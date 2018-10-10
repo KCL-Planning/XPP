@@ -1,3 +1,3 @@
-# AFOSR
+# XPP
 
-Materials related to AFOSR project
+Materials related to XPP project
