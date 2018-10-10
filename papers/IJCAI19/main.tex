@@ -1,0 +1,107 @@
+\def\year{2018}\relax
+\documentclass[letterpaper]{article}
+\usepackage{aaai18}
+\usepackage{times}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage{url}  %Required
+\usepackage{graphicx}  %Required
+\frenchspacing  %Required
+\setlength{\pdfpagewidth}{8.5in}  %Required
+\setlength{\pdfpageheight}{11in}  %Required
+
+
+\pdfinfo{
+%/Title (Refining Abstraction Heuristics During Real-time Planning)
+%/Author (Rebecca Eifler,Maximilian Fickert, Joerg Hoffmann, Wheeler Ruml)
+}
+
+\setcounter{secnumdepth}{0}
+
+%%%%%%%%%%%%%%%%%%%%%
+%%%% Packages
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgf-umlsd}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepgfplotslibrary{fillbetween}
+\usepackage{ragged2e}
+\usetikzlibrary{arrows,automata,fit,calc,positioning,shapes,shapes.multipart} %
+%\usepackage[inline]{enumitem}
+\usepackage{enumerate,url,soul}
+\usepackage{paralist}
+%\usepackage[usenames]{color} % Only used in comment commands
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{thmtools,thm-restate}
+\usepackage{listings}
+\usepackage{subcaption}
+
+
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{example}{Example}
+\usepackage{placeins}
+
+%\renewenvironment{proof}{\textit{Proof.} }{}
+\renewenvironment{proof}{\noindent{\it
+Proof.}\hspace*{0.5em}}{\qed}
+
+%\setlength\floatsep{0.25\baselineskip}
+%\setlength\textfloatsep{0.25\baselineskip}
+%\setlength\intextsep{0.25\baselineskip}
+
+\input{commands.tex}
+
+
+\begin{document}
+
+\nocopyright
+
+\title{Explaining the Space of Plans through Plan-Property Dependencies}
+
+\author{Submission \#
+%\hspace{3.0cm}Rebecca Eifler \and J\"org Hoffmann \and Marcel Steinmetz\\
+%  \hspace{3.0cm}Saarland University, Saarland Informatics Campus\\
+%  \hspace{3.0cm}Saarbr\"ucken, Germany\\
+%  \hspace{3.0cm}\{eifler,hoffmann,steinmetz\}@cs.uni-saarland.de
+%\And
+%\hspace{4.0cm}Wheeler Ruml\\
+%\hspace{4.0cm}University of New Hampshire\\
+%\hspace{4.0cm}Durham, NH USA\\
+%\hspace{4.0cm}ruml \mbox{at} cs.unh.edu
+}
+
+\maketitle
+
+\begin{abstract}
+	\rebecca{to be written tomorrow}
+\end{abstract}
+
+\input{introduction}
+
+\input{plan_property_framework}
+
+\input{goal_fact_dependencies}
+
+\input{compilation}
+
+\input{experiments}
+
+\input{conclusion}
+
+\medskip
+
+\noindent
+%% \textbf{Acknowledgments.} Ack DFG partial delete
+%%  relaxation, probably AFOSR.
+
+%\bibliographystyle{aaai}
+%\bibliography{abbreviations,biblio,crossref}
+
+
+
+\end{document}
