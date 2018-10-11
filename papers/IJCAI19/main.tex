@@ -64,18 +64,31 @@ Proof.}\hspace*{0.5em}}{\qed}
 \title{Explaining the Space of Plans through Plan-Property Dependencies}
 
 \author{
-\hspace{3.0cm}Rebecca Eifler \and J\"org Hoffmann \and Marcel Steinmetz\\
-  \hspace{3.0cm}Saarland University, Saarland Informatics Campus\\
-  \hspace{3.0cm}Saarbr\"ucken, Germany\\
-  \hspace{3.0cm}\{eifler,hoffmann,steinmetz\}@cs.uni-saarland.de
+\hspace{1.0cm}Rebecca Eifler, J\"org Hoffmann \and Marcel Steinmetz\\
+  \hspace{1.0cm}Saarland University, Saarland Informatics Campus\\
+  \hspace{1.0cm}Saarbr\"ucken, Germany\\
+  \hspace{1.0cm}\{eifler,hoffmann,steinmetz\}@cs.uni-saarland.de
 \And
-\hspace{4.0cm} TODO
+\hspace{4.0cm}Michael Cashmore \and Daniele Magazzeni\\
+\hspace{4.0cm}King's College London, Department of Informatics\\
+\hspace{4.0cm}London, United Kingdom\\
+\hspace{4.0cm}\{michael.cashmore,daniele.magazzeni\}@kcl.ac.uk 
 }
 
 \maketitle
 
 \begin{abstract}
-	\rebecca{to be written tomorrow}
+	In an interactive planning process, it is important for human users to understand the decision rationales behind the suggested plans: Why was some plan returned and not some other one? 
+	In principle this can be explained through the search space explored by the planner.
+	But how to make a vast search space understandable to a human user? 
+	We propose to do so by explaining the space of plans in terms of a selected set of plan 
+	properties and their dependencies, such as entailment in plan space. 
+	We introduce a generic formal framework for such dependency analysis.
+	We instantiate and operationalize that framework for the case of dependencies 
+	between goal facts in oversubscription planning, leveraging recent nogood learning methods 
+	for computational efficiency. We show that more general plan properties can be compiled 
+	into this special case. We show experimentally, in several benchmark studies,  
+	that our analysis can be feasible and produce compact results for human inspection. 
 \end{abstract}
 
 \input{introduction}
