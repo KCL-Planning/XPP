@@ -1,0 +1,3 @@
+[submodule "FD_ppd"]
+	path = FD_ppd
+	url = git@bitbucket.org:Rebecca93/plan_property_dependency.git
