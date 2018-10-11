@@ -1,0 +1,119 @@
+\begin{itemize}
+	\item the number of locations is fixed to 10
+	\item the number of goal facts (packages) is scaled from 7 to 11
+	\item heuristic: Marcel's approach with nogoods (except for the black one which uses $A^*$ with $h^{max}$).
+		The heuristic with its learned conjunctions is reused. In the versions with \textit{nr} the heuristic is recomputed 
+		fur every run and the learned conjunctions are not reused.
+	\item x-axis: fraction of fuel necessary to deliver all packages
+	\item y-axis: overall search time/expansions to compute PPD1 (all minimal unsolvable goal subsets)
+\end{itemize}
+
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[
+			width = 15cm,
+			height = 8cm,
+			ymode = log,
+			legend pos=outer north east,
+			xtick={0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9},
+			xlabel=fuel,
+			ylabel=search time,
+		]	
+		\addplot+[sharp plot, draw=black, mark=*,mark options={fill=black}, solid] coordinates
+			{(0.2,0.04) (0.3,0.08) (0.4,0.45) (0.5,7.44) (0.6,108.14) };
+
+		\addplot+[sharp plot, draw=red, mark=*,mark options={fill=red}, solid] coordinates
+			{(0.2,0.01) (0.3,0.02) (0.4,0.04) (0.5,0.13) (0.6,0.61) (0.7,1.3) (0.8, 1.36) (0.9,4.02)};
+		\addplot+[sharp plot, draw=blue, mark=triangle*,mark options={fill=blue}, solid] coordinates
+			{(0.2,0.03) (0.3,0.07) (0.4,0.18) (0.5,0.61) (0.6,1.7) (0.7,3.17) (0.8, 11) (0.9,9.64)};
+		\addplot+[sharp plot, draw=mygreen, mark=square*,mark options={fill=mygreen}, solid] coordinates
+			{(0.2,0.05) (0.3,0.12) (0.4,0.28) (0.5,0.81) (0.6,2.26) (0.7,5.87) (0.8,36.6) (0.9,44.37)};
+		\addplot+[sharp plot, draw=orange, mark=diamond*,mark options={fill=orange}, solid] coordinates
+			{(0.2,0.11) (0.3,0.21) (0.4,0.45) (0.5,1.08) (0.6,3.15) (0.7,9.58) (0.8, 68.42) (0.9,195.58)};
+		\addplot+[sharp plot, draw=yellow, mark=diamond*,mark options={fill=yellow}, solid] coordinates
+			{(0.2,0.26) (0.3,0.34) (0.4,0.97) (0.5,2.28) (0.6,5.35) (0.7,22.94) (0.8, 131.70) (0.9,658.78)};
+
+		\addplot+[sharp plot, draw=red, mark=*,mark options={fill=red}, dashed] coordinates
+			{(0.2,0.03) (0.3,0.08) (0.4,0.26) (0.5,0.98) (0.6,1.82) (0.7,4.04) (0.8, 5.17) (0.9, 9.13)};
+		\addplot+[sharp plot, draw=blue, mark=triangle*,mark options={fill=blue}, dashed] coordinates
+			{(0.2,0.17) (0.3,0.57) (0.4,1.62) (0.5,3.05) (0.6,6.41) (0.7,12.65) (0.8, 30.17) (0.9,34.29)};
+		\addplot+[sharp plot, draw=mygreen, mark=square*,mark options={fill=mygreen}, dashed] coordinates
+			{(0.2,0.37) (0.3,1.26) (0.4,3.02) (0.5,5.59) (0.6,11.56) (0.7,27.15) (0.8, 68.48) (0.9, 163.09)};
+		
+	
+		\legend{7p $h^{max}$, 7P, 8P, 9P, 10P, 11P, 7P nr, 8P nr, 9P nr}
+	
+		\end{axis}
+	\end{tikzpicture}	
+	\end{center}
+
+
+
+	\begin{center}
+		\begin{tikzpicture}
+			\begin{axis}[
+				width = 15cm,
+				height = 8cm,
+				ymode = log,
+				legend pos=outer north east,
+				xtick={0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9},
+				xlabel=fuel,
+				ylabel=overall expansions,
+			]	
+			\addplot+[sharp plot, draw=black, mark=*,mark options={fill=black}, solid] coordinates
+				{(0.2,128) (0.3,1525) (0.4,22982) (0.5,498435) (0.6,8368397) };
+	
+			\addplot+[sharp plot, draw=red, mark=*,mark options={fill=red}, solid] coordinates
+				{(0.2,127) (0.3,141) (0.4,257) (0.5,1182) (0.6,2352) (0.7,3320) (0.8, 2067) (0.9,3493)};
+			\addplot+[sharp plot, draw=blue, mark=triangle*,mark options={fill=blue}, solid] coordinates
+				{(0.2,270) (0.3,337) (0.4,1242) (0.5,2451) (0.6,3637) (0.7,3219) (0.8, 7174) (0.9,4314)};
+			\addplot+[sharp plot, draw=mygreen, mark=square*,mark options={fill=mygreen}, solid] coordinates
+				{(0.2,527) (0.3,477) (0.4,1325) (0.5,2621) (0.6,4094) (0.7,4544) (0.8,12072) (0.9,12548)};
+			\addplot+[sharp plot, draw=orange, mark=diamond*,mark options={fill=orange}, solid] coordinates
+				{(0.2,1040) (0.3,745) (0.4,1456) (0.5,2897) (0.6,4752) (0.7,6801) (0.8, 22619) (0.9,29877)};
+			\addplot+[sharp plot, draw=yellow, mark=diamond*,mark options={fill=yellow}, solid] coordinates
+				{(0.2,4107) (0.3,751) (0.4,2847) (0.5,5198) (0.6,8776) (0.7,14519) (0.8, 44402) (0.9,81084)};
+
+			\addplot+[sharp plot, draw=red, mark=*,mark options={fill=red}, dashed] coordinates
+				{(0.2,127) (0.3,837) (0.4,2349) (0.5,8899) (0.6,12152) (0.7,18844) (0.8, 13885) (0.9,17043)};
+			\addplot+[sharp plot, draw=blue, mark=triangle*,mark options={fill=blue}, dashed] coordinates
+				{(0.2,1669) (0.3,4589) (0.4,12931) (0.5,18380) (0.6,29148) (0.7,35997) (0.8, 59682) (0.9,37749)};
+			\addplot+[sharp plot, draw=mygreen, mark=square*,mark options={fill=mygreen}, dashed] coordinates
+				{(0.2,3333) (0.3,9069) (0.4,20995) (0.5,30912) (0.6,50435) (0.7,77003) (0.8, 127056) (0.9,141560)};
+			
+		
+				\legend{7p $h^{max}$, 7P, 8P, 9P, 10P, 11P, 7P nr, 8P nr, 9P nr}
+		
+			\end{axis}
+		\end{tikzpicture}	
+        \end{center}
+        
+        \subsubsection*{Impact of nogoods}
+
+        \begin{tikzpicture}
+            \scriptsize
+            \begin{axis}[
+                width = 15cm,
+                height = 6cm,
+                ymode = log,
+                xlabel=fuel,
+                ylabel=overall search time,
+                legend columns=5,
+                legend style={at={(0.8,1.25)}},
+            ]
+                \addplot[sharp plot, draw=red, mark=*,mark options={fill=red}, solid] table [x=n, y=7Pnng, col sep=tab] {data/nomystery_loc10.csv};
+                \addplot[sharp plot, draw=blue, mark=*,mark options={fill=blue}, solid] table [x=n, y=8Pnng, col sep=tab] {data/nomystery_loc10.csv};
+                \addplot[sharp plot, draw=mygreen, mark=*,mark options={fill=mygreen}, solid] table [x=n, y=9Pnng, col sep=tab] {data/nomystery_loc10.csv};
+                \addplot[sharp plot, draw=orange, mark=*,mark options={fill=orange}, solid] table [x=n, y=10Pnng, col sep=tab] {data/nomystery_loc10.csv};
+                \addplot[sharp plot, draw=yellow, mark=*,mark options={fill=yellow}, solid] table [x=n, y=11Pnng, col sep=tab] {data/nomystery_loc10.csv};
+                
+                \addplot[sharp plot, draw=red, mark=*,mark options={fill=red}, dashed] table [x=n, y=7Pwng, col sep=tab] {data/nomystery_loc10.csv};
+                \addplot[sharp plot, draw=blue, mark=*,mark options={fill=blue}, dashed] table [x=n, y=8Pwng, col sep=tab] {data/nomystery_loc10.csv};
+                \addplot[sharp plot, draw=mygreen, mark=*,mark options={fill=mygreen}, dashed] table [x=n, y=9Pwng, col sep=tab] {data/nomystery_loc10.csv};
+                \addplot[sharp plot, draw=orange, mark=*,mark options={fill=orange}, dashed] table [x=n, y=10Pwng, col sep=tab] {data/nomystery_loc10.csv};
+                \addplot[sharp plot, draw=yellow, mark=*,mark options={fill=yellow}, dashed] table [x=n, y=11Pwng, col sep=tab] {data/nomystery_loc10.csv};
+                            
+                \legend{7P nng, 7P wng, 8P nng, 8P wng, 9P nng, 9P wng, 10P nng, 10P wng, 11P nng, 11P wng}
+                
+            \end{axis}
+        \end{tikzpicture}

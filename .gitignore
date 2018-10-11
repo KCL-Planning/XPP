@@ -1,4 +1,10 @@
+#latex and vim 
 *.swp
+*.out
+*.fdb_latexmk
+*.fls
+*.out
+*.gz
 *.aux
 *.bbl
 *.blg

@@ -1,0 +1,115 @@
+\subsubsection*{Example 2}
+\begin{figure}[ht]
+    \begin{center}
+        \begin{tikzpicture}
+            \node[draw, circle, label=right:{\textcolor{red}{$P_0$}},
+                , label=above:{\textcolor{mygreen}{$P_3$}}] (l0) at (4,0) {$L_0$};
+            \node[draw, circle, label=below:{\textcolor{red}{$T$}},
+                , label=left:{\textcolor{mygreen}{$P_1, P_4$}}] (l1) at (0.5,-6) {$L_1$};
+            \node[draw, circle, label=right:{\textcolor{red}{$P_2$}}
+                , label=190:{\textcolor{mygreen}{$P_0$}}] (l2) at (3.5,-6) {$L_2$};
+            \node[draw, circle, label=right:{\textcolor{red}{$P_4$}}] (l3) at (2,-4) {$L_3$};
+            \node[draw, circle, label=right:{\textcolor{red}{$P_3$}}] (l4) at (2,-1.5) {$L_4$};
+            \node[draw, circle, label=10:{\textcolor{red}{$P_1$}}
+                , label=left:{\textcolor{mygreen}{$P_2$}}] (l5) at (0,0) {$L_5$};
+            
+            \draw[thick] (l5) to (l0);
+            \draw[thick] (l5) to (l4);
+            \draw[thick] (l0) to (l4);
+            \draw[thick] (l5) to (l3);
+            \draw[thick] (l0) to (l3);
+            \draw[thick] (l3) to (l1);
+            \draw[thick] (l3) to (l2);
+            \draw[thick] (l1) to (l2);
+            \draw[thick] (l4) to (l3);
+        \end{tikzpicture}
+    \end{center}
+    \caption{red: initial state, green: goal, minimal fuel to deliver all packages: 8}
+    \end{figure}
+    
+    \textbf{PPD1: }\\
+    
+    \begin{tabular}{r|l}
+        fuel & minimal unsolvable goals \\\hline
+        1 & $\{P_0\} \{P_1\} \{P_2\} \{P_3\} \{P_4\}$\\
+        2 & $\{P_0\} \{P_1\} \{P_2\} \{P_3\}$\\
+        3 & $\{P_0\} \{P_1\} \{P_2, P_3\} \{P_2, P_4\} \{P_3, P_4\}$\\
+        4 & $\{P_0, P_1\} \{P_0, P_2\} \{P_0, P_3\} \{P_0, P_4\} \{P_1, P_2\} \{P_1, P_3\} \{P_2, P_3\}
+                \{P_2, P_4\} \{P_3, P_4\}$\\
+        5 & $\{P_0, P_1\} \{P_0, P_2\} \{P_1, P_3\} \{P_0, P_3, P_4\} \{P_2, P_3, P_4\}$\\
+        6 & $\{P_0, P_1, P_2\} \{P_0, P_1, P_3\} \{P_0, P_2, P_3\} \{P_1, P_2, P_3\} 
+                \{P_0, P_2, P_4\} \{P_2, P_3, P_4\}$\\
+        7 & $\{P_0, P_1, P_2, P_3\} \{P_0, P_2, P_3, P_4\}$\\
+    \end{tabular}\\
+    
+    \newpage
+    \textbf{PPD2: }\\
+    
+    \begin{minipage}[t]{0.30\textwidth}
+        fuel: 3\\
+    \begin{tabular}{l|l}
+        A & B \\\hline
+        $P_2$ & $P_0, P_1, P_3, P_4$ \\
+        $P_3$ & $P_0, P_1, P_2, P_4$ \\
+        $P_4$ & $P_0, P_1, P_2, P_3$ \\
+    \end{tabular}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.30\textwidth}
+        fuel: 4\\
+    \begin{tabular}{l|l}
+        A & B \\\hline
+        $P_0$ & $P_1, P_2, P_3, P_4$ \\
+        $P_1$ & $P_0, P_2, P_3$ \\
+        $P_2$ & $P_0, P_1, P_3, P_4$ \\
+        $P_3$ & $P_0, P_1, P_2, P_4$ \\
+        $P_4$ & $P_0, P_2, P_3$ \\
+    \end{tabular}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.30\textwidth}
+        fuel: 5\\
+    \begin{tabular}{l|l}
+        A & B \\\hline
+        $P_0$ & $P_1, P_2$ \\
+        $P_1$ & $P_0, P_3$ \\
+        $P_2$ & $P_0$ \\
+        $P_3$ & $P_1$ \\
+        $P_0, P_3$ & $P_1, P_2, P_4$ \\
+        $P_0, P_4$ & $P_1, P_2, P_3$ \\
+        $P_2, P_3$ & $P_0, P_1, P_4$ \\
+        $P_2, P_4$ & $P_0, P_3$ \\
+        $P_3, P_4$ & $P_0, P_1, P_2$ \\	
+    \end{tabular}
+    \end{minipage}
+    
+    
+    \begin{minipage}[t]{0.30\textwidth}
+        fuel: 6\\
+    \begin{tabular}{l|l}
+        A & B \\\hline
+        $P_0, P_1$ & $P_2, P_3$ \\
+        $P_0, P_2$ & $P_1, P_3, P_4$ \\	
+        $P_0, P_3$ & $P_1, P_2$ \\
+        $P_0, P_4$ & $P_2$ \\
+        $P_1, P_2$ & $P_0, P_3$\\
+        $P_1, P_3$ & $P_0, P_2$\\
+        $P_2, P_3$ & $P_0, P_1, P_4$\\
+        $P_2, P_4$ & $P_0, P_3$\\
+        $P_3, P_4$ & $P_2$\\
+    \end{tabular}
+    \end{minipage}
+    \begin{minipage}[t]{0.30\textwidth}
+        fuel: \\
+    \begin{tabular}{l|l}
+        A & B \\\hline
+        $P_0, P_1, P_2$ & $P_3$ \\
+        $P_0, P_1, P_3$ & $P_2$ \\
+        $P_1, P_2, P_3$ & $P_0$ \\
+        $P_0, P_2, P_3$ & $P_1, P_4$ \\
+        $P_0, P_2, P_4$ & $P_3$ \\
+        $P_0, P_3, P_4$ & $P_2$ \\
+        $P_2, P_3, P_4$ & $P_0$ \\
+    
+    \end{tabular}
+    \end{minipage}
