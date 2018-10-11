@@ -93,10 +93,10 @@ g$, for $f, g \in F$.
 %% basic: find all pairwise dependencies, ie, compute the graph whose
 %% nodes are the properties and whose edges are the basic dependencies
 
-\begin{definition}[Basic Plan-Property Dependency Graph (BPDG)]
+\begin{definition}[Plan-Property Dependency Graph (PDG)]
 Given a planning task $\cal T$ and a set $F$ of plan properties in
-$\cal T$. The \emph{basic plan-property dependency graph (BPDG)} is
-the directed graph whose vertices are $F$ and that contains an arc $f
+$\cal T$. The \emph{plan-property dependency graph (PDG)} is the
+directed graph whose vertices are $F$ and that contains an arc $f
 \rightarrow g$ whenever the basic dependency $f \implies g$ is valid
 in $\cal T$.
 \end{definition}
@@ -137,21 +137,46 @@ the equivalence class of $\phi$.
   can be of interest too (and will be in our goal-fact analysis in the
   next section)}
 
-\begin{definition}[Plan-Property Dependency Graph (PDG)]
+\begin{definition}[Plan-Property Dependency Axiomatization (PDA)]
 Given a planning task $\cal T$ and a set $\Phi$ of plan-property
-dependencies in $\cal T$. The \emph{plan-property dependency graph
-  (PDG)} is the directed acyclic graph whose vertices are the
-equivalence classes $[\phi]$ where $\phi \in \Phi$ is valid in $\cal
-T$, and that contains an arc $[\phi] \rightarrow [\psi]$ whenever
-$\phi$ entails $\psi$.
+dependencies in $\cal T$. 
+%
+Let $O$ be the partial order over the equivalence classes $[\phi]$
+where $\phi \in \Phi$ is valid in $\cal T$, and where $[\phi] <
+[\psi]$ iff $\phi$ entails $\psi$.
 
-The \emph{root dependency set (RDS)} of $\cal T$ and $\Phi$ is the set
-of root nodes in the PDG.
+A set $\Phi[{\cal T}] \subseteq \Phi$ is a \emph{plan-property
+  dependency axiomatization (PDA)} of $\cal T$ relative to $\Phi$ if,
+for every minimal element $[\phi_r]$ of $O$, $\Phi[{\cal T}]$
+contains exactly one member of $[\phi_r]$.
 \end{definition}
 
-\joerg{terminology: it is not niced that in a BPDG nodes are plan
-  properties and edegs are dependencies; while in a PDG nodes are
-  dependencies and edges are entailment. TBD.}
+\joerg{reg terminology: ``axiomatization'' captures this well I think,
+  in the sense that $\Pi$ basically identifies a subset of truth-value
+  assignments to $F$, ie, of logical interpretations of our
+  propositional variables; we can view this subset of interpretations
+  as the possible worlds given $\Pi$. Then $O$ is the entailment order
+  over the things that hold in all possible worlds; and a set of
+  axioms is a smallest set of formulas that fully characterizes these
+  things.}
+
+\joerg{reg lattices: $O$ is a ``meet-semilattice'' if and only if
+  $\Phi$ is closed under conjunction: in a lattice, every two elements
+  need to have a common ancestor. in standard logic, entailment over
+  formula equivalence classes is a lattice because for any $\phi$ and
+  $\psi$ $\phi \wedge \psi$ is a common ancestor; actually a bounded
+  lattice, with a unique element that is an ancestor to (that implies)
+  everything else. the same is true here if $\Phi$ is closed under
+  conjunction (because if each of $\phi$ and $\psi$ is valid, then so
+  is $\phi \wedge \psi$). In this case, the PDA is the unique common
+  ancestor, which can basically be thought of as a conjunction of
+  axioms. In lattice terminology, the unique common ancestor is called
+  a ``least element'', ``minimum'', or ``bottom'' element; but I think
+  none of these names makes much sense in our context so I would leave
+  it at the above definition, maybe briefly remarking here that $O$ is
+  a meet-semilattice if and only if $\Phi$ is closed under
+  conjunction.}
+
 
 \joerg{discuss/motivate why this makes sense; discuss complexity,
   point out encouraging results with goal-fact dependencies in our
