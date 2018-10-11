@@ -122,8 +122,8 @@ the equivalence class of $\phi$.
   $\phi \implies psi$, and note that it is not the same as standard
   propsitional entailment, again due to the underlying restriction of
   interpretations to $\Pi$. ... also note that entailment over
-  equivalence clasyses remains acyclic as in standard propositional
-  logic}
+  equivalence clasyses remains a partial order as in standard
+  propositional logic}
 
 
 
@@ -160,12 +160,12 @@ contains exactly one member of $[\phi_r]$.
   axioms is a smallest set of formulas that fully characterizes these
   things.}
 
-\joerg{reg lattices: $O$ is a ``meet-semilattice'' if and only if
-  $\Phi$ is closed under conjunction: in a lattice, every two elements
-  need to have a common ancestor. in standard logic, entailment over
-  formula equivalence classes is a lattice because for any $\phi$ and
-  $\psi$ $\phi \wedge \psi$ is a common ancestor; actually a bounded
-  lattice, with a unique element that is an ancestor to (that implies)
+\joerg{reg lattices: $O$ is a ``meet-semilattice'' if $\Phi$ is closed
+  under conjunction: in a lattice, every two elements need to have a
+  common ancestor. in standard logic, entailment over formula
+  equivalence classes is a lattice because for any $\phi$ and $\psi$
+  $\phi \wedge \psi$ is a common ancestor; actually a bounded lattice,
+  with a unique element that is an ancestor to (that implies)
   everything else. the same is true here if $\Phi$ is closed under
   conjunction (because if each of $\phi$ and $\psi$ is valid, then so
   is $\phi \wedge \psi$). In this case, the PDA is the unique common
@@ -174,8 +174,7 @@ contains exactly one member of $[\phi_r]$.
   a ``least element'', ``minimum'', or ``bottom'' element; but I think
   none of these names makes much sense in our context so I would leave
   it at the above definition, maybe briefly remarking here that $O$ is
-  a meet-semilattice if and only if $\Phi$ is closed under
-  conjunction.}
+  a meet-semilattice if $\Phi$ is closed under conjunction.}
 
 
 \joerg{discuss/motivate why this makes sense; discuss complexity,
