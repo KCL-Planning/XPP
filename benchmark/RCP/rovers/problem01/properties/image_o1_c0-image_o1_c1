@@ -1,0 +1,14 @@
+# && camera_o1_c0  ! camera_o1_c1
+# &&  ! camera_o1_c0 camera_o1_c1
+
+set camera_o1_c1 1
+take_image rover waypoint objective1 camera1 mode
+
+
+set camera_o1_c0 1
+take_image rover waypoint objective1 camera0 mode
+
+
+
+property image_o1_c0-image_o1_c1
+ ||  &&  && camera_o1_c0  ! camera_o1_c1 camera_o1_c0  &&  && camera_o1_c0  ! camera_o1_c1  ! camera_o1_c1

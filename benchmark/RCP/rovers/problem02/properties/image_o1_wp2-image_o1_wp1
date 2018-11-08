@@ -1,0 +1,18 @@
+# &&  &&  ! waypoint_o1_wp4  ! waypoint_o1_wp1 waypoint_o1_wp2
+# &&  &&  ! waypoint_o1_wp4 waypoint_o1_wp1  ! waypoint_o1_wp2
+
+set waypoint_o1_wp4 1
+take_image rover waypoint4 objective1 camera mode
+
+
+set waypoint_o1_wp1 1
+take_image rover waypoint1 objective1 camera mode
+
+
+set waypoint_o1_wp2 1
+take_image rover waypoint2 objective1 camera mode
+
+
+
+property image_o1_wp2-image_o1_wp1
+ ||  ||  &&  &&  &&  ! waypoint_o1_wp4  ! waypoint_o1_wp1 waypoint_o1_wp2 waypoint_o1_wp4  &&  &&  &&  ! waypoint_o1_wp4  ! waypoint_o1_wp1 waypoint_o1_wp2  ! waypoint_o1_wp1  &&  &&  &&  ! waypoint_o1_wp4  ! waypoint_o1_wp1 waypoint_o1_wp2 waypoint_o1_wp2

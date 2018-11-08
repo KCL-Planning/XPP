@@ -1,0 +1,2 @@
+digraph G {
+buy_g0_m4 -> buy_g1_m3;buy_g0_m4 -> buy_g2_m3;buy_g0_m5 -> buy_g1_m3;buy_g0_m5 -> buy_g2_m3;buy_g1_m1 -> buy_g0_m4;buy_g1_m1 -> buy_g0_m5;buy_g1_m1 -> buy_g1_m3;buy_g1_m1 -> buy_g2_m3;buy_g1_m1 -> buy_g2_m4;buy_g1_m3 -> buy_g2_m3;buy_g2_m3 -> buy_g1_m3;buy_g2_m4 -> buy_g0_m4;buy_g2_m4 -> buy_g0_m5;buy_g2_m4 -> buy_g1_m1;buy_g2_m4 -> buy_g1_m3;buy_g2_m4 -> buy_g2_m3;}

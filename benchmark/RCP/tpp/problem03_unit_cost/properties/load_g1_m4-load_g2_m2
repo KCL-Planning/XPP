@@ -1,0 +1,22 @@
+# && load_g1_m4  ! load_g1_m6
+# && load_g2_m2  ! load_g2_m7
+
+set load_g1_m6 1
+load goods1 truck market6
+
+
+set load_g2_m7 1
+load goods2 truck market7
+
+
+set load_g2_m2 1
+load goods2 truck market2
+
+
+set load_g1_m4 1
+load goods1 truck market4
+
+
+
+property load_g1_m4-load_g2_m2
+ ||  &&  && load_g1_m4  ! load_g1_m6  ! load_g2_m2  &&  && load_g1_m4  ! load_g1_m6 load_g2_m7

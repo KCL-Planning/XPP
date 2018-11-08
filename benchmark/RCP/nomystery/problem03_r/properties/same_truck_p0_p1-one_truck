@@ -1,0 +1,38 @@
+# ||  && p0_delwithT0 p1_delwithT0  && p0_delwithT1 p1_delwithT1
+# ||  && useT0  ! useT1  &&  ! useT0 useT1
+
+set p1_delwithT1 2
+unload p1 t1 location
+load p1 t1 location
+
+
+set useT1 3
+load package t1 location
+unload package t1 location
+drive t1 location location fuellevel fuellevel fuellevel
+
+
+set p0_delwithT1 2
+unload p0 t1 location
+load p0 t1 location
+
+
+set p1_delwithT0 2
+unload p1 t0 location
+load p1 t0 location
+
+
+set useT0 3
+load package t0 location
+unload package t0 location
+drive t0 location location fuellevel fuellevel fuellevel
+
+
+set p0_delwithT0 2
+unload p0 t0 location
+load p0 t0 location
+
+
+
+property same_truck_p0_p1-one_truck
+ ||  ||  ||  &&  && p0_delwithT0 p1_delwithT0  &&  ! useT0 useT0  &&  && p0_delwithT0 p1_delwithT0  && useT1 useT0  ||  &&  && p0_delwithT0 p1_delwithT0  &&  ! useT0  ! useT1  &&  && p0_delwithT0 p1_delwithT0  && useT1  ! useT1  ||  ||  &&  && p0_delwithT1 p1_delwithT1  &&  ! useT0 useT0  &&  && p0_delwithT1 p1_delwithT1  && useT1 useT0  ||  &&  && p0_delwithT1 p1_delwithT1  &&  ! useT0  ! useT1  &&  && p0_delwithT1 p1_delwithT1  && useT1  ! useT1

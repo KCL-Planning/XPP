@@ -1,0 +1,58 @@
+
+we have only instances with one truck and one depot
+
+- buy good X in market Y
+	S1: buy truck good_x market_y moneylevel moneylevel moneylevel
+	S2: all buy actions good_x and any other market than market_y	
+	
+	property: S1 && ! S2
+	
+	
+	
+- buy good X before monylevel is below Z
+	S1: buy truck good_x market (level >= Z) moneylevel moneylevel	
+	S2: buy truck good_x market (level < Z) moneylevel moneylevel
+
+	property: S1 && ! S2
+	
+	
+
+- if you buy good x in market X then buy good y in market Y 
+	S1: buy truck good_x market_X moneylevel moneylevel moneylevel
+	S2: buy truck good_y market_Y moneylevel moneylevel moneylevel
+	
+	property: S1 -> S2 = ! S1 || S2
+	
+	
+	
+- buy good x and y in the same market
+	S1: buy truck good_x market_1 moneylevel moneylevel moneylevel
+		buy truck good_y market_1 moneylevel moneylevel moneylevel
+	...
+	Sn: buy truck good_x market_n moneylevel moneylevel moneylevel
+		buy truck good_y market_n moneylevel moneylevel moneylevel
+	
+	property: (S1 && ! S2 && ... ! Sn) || (!S1 && S2 && ... ! Sn) ...
+	
+	
+
+Answer some questions:
+	Why have you bought good X in market Y altough it is cheaper in market Z ?
+	
+	-> actions set 
+		S1 = {buy truck good_x market_Z moneylevel moneylevel moneylevel}
+		S2 = {buy truck good_x market_Y moneylevel moneylevel moneylevel}
+		with property S1 && ! S2 and see which dependencies you get
+		(only property S1 would suffice because you have to buy a good only once)
+		
+		
+	
+		
+		
+		
+		
+		
+		
+		
+		
+	

@@ -1,0 +1,14 @@
+# ! d_T1_to_L0
+# ! d_T1_to_L2
+
+set d_T1_to_L2 1
+drive t1 location l2 fuellevel fuellevel fuellevel
+
+
+set d_T1_to_L0 1
+drive t1 location l0 fuellevel fuellevel fuellevel
+
+
+
+property do_not_drive_t1_to_L0-do_not_drive_t1_to_L2
+ &&  ! d_T1_to_L0 d_T1_to_L2

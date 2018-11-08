@@ -1,0 +1,22 @@
+# ! d_T1_to_L2
+# ||  && useT0  ! useT1  &&  ! useT0 useT1
+
+set d_T1_to_L2 1
+drive t1 location l2 fuellevel fuellevel fuellevel
+
+
+set useT1 3
+load package t1 location
+unload package t1 location
+drive t1 location location fuellevel fuellevel fuellevel
+
+
+set useT0 3
+load package t0 location
+unload package t0 location
+drive t0 location location fuellevel fuellevel fuellevel
+
+
+
+property do_not_drive_t1_to_L2-one_truck
+ ||  ||  &&  ! d_T1_to_L2  &&  ! useT0 useT0  &&  ! d_T1_to_L2  && useT1 useT0  ||  &&  ! d_T1_to_L2  &&  ! useT0  ! useT1  &&  ! d_T1_to_L2  && useT1  ! useT1

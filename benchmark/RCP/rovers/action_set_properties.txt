@@ -1,0 +1,8 @@
+Rovers:
+
+- take picture of object x with camera y
+- take picture of object x from waypoint y
+- use robot x to take picture y
+- do action A before energy level is below z
+- take picture of object x with the same camera/robot
+- 

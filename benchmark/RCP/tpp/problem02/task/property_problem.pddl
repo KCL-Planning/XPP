@@ -1,0 +1,18 @@
+# &&  &&  ! buy_g2_m3 buy_g2_m4 unload_g2
+# &&  && buy_g2_m3  ! buy_g2_m4 unload_g2
+
+set buy_g2_m4 1
+buy truck goods2 market4 moneylevel moneylevel moneylevel
+
+
+set buy_g2_m3 1
+buy truck goods2 market3 moneylevel moneylevel moneylevel
+
+
+set unload_g2 1
+unload truck goods2 depot0
+
+
+
+property buy_g2_m4-buy_g2_m3
+ ||  ||  &&  &&  &&  ! buy_g2_m3 buy_g2_m4 unload_g2  ! buy_g2_m3  &&  &&  &&  ! buy_g2_m3 buy_g2_m4 unload_g2 buy_g2_m4  &&  &&  &&  ! buy_g2_m3 buy_g2_m4 unload_g2  ! unload_g2

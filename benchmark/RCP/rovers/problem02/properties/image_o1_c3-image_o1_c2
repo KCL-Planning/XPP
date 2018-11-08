@@ -1,0 +1,14 @@
+#camera_o1_c3
+#camera_o1_c2
+
+set camera_o1_c3 1
+take_image rover waypoint objective1 camera3 mode
+
+
+set camera_o1_c2 1
+take_image rover waypoint objective1 camera2 mode
+
+
+
+property image_o1_c3-image_o1_c2
+ && camera_o1_c3  ! camera_o1_c2

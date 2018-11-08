@@ -1,0 +1,24 @@
+# ! d_T1_to_L2
+# ||  && p0_p1_delwithT0  ! p0_p1_delwithT1  &&  ! p0_p1_delwithT0 p0_p1_delwithT1
+
+set d_T1_to_L2 1
+drive t1 location l2 fuellevel fuellevel fuellevel
+
+
+set p0_p1_delwithT1 4
+unload p0 t1 location
+unload p1 t1 location
+load p0 t1 location
+load p1 t1 location
+
+
+set p0_p1_delwithT0 4
+unload p0 t0 location
+unload p1 t0 location
+load p0 t0 location
+load p1 t0 location
+
+
+
+property do_not_drive_t1_to_L2-same_truck_p0_p1
+ ||  ||  &&  ! d_T1_to_L2  &&  ! p0_p1_delwithT0 p0_p1_delwithT0  &&  ! d_T1_to_L2  && p0_p1_delwithT1 p0_p1_delwithT0  ||  &&  ! d_T1_to_L2  &&  ! p0_p1_delwithT0  ! p0_p1_delwithT1  &&  ! d_T1_to_L2  && p0_p1_delwithT1  ! p0_p1_delwithT1

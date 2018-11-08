@@ -1,0 +1,46 @@
+# ||  && p0_delwithT0 p4_delwithT0  && p0_delwithT1 p4_delwithT1
+# ||  && p1_delwithT0 p2_delwithT0  && p1_delwithT1 p2_delwithT1
+
+set p2_delwithT1 2
+unload p2 t1 location
+load p2 t1 location
+
+
+set p1_delwithT1 2
+unload p1 t1 location
+load p1 t1 location
+
+
+set p0_delwithT1 2
+unload p0 t1 location
+load p0 t1 location
+
+
+set p1_delwithT0 2
+unload p1 t0 location
+load p1 t0 location
+
+
+set p4_delwithT1 2
+unload p4 t1 location
+load p4 t1 location
+
+
+set p4_delwithT0 2
+unload p4 t0 location
+load p4 t0 location
+
+
+set p2_delwithT0 2
+unload p2 t0 location
+load p2 t0 location
+
+
+set p0_delwithT0 2
+unload p0 t0 location
+load p0 t0 location
+
+
+
+property same_truck_p0_p4-same_truck_p1_p2
+ ||  ||  ||  &&  && p0_delwithT0 p4_delwithT0  &&  ! p1_delwithT0  ! p1_delwithT1  &&  && p0_delwithT0 p4_delwithT0  &&  ! p2_delwithT0  ! p1_delwithT1  ||  &&  && p0_delwithT0 p4_delwithT0  &&  ! p1_delwithT0  ! p2_delwithT1  &&  && p0_delwithT0 p4_delwithT0  &&  ! p2_delwithT0  ! p2_delwithT1  ||  ||  &&  && p0_delwithT1 p4_delwithT1  &&  ! p1_delwithT0  ! p1_delwithT1  &&  && p0_delwithT1 p4_delwithT1  &&  ! p2_delwithT0  ! p1_delwithT1  ||  &&  && p0_delwithT1 p4_delwithT1  &&  ! p1_delwithT0  ! p2_delwithT1  &&  && p0_delwithT1 p4_delwithT1  &&  ! p2_delwithT0  ! p2_delwithT1
