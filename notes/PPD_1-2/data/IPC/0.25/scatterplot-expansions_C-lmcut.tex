@@ -1,0 +1,54 @@
+\begin{tikzpicture}
+\begin{axis}[extra x tick style={grid=major}, extra x ticks=100000000, extra y tick style={grid=major}, extra y ticks=100000000, 
+height=7.00cm, legend cell align=left, legend style={at={(1.4, 1)}}, title=expansions, width=7.00cm, xlabel=hc, xmin=0.05, xmode=log, ylabel=lmcut, ymin=0.05, ymode=log]
+\addplot[color=green, mark=x, mark options={{draw=black}}, only marks] coordinates {
+(0.100000, 33) (0.100000, 219) (0.100000, 181) (42, 59492) (0.100000, 217) (0.100000, 6) (0.100000, 9131) (0.100000, 5) (0.100000, 7615) (0.100000, 7625) (0.100000, 245) (0.100000, 3) (0.100000, 8)
+};
+\addlegendentry{airport}
+\addplot[color=blue, mark=*, mark options={{draw=black}}, only marks] coordinates {
+(18, 13376) (0.100000, 187) (2, 213) (6, 12007) (0.100000, 58) (6, 7076) (9, 1570) (0.100000, 14) (19, 1532) (3, 4066) (2, 75) (0.100000, 379) (3, 6886) (40, 18268) (1, 61) (0.100000, 8) (3, 187)
+};
+\addlegendentry{blocks}
+\addplot[color=magenta, mark=square, mark options={{draw=black}}, only marks] coordinates {
+(0.100000, 22) (15, 34039) (11, 20162) (35, 142452) (13, 11292) (0.100000, 407)
+};
+\addlegendentry{depot}
+\addplot[color=cyan, mark=*, mark options={{draw=black}}, only marks] coordinates {
+(0.100000, 16896) (26, 49620) (20, 64248) (51, 156560) (0.100000, 13) (143, 266848) (4, 22448) (65, 328115) (20, 13650) (8, 1360) (78, 104720)
+};
+\addlegendentry{driverlog}
+\addplot[color=yellow, mark=*, mark options={{draw=black}}, only marks] coordinates {
+(0.100000, 17761) (0.100000, 3286) (0.100000, 2971) (0.100000, 7067) (0.100000, 19591) (0.100000, 242704) (0.100000, 19141) (0.100000, 21631) (0.100000, 226) (0.100000, 136) (0.100000, 211) (0.100000, 2791) (3, 190470) (0.100000, 2626) (0.100000, 256) (0.100000, 16051) (0.100000, 241) (0.100000, 2506) (0.100000, 80809) (0.100000, 2056) (0.100000, 31823) (0.100000, 766) (0.100000, 104311)
+};
+\addlegendentry{freecell}
+\addplot[color=magenta, mark=*, mark options={{draw=black}}, only marks] coordinates {
+(1920, 19916814) (45, 5268) (208, 67710) (0.100000, 151) (668, 1367176)
+};
+\addlegendentry{gripper}
+\addplot[color=cyan, mark=triangle, mark options={{draw=black}}, only marks] coordinates {
+(55, 7443) (0.100000, 181) (135, 69039) (155, 185047) (18, 5647) (819, 6915236) (156, 182083) (0.100000, 43) (2, 406) (395, 1143604) (409, 1131564) (17, 5356) (824, 6718966) (803, 5972930) (54, 6872) (18, 1954) (14, 1892) (416, 1656749) (0.100000, 50) (67, 40958) (0.100000, 4) (122, 60879) (57, 8012) (65, 23797) (166, 185293) (391, 846923) (931, 10411953) (649, 2261005) (14, 1861) (801, 7337121) (164, 198138) (1, 745) (0.100000, 2) (67, 32915)
+};
+\addlegendentry{miconic}
+\addplot[color=red, mark=*, mark options={{draw=black}}, only marks] coordinates {
+(5, 73) (206, 3719) (863, 71216) (902, 118208) (3, 21) (29, 760) (8, 152) (19, 124) (958, 46688) (9, 116) (116, 1866) (55, 892) (151, 3851) (3, 138) (31, 1232) (25, 364) (8, 297) (5, 25) (4, 23) (0.100000, 772) (9, 109) (173, 10124) (3, 13) (2109, 41214) (29, 205) (5183, 251714) (85, 1355) (1, 24) (2, 19) (2, 7) (151, 2707) (7, 128) (2, 50) (2, 40) (5, 43) (16, 129) (0.100000, 6) (9, 81) (2, 15) (50, 741) (149, 2328)
+};
+\addlegendentry{psr-small}
+\addplot[color=black, mark=*, mark options={{draw=black}}, only marks] coordinates {
+(43, 36383) (0.100000, 43) (0.100000, 50) (112, 67588)
+};
+\addlegendentry{rovers}
+\addplot[color=green, mark=*, mark options={{draw=black}}, only marks] coordinates {
+(0.100000, 57) (2, 138858) (48, 1342395) (0.100000, 745) (1, 573) (3, 112017)
+};
+\addlegendentry{satellite}
+\addplot[color=blue, mark=diamond, mark options={{draw=black}}, only marks] coordinates {
+(0.100000, 91) (0.100000, 15) (0.100000, 559) (0.100000, 7) (25, 29953) (123, 884427)
+};
+\addlegendentry{tpp}
+\addplot[color=red, mark=pentagon, mark options={{draw=black}}, only marks] coordinates {
+(0.100000, 8) (0.100000, 632) (1, 3844) (0.100000, 166) (4, 170892) (8, 3160) (83, 1096013) (0.100000, 32) (4, 276)
+};
+\addlegendentry{zenotravel}
+\addplot[color=black] coordinates {(0.050000, 0.050000) (19916814, 19916814)};
+\end{axis}
+\end{tikzpicture}

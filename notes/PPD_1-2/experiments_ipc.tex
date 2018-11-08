@@ -1,0 +1,113 @@
+
+    To get existing oversubscription planning benchmarks from the optimal IPC benchmarks the maximal plan 
+    cost is restricted to $x\%$ of the optimal cost to achieve all goals. We do not use an artificial 
+    cost variable which encodes the maximal available cost in the planning task, but restrict the search
+    algorithm to a maximal depth as in the satisficing cost-bounded track. 
+
+    \paragraph{Adaption $A^*$:}
+    A state is not further expanded when $g(s) +  h(s) \geq bound$. \\
+
+    \paragraph{Conflict Learning}
+    Originally conjunctions are learned for a state if it is identified as a dead-end by
+    expanding the whole search space below the state.
+    This is adapted to a \textit{cost-bound-dead-end}. You learn conjunctions for a state s until
+    $h(s) \geq bound - g(s)$ if there is no solution, satisfying the cost bound, found below the state.
+
+    \begin{itemize}
+        \item hmax: $A^*$ with $h^{max}$
+        \item lmcut:  $A^*$ with $h^{lmcut}$
+        \item hc: DFS with conflict learning, heuristic is reused in every search
+        \item hcnr: DFS with conflict learning, heuristic is \textbf{not} reused in every search.
+        \item CEGAR ?
+    \end{itemize}
+
+    \subsubsection*{Cost Bound 0.25}
+    \begin{center}
+        \begin{tabular}{l|r|r|r|r}
+            Finished PPD1 & hc & hcnr & hmax & lmcut \\\hline
+            airport (19) & 16 & 16 & \textbf{18} & 16\\\hline
+            blocks (18) & 18 & 18 & 18 & 18 \\\hline
+            depot (6) & 6 & 6 & 6 & 6 \\\hline
+            driverlog (11) & 11 & 11 & 11 & 11 \\\hline
+            freecell (55) & \textbf{48} & \textbf{48} & 32 & 24 \\\hline
+            gripper (8) & 5 & 5 & 5 & 5 \\\hline
+            miconic (69) & \textbf{64} & \textbf{64} & 54 & 49 \\\hline
+            PSR (49) & \textbf{49} & 48 & 48 & 48 \\\hline
+            rovers (7) & \textbf{7} & \textbf{7} & \textbf{7} & 6 \\\hline
+            satellite (6) & 6 & 6 & 6 & 6 \\\hline
+            tpp (10) & \textbf{10} & \textbf{10} & 7 & 6 \\\hline
+            zenotravel (11) & \textbf{11} & \textbf{11} & \textbf{11} & 9 \\\hline\hline
+            sum (269) & \textbf{251} & 250 & 223 & 204 \\\hline
+        \end{tabular}
+
+        \scriptsize
+        \input{data/IPC/0.25/scatterplot-search_time_C-Cnr.tex}\\
+        \input{data/IPC/0.25/scatterplot-search_time_C-lmcut.tex}\\
+        \input{data/IPC/0.25/scatterplot-search_time_C-max.tex}\\
+        \input{data/IPC/0.25/scatterplot-expansions_C-Cnr.tex}\\
+        \input{data/IPC/0.25/scatterplot-expansions_C-lmcut.tex}\\
+        \input{data/IPC/0.25/scatterplot-expansions_C-max.tex}
+    \end{center}
+   
+
+    \subsubsection*{Cost Bound 0.5}
+
+    \begin{center}
+
+        \begin{tabular}{l|r|r|r|r}
+            Finished PPD1 & hc & hcnr & hmax & lmcut \\\hline
+            airport (19) & 12 & 12 & \textbf{16} & 15\\\hline
+            blocks (18) & 18 & 18 & 18 & 18 \\\hline
+            depot (6) & \textbf{6} & \textbf{6} & 5 & 4 \\\hline
+            driverlog (11) & \textbf{11} & \textbf{11} & 9 & 8 \\\hline
+            freecell (55) & 6 & 7 & \textbf{15} & 14 \\\hline
+            gripper (8) & 3 & \textbf{4} & \textbf{4} & \textbf{4} \\\hline
+            miconic (69) & 39 & \textbf{48} & 43 & 39 \\\hline
+            PSR (49) & \textbf{49} & 48 & 48 & 47 \\\hline
+            rovers (7) & 6 & 6 & 6 & 6 \\\hline
+            satellite (6) & \textbf{6} & \textbf{6} & \textbf{6} & 4 \\\hline
+            tpp (10) & \textbf{6} & \textbf{6} & 5 & 5 \\\hline
+            zenotravel (11) & 8 & \textbf{9} & 7 & 7 \\\hline\hline
+            sum (269) & 170 & 181 & \textbf{182} & 171 \\
+        \end{tabular}
+
+        \scriptsize
+        \input{data/IPC/0.5/scatterplot-search_time_C-Cnr.tex}\\
+        \input{data/IPC/0.5/scatterplot-search_time_C-lmcut.tex}\\
+        \input{data/IPC/0.5/scatterplot-search_time_C-max.tex}\\
+        \input{data/IPC/0.5/scatterplot-expansions_C-Cnr.tex}\\
+        \input{data/IPC/0.5/scatterplot-expansions_C-lmcut.tex}\\
+        \input{data/IPC/0.5/scatterplot-expansions_C-max.tex}
+    \end{center}
+
+
+    \subsubsection*{Cost Bound 0.75}
+
+    \begin{center}
+
+        \begin{tabular}{l|r|r|r|r}
+            Finished PPD1 & hc & hcnr & hmax & lmcut \\\hline
+            airport (19) & 8 & 8 & \textbf{16} & 15\\\hline
+            blocks (18) & \textbf{18} & \textbf{18} & 15 & 15 \\\hline
+            depot (6) & 3 & 3 & \textbf{4} & 2 \\\hline
+            driverlog (11) & \textbf{9} & \textbf{9} & 6 & 3 \\\hline
+            freecell (55) & 0 & 0 & \textbf{13} & 7 \\\hline
+            gripper (8) & 3 & 3 & \textbf{4} & \textbf{4} \\\hline
+            miconic (69) & 35 & \textbf{39} & \textbf{39} & \textbf{39} \\\hline
+            PSR (49) & \textbf{47} & 45 & 46 & 46 \\\hline
+            rovers (7) & 4 & 5 & \textbf{6} & 4 \\\hline
+            satellite (6) & 4 & \textbf{5} & 4 & 4 \\\hline
+            tpp (10) & 4 & \textbf{5} & \textbf{5} & 4 \\\hline
+            zenotravel (11) & \textbf{8} & \textbf{8} & 7 & 6 \\\hline\hline
+            sum (269) & 143 & 148 & \textbf{165} & 149 \\
+        \end{tabular}
+
+        \scriptsize
+        \input{data/IPC/0.75/scatterplot-search_time_C-Cnr.tex}\\
+        \input{data/IPC/0.75/scatterplot-search_time_C-lmcut.tex}\\
+        \input{data/IPC/0.75/scatterplot-search_time_C-max.tex}\\
+        \input{data/IPC/0.75/scatterplot-expansions_C-Cnr.tex}\\
+        \input{data/IPC/0.75/scatterplot-expansions_C-lmcut.tex}\\
+        \input{data/IPC/0.75/scatterplot-expansions_C-max.tex}
+    \end{center}
+   

@@ -1,0 +1,50 @@
+\begin{tikzpicture}
+\begin{axis}[extra x tick style={grid=major}, extra x ticks=100000000, extra y tick style={grid=major}, extra y ticks=100000000, height=8.00cm, 
+legend cell align=left, legend style={at={(1.4, 1)}}, title=expansions, width=8.00cm, xlabel=hc, xmin=0.05, xmode=log, ylabel=lmcut, ymin=0.05, ymode=log]
+\addplot[color=red, mark=x, mark options={{draw=black}}, only marks] coordinates {
+(142, 444) (0.100000, 14) (0.100000, 18) (0.100000, 7) (0.100000, 16) (137, 421)
+};
+\addlegendentry{airport}
+\addplot[color=blue, mark=*, mark options={{draw=black}}, only marks] coordinates {
+(9, 173) (474, 4460545) (100, 3018) (439, 139356) (14, 89) (144, 14312) (442, 5854588) (106, 13778) (56, 8750) (651, 676067) (770, 5723779) (3, 135) (70, 1350) (54, 1191) (499, 470462)
+};
+\addlegendentry{blocks}
+\addplot[color=cyan, mark=square, mark options={{draw=black}}, only marks] coordinates {
+(186, 30045) (26, 362)
+};
+\addlegendentry{depot}
+\addplot[color=cyan, mark=*, mark options={{draw=black}}, only marks] coordinates {
+(306, 60344) (1805, 1028572) (2, 635)
+};
+\addlegendentry{driverlog}
+\addplot[color=magenta, mark=*, mark options={{draw=black}}, only marks] coordinates {
+(103, 958) (419, 11586) (2708, 448198)
+};
+\addlegendentry{gripper}
+\addplot[color=blue, mark=triangle, mark options={{draw=black}}, only marks] coordinates {
+(2121, 1903853) (372, 22499) (48, 361) (13, 26) (52, 424) (391, 19586) (1940, 1650838) (12, 27) (730, 174147) (1651, 1697048) (51, 400) (2333, 1690274) (47, 327) (901, 151003) (359, 21853) (10, 31) (188, 3492) (46, 336) (371, 23396) (981, 263639) (207, 3488) (296, 19955) (0.100000, 4) (164, 3060) (867, 234915) (136, 2947) (937, 219412) (164, 3501) (2060, 1656771)
+};
+\addlegendentry{miconic}
+\addplot[color=red, mark=*, mark options={{draw=black}}, only marks] coordinates {
+(271, 2092) (27, 215) (861, 34633) (64, 557) (27, 83) (40, 5446) (80, 9432) (564, 6833) (73, 27640) (73, 61548) (6652, 618078) (259, 1944) (106, 260) (4401, 120468) (4, 304) (24, 89) (10, 14) (19, 28) (52, 1008) (623, 9112) (28, 73) (57, 123268) (95, 2286) (891, 12005) (552, 4917) (22, 457) (134, 967) (69, 392) (133, 387) (68, 649) (60, 241899) (335, 11892) (6, 188) (5143, 370920) (18, 36) (19, 184) (170, 1626) (175, 979) (66, 229) (941, 36799) (173, 650) (246, 3125) (2036, 305520)
+};
+\addlegendentry{psr-small}
+\addplot[color=green, mark=diamond, mark options={{draw=black}}, only marks] coordinates {
+(34, 1343) (43, 1106) (53, 2354) (26, 186)
+};
+\addlegendentry{rovers}
+\addplot[color=green, mark=*, mark options={{draw=black}}, only marks] coordinates {
+(214, 42892) (31, 142) (227, 8777) (1844, 4711577)
+};
+\addlegendentry{satellite}
+\addplot[color=yellow, mark=*, mark options={{draw=black}}, only marks] coordinates {
+(511, 69014) (136, 1779) (15, 31) (56, 338)
+};
+\addlegendentry{tpp}
+\addplot[color=black, mark=*, mark options={{draw=black}}, only marks] coordinates {
+(602, 1133103) (16, 9104) (4, 110) (123, 55014) (83, 11510) (173, 769022)
+};
+\addlegendentry{zenotravel}
+\addplot[color=black] coordinates {(0.050000, 0.050000) (12763448, 12763448)};
+\end{axis}
+\end{tikzpicture}

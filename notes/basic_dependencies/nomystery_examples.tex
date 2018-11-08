@@ -1,0 +1,262 @@
+\subsection*{Properties}
+
+\begin{itemize}
+	\item use only one truck to deliver all packages (1T, \emph{one\_truck})
+	\item use the same truck to deliver package x and y ($st(P_x, P_y)$, {same\_truck\_px\_py})
+		(both packages have been loaded into the same truck at some point in the plan, does not exclude loading a package also in the other truck)
+	\item both packages have been loaded into the same truck at some point in the plan, excludes loading a package also in the other truck
+		($sto(P_x, P_y)$, {same\_truck\_px\_py\_o1})
+\end{itemize}
+
+\subsection*{Example 1}
+
+	\begin{itemize}
+		\item 2 trucks, 5 locations, 3 packages
+		\item $fuel(T_0) = 3$
+		\item $fuel(T_1) = 1$
+	\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}
+	\node[draw, circle,
+			label=above:{\textcolor{mygreen}{$P_2$}},
+		] (l0) at (0,0) {$L_0$};
+	\node[draw, circle,
+			label=above:{\textcolor{mygreen}{$P_1$}},
+		] (l1) at (2,-2) {$L_1$};
+	\node[draw, circle,
+			label=below:{\textcolor{mygreen}{$P_0$}},
+		] (l2) at (4,-4) {$L_2$};
+	\node[draw, circle,
+			label=below:{\textcolor{red}{$P_1$}},
+			label=left:{$T_0$},
+		] (l3) at (0,-4) {$L_3$};
+	\node[draw, circle,
+			label=above:{\textcolor{red}{$P_0,P_2$}},
+			label=right:{$T_1$},
+		] (l4) at (4,0) {$L_4$};
+
+	\draw[thick] (l0) to (l4);
+	\draw[thick] (l0) to (l1);
+	\draw[thick] (l1) to (l2);
+	\draw[thick] (l1) to (l3);
+	\draw[thick] (l0) to (l3);
+	\draw[thick] (l2) to (l4);
+	\draw[thick] (l2) to (l3);
+\end{tikzpicture}
+\end{center}
+
+
+\begin{figure}[ht]
+\begin{center}
+	\includegraphics[scale=0.4]{data/graph_nomystery_p01.pdf}
+\end{center}
+\caption{plan-property dependency graph (PDG) example 01, $fuel(T_0) = 3$ and $fuel(T_1) = 1$}
+\end{figure}
+
+\subsubsection{Goal-Fact Dependencies}
+\begin{itemize}
+	\item $P_1,P_0,nd(T_1,L_0),nd(T_1,L_2)$
+	\item $P_1,P_0,st(P_0,P_2),nd(T_1,L_2)$
+	\item $P_1,P_0,st(P_0,P_1)$
+	\item $P_1,P_0,1T$
+	\item $P_2,P_0,nd(T_1,L_0),nd(T_1,L_2)$
+	\item $P_2,P_0,st(P_0,P_2)$
+	\item $P_2,P_0,1T$
+	\item $P_2,P_1,nd(T_1,L_0),nd(T_1,L_2)$
+	\item $P_2,P_1,st(P_0,P_2),nd(T_1,L_0)$
+	\item $P_2,P_1,st(P_1,P_2)$
+	\item $P_2,P_1,1T$
+\end{itemize}
+
+If you want to deliver at least 2 packages you have to use 2 trucks. 
+$T_1$ can either deliver $P_0$ or $P_2$. $T_1$ then loads the missing package again and delivers it.
+
+
+
+\subsection*{Example 2}
+
+	\begin{itemize}
+		\item 2 trucks, 8 locations, 4 packages
+		\item all ways cost 1 fuel
+		\item minimal fuel
+		\begin{itemize}
+			\item $fuel(T_0) = 4$
+			\item $fuel(T_1) = 3$
+		\end{itemize}
+	\end{itemize}
+
+\begin{figure}[ht]
+\begin{center}
+	\begin{tikzpicture}[scale=0.8]
+	\node[draw, circle,
+		] (l0) at (9,-2) {$L_0$};
+	\node[draw, circle,
+			label=above:{\textcolor{mygreen}{$P_1$}},
+		] (l1) at (4,2) {$L_1$};
+	\node[draw, circle,
+			label=above:{\textcolor{mygreen}{$P_2,P_3$}},
+		] (l2) at (9,2) {$L_2$};
+	\node[draw, circle,
+			label=below:{\textcolor{red}{$P_1$}},
+			label=above:{$T_0$},
+		] (l3) at (11,0) {$L_3$};
+	\node[draw, circle,
+			label=below:{\textcolor{mygreen}{$P_0$}},
+		] (l4) at (4,-2) {$L_4$};
+	\node[draw, circle,
+			label=above:{\textcolor{red}{$P_0$}},
+			label=right:{$T_1$},
+		] (l5) at (2,0) {$L_5$};
+	\node[draw, circle,
+			label=above:{\textcolor{red}{$P_2,P_3$}},
+		] (l6) at (0,-2) {$L_6$};
+	\node[draw, circle] (l7) at (6,0) {$L_7$};
+
+	\draw[thick] (l6) to (l4);
+	\draw[thick] (l5) to (l1);
+	\draw[thick] (l5) to (l4);
+	\draw[thick] (l1) to (l4);
+	\draw[thick] (l1) to (l7);
+	\draw[thick] (l4) to (l7);
+	\draw[thick] (l1) to (l2);
+	\draw[thick] (l4) to (l0);
+	\draw[thick] (l2) to (l0);
+	\draw[thick] (l2) to (l3);
+	\draw[thick] (l0) to (l3);
+\end{tikzpicture}
+\end{center}
+\caption{Map Nomystery (E02), red: initial location, green: goal} 
+\end{figure}
+
+%\subsubsection*{Plan-Property Dependency Graph}
+\begin{figure}[ht]
+\begin{center}
+	\includegraphics[scale=0.4]{data/graph_nomystery_p02.pdf}
+\end{center}
+\caption{plan-property dependency graph (PDG) example 02, $fuel(T_0) = 4$ and $fuel(T_1) = 3$ (minimal fuel to deliver all packages is 4 3)}
+\end{figure}
+
+\begin{figure}[ht]
+\begin{center}
+	\includegraphics[scale=0.4]{data/graph_nomystery_p02_f4-4.pdf}
+\end{center}
+\caption{plan-property dependency graph (PDG) example 02, $fuel(T_0) = 4$ and $fuel(T_1) = 4$ (minimal fuel to deliver all packages is 4 3)}
+\end{figure}
+
+\FloatBarrier
+\subsubsection*{Goal-Fact Dependencies}
+
+\begin{itemize}
+	\item $sto(P_0,P_2),sto(P_1,P_2)$
+	\item $sto(P_0,P_1),sto(P_1,P_2)$
+	\item $sto(P_0,P_1),sto(P_0,P_2)$
+	\item $1T,st(P_1,P_2),sto(P_0,P_2)$
+	\item $1T,st(P_1,P_2),sto(P_0,P_1)$
+	\item $1T,st(P_0,P_2),sto(P_1,P_2)$
+	\item $1T,st(P_0,P_2),sto(P_0,P_1)$
+	\item $1T,st(P_0,P_2),st(P_1,P_2)$
+	\item $1T,st(P_0,P_1),sto(P_1,P_2)$
+	\item $1T,st(P_0,P_1),sto(P_0,P_2)$
+	\item $1T,st(P_0,P_1),st(P_1,P_2)$
+	\item $1T,st(P_0,P_1),st(P_0,P_2)$
+	\item $P_0,1T,sto(P_1,P_2)$
+	\item $P_0,1T,st(P_1,P_2)$
+	\item $P_1,1T,sto(P_0,P_2)$
+	\item $P_1,1T,st(P_0,P_2)$
+	\item $P_2,sto(P_1,P_2)$
+	\item $P_2,sto(P_0,P_2)$
+	\item $P_2,sto(P_0,P_1)$
+	\item $P_2,1T$
+	\item $P_3,sto(P_0,P_1)$
+	\item $P_3,1T$
+	\item $P_3,P_1,sto(P_1,P_2)$
+\end{itemize}
+
+\newpage
+\subsection*{Example 3}
+
+	\begin{itemize}
+		\item 2 trucks, 8 locations, 5 packages
+		\item all ways cost 1 fuel
+		\item minimal fuel
+		\begin{itemize}
+			\item $fuel(T_0) = 5$
+			\item $fuel(T_1) = 3$
+		\end{itemize}
+	\end{itemize}
+
+\begin{figure}[ht]
+\begin{center}
+	\begin{tikzpicture}[scale=1]
+	\node[draw, circle,
+			label=45:{\textcolor{mygreen}{$P_4$}},
+			label=135:{\textcolor{red}{$P_0$}},
+		] (l0) at (0,0) {$L_0$};
+	\node[draw, circle,
+			label=above:{\textcolor{mygreen}{$P_2$}},
+			label=below:{\textcolor{red}{$P_3$}},
+		] (l1) at (2,-6) {$L_1$};
+	\node[draw, circle,
+			label=above:{\textcolor{mygreen}{$P_1$}},
+		] (l2) at (4,0) {$L_2$};
+	\node[draw, circle,
+			label=above:{$T_0$},
+		] (l3) at (-2,-2) {$L_3$};
+	\node[draw, circle,
+			label=right:{\textcolor{mygreen}{$P_0$}},
+		] (l4) at (4,-4) {$L_4$};
+	\node[draw, circle,
+			label=above:{\textcolor{red}{$P_1$}},
+			label=below:{$T_1$},
+		] (l5) at (6,0) {$L_5$};
+	\node[draw, circle,
+			label=below:{\textcolor{red}{$P_2$}},
+			label=left:{\textcolor{mygreen}{$P_3$}},
+		] (l6) at (0,-4) {$L_6$};
+	\node[draw, circle,
+			label=below:{\textcolor{red}{$P_4$}},
+		] (l7) at (2,-2) {$L_7$};
+
+	\draw[thick] (l3) to (l0);
+	\draw[thick] (l3) to (l6);
+	\draw[thick] (l0) to (l6);
+	\draw[thick] (l2) to (l2);
+	\draw[thick] (l6) to (l7);
+	\draw[thick] (l7) to (l2);
+	\draw[thick] (l2) to (l5);
+	\draw[thick] (l2) to (l4);
+	\draw[thick] (l6) to (l1);
+	\draw[thick] (l1) to (l4);
+	\draw[thick] (l4) to (l6);
+	\draw[thick] (l0) to (l2);
+	\draw[thick, bend left] (l0) to (l4);
+\end{tikzpicture}
+\end{center}
+\caption{Map Nomystery (E03), red: initial location, green: goal} 
+\end{figure}
+
+%\FloatBarrier
+%\subsubsection*{Plan-Property Dependency Graph}
+\begin{figure}[ht]
+\begin{center}
+	\includegraphics[scale=0.35]{data/graph_nomystery_p03.pdf}
+\end{center}
+\caption{plan-property dependency graph (PDG) example 03, $fuel(T_0) = 5$ and $fuel(T_1) = 3$ (minimal fuel to deliver all packages), computation time 1800 sec}
+\end{figure}
+
+\begin{figure}[ht]
+\begin{center}
+	\includegraphics[scale=0.3]{data/graph_nomystery_p03_r.pdf}
+\end{center}
+\caption{plan-property dependency graph (PDG) example 03, $fuel(T_0) = 5$ and $fuel(T_1) = 4$, computation time = 4800 sec}
+\end{figure}
+
+\FloatBarrier
+\subsubsection*{Goal-Fact Dependencies}
+
+\begin{itemize}
+	\item TODO
+\end{itemize}
+
+

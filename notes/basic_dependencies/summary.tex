@@ -1,0 +1,72 @@
+\documentclass[12pt]{article}
+
+\input{packeges.tex}
+\input{commands.tex}
+
+
+\begin{document}
+
+\section{Nomystery}
+
+\input{nomystery_examples.tex}
+
+\newpage
+\section{Rovers}
+
+\input{rovers_examples.tex}
+
+
+\newpage
+\section{TPP}
+
+\input{tpp_examples.tex}
+
+\newpage
+\begin{landscape}
+\scriptsize
+	\begin{tabular}{l|l|r|r||rr|rr|rr|rr}
+		\multicolumn{4}{c||}{}  & \multicolumn{8}{c}{GFD} \\\hline
+		domain & size & goals & prop & 
+			\multicolumn{2}{r|}{blind} & \multicolumn{2}{r|}{$h_{max}$} & \multicolumn{2}{r|}{$h_{lmcut}$} & \multicolumn{2}{r|}{$h_C$} \\\hline
+			 &	&		&	& t & exp & t & exp & t & exp & t & exp \\\hline	
+			Nomystery 01 & 5 L, 3 P & 3 & 6 & 69.7 sec & 17,477,070 & 4.2 sec & 145,608 & 6.4 sec & 120.584 & 333 sec & 20619 \\\hline
+			Rovers 01 & 4 WP, 2 0b & 5 &  8 & ? & ? & \\\hline
+			TPP 01 & 5 L, 3 G & 3 &  6 & 30 sec & 9,464,061 & 15 sec & 813,173 & 27 sec & 631,763 & \\\hline
+			TPP 02 & 5 L, 3 G & 3 &  6 & ? & ? & 9 sec & 217,847 &\\\hline
+			TPP 03 & 8 L, 5 G & 5 &  10 & > 2.75 h & ? & & &\\\hline
+	\end{tabular}
+	
+	\vspace{1cm}	
+
+	\begin{tabular}{l|l|r|r|r|r||rr|rr|rr|rr}
+		\multicolumn{6}{c||}{} & \multicolumn{8}{c}{PDG} \\\hline
+		domain & size & goals & prop & b-prop &  RF & 
+			\multicolumn{2}{r|}{blind} & \multicolumn{2}{r|}{$h_{max}$} & \multicolumn{2}{r|}{$h_{lmcut}$} & \multicolumn{2}{r|}{$h_C$} \\\hline
+			 &	&		&				&			&			& t & exp & t & exp & t & exp & t & exp \\\hline	
+			Nomystery 01 & 5 L, 3 P & 3 & 6 & 30 & 0.33 & 5.5 sec &  363,142 & 5.3 sec & 33,778 & 5.9 sec & 21,999 & 6.7 sec & 5,621  \\\hline
+			Nomystery 02 & 8 L, 4 P & 4 & 7 & 42 & 0.33 & 138 sec & 22,731,493 & 110 sec & 2,155,940 & 150 sec & 1,046,106\\\hline
+			Rovers 01 & 4 WP, 2 0b & 5 &  8 & 56 & 0.77 & 78 sec & 11,242,246 & 38 sec & 930,088 & 44 sec & 211,286  \\\hline
+			TPP 01 & 5 L, 3 G & 3 &  6 & 30 & 0.6 & 9.5 sec & 415,092 & 8.1 sec & 82,523 & 8.3 sec & 37,531 & 35 sec & 10,479\\\hline
+			TPP 02 & 5 L, 3 G & 3 &  6 & 30 & 0.47 & ? & ? & 15.5 sec & 50598 &\\\hline
+			TPP 03 & 8 L, 5 G & 5 &  10 & 90 & 0.28 & ? & ? & 140 sec & 2,109,537 &\\\hline
+			TPP 03 uc & 8 L, 5 G & 5 &  10 & 90 & & ? & ? & & &\\\hline
+	\end{tabular}
+\end{landscape}
+
+\newpage
+\section{Property Files}
+
+\subsection*{Nomystery}
+\lstinputlisting[language=actionsets, caption={Properties Nomystery E2}]{data/property_nomystery_p02.pddl}
+\lstinputlisting[language=actionsets, caption={Properties Nomystery E3}]{data/property_nomystery_p03.pddl}
+
+\subsection*{Rovers}
+\lstinputlisting[language=actionsets, caption={Properties Rovers E2}]{data/property_rovers_p03.pddl}
+
+\FloatBarrier
+\subsubsection*{TPP}
+\lstinputlisting[language=actionsets, caption={Properties TPP E1}]{data/property_tpp_p02.pddl}
+\lstinputlisting[language=actionsets, caption={Properties TPP E2}]{data/property_tpp_p04.pddl}
+
+
+\end{document}

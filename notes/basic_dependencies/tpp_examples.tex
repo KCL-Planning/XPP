@@ -1,0 +1,226 @@
+\subsection*{Properties}
+
+\begin{itemize}
+	\item buy goods x in market y ($b(G_x, M_y)$)
+	\item load goods x in market y ($l(G_x, M_y)$)
+	\item buy goods x before monylevel is below y ($bb(G_x, ML_y)$)
+	\item if you buy goods a in market b then buy goods c in market d ($bd(G_a, M_b, G_c, M_d)$)
+	\item buy goods x and goods y in the same market ($sm(G_x, G_y)$)
+\end{itemize}
+
+
+\subsection*{Example 1}
+
+\begin{itemize}
+	\item moneylevel: 7
+	\item all connections and goods cost 1
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}
+	\node[draw, circle,
+			label=right:{$G_0, G_1$},
+		] (m1) at (3,2) {$M_1$};
+	\node[draw, circle,
+			label=45:{$G_2$},
+		] (m2) at (6,0) {$M_2$};
+	\node[draw, circle,
+			label=below:{$G_1, G_2$},
+		] (m3) at (3,-2) {$M_3$};
+	\node[draw, circle,
+			label=left:{$G_0$},
+		] (m4) at (0,-2) {$M_4$};
+	\node[draw, circle,
+		] (m5) at (0,0) {$M_5$};
+	\node[draw, circle,
+			label=right:{$T$},
+		] (d) at (6,-2) {$D$};
+
+	\draw[thick] (m3) to (m5);
+	\draw[thick] (m4) to (m5);
+	\draw[thick] (m1) to (m5);
+	\draw[thick] (m2) to (m5);
+	\draw[thick] (m1) to (m2);
+	\draw[thick] (m2) to (d);
+	\draw[thick] (m3) to (d);
+	\draw[thick] (m4) to (m5);
+	\draw[thick] (m3) to (m4);
+	\draw[thick] (m2) to (m3);
+\end{tikzpicture}
+\end{center}
+
+\subsubsection*{Plan-Property Dependency Graph}
+
+\begin{figure}[ht]
+\begin{center}
+	\includegraphics[scale=0.4]{data/graph_tpp_p01.pdf}
+\end{center}
+\caption{plan-property dependency graph (PDG) example 01}
+\end{figure}
+
+\FloatBarrier
+\subsubsection*{Goal-Fact Dependencies}
+\begin{itemize}
+	\item $l(G_2,M_2),l(G_2,M_3)$
+	\item $l(G_1,M_1),l(G_1,M_3)$
+	\item $l(G_0,M_1),l(G_0,M_4)$
+	\item $s(G_0),l(G_1,M_3),l(G_2,M_2)$
+	\item $s(G_0),l(G_1,M_1),l(G_2,M_3)$
+	\item $s(G_0),l(G_0,M_4),l(G_1,M_1)$
+	\item $s(G_0),l(G_0,M_1),l(G_1,M_3),l(G_2,M_3)$
+	\item $s(G_1),l(G_0,M_4),l(G_2,M_2)$
+	\item $s(G_1),l(G_0,M_4),l(G_1,M_1)$
+	\item $s(G_1),l(G_0,M_1),l(G_1,M_1),l(G_2,M_3)$
+	\item $s(G_1),s(G_0),l(G_0,M_1),l(G_2,M_3)$
+	\item $s(G_2),l(G_0,M_4),l(G_1,M_1)$
+	\item $s(G_2),l(G_0,M_1),l(G_1,M_3),l(G_2,M_2)$
+	\item $s(G_2),s(G_0),l(G_0,M_1),l(G_1,M_3)$
+\end{itemize}
+
+\subsection*{Example 2}
+
+\begin{itemize}
+	\item moneylevel: 10
+	\item all connections cost 1
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}
+	\node[draw, circle,
+		] (m1) at (0,2) {$M_1$};
+	\node[draw, circle,
+			label=45:{$(G_1,2)$},
+		] (m2) at (4,2) {$M_2$};
+	\node[draw, circle,
+			label=below:{$(G_1,2), (G_2,1)$},
+		] (m3) at (7,0) {$M_3$};
+	\node[draw, circle,
+			label=right:{$(G_0,3), (G_2,4)$},
+		] (m4) at (4,-2) {$M_4$};
+	\node[draw, circle,
+			label=45:{$(G_0,1)$},
+		] (m5) at (0,-2) {$M_5$};
+	\node[draw, circle,
+			label=45:{$T$},
+		] (d) at (5,0) {$D$};
+
+	\draw[thick] (m1) to (m2);
+	\draw[thick] (m2) to (d);
+	\draw[thick] (m2) to (m4);
+	\draw[thick] (m3) to (d);
+	\draw[thick] (m4) to (m5);
+	\draw[thick] (m4) to (d);
+
+\end{tikzpicture}
+\end{center}
+
+\begin{figure}[ht]
+\begin{center}
+	\includegraphics[scale=0.6]{data/graph_tpp_p02.pdf}
+\end{center}
+\caption{plan-property dependency graph (PDG) example 02}
+\end{figure}
+
+\subsubsection*{Goal-Fact Dependencies}
+\begin{itemize}
+	\item $l(G_2,M_3),l(G_2,M_4)$
+	\item $l(G_1,M_1),l(G_1,M_3)$
+	\item $l(G_0,M_5),l(G_1,M_3),l(G_2,M_4)$
+	\item $l(G_0,M_5),l(G_1,M_1),l(G_2,M_4)$
+	\item $l(G_0,M_5),l(G_1,M_1),l(G_2,M_3)$
+	\item $l(G_0,M_4),l(G_1,M_3),l(G_2,M_4)$
+	\item $l(G_0,M_4),l(G_1,M_1),l(G_2,M_4)$
+	\item $l(G_0,M_4),l(G_1,M_1),l(G_2,M_3)$
+	\item $l(G_0,M_4),l(G_0,M_5)$
+	\item $s(G_0),l(G_1,M_3),l(G_2,M_4)$
+	\item $s(G_0),l(G_1,M_1),l(G_2,M_4)$
+	\item $s(G_0),l(G_1,M_1),l(G_2,M_3)$
+	\item $s(G_1),l(G_0,M_5),l(G_2,M_4)$
+	\item $s(G_1),l(G_0,M_4),l(G_2,M_4)$
+	\item $s(G_1),s(G_0),l(G_2,M_4)$
+	\item $s(G_2),l(G_0,M_5),l(G_1,M_1)$
+	\item $s(G_2),l(G_0,M_4),l(G_1,M_1)$
+	\item $s(G_2),s(G_0),l(G_1,M_1)$
+\end{itemize}
+
+
+\subsection*{Example 3}
+
+\begin{itemize}
+	\item moneylevel: 11
+	\item all connections cost 1
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}
+	\node[draw, circle,
+			label=right:{$(G_3,4)$},
+		] (m1) at (-3,1) {$M_1$};
+	\node[draw, circle,
+			label=right:{$(G_2,3), (G_4, 1)$},
+		] (m2) at (0,4) {$M_2$};
+	\node[draw, circle,
+			label=left:{$(G_0,3)$},
+		] (m3) at (-6,0) {$M_3$};
+	\node[draw, circle,
+			label=left:{$(G_1,3)$},
+		] (m4) at (-3,-3) {$M_4$};
+	\node[draw, circle,
+		] (m5) at (3,-1) {$M_5$};
+	\node[draw, circle, align=center,
+			label={[align=center]below:{$(G_0,1)$\\ $(G_1,1)$}},
+		] (m6) at (0,0) {$M_6$};
+	\node[draw, circle, align=center,
+			label={[align=center]below:{\scriptsize $(G_2,1)$ $(G_3,2)$\\ \scriptsize$(G_4,3)$}},
+		] (m7) at (-3,-0.5) {$M_7$};
+	\node[draw, circle,
+		] (m8) at (3,1) {$M_8$};
+	\node[draw, circle,
+			label=above:{$T$},
+		] (d) at (6,0) {$D$};
+
+	\draw[thick] (m1) to (m3);
+	\draw[thick] (m1) to (m6);
+	\draw[thick] (m2) to (m3);
+	\draw[thick] (m2) to (m6);
+	\draw[thick] (m2) to (d);
+	\draw[thick] (m3) to (m4);
+	\draw[thick] (m3) to (m7);
+	\draw[thick] (m4) to (m6);
+	\draw[thick] (m5) to (m6);
+	\draw[thick] (m5) to (d);
+	\draw[thick] (m6) to (d);
+	\draw[thick] (m6) to (m7);
+	\draw[thick] (m6) to (m8);
+	\draw[thick] (m8) to (d);
+\end{tikzpicture}
+\end{center}
+
+
+\begin{figure}[ht]
+\begin{center}
+	\includegraphics[scale=0.5]{data/graph_tpp_p03.pdf}
+\end{center}
+\caption{plan-property dependency graph (PDG) example 03}
+\end{figure}
+
+
+\FloatBarrier
+\subsubsection*{Goal-Fact Dependencies}
+\begin{itemize}
+	\item TODO
+\end{itemize}
+
+\newpage
+\FloatBarrier
+\subsubsection*{Unit Cost Goods}
+
+\begin{figure}[ht]
+\begin{center}
+	%\includegraphics[scale=0.5]{data/graph_tpp_p03.pdf}
+\end{center}
+\caption{plan-property dependency graph (PDG) example 03}
+\end{figure}
+
+
+

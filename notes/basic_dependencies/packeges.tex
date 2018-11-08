@@ -1,0 +1,65 @@
+\usepackage[german, english]{babel}
+\usepackage[left=3cm,right=2.5cm, top=1cm, bottom=1.5cm,includeheadfoot]{geometry}
+\usepackage{fleqn}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage[hidelinks]{hyperref}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{placeins}
+\usepackage{dsfont}
+\usepackage{booktabs}
+\usepackage{rotating}
+\usepackage{lscape}
+
+%tikz
+\usepackage{tikz}
+\usepackage{pgf-umlsd}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usetikzlibrary{arrows,automata,shadows, shapes, positioning}
+
+\usepackage[textsize=tiny, colorinlistoftodos]{todonotes}
+\newcommand{\note}[1]{\todo[color=blue!40, inline]{#1}}
+\newcommand{\insertref}[1]{\todo[color=green!40, inline]{#1}}
+\newcommand{\explainindetail}[1]{\todo[color=orange!40, inline]{#1}}
+\newcommand{\missing}[1]{\todo[color=red!40, inline]{#1}}
+\newcommand{\reformulate}{\todo[color=yellow!40, inline]{refomulate}}
+\newcommand{\evaluation}[1]{\missingfigure[figheight=20cm]{#1}}
+\newcommand{\missingtext}[1]{\missingfigure[figcolor=red!30]{#1}}
+
+
+
+\usepackage{listings}
+\lstset{
+	language=C,
+	tabsize=3,
+	basicstyle=\footnotesize,        % the size of the fonts that are used for
+	breakatwhitespace=false,         % sets if automatic breaks should only
+	breaklines=true,                 % sets automatic line breaking
+	captionpos=b,                    % sets the caption-position to bottom
+	morekeywords={function, Global, variables, then},
+	commentstyle=\color{mygreen},
+	escapeinside={\%*}{*)},
+}
+
+\usepackage{algpseudocode}
+\usepackage{caption}
+\captionsetup{margin=10pt,font=small,labelfont=bf}
+
+\newenvironment{algorithm}[1]
+{
+	\begin{figure}[ht]
+	\captionsetup{format=plain, position=above, name=Algorithm}
+	\rule{\textwidth}{0.03cm}
+	\caption{#1}
+	\vspace*{-0.3cm}
+	\hrule
+	\vspace*{0.2cm}
+}
+{
+	\rule{\textwidth}{0.03cm}
+	\end{figure}
+}

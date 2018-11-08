@@ -1,0 +1,17 @@
+searchtime	n	shmax	slmcut	expansions	ehmax	elmcut
+p01-airport1-p1.pddl	1	0.01	0.01	p01-airport1-p1.pddl	5	5
+p02-airport1-p1.pddl	2	0.01	0.01	p02-airport1-p1.pddl	5	5
+p03-airport1-p2.pddl	3	0.01	0.01	p03-airport1-p2.pddl	105	105
+p04-airport2-p1.pddl	4	0.01	0.01	p04-airport2-p1.pddl	11	11
+p05-airport2-p1.pddl	5	0.01	0.01	p05-airport2-p1.pddl	13	13
+p06-airport2-p2.pddl	6	0.0362	0.1721	p06-airport2-p2.pddl	807	807
+p07-airport2-p2.pddl	7	0.0347	0.1652	p07-airport2-p2.pddl	747	747
+p08-airport2-p3.pddl	8	1.5284	10.4396	p08-airport2-p3.pddl	22374	22059
+p09-airport2-p4.pddl	9	30.3263	169.182	p09-airport2-p4.pddl	337294	329790
+p10-airport3-p1.pddl	10	0.01	0.01	p10-airport3-p1.pddl	10	10
+p11-airport3-p1.pddl	11	0.01	0.01	p11-airport3-p1.pddl	13	13
+p12-airport3-p2.pddl	12	0.0304	0.1395	p12-airport3-p2.pddl	474	474
+p13-airport3-p2.pddl	13	0.035	0.1552	p13-airport3-p2.pddl	622	622
+p14-airport3-p3.pddl	14	1.8048	12.1188	p14-airport3-p3.pddl	23581	23421
+p15-airport3-p3.pddl	15	1.7353	10.8623	p15-airport3-p3.pddl	20981	20677
+p16-airport3-p4.pddl	16	154.139	nan	p16-airport3-p4.pddl	1222697	nan
