@@ -1,3 +1,90 @@
 \section{Goal-Fact Dependencies}
 
 \rebecca{ 1-1.5 page(s) Rebecca}
+
+\subsection{???}
+
+\rebecca{start with a concrete example, in the truck domain}
+
+\emph{If goal subset A is true at the end of the plan, then at least one element of goal subset B
+must be false at the end of the plan.}
+
+\rebecca{if we are looking fore the minimal sets $A \cup B$ than B always contains 
+only one element}
+
+\begin{definition}[Goal-Fact Dependency 1 (GFD1)]
+Given a planning task $\Pi = (V,A,c,I,G)$ $(A,B)$ with $A, B \subseteq G$ is a 
+GFD1 if $\Pi$ with the goal $A \cup B$, i.e., $\bigwedge_{p \in A \cup B} p$
+is unsolvable.
+The subsumption relation is given by $\forall A,B,A',B': (A,B) \leq (A',B')$ iff $A \cup B \subseteq 
+A' \cup B'$
+\end{definition}
+
+\paragraph{Algorithm}
+All minimal GFD1s can be computed through a search tree that starts at node $N_0$ containing
+all goal facts $G$ and where each search step on a node $N_i$ tests solvability of 
+$\Pi_i = (V,A,c,I,N_i)$. If $\Pi_i$ is not solvable, we generate one child 
+node $N'$ for every subset of $N_i$ obtained by removing one fact.  
+Upon termination all nodes with only solvable children are the \emph{minimal unsolvable 
+goal subsets (MUGS)}. (A,B) is a minimal GFD1 iff $A \cup B \in \text{MUGS}$, 
+$A \cap B = \emptyset$ and $|B| = 1$
+
+\rebecca{A is always solvable}
+
+\rebecca{add example, for fuel level 5}
+
+\subsection{???}
+
+\textit{If goal subset A is true at the end of the plan, 
+then ALL elements of goal subset B must be false at the end of the plan.}\\
+
+\begin{definition}[Goal-Fact Dependency 2 (GFD2)]
+	Given a planning task $\Pi = (V,A,c,I,G)$ the tuples
+	$(A,B)$ with $A,B \subseteq G $ is a GFD2 if 
+	$\Pi$ with the goal $\bigwedge_{p \in A} p \wedge (\bigvee_{q \in B} q)$
+	is unsolvable. 
+	The subsumption relation is given by $\forall A,B,A',B': (A,B) \leq (A',B')$ iff $A \subseteq A'$
+	and $B \supseteq B'$.
+\end{definition}	
+
+	\noindent
+	Given all minimal GFD1s for $\Pi$ all minimal GFD2s can be derived according 
+	to the following relation.
+
+	\rebecca{proof}
+
+	\vspace{-0.3cm}
+	\begin{align*}
+		GFD2 &:= \{(A,B) | 
+				\exists P \in GFD1:(
+				   A \subseteq P \wedge |P \setminus A | = 1 \wedge\\
+				   &\forall P' \in PPD1:
+					  A \subseteq P' \rightarrow P' \setminus A \subseteq B
+				)
+			 \}
+	\end{align*}
+
+\paragraph{Algorithm}
+From the minimal GFD1s we get a set:
+	$D = \{(A,B) | \exists P \in GFD1s, p \in P: A = P \setminus p \wedge
+	B = \{p\}\}$
+
+These GFD2s are not necessary optimal, the B could be larger.
+
+\rebecca{find a name for A and B}
+
+\noindent
+To get the maximal set of goals which can not be achieved if we achieve A, 
+you have to merge all B's which belong to an A' which is a subset of A. 
+
+\begin{align*}
+	(A, \bigcup_{(A', B') \in \{(A'', B'') \in D | A' \subseteq A\}} B' \cup B)
+\end{align*}
+
+\rebecca{to many ticks}
+
+\rebecca{add example, from GFD1 to GFD2}
+
+\noindent
+If the planning task is not solvable for a goal fact at all, you can add 
+this goal fact to all B's.\\

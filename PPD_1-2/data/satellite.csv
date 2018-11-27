@@ -1,7 +1,0 @@
-search_time	n	shmax	slmcut	expansions	ehmax	elmcut
-p01-pfile1.pddl	1	0.01	0.01	p01-pfile1.pddl	106	106
-p02-pfile2.pddl	2	0.0263	0.0374	p02-pfile2.pddl	1815	1775
-p03-pfile3.pddl	3	0.1319	0.2926	p03-pfile3.pddl	17624	17624
-p04-pfile4.pddl	4	7.6666	23.064	p04-pfile4.pddl	1023342	1007160
-p05-pfile5.pddl	5	258.843	nan	p05-pfile5.pddl	23964757	nan
-p06-pfile6.pddl	6	284.666	nan	p06-pfile6.pddl	27067605	nan

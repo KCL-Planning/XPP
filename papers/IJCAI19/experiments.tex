@@ -13,4 +13,186 @@
 \rebecca{ 1-1.5 page(s) Michael/Rebecca }
 
 
+\joerg{Ideally, we should actually do something with existing oversubscription 
+	planning benchmarks. Carmel and Mirkis generated ones in their work 
+	(http://iew3.technion.ac.il/~dcarmel/Papers/Sources/ecai14b.pdf), 
+	from IPC benchmarks, by restricting plan cost to 25\%, 50\%, 75\%, and 100\% 
+	of optimal plan cost for all goals. Emulate this, for unit action costs, 
+	in a way that makes our current technology applicable.}
+
+\joerg{	
+	Question: what about the nogood learning here? does the search just prune 
+	against the g function? or do we represent a discrete g function through a 
+	discrete state variable treating it like a resource?}
+
+\setlength{\tabcolsep}{1pt}
+\begin{figure}[ht]
+	\centering
+	\scriptsize
+	\begin{tabular}{l|rr|rr|rr}
+			& \multicolumn{2}{c}{0.25} & \multicolumn{2}{|c}{0.5} & \multicolumn{2}{|c}{0.75}\\
+			& C & max & C & max & C & max \\\hline
+		Agricola \numtasks{9} & 1 & \textbf{4} & 1 & 1 &\textbf{1} & 0 \\
+		Airport \numtasks{19} & 16 & \textbf{18} & 12 & \textbf{16} & 8 & \textbf{16}\\
+		Blocks \numtasks{18} & 18 & 18 &18 & 18& \textbf{18} & 15\\
+		Data-Networks \numtasks{8} & 0 & \textbf{4} & 0 & \textbf{4} & 0 & \textbf{4}\\
+		Depot \numtasks{6} & 6 & 6 & \textbf{6} & 5 & 3 & \textbf{4} \\
+		Driverlog \numtasks{11} & 11 & 11 & 10 & 10 & \textbf{8} & 6 \\
+		Freecell \numtasks{55} & \textbf{48} & 32 & 6 & \textbf{14} & 0 & \textbf{10}\\
+		Gripper \numtasks{8} & 5 & 5 & 3 & \textbf{4} & 3 & \textbf{4} \\
+		Hiking \numtasks{13} & 13 & 13 & 10 & \textbf{11} & 2 & \textbf{11}\\
+		Miconic \numtasks{69} & \textbf{63} & 54 & 39 & \textbf{44} &35 & \textbf{39} \\
+		Openstacks \numtasks{49} & 7 & \textbf{24} & 5 & \textbf{22} & 5 & \textbf{20}\\
+		PSR \numtasks{49} & 49 & 48 & \textbf{49} & 48 & \textbf{47} & 46\\
+		Rovers \numtasks{7} & 7 & 7 & 6 & 6 & 4 & \textbf{6} \\
+		Satellite \numtasks{6} & 6 & 6 &  6 & 6 & 4 & 4 \\
+		Snake \numtasks{10} & 0 & \textbf{3} & 1 & \textbf{6} & 2 & \textbf{6} \\
+		Termes \numtasks{7} & 0 & \textbf{1} & 0 & \textbf{2} & 0 & \textbf{2} \\
+		Tetris \numtasks{9} & \textbf{7} & 2 & \textbf{3} & 2 & 2 & \textbf{3}\\
+		TPP \numtasks{10} & \textbf{10} & 7 & 5 & 5 & 4 & \textbf{5} \\
+		Transport \numtasks{24} & 24 & 24 & \textbf{24} & 23 & 22 & 22\\
+		Zenotravel \numtasks{11} & 11 & 11 & \textbf{8} & 7 & 7 & 7\\\hline
+		sum \numtasks{436} & \textbf{330} & 326 & 230 & \textbf{273} & 184 & \textbf{235}\\
+	\end{tabular}
+	\caption{Coverage: computation of \emph{Goal-Fact Dependencies 1} of the IPC 
+		domains with bound $ = x \cdot $ optimal cost with $ x \in \{0.25, 0.5, 0.75\}$
+	of online learned dead-end detectors with bounded DFS (C) and $h^{max}$ with $A^*$. 
+	time-out 10 min}
+\end{figure}
+
+
+\begin{figure}[ht]
+	\begin{minipage}{0.2\textwidth}
+		\input{data/IPC_cost_bound/scatterplot-expansions_C-max_IPC_GFD_0.25.tex}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.2\textwidth}
+		\input{data/IPC_cost_bound/scatterplot-search_time_C-max_IPC_GFD_0.25.tex}
+	\end{minipage}
+
+
+	\begin{minipage}{0.2\textwidth}
+		\input{data/IPC_cost_bound/scatterplot-expansions_C-max_IPC_GFD_0.5.tex}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.2\textwidth}
+		\input{data/IPC_cost_bound/scatterplot-search_time_C-max_IPC_GFD_0.5.tex}
+	\end{minipage}
+
+
+	\begin{minipage}{0.2\textwidth}
+		\input{data/IPC_cost_bound/scatterplot-expansions_C-max_IPC_GFD_0.75.tex}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.2\textwidth}
+		\input{data/IPC_cost_bound/scatterplot-search_time_C-max_IPC_GFD_0.75.tex}
+	\end{minipage}
+	\caption{Comparison of expansions and search time per task of $h^{max}$ and $h^C$ for bounded IPC domains}
+\end{figure}
+
+\rebecca{has the number of mugs (minimal unsolvable goals subsets) an influence on 
+which heuristic is better?}
+
+
+\setlength{\tabcolsep}{1pt}
+\begin{figure}[ht]
+	\centering
+	\scriptsize
+	\begin{tabular}{l|rr|rr|rr|rr}
+			& \multicolumn{2}{c}{0.25} & \multicolumn{2}{|c}{0.5} & \multicolumn{2}{|c}{0.75}& \multicolumn{2}{|c}{1.0}\\
+		& C & max & C & max & C & max & C & hmax\\\hline
+		NoMystery 6L 4P & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10\\
+		NoMystery 6L 5P & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10\\
+		NoMystery 6L 6P & 10 & 10 & 10 & 10 & 10 & 10 & 9 & 10\\
+		NoMystery 8L 4P & 10 & 10 & 10 & 10 & 10 & 10 & 5 & 10\\
+		NoMystery 8L 5P & 10 & 10 & 10 & 10 & 8 & 10 & 3 & 7\\
+		NoMystery 8L 6P & 10 & 10 & 10 & 10 & 8 & 10 & 10 & 10\\
+		TPP 6M 4G & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10\\
+		TPP 6M 5G & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10\\
+		TPP 6M 6G & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10\\
+		TPP 6M 7G & 10 & 10 & 10 & 10 & 1 & 8 & 2 & 10\\
+		TPP 8M 4G & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10\\
+		TPP 8M 5G & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10\\
+		TPP 8M 6G & 10 & 10 & 10 & 10 & 6 & 10 & 9 & 10\\
+		TPP 10M 4G & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10\\
+		TPP 10M 5G & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10\\
+		TPP 10M 6G & 10 & 10 & 10 & 10 & 9 & 10 & 8 & 10\\\hline
+		sum \numtasks{160} & 160 & 160 & 160 & 160 & 138 & 158 & 136 & 157\\
+	\end{tabular}
+	\caption{Coverage: computation of \emph{Goal-Fact Dependencies 1} of the RPC 
+		domains with bound $ = x \cdot $ optimal cost with $ x \in \{0.25, 0.5, 0.75\}$
+	of online learned dead-end detectors with bounded DFS (C) and $h^{max}$ with $A^*$. 
+	time-out 10 min}
+\end{figure}
+
+\begin{figure}[ht]
+	\begin{minipage}{0.2\textwidth}
+		\input{data/RCP/scatterplot-expansions_C-max_IPC_GFD_0.25.tex}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.2\textwidth}
+		\input{data/RCP/scatterplot-search_time_C-max_IPC_GFD_0.25.tex}
+	\end{minipage}
+
+	\begin{minipage}{0.2\textwidth}
+		\input{data/RCP/scatterplot-expansions_C-max_IPC_GFD_0.5.tex}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.2\textwidth}
+		\input{data/RCP/scatterplot-search_time_C-max_IPC_GFD_0.5.tex}
+	\end{minipage}
+
+	\begin{minipage}{0.2\textwidth}
+		\input{data/RCP/scatterplot-expansions_C-max_IPC_GFD_0.75.tex}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.2\textwidth}
+		\input{data/RCP/scatterplot-search_time_C-max_IPC_GFD_0.75.tex}
+	\end{minipage}
+
+	\begin{minipage}{0.2\textwidth}
+		\input{data/RCP/scatterplot-expansions_C-max_IPC_GFD_1.0.tex}
+	\end{minipage}
+	\hfill
+	\begin{minipage}{0.2\textwidth}
+		\input{data/RCP/scatterplot-search_time_C-max_IPC_GFD_1.0.tex}
+	\end{minipage}
+	\caption{Comparison of expansions and search time per task (RCP domains) of $h^{max}$ and $h^C$ for bounded IPC domains}
+\end{figure}
+
+\FloatBarrier
+\newpage
+\subsubsection*{Action Set Properties}
+
+\rebecca{TPP: problems: all path and goods cost 1, every goods is available 
+in exactly 2 markets. properties are: Buy goods x in market y and not in market z}
+
+\rebecca{NoMystery: problems, path cost between 1 to 5, 2 trucks. Properties: only use one truck and 
+deliver package x and y in the same truck (for every package combination)} 
+
+\setlength{\tabcolsep}{3pt}
+\begin{figure}[ht]
+	\centering
+	\begin{tabular}{l|r|rr}
+			& c & C & max \\\hline
+		NoMystery 6L 4P & 1 & 1 & 9 \\
+		NoMystery 6l 4P & 1.2 & 1 & 7\\
+		NoMystery 6L 5P & 1 & 0 & 2\\
+		TPP 5M 3G & 1 & 3 & 10\\
+		TPP 5M 4G & 1 & 0 & 10\\
+		TPP 5M 5G & 1 & 0 &	0 \\\hline
+		sum \numtasks(60) & - & 5 & 36 \\
+	\end{tabular}
+	\caption{Coverage GFD 1 with time out 60 min. 10 problems per size. c: fuel/money constraints }
+\end{figure}
+
+\begin{figure}[ht]
+		\input{data/action_set_properties/scatterplot-expansions_C-max_PDG.tex}
+
+		\input{data/action_set_properties/scatterplot-search_time_C-max_PDG.tex}
+	\caption{Comparison of expansions and search time per basic property of $h^C$ and $h^{max}$. 
+		The marks are group by domain size and type. 
+		Per basic property the time-out was 10 min, both configuration solved all problems.}
+\end{figure}
+
 
