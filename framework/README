@@ -1,0 +1,155 @@
+How to run FD:
+
+With hmax:
+
+./fast-downward.py --build release64 problemX.pddl --translate-options --property_type  0 --search-options --heuristic "h=hmax()" --search "goal_relation([astar(hmax())], heu=h)"
+
+With Marcel's heuristic
+
+./fast-downward.py --build release64 problemX.pddl --translate-options --property_type  0 --search-options --heuristic "h=hc(cache_estimates=false, nogoods=false, prune_subsumed_preconditions=false)" --search "goal_relation([dfs(eval=blind, learn=ucrn(hc=h))], heu=h)"
+
+
+Flags:
+property_type:
+	- 0: action set properties
+	- 1: LTL properties
+	
+	
+The property file is automatically recognized if it is called property-problemX.pddl
+
+A action set property definition:
+
+- action subsets
+
+set <name> <number of actions>
+<list of actions>
+
+The action parameters can either be objects or types. A "type-parameter" is a wild card and 
+instantiated with all objects with the given type.
+
+Example
+
+set delwithT0 4
+unload p0 t0 location
+load p1 t0 location
+unload p1 t0 location
+load p1 t0 location
+
+set delwithT1 4
+unload p0 t1 location
+load p0 t1 location
+unload p1 t1 location
+load p1 t1 location
+
+- property
+
+[soft-]property <name>
+<DNF>
+
+The property definition consists of a name and a propositional formula over the set names.
+The formula has to be in disjunctive normal form and an prefix notation.
+	- not !
+	- and &&
+	- or ||
+	
+A "soft-property" is included in the goal-fact dependency search while a "property" 
+has to be always satisfied.
+
+
+Example
+
+soft-property same_truck
+|| && delwithT0 ! delwithT1 && ! delwithT0 delwithT1
+
+
+---> There are some examples in the benchmark repository
+---> The number of allowed withe spaces is still limited and there does not exist
+		a proper error handling	
+
+
+You can also define property classes with reduce "copy and paste"
+
+Example
+
+propertyclass same_truck(px,py)
+{
+	set delwithT0 4
+	unload px t0 location
+	load px t0 location
+	unload py t0 location
+	load py t0 location
+	
+	set delwithT1 4
+	unload px t1 location
+	load px t1 location
+	unload py t1 location
+	load py t1 location
+	
+	soft-property same_truck
+	|| && delwithT0 ! delwithT1 && ! delwithT0 delwithT1
+}
+{
+	same_truck(p0, p1)
+	same_truck(p0, p2)
+	same_truck(p0, p3)
+	same_truck(p1, p2)
+	same_truck(p1, p3)
+	same_truck(p2, p3)
+}
+
+
+Soft goals:
+You can also declare some of the original goal facts to be soft goals at the end of the property file:
+
+soft-goals
+<list of goal facts>
+
+Example:
+
+soft-goals
+at(p0, l5)
+
+
+FD Output:
+
+Example:
+*********************************
+Size of tree: 128
+Hard goals: 
+Atom at(p3, l3)
+Atom at(p2, l5)
+Atom at(p1, l2)
+Soft goals: 
+soft_Atom at(p0, l5)
+soft_sat_same_truck_p0_p1
+soft_sat_same_truck_p0_p2
+soft_sat_same_truck_p0_p3
+soft_sat_same_truck_p1_p2
+soft_sat_same_truck_p1_p3
+soft_sat_same_truck_p2_p3
+*********************************
+Unsolvable:
+soft_sat_same_truck_p2_p3
+Unsolvable:
+soft_sat_same_truck_p1_p2
+Unsolvable:
+soft_sat_same_truck_p0_p2|soft_sat_same_truck_p1_p3
+Unsolvable:
+soft_sat_same_truck_p0_p2|soft_sat_same_truck_p0_p3
+Unsolvable:
+soft_Atom at(p0, l5)|soft_sat_same_truck_p1_p3
+Unsolvable:
+soft_Atom at(p0, l5)|soft_sat_same_truck_p0_p3
+Unsolvable:
+soft_Atom at(p0, l5)|soft_sat_same_truck_p0_p1
+*********************************
+Number of minimal unsolvable goal subsets: 7
+*********************************
+
+The output first shows the soft and hard goals.
+Then all unsolvable minimal sub-goals are listed (only the soft goal part)
+
+
+
+
+
