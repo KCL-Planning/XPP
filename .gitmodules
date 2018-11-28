@@ -1,3 +1,6 @@
 [submodule "FD_ppd"]
 	path = FD_ppd
 	url = git@bitbucket.org:Rebecca93/plan_property_dependency.git
+[submodule "benchmark/ppd_benchmark"]
+	path = benchmark/ppd_benchmark
+	url = https://Rebecca93@bitbucket.org/Rebecca93/ppd_benchmark.git
