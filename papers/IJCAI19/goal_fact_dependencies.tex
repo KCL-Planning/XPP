@@ -2,6 +2,20 @@
 
 \rebecca{ 1-1.5 page(s) Rebecca}
 
+\joerg{Rebecca, let's discuss this in detaiul before you write it
+  up. ... some preliminary notes: the whole thing below must be
+  re-written following the framework definitions. The Con/Disjunctive
+  Goal-Fact Dependencies are simply different sets $\Phi$ of
+  plan-property dependencies, where the Dis-variant is derivable (see
+  my comment in previous section) from the Con-variant. The
+  ``subsumption relations'' are simply entailment across the
+  dependencies here. The specialized notation in terms of goal-set
+  pairs, as well as the simple characterization of entailment across
+  these, should be given in the definitions, but explicitly marked as
+  an equivalent specialized notation that we will use for
+  convenience.}
+
+
 \subsection{???}
 
 \rebecca{start with a concrete example, in the truck domain}
@@ -12,7 +26,7 @@ must be false at the end of the plan.}
 \rebecca{if we are looking fore the minimal sets $A \cup B$ than B always contains 
 only one element}
 
-\begin{definition}[Goal-Fact Dependency 1 (GFD1)]
+\begin{definition}[Conjunctive Goal-Fact Dependencies]
 Given a planning task $\Pi = (V,A,c,I,G)$ $(A,B)$ with $A, B \subseteq G$ is a 
 GFD1 if $\Pi$ with the goal $A \cup B$, i.e., $\bigwedge_{p \in A \cup B} p$
 is unsolvable.
@@ -38,7 +52,7 @@ $A \cap B = \emptyset$ and $|B| = 1$
 \textit{If goal subset A is true at the end of the plan, 
 then ALL elements of goal subset B must be false at the end of the plan.}\\
 
-\begin{definition}[Goal-Fact Dependency 2 (GFD2)]
+\begin{definition}[Disjunctive Goal-Fact Dependencies]
 	Given a planning task $\Pi = (V,A,c,I,G)$ the tuples
 	$(A,B)$ with $A,B \subseteq G $ is a GFD2 if 
 	$\Pi$ with the goal $\bigwedge_{p \in A} p \wedge (\bigvee_{q \in B} q)$
