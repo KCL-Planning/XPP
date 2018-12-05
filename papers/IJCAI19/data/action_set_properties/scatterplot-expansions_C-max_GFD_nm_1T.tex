@@ -1,0 +1,13 @@
+\begin{tikzpicture}
+\begin{axis}[extra x tick style={grid=major}, extra x ticks=100000000, extra y tick style={grid=major}, extra y ticks=100000000, height=5cm, legend cell align=left, legend style={at={(1.3, 0.5)}}, title=expansions, width=5cm, xlabel=asp-hmax-GFD, xmin=0.05, xmode=log, ylabel=asp-hc-GFD, ymin=0.05, ymode=log]
+\addplot[color=green, mark=*, mark options={{draw=black}}, only marks] coordinates {
+(14130, 4672) (327036, 10492) (6949, 1387) (3003597, 14394) (51670929, 93760) (119756, 8806) (177854, 45225) (4551, 606) (87180, 3492) (7770, 1227) (10157013, 72997) (481214, 5662) (47345, 1613) (802101, 17735) (10361851, 74595)
+};
+\addlegendentry{blocked roads}
+\addplot[color=red, mark=*, mark options={{draw=black}}, only marks] coordinates {
+(2995530, 18623) (100843, 5361) (127212, 32109) (18512, 5374) (1083857, 6283) (336360, 27850) (10173, 1067) (473783, 87328) (97121, 4361) (5020, 1024) (556154, 11211) (24976, 3815)
+};
+\addlegendentry{forced roads}
+\addplot[color=black] coordinates {(0.050000, 0.050000) (51670929, 51670929)};
+\end{axis}
+\end{tikzpicture}
