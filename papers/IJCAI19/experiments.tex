@@ -26,67 +26,43 @@
 	discrete state variable treating it like a resource?}
 
 \setlength{\tabcolsep}{1pt}
+\renewcommand{\arraystretch}{0.8}
 \begin{figure}[ht]
 	\centering
-	\scriptsize
-	\begin{tabular}{l|rr|rr|rr}
-			& \multicolumn{2}{c}{0.25} & \multicolumn{2}{|c}{0.5} & \multicolumn{2}{|c}{0.75}\\
-			& C & max & C & max & C & max \\\hline
-		Agricola \numtasks{9} & 1 & \textbf{4} & 1 & 1 &\textbf{1} & 0 \\
-		Airport \numtasks{19} & 16 & \textbf{18} & 12 & \textbf{16} & 8 & \textbf{16}\\
-		Blocks \numtasks{18} & 18 & 18 &18 & 18& \textbf{18} & 15\\
-		Data-Networks \numtasks{8} & 0 & \textbf{4} & 0 & \textbf{4} & 0 & \textbf{4}\\
-		Depot \numtasks{6} & 6 & 6 & \textbf{6} & 5 & 3 & \textbf{4} \\
-		Driverlog \numtasks{11} & 11 & 11 & 10 & 10 & \textbf{8} & 6 \\
-		Freecell \numtasks{55} & \textbf{48} & 32 & 6 & \textbf{14} & 0 & \textbf{10}\\
-		Gripper \numtasks{8} & 5 & 5 & 3 & \textbf{4} & 3 & \textbf{4} \\
-		Hiking \numtasks{13} & 13 & 13 & 10 & \textbf{11} & 2 & \textbf{11}\\
-		Miconic \numtasks{69} & \textbf{63} & 54 & 39 & \textbf{44} &35 & \textbf{39} \\
-		Openstacks \numtasks{49} & 7 & \textbf{24} & 5 & \textbf{22} & 5 & \textbf{20}\\
-		PSR \numtasks{49} & 49 & 48 & \textbf{49} & 48 & \textbf{47} & 46\\
-		Rovers \numtasks{7} & 7 & 7 & 6 & 6 & 4 & \textbf{6} \\
-		Satellite \numtasks{6} & 6 & 6 &  6 & 6 & 4 & 4 \\
-		Snake \numtasks{10} & 0 & \textbf{3} & 1 & \textbf{6} & 2 & \textbf{6} \\
-		Termes \numtasks{7} & 0 & \textbf{1} & 0 & \textbf{2} & 0 & \textbf{2} \\
-		Tetris \numtasks{9} & \textbf{7} & 2 & \textbf{3} & 2 & 2 & \textbf{3}\\
-		TPP \numtasks{10} & \textbf{10} & 7 & 5 & 5 & 4 & \textbf{5} \\
-		Transport \numtasks{24} & 24 & 24 & \textbf{24} & 23 & 22 & 22\\
-		Zenotravel \numtasks{11} & 11 & 11 & \textbf{8} & 7 & 7 & 7\\\hline
-		sum \numtasks{436} & \textbf{330} & 326 & 230 & \textbf{273} & 184 & \textbf{235}\\
-	\end{tabular}
-	\caption{Coverage: computation of \emph{Goal-Fact Dependencies 1} of the IPC 
-		domains with bound $ = x \cdot $ optimal cost with $ x \in \{0.25, 0.5, 0.75\}$
-	of online learned dead-end detectors with bounded DFS (C) and $h^{max}$ with $A^*$. 
-	time-out 10 min}
+	\input{tables/coverage_IPC.tex}
+	\caption{Coverage of \emph{Goal-Fact Dependencies 1} computation as fraction of the 
+		instances solved by \emph{lmcut}. Benchmark: oversubscription IPC 
+		domains with bound $ = x \cdot $ optimal cost with $ x \in \{0.25, 0.5, 0.75\}$.
+		C: online learned dead-end detectors with bounded DFS which are propagated 
+		down the three, C nr: the learned heuristic is not reused, max: $h^{max}$ with $A^*$. 
+		time-out 30 min}
 \end{figure}
 
 
 \begin{figure}[ht]
+	\scriptsize
+	\begin{minipage}{0.5\textwidth}
+		\input{data/IPC_cost_bound/scatterplot-expansions_C-Cnr_IPC_GFD_0.25.tex}
+	\end{minipage}
+	%\hfill
+	%\begin{minipage}{0.2\textwidth}
+	%	\input{data/IPC_cost_bound/scatterplot-search_time_C-Cnr_IPC_GFD_0.25.tex}
+	%\end{minipage}
 	\begin{minipage}{0.2\textwidth}
-		\input{data/IPC_cost_bound/scatterplot-expansions_C-max_IPC_GFD_0.25.tex}
+		\input{data/IPC_cost_bound/scatterplot-expansions_C-Cnr_IPC_GFD_0.5.tex}
 	\end{minipage}
 	\hfill
 	\begin{minipage}{0.2\textwidth}
-		\input{data/IPC_cost_bound/scatterplot-search_time_C-max_IPC_GFD_0.25.tex}
+		\input{data/IPC_cost_bound/scatterplot-search_time_C-Cnr_IPC_GFD_0.5.tex}
 	\end{minipage}
-
-
 	\begin{minipage}{0.2\textwidth}
-		\input{data/IPC_cost_bound/scatterplot-expansions_C-max_IPC_GFD_0.5.tex}
+		\input{data/IPC_cost_bound/scatterplot-expansions_C-Cnr_IPC_GFD_0.75.tex}
 	\end{minipage}
 	\hfill
 	\begin{minipage}{0.2\textwidth}
-		\input{data/IPC_cost_bound/scatterplot-search_time_C-max_IPC_GFD_0.5.tex}
+		\input{data/IPC_cost_bound/scatterplot-search_time_C-Cnr_IPC_GFD_0.75.tex}
 	\end{minipage}
 
-
-	\begin{minipage}{0.2\textwidth}
-		\input{data/IPC_cost_bound/scatterplot-expansions_C-max_IPC_GFD_0.75.tex}
-	\end{minipage}
-	\hfill
-	\begin{minipage}{0.2\textwidth}
-		\input{data/IPC_cost_bound/scatterplot-search_time_C-max_IPC_GFD_0.75.tex}
-	\end{minipage}
 	\caption{Comparison of expansions and search time per task of $h^{max}$ and $h^C$ for bounded IPC domains}
 \end{figure}
 
@@ -103,10 +79,10 @@ which heuristic is better?}
 		& C & max & C & max & C & max & C & hmax\\\hline
 		NoMystery 6L 4P & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10\\
 		NoMystery 6L 5P & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10\\
-		NoMystery 6L 6P & 10 & 10 & 10 & 10 & 10 & 10 & 9 & 10\\
-		NoMystery 8L 4P & 10 & 10 & 10 & 10 & 10 & 10 & 5 & 10\\
-		NoMystery 8L 5P & 10 & 10 & 10 & 10 & 8 & 10 & 3 & 7\\
-		NoMystery 8L 6P & 10 & 10 & 10 & 10 & 8 & 10 & 10 & 10\\
+		NoMystery 6L 6P & 10 & 10 & 10 & 10 & 10 & 10 & 1100 & 10\\
+		NoMystery 8L 4P & 10 & 10 & 10 & 10 & 10 & 10 & 9 & 10\\
+		NoMystery 8L 5P & 10 & 10 & 10 & 10 & 8 & 10 & 5 & 10\\
+		NoMystery 8L 6P & 10 & 10 & 10 & 10 & 8 & 10 & 3 & 7\\
 		TPP 6M 4G & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10\\
 		TPP 6M 5G & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10\\
 		TPP 6M 6G & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10\\
