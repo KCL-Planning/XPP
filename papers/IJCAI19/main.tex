@@ -1,6 +1,9 @@
-\def\year{2018}\relax
-\documentclass[letterpaper]{article}
-\usepackage{aaai18}
+\documentclass{article}
+\pdfpagewidth=8.5in
+\pdfpageheight=11in
+% The file ijcai19.sty is NOT the same than previous years'
+\usepackage{ijcai19}
+
 \usepackage{times}
 \usepackage{helvet}
 \usepackage{courier}
@@ -54,48 +57,60 @@ Proof.}\hspace*{0.5em}}{\qed}
 
 \begin{document}
 
-\nocopyright
-
 \title{Explaining the Space of Plans through Plan-Property Dependencies}
 
 \author{
-\hspace{1.0cm}Rebecca Eifler, J\"org Hoffmann \and Marcel Steinmetz\\
-  \hspace{1.0cm}Saarland University, Saarland Informatics Campus\\
-  \hspace{1.0cm}Saarbr\"ucken, Germany\\
-  \hspace{1.0cm}\{eifler,hoffmann,steinmetz\}@cs.uni-saarland.de
-\And
-\hspace{4.0cm}Michael Cashmore \and Daniele Magazzeni\\
-\hspace{4.0cm}King's College London, Department of Informatics\\
-\hspace{4.0cm}London, United Kingdom\\
-\hspace{4.0cm}\{michael.cashmore,daniele.magazzeni\}@kcl.ac.uk 
+Rebecca Eifler$^1$\and
+J\"org Hoffmann$^1$\and
+Marcel Steinmetz$^1$\and
+Michael Cashmore$^2$\and
+Daniele Magazzeni$^2$
+\affiliations
+$^1$Saarland University, Saarland Informatics Campus, Saarbr\"ucken, Germany\\
+$^2$King's College London, Department of Informatics, London, UK\\
+\emails
+\{eifler,hoffmann,steinmetz\}@cs.uni-saarland.de,
+\{michael.cashmore,daniele.magazzeni\}@kcl.ac.uk 
 }
+%
+%% \author{
+%% \hspace{1.0cm}Rebecca Eifler, J\"org Hoffmann \and Marcel Steinmetz\\
+%%   \hspace{1.0cm}Saarland University, Saarland Informatics Campus\\
+%%   \hspace{1.0cm}Saarbr\"ucken, Germany\\
+%%   \hspace{1.0cm}\{eifler,hoffmann,steinmetz\}@cs.uni-saarland.de
+%% \And
+%% \hspace{4.0cm}Michael Cashmore \and Daniele Magazzeni\\
+%% \hspace{4.0cm}King's College London, Department of Informatics\\
+%% \hspace{4.0cm}London, United Kingdom\\
+%% \hspace{4.0cm}\{michael.cashmore,daniele.magazzeni\}@kcl.ac.uk 
+%% }
 
 \maketitle
 
 \begin{abstract}
 In an interactive planning process, it is important for human users to
-	understand the decision rationale behind the suggested plans:
-	Why is this plan better than the alternatives?  In principle
-	this can be explained through the search space explored by the
-	planner.  But how to make a vast search space understandable
-	to a human user?  We propose to do so by explaining the space
-	of plans in terms of a selected set of plan properties and
-	their dependencies, such as entailment in plan space.  We
-	introduce a generic formal framework for such dependency
-	analysis.  We instantiate and operationalize that framework
-	for the case of dependencies between goal facts in
-	oversubscription planning, leveraging and extending recent
-	nogood learning methods for computational efficiency. We show
-	that more general plan properties can be compiled into this
-	special case. We analyze this approach experimentally, showing
-	in particular that, in several benchmark studies, the
-	suggested analyses can be feasible and produce compact results
-	for human inspection.
+understand the decision rationale behind the suggested plans: Why is
+this plan better than the alternatives?  In principle this can be
+explained through the search space explored by the planner.  But how
+to make a vast search space understandable to a human user?  We
+propose to do so by explaining the space of plans in terms of a
+selected set of plan properties and their dependencies, such as
+entailment in plan space.  We introduce a generic formal framework for
+such dependency analysis.  We instantiate and operationalize that
+framework for the case of dependencies between goal facts in
+oversubscription planning, leveraging and extending recent nogood
+learning methods for computational efficiency. We show that more
+general plan properties can be compiled into this special case. We
+analyze this approach experimentally, showing in particular that, in
+several benchmark studies, the suggested analyses can be feasible and
+produce compact results for human inspection.
 \end{abstract}
 
 \input{introduction}
 
 \input{plan_property_framework}
+%
+%\input{OLD_plan_property_framework}
 
 \input{goal_fact_dependencies}
 
@@ -106,14 +121,15 @@ In an interactive planning process, it is important for human users to
 \FloatBarrier
 \input{conclusion}
 
-\medskip
+%% \section*{Acknowledgments}
+%
+%% This material is based upon work supported by the Air Force Office of
+%% Scientific Research under award number FA9550-18-1-0245. J\"org
+%% Hoffmann's group has received support by the DFG as part of CRC 248
+%% (see perspicuous-computing.science).
 
-\noindent
-%% \textbf{Acknowledgments.} Ack DFG partial delete
-%%  relaxation, probably AFOSR.
-
-%\bibliographystyle{aaai}
-%\bibliography{abbreviations,biblio,crossref}
+\bibliographystyle{named}
+\bibliography{abbreviations,biblio,crossref}
 
 
 
