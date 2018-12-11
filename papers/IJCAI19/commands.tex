@@ -27,6 +27,8 @@
 \definecolor{lightblue}{HTML}{007acc}
 
 \newcommand{\commentout}[1]{}
+\newcommand{\defined}[1]{\emph{#1}}
+
 
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
@@ -60,27 +62,46 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Generic Framework
+\newcommand{\task}{\ensuremath{\tau}}
+\newcommand{\plan}{\ensuremath{\pi}}
+\newcommand{\plans}{\ensuremath{\Pi}}
+\newcommand{\alltasks}{\ensuremath{\cal T}}
+\newcommand{\allplans}{\ensuremath{\cal P}}
+\newcommand{\true}{\ensuremath{\mathit{true}}}
+\newcommand{\false}{\ensuremath{\mathit{false}}}
+
+\newcommand{\prop}{\ensuremath{p}}
+\newcommand{\propq}{\ensuremath{q}}
+\newcommand{\props}{\ensuremath{P}}
+\newcommand{\propsatom}{\ensuremath{P^A}}
+\newcommand{\propscomp}{\ensuremath{P^C}}
+
+\newcommand{\modelsof}[2]{\ensuremath{#1(#2)}}
+\newcommand{\entails}[3]{\ensuremath{#1 \models #2 \Rightarrow #3}}
+\renewcommand{\iff}[3]{\ensuremath{#1 \models #2 \Leftrightarrow #3}}
+\renewcommand{\equiv}[2]{\ensuremath{[#2]_{#1}}}
+%
+%% \renewcommand{\implies}[1]{\ensuremath{\Rightarrow_{#1}}}
+%% \renewcommand{\iff}[1]{\ensuremath{\Leftrightarrow_{#1}}}
+%% \renewcommand{\equiv}[2]{\ensuremath{[#1]_{#2}}}
+
+\newcommand{\pdo}[1]{\ensuremath{<_{#1}}}
+\newcommand{\pda}[1]{\ensuremath{\Phi_{#1}}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Planning Tasks
-\newcommand{\task}{\ensuremath{\Pi}}
-\newcommand{\facts}{\ensuremath{\mathcal P}}
-\newcommand{\acts}{\ensuremath{\mathcal A}}
-\newcommand{\init}{\ensuremath{\mathcal I}}
-\newcommand{\goal}{\ensuremath{\mathcal G}}
-
+\newcommand{\facts}{\ensuremath{P}}
+\newcommand{\acts}{\ensuremath{A}}
+\newcommand{\init}{\ensuremath{I}}
+\newcommand{\goal}{\ensuremath{G}}
 \newcommand{\cost}{{\ensuremath{c}}}
-
 \newcommand{\pre}{\ensuremath{\mathit{pre}}}
 \newcommand{\eff}{\ensuremath{\mathit{eff}}}
-
 \newcommand{\apply}[1]{\ensuremath{[[#1]]}}
 
-\newcommand{\states}{\ensuremath{S}}
-
-\newcommand{\strategy}{\ensuremath{\pi}}
-
-\newcommand{\regress}{\ensuremath{\textup{Regress}}}
-
-\newcommand{\sbtask}{\ensuremath{\Pi^{\textup{SB}}}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,0 +1,198 @@
+\section{Plan-Property Dependency Framework}
+
+\joerg{re-think terminology / TBD}
+
+\joerg{think through different planning frameworks, in particular ones
+  with continous phenomena, like time; everything below remains
+  finite, n particular the BPDG and PDG; what becopmes harder or
+  undecidable though is checking validity of a plan-property
+  dependeny. probably discuss this below.}
+
+Planning task $\cal T$ is a tuple one of whose elements is a finite
+set $A$ of actions. A plan in $\cal T$ is any structure over $A$ that
+serves as a specification of what to do (e.g. a sequence or partially
+ordered set). In what follows, by $\Pi$ we denote a set of plans of
+interest, for example all those plans that are applicable in the
+initial state, or those that are applicable in the initial state and
+achieve some goal. Note: we do not restrict plans to achieve a goal,
+it could be arbitrary action sequences.
+
+
+\subsection{Plan Properties and their Dependencies}
+
+
+%% What is a plan property?
+%
+%%     Plan property: polytime-computable Boolean fn of task Pi and applicable action sequence vec_a
+
+\begin{definition}[Plan Property]
+Given a planning task $\cal T$. A \emph{plan property} $f$ in $\cal T$
+is any function $f : \Pi \mapsto \{true, false\}$ that can be computed
+in time polynomial in the size of its input.
+\end{definition}
+
+\joerg{discuss/motivate why this makes sense}
+
+
+%% What is a plan-property dependency?
+%
+%%     Basic dependency: p entails q if, for every applicable action
+%%     sequence vec_a, if p(veca)=true then q(veca)=true, We say in
+%%     this case that the basic dependency "p entails q" is valid in
+%%     Pi.
+%
+%%     (Complex/general) dependency: propositional formula phi over
+%%     plan properties. phi holds if, for every applicable action
+%%     sequence vec_a, phi evaluates to true on vec_a. We say in this
+%%     case that phi is valid in Pi. Basic dependencies are the
+%%     special case "p ==> q". Motivation: this could be inside a
+%%     single new plan prop. However, plan props are black boxes to
+%%     the framework; in the exploration of composed dependencies,
+%%     i.e. when solving the explanation problem specified below, the
+%%     explanation facility will establish the interesting
+%%     combinations across these blackboxes.
+
+\begin{definition}[Plan-Property Dependency]
+Given a planning task $\cal T$ and a finite set $F$ of plan properties
+in $\cal T$. A \emph{plan-property dependency} $\phi$ is a
+propositional formula over the atoms $\{p_f \mid f \in F\}$. We say
+that a plan $\pi$ \emph{satisfies} $\phi$, written $\pi \models \phi$,
+if $\phi$ evaluates to true under the truth-value assignment
+$\{(p_f,f(\pi)) \mid f \in F\}$. We say that $\phi$ is \emph{valid} in
+$\cal T$ if it is satisfied by all $\pi \in \Pi$. 
+
+We say that $\phi$ is \emph{basic} if it takes the form $f \implies
+g$, for $f, g \in F$.
+\end{definition}
+
+\joerg{discuss/motivate why this makes sense; acknoweledge that
+  potentially very high complexity to decide validity (corresponds to
+  proving unsolability in classical planning)}
+
+
+\joerg{show that dependencies are more than standard propositional
+  logic: even if a formula is not universally true, it may be true for
+  all action sequences due to the underlying planning task. In fact
+  this will typically be the case, e.g. in a simple mutex where
+  reaching one fact A excludes reaching another fact B.}
+
+\joerg{point out that the set $\Pi$ of interest can be the subset of
+  applicable action sequences that achieve a set of ``hard/fixed''
+  plan properties; we will make use of this in our concrete
+  instantiation and experiments}
+
+\joerg{propositional logic could be inside an individual plan
+  property. However, plan props are black boxes to the framework; in
+  the exploration of composed dependencies, i.e. when solving the
+  plan-property axiomatization problem specified below, the
+  explanation facility will establish the interesting combinations
+  across these blackboxes.}
+
+
+
+
+\subsection{Our Plan-Space Explanation Problems}
+
+
+
+%% basic: find all pairwise dependencies, ie, compute the graph whose
+%% nodes are the properties and whose edges are the basic dependencies
+
+\begin{definition}[Plan-Property Dependency Graph (PDG)]
+Given a planning task $\cal T$ and a set $F$ of plan properties in
+$\cal T$. The \emph{plan-property dependency graph (PDG)} is the
+directed graph whose vertices are $F$ and that contains an arc $f
+\rightarrow g$ whenever the basic dependency $f \implies g$ is valid
+in $\cal T$.
+\end{definition}
+
+\joerg{motivate usefulness, discuss complexity (quadratic number of
+  unsolvability proofs).}
+
+
+%% Entailment over two dependencies phi and psi: phi entails psi if, for
+%% every action sequence, if phi evaluates to true then so does psi. Note
+%% that this is equivalent to validity of the dependency "phi ==> psi".
+
+\begin{definition}[Plan-Property Entailment]
+Given a planning task $\cal T$, a set $F$ of plan properties in $\cal
+T$, and two plan-property dependencies $\phi, \psi$. 
+
+We say that $\phi$ \emph{entails} $\psi$ if, for every plan $\pi \in
+\Pi$, if $\pi \models \phi$ then $\pi \models \psi$. We say that
+$\phi$ and $\psi$ are \emph{equivalent} if they entail each other; we
+denote by $[\phi]$ the equivalence class of $\phi$.
+\end{definition}
+
+\joerg{note that this is equivalent to validity of the dependency
+  $\phi \implies \psi$, and note that it is not the same as standard
+  propsitional entailment, again due to the underlying restriction of
+  interpretations to $\Pi$. ... also note that entailment over
+  equivalence clasyses remains a partial order as in standard
+  propositional logic}
+
+
+
+
+%% general: find all strongest dependencies: the root nodes in the DAG
+%% over equivalence classes of dependencies
+
+\joerg{$\Phi$: plan-property dependencies of interest; default can be
+  the set of all formulas over $F$ so that user has to fix only
+  $F$. But more restricted $\Phi$ ie particular classes of formulas,
+  can be of interest too (and will be in our goal-fact analysis in the
+  next section)}
+
+\begin{definition}[Plan-Property Dependency Axiomatization (PDA)]
+Given a planning task $\cal T$ and a set $\Phi$ of plan-property
+dependencies in $\cal T$. 
+
+Let $O$ be the partial order over the equivalence classes $[\phi]$
+where $\phi \in \Phi$ is valid in $\cal T$, and where $[\phi] <
+[\psi]$ iff $\phi$ entails $\psi$.
+%
+A set $\Phi[{\cal T}] \subseteq \Phi$ is a \emph{plan-property
+  dependency axiomatization (PDA)} of $\Phi$ for $\cal T$ if, for
+every minimal element $[\phi_r]$ of $O$, $\Phi[{\cal T}]$ contains
+exactly one member of $[\phi_r]$.
+\end{definition}
+
+\joerg{discuss/motivate why this makes sense; discuss complexity,
+  point out encouraging results with goal-fact dependencies in our
+  experiments.}
+
+\joerg{add some remarks regarding ``axiomatization'' terminology and
+  latticew/properties,m see detailed tex comments here}
+%
+%% \joerg{reg terminology: ``axiomatization'' captures this well I think,
+%%   in the sense that $\Pi$ basically identifies a subset of truth-value
+%%   assignments to $F$, ie, of logical interpretations of our
+%%   propositional variables; we can view this subset of interpretations
+%%   as the possible worlds given $\Pi$. Then $O$ is the entailment order
+%%   over the things that hold in all possible worlds; and a set of
+%%   axioms is a smallest set of formulas that fully characterizes these
+%%   things.}
+%
+%% \joerg{reg lattices: $O$ is a ``meet-semilattice'' if $\Phi$ is closed
+%%   under conjunction: in a lattice, every two elements need to have a
+%%   common ancestor. in standard logic, entailment over formula
+%%   equivalence classes is a lattice because for any $\phi$ and $\psi$
+%%   $\phi \wedge \psi$ is a common ancestor; actually a bounded lattice,
+%%   with a unique element that is an ancestor to (that implies)
+%%   everything else. the same is true here if $\Phi$ is closed under
+%%   conjunction (because if each of $\phi$ and $\psi$ is valid, then so
+%%   is $\phi \wedge \psi$). In this case, the PDA is the unique common
+%%   ancestor, which can basically be thought of as a conjunction of
+%%   axioms. In lattice terminology, the unique common ancestor is called
+%%   a ``least element'', ``minimum'', or ``bottom'' element; but I think
+%%   none of these names makes much sense in our context so I would leave
+%%   it at the above definition, maybe briefly remarking here that $O$ is
+%%   a meet-semilattice if $\Phi$ is closed under conjunction.}
+
+\joerg{discuss relation to model checking here somewhere? discuss
+  possibility to automatically identify relevant $F$ and $\Phi$?}
+
+\joerg{add definition and discussion of ``derivability'' (or some
+  such) across PDASs, where PDA for $\Phi_B$ can be derived from PDA
+  for $\Phi_A$ as in our two different goal-fact dependenciues in the
+  next section.}
