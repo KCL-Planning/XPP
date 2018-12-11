@@ -59,23 +59,22 @@ Example plan properties are goal facts/goal formulas (true at end of
 plan?), temporal plan trajectory constraints, deadlines, bounds on
 resource consumption, etc. For practical purposes, $\prop$ should be
 computable in time polynomial in the size of its input, \ie\ it should
-be efficiently decidable whether ot not a plan property is satisfied,
+be efficiently decidable whether or not a plan property is satisfied,
 but for the purpose of the following definitions that restriction is
 not necessary.
 
-In what follows, we asssume a task \task\ and induced set of plans
-\plans, and we assume a set \props\ of plan properties defined on
-\task\ as part of our input. In this context, another distinction not
-necessary for our generic definitions, but that makes sense in
-practice, is that between \defined{atomic} vs.\ \defined{composed}
-plan properties. The former are given explicitly in an input file, the
-vanilla setup. In more complex setups, the input is a set
-\propsatom\ of atomic properties plus a specification how these can be
-combined into composed properties \propscomp. For example, one may
-specify \propscomp\ to be formulas over the atoms \propsatom, formed
-with a given set of composition operators. In particular, the set
-$\props = \propsatom \cup \propscomp$ whose dependencies are being
-analyzed may be exponentially large in the size of the user input.
+In what follows, we assume a set \props\ of plan properties as part of
+our input. In this context, a distinction not necessary for our
+generic definitions, but important in practice, is that between
+\defined{atomic} vs.\ \defined{composed} plan properties. The set
+\propsatom\ of atomic properties is listed explicitly in the input,
+whereas the composed properties \propscomp\ arise from a compact
+specification how properties can be combined. For example, one may
+define \propscomp\ to be propositional formulas over the atoms
+\propsatom. Note that, given this, the set $\props = \propsatom \cup
+\propscomp$ of plan properties whose dependencies are being analyzed
+may be exponentially larger than the user input, and may even be
+infinite.
 
 As a concrete instance we will consider later on, the user may be
 interested in a set $G$ of soft-goal facts, where for each $g \in G$
@@ -117,9 +116,12 @@ written $\iff{\plans}{\prop}{\propq}$, if $\modelsof{\plans}{\prop} =
 
 This definition essentially just views plans $\plan \in \plans$ as
 truth-value assignments in the obvious manner. Entailment and
-equivalence are then defined straightforwardly, with \plans\ in the
-role traditionally taken by a knowledge base that restricts the
-truth-value assignments under consideration.
+equivalence over plan properties are then defined straightforwardly,
+with \plans\ in the role traditionally taken by a knowledge base that
+restricts the truth-value assignments under consideration. Recall that
+formulas over plan properties can be encoded as individual composed
+plan properties, so that defining entailment over individual plan
+properties is enough to cover logical combinations thereof.
 
 Importantly, the role of \plans\ as a knowledge base means that
 entailment in \plans\ is more than standard entailment: the latter
