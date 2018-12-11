@@ -51,31 +51,31 @@ Denoting by \alltasks\ the set of all tasks and by \allplans\ the set
 of all plans, a \emph{plan property} is a partial function $\prop :
 \alltasks \times \allplans \mapsto \{\true, \false\}$. Given a task
 \task\ and induced set of plans \plans, we say that \prop\ is a plan
-property for \task\ if its domain includes $\{(\task,\plan) \mid \plan
+property defined on \task\ if its domain includes $\{(\task,\plan) \mid \plan
 \in \plans\}$.
 \end{definition}
 
 Example plan properties are goal facts/goal formulas (true at end of
 plan?), temporal plan trajectory constraints, deadlines, bounds on
-resource consumption, etc. For all practical purposes the authors can
-think of, $\prop$ should be computable in time polynomial in the size
-of its input, \ie\ it should be efficiently decidable whether ot not a
-plan property is satisfied, but for the purpose of the following
-definitions that restriction is not necessary.
+resource consumption, etc. For practical purposes, $\prop$ should be
+computable in time polynomial in the size of its input, \ie\ it should
+be efficiently decidable whether ot not a plan property is satisfied,
+but for the purpose of the following definitions that restriction is
+not necessary.
 
-In what follows, we asssume a task \task\ and set of plans \plans, and
-we assume a set \props\ of plan properties for \task\ and \plans\ as
-part of our input. In this context, another distinction not necessary
-for our generic definitions, but that makes sense in practice, is that
-between \defined{atomic} vs.\ \defined{composed} plan properties. The
-former are given explicitly in an input file, the vanilla setup. In
-more complex setups, the input is a set \propsatom\ of atomic
-properties plus a specification how these can be combined into
-composed properties \propscomp. For example, one may specify
-\propscomp\ to be formulas over the atoms \propsatom, formed with a
-given set of composition operators. In particular, the set $\props =
-\propsatom \cup \propscomp$ whose dependencies are being analyzed may
-be exponentially large in the size of the user input.
+In what follows, we asssume a task \task\ and induced set of plans
+\plans, and we assume a set \props\ of plan properties defined on
+\task\ as part of our input. In this context, another distinction not
+necessary for our generic definitions, but that makes sense in
+practice, is that between \defined{atomic} vs.\ \defined{composed}
+plan properties. The former are given explicitly in an input file, the
+vanilla setup. In more complex setups, the input is a set
+\propsatom\ of atomic properties plus a specification how these can be
+combined into composed properties \propscomp. For example, one may
+specify \propscomp\ to be formulas over the atoms \propsatom, formed
+with a given set of composition operators. In particular, the set
+$\props = \propsatom \cup \propscomp$ whose dependencies are being
+analyzed may be exponentially large in the size of the user input.
 
 As a concrete instance we will consider later on, the user may be
 interested in a set $G$ of soft-goal facts, where for each $g \in G$
@@ -92,7 +92,7 @@ the plan-candidate set \plans:
 
 \begin{definition}[Entailment]
 Let \task\ be a task with induced set of plans \plans. Let \props\ be
-a set of plan properties for \task.
+a set of plan properties defined on \task.
 
 Let $\plan \in \plans$. We identify \plan\ with the truth-value
 assignment $\plan : \props \mapsto \{\true, \false\}$ where
@@ -105,7 +105,7 @@ $\plan(\prop) = \true$. We denote by $\modelsof{\plans}{\prop} :=
 $\modelsof{\plans}{\prop} \neq \emptyset$.
 
 We say that \prop\ \defined{entails} \propq\ in \plans, written
-$\implies{\plans}{\prop}{\propq}$, if $\modelsof{\plans}{\prop}
+$\entails{\plans}{\prop}{\propq}$, if $\modelsof{\plans}{\prop}
 \subseteq \modelsof{\plans}{\propq}$.
 %
 We say that \prop\ and \propq\ are \defined{equivalent} in \plans,
@@ -126,14 +126,14 @@ entailment in \plans\ is more than standard entailment: the latter
 implies the former, but not vice versa. As a simple example, say the
 plan properties \props\ are propositional formulas $\phi$ over facts,
 evaluated at the end of the plan. Then $\phi \Rightarrow \psi$ implies
-that $\implies{\plans}{\phi}{\psi}$, simply because any (plan-end)
+that $\entails{\plans}{\phi}{\psi}$, simply because any (plan-end)
 state that satisfies $\phi$ must satisfy $\psi$. But not vice versa:
 \eg\ if facts $p, q$ are mutex in the task then
-$\implies{\plans}{p}{\neg q}$. As a more motivating example, say the
+$\entails{\plans}{p}{\neg q}$. As a more motivating example, say the
 plan properties are goals (like having scientific observations in
 satellite planning) as well as resource constraints (like consuming at
 most a given amount of energy). Then entailments of interest can take
-the form $\implies{\plans}{p}{\neg q_1 \vee \neg q_2 \vee \neg q_3}$
+the form $\entails{\plans}{p}{\neg q_1 \vee \neg q_2 \vee \neg q_3}$
 saying that we cannot have $p$ without foregoing either of $q_1$ or
 $q_2$ or $q_3$. Note that this is an entailment specific to \plans,
 which may not hold in general (\eg\ if cheaper actions are available,
@@ -147,30 +147,30 @@ approach.
 
 
 
-\subsection{Plan-Space Explanation}
+\subsection{Plan-Space Explanation Problems}
 
 Our plan-space explanation problems consist in identifying the
 entailment relation on \props\ given the knowledge base \plans:
 
 \begin{definition}[PDO and PDA]
 Let \task\ be a task with induced set of plans \plans. Let \props\ be
-a set of plan properties for \task.
+a set of plan properties defined on \task.
 
 The \defined{plan-property dependency order (PDO)} for \plans\ is the
 partial order $\pdo{\plans}$ over the equivalence classes
 $\equiv{\plans}{\prop}$, where $\equiv{\plans}{\prop} \pdo{\plans}
-\equiv{\plans}{\propq}$ iff $\implies{\plans}{\prop}{\propq}$.
+\equiv{\plans}{\propq}$ iff $\entails{\plans}{\prop}{\propq}$.
 
 A set $\pda{\plans} \subseteq \props$ is a \defined{plan-property
   dependency axiomatization (PDA)} for \plans\ if, for every minimal
-element $\equiv{\plans}{\prop}$ of $\pdo{\plans}$ when restricted to
+element $\equiv{\plans}{\prop}$ of $\pdo{\plans}$ restricted to
 \prop\ satisfiable in \plans, $\pda{\plans}$ contains exactly one
 member of $\equiv{\plans}{\prop}$.
 \end{definition}
 
 We refer by the \defined{PDO problem} to the computational problem of
-computing the PDO given \task\ as well as (compact) specifications of
-\plans\ and \props. Accordingly for the \defined{PDA problem}.
+computing the PDO given \task\ as well as a (compact) specification of
+\props. Accordingly for the \defined{PDA problem}.
 
 The PDO is a plan-space explanation in the sense of making explicit
 how the plan properties of interest depend on each other -- saying
@@ -223,36 +223,47 @@ specifies the maximal solvable conjunctions.
 %%   finite; what becomes harder or undecidable though is checking
 %%   plan-property dependencies. probably discuss this below.}
 %
-Apropos size, some words are in order regarding
-computation. Obviously, testing satisfiability of a plan property
-encompasses the plan existence problem. The same is true for
+The PDO is finite if only atomic plan properties are considered,
+simply as the number of truth-value assignments is. In the presence of
+an infinite set of composed plan properties (such as propositional
+formulas), the PDO may still be finite due to considering equivalence
+classes. In particular, the latter is necessarily the case if the set
+of plans \plans\ of interest is finite (as is the case \eg\ if the
+action set is finite and plan size can be finitely bounded), because
+then there is only a finite number of non-equivalent plan properties.
+
+Regarding complexity, obviously testing satisfiability of a plan
+property encompasses the plan existence problem. The same is true for
 plan-property entailment, where proving that an entailment
-$\implies{\plans}{\prop}{\propq}$ holds corresponds to proving a
+$\entails{\plans}{\prop}{\propq}$ holds corresponds to proving a
 planning task unsolvable (there exists no plan that satisfies
 \prop\ and that does not satisfy \propq). This is exacerbated by the
-potentially exponential size of the PDO if composed plan properties
-should be considered. Certainly, both the PDO and PDA problems should
-ideally be solved offline, prior to interaction with a user. 
-
-In terms of finiteness, matters are less bleak. If only atomic plan
-properties are considered, the PDO is finite simply as the number of
-truth-value assignments is. In the presence of an infinite set of
-composed plan properties (such as propositional formulas), the PDO may
-still be finite due to considering equivalence classes. In particular,
-the latter is necessarily the case if the set of plans \plans\ of
-interest is finite (as is the case \eg\ if the action set is finite
-and plan size can be finitely bounded), because then there is only a
-finite number of non-equivalent plan properties.
+potentially exponential size of the PDO, and the PDA, for composed
+plan properties. Certainly, both the PDO and PDA problems should
+ideally be solved offline, prior to interaction with a user. As our
+experimental results show, however, in many benchmark studies
+computing the PDA is similarly feasible as optimal planning, and the
+size of the PDA is reasonably small for human inspection.
 
 
 
 
-\joerg{add definition and discussion of ``derivability'' (or some
-  such) across PDAs, where PDA for $\Phi_B$ can be derived from PDA
-  for $\Phi_A$ as in our two different goal-fact dependenciues in the
-  next section. ... discuss reduction to ie PDG/A for props B by
-  f(PDG/A for props A) where f polytime in size of input (composed
-  case: also input ie poly in size of large PDG)}
+\joerg{This definition is optional, depending on whether or not we
+  decide to actually keep in the several different related definitions
+  in the next section:}
+
+As we shall exemplify in the next section, sometimes the PDA for a
+plan-property set $\props^B$ can be easily obtained from that for a
+plan-property set $\props^A$:
+
+\begin{definition}[PDA Derivability]
+Let $\props^A$ and $\props^B$ be sets of plan properties. We say that
+the PDA for $\props^B$ is \defined{polynomially derivable} from that
+for $\props^A$ if there exists an algorithm that runs in time
+polynomial in the size of its input and that, for any task \task\ on
+which all $\prop \in \props^A \cup \props^B$ are defined, transforms
+the PDA for $\props^A$ into that for $\props^B$.
+\end{definition}
 
 
 
