@@ -3,6 +3,110 @@
 
 \joerg{IJCAI'19 page limit: 6 pages main text, 1 page refs}
 
-\rebecca{ 1 page Joerg/Dan; Dan to make first go, then Joerg to make a pass}
+\joerg{1 page Joerg/Dan; Dan to make first go, then Joerg to make a
+  pass. ... as our key point here is introducing a new
+  framework/approach, we need to be real careful to push the right
+  knobs / to set the right expectations and avoid misunderstandings or
+  reviewer questions a la ``isn't this the same as ...''}
+
+
 
 \cite{fox:etal:ijcai-ws-17}
+
+
+\joerg{discuss relation to domain analysis / model checking?
+  basically, our approach can be viewed as a form of domain analysis
+  checking the truth of formulas over plan space. it seems to me that
+  ``domain analysis'' should definitely be mentioned in our
+  introduction, as another frame of reference besides
+  XAIP. ... regarding model checking I suppose it's fine to simply say
+  that our analysis can be viewed as a systematic form of checking a
+  set of properties of interest, and we structure, analyzed, and
+  implement this form of analysis as makes sense in planning. ... as a
+  concrete literture link, I know that some people from Brasil worked
+  on using model checkers as a domaiun analysis tool, in the ICKEPS
+  context; but I don't have the concrete references in mind/ don't
+  know whether and where this has been published. ... we could perhaps
+  mention in this context (currently mentioned in my text snippet
+  below, but this could be moved elsewhere) that ultimately one may
+  want to identify interesting plan properties automatically, which is
+  then clearly beyond anything addressed in model checking.}
+
+
+\joerg{need to set the stage for, and synchronize with, the generic
+  framework in the next section; I'm pasting below some material
+  previously in the framework section but which should probably be
+  worked into the introduction. ... one important point is how our
+  approach relates to plan preferences / what assumptions we make
+  there. In my view, ``hard'' vs ``soft'' goals are a very natural
+  instance of what we are looking at, but they are not the only
+  possible ones: eg in a classical planning context, the ``hard'' part
+  could be just the goal while the ``soft'' part -- the properties
+  being analyzed -- do not pertain to user preferences but rather to
+  comprehension questions where the user wants to know what the
+  consequences were if some trajectory constraint was enforced. ... in
+  other words, the user question ``Why do you do A rather than B?''
+  \emph{can} be motivated by a quest to satisfy soft user preferences
+  in an iterative planning process, but it doesn't have to be
+  so. ... I include below a text snippet attempting to adapt my
+  previous framework text in this direction, using ``enforced'' and
+  ``analyzed'' instead of ``soft'' and ``hard''.}
+
+Our framework assumes a planning task \task, inducing a space of plans
+\plans. The target is to answer user questions about properties of the
+plans \plans, where a property is some Boolean function on plans. For
+example, a question ``Why does the plan satisfy $A$ rather than $B$?''
+is addressed by analyzing what other properties are entailed by a plan
+property of the form ``$\neg A \wedge B$''. We assume that the set
+\props\ of plan properties whose dependencies are of interest within
+\plans\ is given (or specified compactly) in the input; our analysis
+identifies the entailment relations over these. An interesting yet
+challenging question for future work is how one can automatically
+identify relevant plan properties \props\ to analyze.
+
+Observe that \plans\ itself is naturally defined, and will typically
+be defined, as the set of plans satisfying a given set of plan
+properties. For example, in classical planning \plans\ may be the
+(cost-optimal) action sequences achieving the goal from the initial
+state. Given this, it makes sense to distinguish between
+\defined{enforced} plan properties, that induce the set \plans;
+vs.\ \defined{analyzed} plan properties, whose entailment relation
+within \plans\ we wish to identify. The roles played by these two sets
+of properties depend on the application context. If the user questions
+are motivated by a quest, on the part of the user, to better
+comprehend the implications of different decisions within plans, then
+the set of enforced properties is fixed and the set of analyzed
+properties pertains to whatever plan aspects are of interest. Another
+quite natural setting though, that we will refer to frequently in this
+paper, is a quest to find a preferred plan in an iterative manner
+along the lines suggested earlier by \cite{smith:aaai-12}: if the
+consequences of $\neg A \wedge B$ are tolerable to the user, she may
+choose to enforce that property, narrowing the space \plans\ of
+candidate plans. In this setting, enforced properties are akin to
+``hard goals'' while analyzed properties are akin to ``soft goals'',
+and iterative planning replaces the up-front specification of a
+preference model. A canonical application of this kind, that we will
+focus on in our experiments, is oversubscription planning, where our
+analysis explicits the trade-offs between different soft objectives.
+
+
+
+
+
+
+
+
+\joerg{Text snippet from previous abstract below. ... I think that
+  interactive planning is the 2nd point, not the 1st one (as in the
+  proposal: it's something enabled by our approach but the approach
+  remains relevant without it), so I have removed this from the
+  abstract. ... Also, explanation in terms of the search space is a
+  bit itchy as here algorithm-specific, rather than task-specific,
+  aspects come into play; need to think carefully abouyt whether to
+  mention this and if so how.}
+%
+In an interactive planning process, it is important for human users to
+understand the decision rationale behind the suggested plans: Why is
+this plan better than the alternatives?  In principle this can be
+explained through the search space explored by the planner.  But how
+to make a vast search space understandable to a human user? 

@@ -1,10 +1,25 @@
-\section{Compilations into Goal-Fact Dependencies}
+\section{Compilations into Goal Dependencies}
 
 \rebecca{ 1-1.5 page(s) Michael/Rebecca }
 
 \rebecca{Define a FDR task}
 
 \subsection{Action Set Compilation}
+
+\joerg{there first needs to be a separate definition of
+  \defined{action constraints}. Then a definition similar to the one
+  below, that specifies the compilation. Then a formal Proposition
+  claiming that the compilation is correct: given task \task\ with
+  induced plan set \plans\ and plan property set \props\ consisting of
+  goal facts and action constraints, if \task', \plans', and \props'
+  is the compiled task, induced plan set, and property set, then a PDA
+  for \plans\ and \props\ can be constructed in polynomial time from
+  one for \plans' and \props'. In the final paper, the proof can be a
+  short textual explanation, not in a formal proof environment,
+  basically just describing how to do this and why it works; but
+  please first make a more formal detailed proof that explicitly gives
+  the polynomial time algorithm and argues in detail why indeed the
+  result is a PDA for \plans\ and \props.}
 
 The plan properties \textit{"Only one truck is used."} or \textit{"Package A and 
 B are delivered by the same truck"} restrict the actions which can be used to 
