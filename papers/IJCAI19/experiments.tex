@@ -72,33 +72,10 @@
 \newpage
 \subsubsection*{Action Set Properties}
 
-\rebecca{TPP: problems: all path and goods cost 1, every goods is available 
-in exactly 2 markets. properties are: Buy goods x in market y and not in market z}
-
-\rebecca{NoMystery: problems, path cost between 1 to 5, 2 trucks. Properties: only use one truck and 
-deliver package x and y in the same truck (for every package combination)} 
-
 \begin{figure}[ht]
 	\input{data/action_set_properties/scatterplot-expansions_C-max_GFD.tex}
 	\input{data/action_set_properties/scatterplot-search_time_C-max_GFD.tex}
 	\caption{Compare $h^C$ and $h^{max}$ with respect of different \emph{types} of action set properties. 
 	one truck: forced and blocked roads, two trucks: blocked roads, two packages in the same truck}
 \end{figure}
-
-\setlength{\tabcolsep}{3pt}
-\begin{figure}[ht]
-	\centering
-	\begin{tabular}{l|r|rr}
-			& c & C & max \\\hline
-		NoMystery 6L 4P & 1 & 1 & 9 \\
-		NoMystery 6l 4P & 1.2 & 1 & 7\\
-		NoMystery 6L 5P & 1 & 0 & 2\\
-		TPP 5M 3G & 1 & 3 & 10\\
-		TPP 5M 4G & 1 & 0 & 10\\
-		TPP 5M 5G & 1 & 0 &	0 \\\hline
-		sum \numtasks(60) & - & 5 & 36 \\
-	\end{tabular}
-	\caption{Coverage GFD 1 with time out 60 min. 10 problems per size. c: fuel/money constraints }
-\end{figure}
-
 
