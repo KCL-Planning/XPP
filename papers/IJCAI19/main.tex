@@ -70,9 +70,9 @@ $^2$King's College London, Department of Informatics, London, UK\\
 \maketitle
 
 \begin{abstract}
-When a plan has been generated, a user may ask questions asking to
-elucidate decision rationales: Why does the plan do A rather than B?
-This requires an explanation of the space of possible plans. We
+A key problem in explainable planning is to answer user questions
+asking to elucidate decision rationales, \eg, ``Why do A rather than
+B?'' This requires an explanation of the space of possible plans. We
 propose to address this through the analysis of a set of plan
 properties, identifying their dependencies in terms of entailment
 relations in plan space. We introduce a generic formal framework for
@@ -106,7 +106,8 @@ inspection.
    properties there. in our goal facts stuff, this should simply equal
    the number of leaves of the meta search tree. right? this could go
    together, then, with the previous item.
-\item Marcel: try trap learning techniques, on fig 1 benchmarks as well as on new ben chmarks with action constraints; see if tghey do better than hC learning / try to improve performance by navigating his algorithm configuration space
+\item Rebecca \& Michael: extend action-constraint formalization, implementation, and experiments to cases where the action sets may overlap?
+\item Marcel: try trap learning techniques, on fig 1 benchmarks as well as on new benchmarks with action constraints; see if tghey do better than hC learning / try to improve performance by navigating his algorithm configuration space
 \item Rebecca \& Michael: design and run action-constraint experiments where original goals are hard; full cost bound; number of action constraints added is scaled from 1 to N (a priori, given a fixed order of action constraints, unless it turns out to be crucial for performance which of these constraints are added).
 \item Perhaps later depending on outcome of previous item: design experiments where both the number of original goals and gtat of action cnstraints are scaled (2 dimensions); plus where suitabke different cost bounds.
 \item Later: include some data also on LTL compilation. (might decide to remove this from paper later on depending on results and space, but let's keep it in for now)
