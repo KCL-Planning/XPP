@@ -1,70 +1,80 @@
-\section{Plan-Property Dependency Framework}
+\section{Generic Framework}
 
-In this section, we make minimal assumptions on the planning context
-and the plan properties concerned. This serves to identify the generic
-structure of our framework and targeted explainability problems, which
-can then be instantiated against concrete planning formalisms and
-plan-property languages of interest.
+We first introduce our approach making minimal assumptions on the
+planning context and plan properties concerned. This serves to
+identify the generic structure of the explainability problems we
+target. That structure can then be instantiated with concrete planning
+formalisms and plan-property languages of interest, as we will
+exemplify in later sections.
+
+
+
+
+\subsection{Planning Tasks and Plans}
 
 We assume some formalism defining planning \defined{tasks} \task. We
-do not need to make any assumptions about \task, except that it
-induces a set \plans\ of \defined{plans} of interest. A ``plan''
-$\plan \in \plans$ here is any structure that serves as a
-specification what to do (\eg\ a sequence or partially ordered set of
-actions).
-%
-% Joerg: not really needed after all.
-%
-%% For the purpose of our discussions, we assume that computing
-%% \plans\ from \task\ is hard: deciding whether or not \plans\ is empty
-%% is at least \np-hard, and in general $|\plans|$ is not polynomially
-%% bounded in the size of \task. Our framework remains valid if these
-%% assumptions are not met (\eg\ in tractable special cases of planning),
-%% but canonically our explainability analyses are relevant if \plans\ is
-%% large and/or hard to compute.
+do not need any assumptions about that formalism, except that it
+defines a concept of \defined{plans} \plan, where that concept can
+again be arbitrary (action sequence/schedule/partial order/etc). 
 
-For our analyses to make sense, \plans\ should be the set of plan
-\emph{candidates} that a human user could consider. Canonically, this
-includes all action sequences that are applicable at an initial state
-and that achieve a set of \defined{hard} goals/constraints -- in
-general: \defined{plan properties}, see below -- which the user is not
-willing to forego under any circumstance. Within \plans, then, the
-questions are a) in which manner these hard plan properties are
-achieved, and/or b) which other \defined{soft} properties are
-achieved. We will be using the distinction between hard and soft plan
-properties in some discussions, and in parts of our experiments. Keep
-in mind though that, through a), our framework is not limited to
-oversubscription planning; \eg\ in classical planning \plans\ can
-simply be the set of (cost-optimal) plans achieving the goal, where
-our framework answers questions about the properties of such plans.
+Our definitions are relative to a set of plans \plans\ of
+interest. The canonical setup we have in mind is that where \plans\ is
+\defined{implicit}, induced by \task\ as the set of \plan\ that
+achieve a set of \defined{enforced} plan properties. But
+\defined{explicit} \plans, given as a list of plans in the input, can
+also be relevant if the user wants to focus the analysis on a
+narrow/small subset of candidate plans. In either case, our framework
+addresses dependencies between \defined{analyzed} plan properties
+within \plans.
+%
+% Joerg: previous text here
+%
+%% Our definitions are relative to a set of plans \plans\ of interest:
+%% the set of plan \emph{candidates} the human user is considering, and
+%% whose property dependencies we should thus analyze. The canonical
+%% setup we have in mind is that where \plans\ is \defined{implicit},
+%% induced by \task\ as the set of \plan\ that achieve a set of
+%% \defined{hard} goals/constraints (in general: \defined{plan
+%%   properties}, see below) which the user is not willing to forego
+%% under any circumstance. But \defined{explicit} \plans, given as a list
+%% of plans in the input, can also be relevant if the user wants to focus
+%% the analysis on a narrow/small subset of candidate plans. Whichever is
+%% the case, the analysis considers dependencies between \defined{soft}
+%% plan properties within \plans. These properties can be soft goals as
+%% in oversubscription planning, but they can also be arbitrary
+%% constraints characterizing the manner in which the hard plan
+%% properties are achieved. For example, in classical planning,
+%% \plans\ can simply be the set of (cost-optimal) plans achieving the
+%% goal, where our analysis answers questions about the properties of
+%% such plans.
+
+
 
 
 
 \subsection{Plan Properties and Property Entailment}
 
 Plan properties, in their most general form, are simply functions
-mapping a plan to a Boolean value indicating whether or not the
-property is satisfied:
+mapping a task and plan to a Boolean value indicating whether or not
+the property is satisfied:
 
 \begin{definition}[Plan Property]
 Denoting by \alltasks\ the set of all tasks and by \allplans\ the set
 of all plans, a \emph{plan property} is a partial function $\prop :
 \alltasks \times \allplans \mapsto \{\true, \false\}$. Given a task
-\task\ and induced set of plans \plans, we say that \prop\ is a plan
-property defined on \task\ if its domain includes $\{(\task,\plan) \mid \plan
-\in \plans\}$.
+\task\ and a set of plans \plans, we say that \prop\ is a plan
+property defined on \task\ and \plans\ if its domain includes
+$\{(\task,\plan) \mid \plan \in \plans\}$.
 \end{definition}
 
 Example plan properties are goal facts/goal formulas (true at end of
-plan?), temporal plan trajectory constraints, deadlines, bounds on
-resource consumption, etc. For practical purposes, $\prop$ should be
-computable in time polynomial in the size of its input, \ie\ it should
-be efficiently decidable whether or not a plan property is satisfied,
-but for the purpose of the following definitions that restriction is
-not necessary.
+plan?), temporal plan trajectory constraints, constraints on subsets
+of actions used/not used, deadlines, bounds on resource consumption,
+etc. Canonically, $\prop$ is computable in time polynomial in the size
+of its input.
 
-In what follows, we assume a set \props\ of plan properties as part of
-our input. In this context, a distinction not necessary for our
+We assume a set \props\ of plan properties (the analyzed ones) as part
+of our input. In this context, a distinction not necessary for our
 generic definitions, but important in practice, is that between
 \defined{atomic} vs.\ \defined{composed} plan properties. The set
 \propsatom\ of atomic properties is listed explicitly in the input,
@@ -90,8 +100,8 @@ plan properties, in the space of truth-value assignments induced by
 the plan-candidate set \plans:
 
 \begin{definition}[Entailment]
-Let \task\ be a task with induced set of plans \plans. Let \props\ be
-a set of plan properties defined on \task.
+Let \task\ be a task and \plans\ a set of plans. Let \props\ be a set
+of plan properties defined on \task\ and \plans.
 
 Let $\plan \in \plans$. We identify \plan\ with the truth-value
 assignment $\plan : \props \mapsto \{\true, \false\}$ where
@@ -155,35 +165,40 @@ Our plan-space explanation problems consist in identifying the
 entailment relation on \props\ given the knowledge base \plans:
 
 \begin{definition}[PDO and PDA]
-Let \task\ be a task with induced set of plans \plans. Let \props\ be
-a set of plan properties defined on \task.
+Let \task\ be a task and \plans\ a set of plans. Let \props\ be a set
+of plan properties defined on \task\ and \plans.
 
-The \defined{plan-property dependency order (PDO)} for \plans\ is the
-partial order $\pdo{\plans}$ over the equivalence classes
-$\equiv{\plans}{\prop}$, where $\equiv{\plans}{\prop} \pdo{\plans}
-\equiv{\plans}{\propq}$ iff $\entails{\plans}{\prop}{\propq}$.
+The \defined{plan-property dependency order (PDO)} for \plans\ and
+\props\ is the partial order $\pdo{\plans}$ over the equivalence
+classes $\equiv{\plans}{\prop}$, where $\equiv{\plans}{\prop}
+\pdo{\plans} \equiv{\plans}{\propq}$ iff
+$\entails{\plans}{\prop}{\propq}$.
 
 A set $\pda{\plans} \subseteq \props$ is a \defined{plan-property
-  dependency axiomatization (PDA)} for \plans\ if, for every minimal
-element $\equiv{\plans}{\prop}$ of $\pdo{\plans}$ restricted to
-\prop\ satisfiable in \plans, $\pda{\plans}$ contains exactly one
-member of $\equiv{\plans}{\prop}$.
+  dependency axiomatization (PDA)} for \plans\ and \props\ if, for
+every minimal element $\equiv{\plans}{\prop}$ of $\pdo{\plans}$
+restricted to \prop\ satisfiable in \plans, $\pda{\plans}$ contains
+exactly one member of $\equiv{\plans}{\prop}$.
 \end{definition}
 
-We refer by the \defined{PDO problem} to the computational problem of
-computing the PDO given \task\ as well as a (compact) specification of
-\props. Accordingly for the \defined{PDA problem}.
+% Joerg: not really needed, and potentially confusing in terms of what
+% ``computing the PDO'' actually means -- how to represent the
+% equivalence classes?
+%
+%% We refer by the \defined{PDO problem} to the computational problem of
+%% computing the PDO given \task\ as well as a (compact) specification of
+%% \props. Accordingly for the \defined{PDA problem}.
 
 The PDO is a plan-space explanation in the sense of making explicit
 how the plan properties of interest depend on each other -- saying
 things like ``we cannot have $p$ without foregoing either of $q_1$ or
 $q_2$ or $q_3$''. The PDO is exhaustive, and in that sense the ideal
-plan-space explanation in principle. In practice though its size may
-be problematic. If one is interested in atomic plan properties only,
-specified explicitly in the user input, then \props\ and hence the PDO
-is small. If \props\ includes composed properties however, like
-arbitrary propositional formulas, then showing the user a PDA may be
-more suitable than showing the entire PDO.
+plan-space explanation in principle. In practice though its size, \ie,
+the number of equivalence classes, may be problematic. If one is
+interested in atomic plan properties only, specified explicitly in the
+user input, then \props\ and hence the PDO is small. If
+\props\ includes composed properties though, then showing a PDA may be
+more suitable.
 
 A PDA captures the strongest properties, that together entail all
 other properties given \plans\ -- and that, in this sense, form an
@@ -215,16 +230,6 @@ specifies the maximal solvable conjunctions.
 %%   it at the above definition, maybe briefly remarking here that $O$ is
 %%   a meet-semilattice if $\Phi$ is closed under conjunction.}
 
-
-%% \joerg{discuss finiteness; discuss complexity (corresponds to proving
-%%   unsolability in classical planning), point out encouraging results
-%%   with goal-fact dependencies in our experiments.}
-%
-%% \joerg{think through different planning frameworks, in particular ones
-%%   with continous phenomena, like time; everything below remains
-%%   finite; what becomes harder or undecidable though is checking
-%%   plan-property dependencies. probably discuss this below.}
-%
 The PDO is finite if only atomic plan properties are considered,
 simply as the number of truth-value assignments is. In the presence of
 an infinite set of composed plan properties (such as propositional
@@ -234,41 +239,45 @@ of plans \plans\ of interest is finite (as is the case \eg\ if the
 action set is finite and plan size can be finitely bounded), because
 then there is only a finite number of non-equivalent plan properties.
 
-Regarding complexity, obviously testing satisfiability of a plan
-property encompasses the plan existence problem. The same is true for
-plan-property entailment, where proving that an entailment
+Regarding complexity, if \plans\ is implicitly given, then obviously
+testing plan-property satisfiability encompasses the plan existence
+problem even for the simplest possible plan properties which merely
+ask whether some fact $p$ is true at the end of the plan. The same is
+true for plan-property entailment, where proving that an entailment
 $\entails{\plans}{\prop}{\propq}$ holds corresponds to proving a
 planning task unsolvable (there exists no plan that satisfies
 \prop\ and that does not satisfy \propq). This is exacerbated by the
 potentially exponential size of the PDO, and the PDA, for composed
 plan properties. Certainly, both the PDO and PDA problems should
 ideally be solved offline, prior to interaction with a user. As our
-experimental results show, however, in many benchmark studies
-computing the PDA is similarly feasible as optimal planning, and the
-size of the PDA is reasonably small for human inspection.
+experimental results show, however, in a variety of benchmarks,
+computing a PDA has similar scalability as optimal planning, and the
+size of a PDA is reasonably small for human inspection.
+%
+%% For the purpose of our discussions, we assume that computing
+%% \plans\ from \task\ is hard: deciding whether or not \plans\ is
+%% empty is at least \np-hard, and in general $|\plans|$ is not
+%% polynomially bounded in the size of \task. Our framework remains
+%% valid if these assumptions are not met (\eg\ in tractable special
+%% cases of planning), but canonically our explainability analyses are
+%% relevant if \plans\ is large and/or hard to compute.
 
 
+% Joerg: a fully formal frame here would need to talk about
+% compilations, also of planning tasks ... overkill, instead formulate
+% what's needed in the concrete instances here when we get there.
+%
+%% A property we will rely on in the following sections is that sometimes
+%% a PDA for a plan-property set $\props^B$ can be easily obtained from
+%% that for a plan-property set $\props^A$:
+%
+%% \begin{definition}[PDA Derivability]
+%% Let $\props^A$ and $\props^B$ be sets of plan properties. We say that
+%% a PDA for $\props^B$ is \defined{polynomially derivable} from that for
+%% $\props^A$ if there exists an algorithm that runs in time polynomial
+%% in the size of its input and that, for any task \task\ on which all
+%% $\prop \in \props^A \cup \props^B$ are defined, transforms a PDA for
+%% $\props^A$ into one for $\props^B$.
+%% \end{definition}
 
 
-\joerg{This definition is optional, depending on whether or not we
-  decide to actually keep in the several different related definitions
-  in the next section:}
-
-As we shall exemplify in the next section, sometimes the PDA for a
-plan-property set $\props^B$ can be easily obtained from that for a
-plan-property set $\props^A$:
-
-\begin{definition}[PDA Derivability]
-Let $\props^A$ and $\props^B$ be sets of plan properties. We say that
-the PDA for $\props^B$ is \defined{polynomially derivable} from that
-for $\props^A$ if there exists an algorithm that runs in time
-polynomial in the size of its input and that, for any task \task\ on
-which all $\prop \in \props^A \cup \props^B$ are defined, transforms
-the PDA for $\props^A$ into that for $\props^B$.
-\end{definition}
-
-
-
-
-\joerg{discuss relation to model checking here somewhere? discuss
-  possibility to automatically identify relevant $F$ and $\Phi$?}

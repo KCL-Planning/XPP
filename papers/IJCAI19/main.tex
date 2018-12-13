@@ -9,12 +9,6 @@
 \usepackage{courier}
 \usepackage{url}  %Required
 \usepackage{graphicx}  %Required
-\frenchspacing  %Required
-\setlength{\pdfpagewidth}{8.5in}  %Required
-\setlength{\pdfpageheight}{11in}  %Required
-
-
-\setcounter{secnumdepth}{0}
 
 %%%%%%%%%%%%%%%%%%%%%
 %%%% Packages
@@ -35,18 +29,6 @@
 \usepackage{listings}
 \usepackage{subcaption}
 
-
-\newtheorem{corollary}{Corollary}
-\newtheorem{lemma}{Lemma}
-\newtheorem{theorem}{Theorem}
-\newtheorem{definition}{Definition}
-\newtheorem{proposition}{Proposition}
-\newtheorem{example}{Example}
-\usepackage{placeins}
-
-%\renewenvironment{proof}{\textit{Proof.} }{}
-\renewenvironment{proof}{\noindent{\it
-Proof.}\hspace*{0.5em}}{\qed}
 
 %\setlength\floatsep{0.25\baselineskip}
 %\setlength\textfloatsep{0.25\baselineskip}
@@ -88,23 +70,50 @@ $^2$King's College London, Department of Informatics, London, UK\\
 \maketitle
 
 \begin{abstract}
-In an interactive planning process, it is important for human users to
-understand the decision rationale behind the suggested plans: Why is
-this plan better than the alternatives?  In principle this can be
-explained through the search space explored by the planner.  But how
-to make a vast search space understandable to a human user?  We
-propose to do so by explaining the space of plans in terms of a
-selected set of plan properties and their dependencies, such as
-entailment in plan space.  We introduce a generic formal framework for
-such dependency analysis.  We instantiate and operationalize that
-framework for the case of dependencies between goal facts in
-oversubscription planning, leveraging and extending recent nogood
-learning methods for computational efficiency. We show that more
-general plan properties can be compiled into this special case. We
-analyze this approach experimentally, showing in particular that, in
-several benchmark studies, the suggested analyses can be feasible and
-produce compact results for human inspection.
+A key problem in explainable planning is to answer user questions
+asking to elucidate decision rationales, \eg, ``Why do A rather than
+B?'' This requires an explanation of the space of possible plans. We
+propose to address this through the analysis of a set of plan
+properties, identifying their dependencies in terms of entailment
+relations in plan space. We introduce a generic formal framework for
+such dependency analysis. We instantiate and operationalize that
+framework for the case of dependencies between goals in
+oversubscription planning.
+%
+% Joerg: the nogood learning is after all not super important for
+% performance; whereas the compilations really are central to this
+% paper.
+%
+%% , leveraging and extending recent nogood learning methods for
+%% computational efficiency. We show that more general plan properties
+%% can be compiled into this special case.
+%
+We show how to compile powerful plan properties, constraining action
+choices or imposing LTL formulas on the plan trajectory, into that
+special case.
+%
+We show experimentally that, in a variety of benchmarks, the suggested
+analyses can be feasible and produce compact results for human
+inspection.
 \end{abstract}
+
+\joerg{TODO:}
+
+\begin{itemize}
+\item Rebecca: get RCP benchmarks from Marcel (3 domains), add corresponding table rows to Figure 1, in separate part at bottom
+\item Rebecca: add to data on the meta search tree: 1. size of the search tree ie number of nodes (of planning tasks) solved, as a function of the cost bound; 2. (average) time-per-node in that search tree, as a function of the cost bound and the planner.  As the cost bound grows, 1. should get smaller while 2. should get larger.
+\item Rebecca: add data on the size of the PDA, ie the number of plan
+   properties there. in our goal facts stuff, this should simply equal
+   the number of leaves of the meta search tree. right? this could go
+   together, then, with the previous item.
+\item Rebecca \& Michael: extend action-constraint formalization, implementation, and experiments to cases where the action sets may overlap?
+\item Marcel: try trap learning techniques, on fig 1 benchmarks as well as on new benchmarks with action constraints; see if tghey do better than hC learning / try to improve performance by navigating his algorithm configuration space
+\item Rebecca \& Michael: design and run action-constraint experiments where original goals are hard; full cost bound; number of action constraints added is scaled from 1 to N (a priori, given a fixed order of action constraints, unless it turns out to be crucial for performance which of these constraints are added).
+\item Perhaps later depending on outcome of previous item: design experiments where both the number of original goals and gtat of action cnstraints are scaled (2 dimensions); plus where suitabke different cost bounds.
+\item Later: include some data also on LTL compilation. (might decide to remove this from paper later on depending on results and space, but let's keep it in for now)
+\item Rebecca/Michael: check out the IPC net-benefit benchmarks. Reviwers may naturally expect us to experiment with those, given our strong focus on oversubscription planning (actually this question came up in the discussion with the NASA guys yesterday). In the net-bnefit benchmarks, goal facts have rewards which we don't need. The question is whether, stripping away these rewards and imposing a plan-cost bound, we would get benchmarks not already covered by bour IPC experiments anyway. If the answer is "no", we can just say so in the paper. If the answer is "yes", it would be good (though probably not absolitely necessary) to experiment with these domains as well. In any case, we should know what the answer is.
+\end{itemize}
+
 
 \input{introduction}
 
