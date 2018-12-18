@@ -20,13 +20,14 @@ again be arbitrary (action sequence/schedule/partial order/etc).
 
 Our definitions are relative to a set of plans \plans\ of
 interest. The canonical setup we have in mind is that where \plans\ is
-\defined{implicit}, induced by \task\ as the set of \plan\ that
-achieve a set of \defined{enforced} plan properties. But
+\defined{implicit}, induced by \task: \plans\ may be the set of action
+sequences applicable in the initial state; or it may be the set of
+plans which satisfy a set of \defined{enforced} plan properties (and,
+potentially, some optimality criterion). But if the user wants to
+focus the analysis on a narrow/small subset of candidate plans, then
 \defined{explicit} \plans, given as a list of plans in the input, can
-also be relevant if the user wants to focus the analysis on a
-narrow/small subset of candidate plans. In either case, our framework
-addresses dependencies between \defined{analyzed} plan properties
-within \plans.
+also be relevant. In either case, our framework addresses dependencies
+between \defined{analyzed} plan properties within \plans.
 %
 % Joerg: previous text here
 %
@@ -71,8 +72,9 @@ $\{(\task,\plan) \mid \plan \in \plans\}$.
 Example plan properties are goal facts/goal formulas (true at end of
 plan?), temporal plan trajectory constraints, constraints on subsets
 of actions used/not used, deadlines, bounds on resource consumption,
-etc. Canonically, $\prop$ is computable in time polynomial in the size
-of its input.
+etc. We presume that $\prop$ is computable in time polynomial in the
+size of its input, though that is not, strictly speaking, a
+requirement of our framework.
 
 We assume a set \props\ of plan properties (the analyzed ones) as part
 of our input. In this context, a distinction not necessary for our
@@ -90,7 +92,7 @@ infinite.
 As a concrete instance we will consider later on, the user may be
 interested in a set $G$ of soft-goal facts, where for each $g \in G$
 being or not being achieved by a plan $\plan \in \plans$ is an atomic
-goal property. But the interesting dependencies may be, not across
+plan property. But the interesting dependencies may be, not across
 individual $g$, but over conjunctions thereof (\eg\ if conjunctions,
 but not typically singletons, exclude the possibility to achieve other
 goals). The input to our analysis then is merely the set $G$, while
@@ -99,6 +101,30 @@ the analysis considers dependencies across all conjunctions over $G$.
 The kind of dependency our framework focusses on is entailment over
 plan properties, in the space of truth-value assignments induced by
 the plan-candidate set \plans:
+
+\joerg{I deliberated adapting the following definitions and text to
+  explicitly use two sets of plan properties, enforced vs analyzed,
+  where the enforced ones replace the role currently taken by
+  \plans. This would be nice in that it makes visible how properties
+  can move between these two sides, and that entailment in the KB is
+  the same, then, as moving the required properties from the KB into
+  the LHS of an implication which is then valid in the reduced KB --
+  overall, this yields a nice match with the usual stuff one is used
+  to in logics. However, the definitions as stated here are 1)
+  strictly more general, as they allow such a setup in particular but
+  also allow explicitly given \plans; 2) better suited to the case
+  where \plans\ has optimality criteria as well, which can be captured
+  as plan properties but odd ones not computable in polynomial time;
+  3) better suited to our discussion here as they focus on the issue
+  of entailment in plan space, where the set of plans is a KB, which
+  is our main focus and new thing here.}
+
+%% \joerg{mention task properties? (ini state etc)? decided to not do
+%%   this here: 1) these make most intuitive sense when explcitly making
+%%   them enforced properties, that define the space of plans \plans\ we
+%%   are interested in; 2) it's rather a side line here, and distracting
+%%   from the main focus of our discussion introducing the framework,
+%%   which already covers many aspects and can be confusing.}
 
 \begin{definition}[Entailment]
 Let \task\ be a task and \plans\ a set of plans. Let \props\ be a set
@@ -124,9 +150,6 @@ written $\iff{\plans}{\prop}{\propq}$, if $\modelsof{\plans}{\prop} =
 \prop\ in \plans\ is written $\equiv{\plans}{\prop} := \{\propq \mid
 \propq \in \props, \iff{\plans}{\prop}{\propq}\}$.
 \end{definition}
-
-\joerg{do minimal elements always exist? discuss below together with
-  finiteness?}
 
 This definition essentially just views plans $\plan \in \plans$ as
 truth-value assignments in the obvious manner. Entailment and
@@ -201,7 +224,7 @@ principle. In practice though its size, \ie, the number of equivalence
 classes, may be problematic. If one is interested in atomic plan
 properties only, specified explicitly in the user input, then
 \props\ and hence the PDO is small. If \props\ includes composed
-properties though, then the PDA may be more suited as an overview
+properties though, then the PDA may be more suited to show as overview
 information.
 
 The PDA captures the strongest properties, that together entail all
@@ -236,7 +259,7 @@ solvable conjunctions.
 
 A concrete PDO/PDA is a practical proxy if equivalence classes are
 large or infinite.
-%
+
 The PDO is finite if only atomic plan properties are considered,
 simply as the number of truth-value assignments is. In the presence of
 an infinite set of composed plan properties (such as propositional
@@ -245,6 +268,9 @@ classes. In particular, the latter is necessarily the case if the set
 of plans \plans\ of interest is finite (as is the case \eg\ if the
 action set is finite and plan size can be finitely bounded), because
 then there is only a finite number of non-equivalent plan properties.
+%
+When the PDO is finite, minimal elements exist and thus the PDA is
+non-empty
 
 Regarding complexity, if \plans\ is implicitly given, then testing
 plan-property satisfiability encompasses the plan existence problem
