@@ -1,114 +1,341 @@
 \section{Goal Dependencies in Oversubscription Planning}
 \label{goaldep}
 
-\joerg{0.75 -- 1 page(s) joerg}
+%% \joerg{0.75 -- 1 page(s) joerg}
 
-\joerg{To formulate the below as an instantiation of the framework:}
-assume soft-goal fact set $G$. formulate all property sets as formulas
-over $G$, which become atomic plan properties $\props^{G}$ by
-evaluating them at end of plan. three different plan-property sets,
-all with atomic properties $\props^{G}$ but with different composed
-properties: 1. conjunctive properties $\props^{C}$, $\bigwedge_{g \in
-  A} a$; 2. conjunctive exclusion properties $\props^{CE}$,
-$\bigwedge_{g \in A} g \implies \neg \bigwedge_{g \in B} g$;
-3. disjunctive exclusion properties $\props^{DE}$, $\bigwedge_{g \in
-  A} g \implies \neg \bigvee_{g \in B} g$. Describe computation of PDA
-for $\props = \props^{G} \cup \props^{C}$. Prove that the PDA for
-$\props^{G} \cup \props^{CE}$ and $\props^{G} \cup \props^{DE}$ are
-polynomially derivable from that (by specifying the required
-derivation functions $f$ and proving them correct). 
-
-\joerg{introduce 1. formally. introduce 2. and 3. briefly and discuss
-  their derivability, to point out application to more XAIP-like
-  questions than just solvable goal sets}
-
-\joerg{question: does our method compute the PDO alongside the PDA?
-  and is the PDA unique?}
+We now instantiate our framework with a concrete use case:
+dependencies between goals in oversubscription planning, where the
+question addressed is which combinations of (soft) goals exclude which
+other combinations. In Section~\ref{compilation}, we will show how to
+compile more powerful plan property languages into this special case.
 
 
-\subsection{???}
 
-\rebecca{start with a concrete example, in the truck domain}
 
-\emph{If goal subset A is true at the end of the plan, then at least one element of goal subset B
-must be false at the end of the plan.}
+\subsection{Planning Framework}
+\label{goaldep:planning}
 
-\rebecca{if we are looking fore the minimal sets $A \cup B$ than B always contains 
-only one element}
+Most of the techniques we introduce in what follows are applicable to
+a broad range of planning frameworks. Nevertheless, for a concrete
+exposition, henceforth we consider the \emph{finite-domain
+  representation (FDR)} framework
+\cite{backstrom:nebel:ci-95,helmert:ai-09}, with finite-domain state
+variables as used in the Fast Downward system \cite{helmert:jair-06}
+on which our implementation is based.
 
-\begin{definition}[Conjunctive Exclusion]
-Given a planning task $\Pi = (V,A,c,I,G)$ $(A,B)$ with $A, B \subseteq G$ is a 
-GFD1 if $\Pi$ with the goal $A \cup B$, i.e., $\bigwedge_{p \in A \cup B} p$
-is unsolvable.
-The subsumption relation is given by $\forall A,B,A',B': (A,B) \leq (A',B')$ iff $A \cup B \subseteq 
-A' \cup B'$
+An FDR planning \defined{\task} is a tuple $\task =
+(\vars,\acts,\cost,\init,\goal)$ where \vars\ is the set of
+\defined{variables}, \acts\ is the set of \defined{actions}, $\cost:
+\acts \mapsto \reals^+_0$ is the action \defined{cost} function,
+\init\ is the \defined{initial state}, and \goal\ is the
+\defined{goal}. A \defined{state}, in particular \init, is a complete
+assignment to $\vars$; \goal\ is a partial assignment to \vars; each
+action $a \in \acts$ has a \defined{precondition} $\pre_a$ and an
+effect $\eff_a$, both partial assignments to \vars. We will refer to
+variable-value pairs $v=d$ as \defined{facts}, and we will identify
+partial variable assignments with sets of facts.
+%
+An action $a$ is \defined{applicable} in a state $s$ if $\pre_a
+\subseteq s$. The outcome state $s\apply{a}$ is like $s$ except that
+$s\apply{a}(v) = \eff_a(v)$ for those $v$ on which $\eff_a$ is
+defined. The outcome state of an iteratively applicable action
+sequence $\plan$ is denoted $s\apply{\plan}$.
+
+We address an oversubscription variant of FDR, where an
+\defined{oversubscription planning (OSP) task} is a tuple $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
+exactly like an FDR task but with an additional \defined{cost bound}
+$\costbound \in \reals^+_0$. Intuitively, the goals \goal\ are
+``soft'', and the challenge is to achieve a maximally valuable subset
+of \goal\ within the cost bound. OSP frameworks in the literature
+employ notions (\eg\ goal-fact rewards) of what it means to be
+``maximally valuable''
+\cite{smith:icaps-04,domshlak:mirkis:jair-15}. Here we assume instead
+that the user's preferences over the soft goals are difficult to
+specify or elicitate, so that an in-depth characterization of the
+trade-offs between different goal sets -- their dependencies -- is of
+interest. In the terms of our framework, this means that the set
+\plans\ of \defined{plans} is simply the set of all action sequences
+$\plan = \langle a_1, \dots, a_n\rangle$ that are applicable in
+\init\ and where $\sum_{i=1}^n \cost(a_i) \leq \costbound$. An
+analysis over suitable sets of properties \props\ and dependencies
+\deps\ then yields the desired trade-off information.
+
+
+
+
+
+
+\subsection{Conjunctive Exclusion}
+\label{goaldep:conjunctive}
+
+The properties of interest will be different sub-classes of
+propositional formulas over goals, so we first introduce general
+notation for those:
+
+\begin{definition}[Goal Properties]
+Let $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
+be an OSP task, and \plans\ its set of plans. 
+
+The set $\props^{GA}$ of \defined{atomic goal properties} for
+\task\ contains the functions $\prop_g : \plans \mapsto \{\true,
+\false\}$ for $g \in \goal$, where $\prop_g(\plan) = \true$ iff $g \in
+s\init\apply{\plan}$.
+%
+The set $\props^{GC}$ of \defined{composed goal properties} for
+\task\ contains the functions $\prop_\phi : \plans \mapsto \{\true,
+\false\}$ for all propositional formulas $\phi$ over the atoms \goal,
+where $\prop_\phi(\plan) = \true$ iff $\phi$ evaluates to true given
+the values of $\prop_g(\plan)$.
 \end{definition}
 
-\paragraph{Algorithm}
-All minimal GFD1s can be computed through a search tree that starts at node $N_0$ containing
-all goal facts $G$ and where each search step on a node $N_i$ tests solvability of 
-$\Pi_i = (V,A,c,I,N_i)$. If $\Pi_i$ is not solvable, we generate one child 
-node $N'$ for every subset of $N_i$ obtained by removing one fact.  
-Upon termination all nodes with only solvable children are the \emph{minimal unsolvable 
-goal subsets (MUGS)}. (A,B) is a minimal GFD1 iff $A \cup B \in \text{MUGS}$, 
-$A \cap B = \emptyset$ and $|B| = 1$
+We first consider a class of properties and dependencies identifying
+exclusions between goal conjunctions:
 
-\rebecca{A is always solvable}
+\begin{definition}[Conjunctive Exclusion]
+Let $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
+be an OSP task, and \plans\ its set of plans.  
 
-\rebecca{add example, for fuel level 5}
+The \defined{PDO for conjunctive exclusion (PDO-CE)} is the PDO for
+\plans, the property set $\props^{CE} := \{\bigwedge_{g \in A} g \mid
+A \subseteq G\} \cup \{\neg \bigwedge_{g \in B} g \mid B \subseteq
+G\}$, and the dependency set $\deps^{CE} := (\bigwedge_{g \in A}
+g,\neg \bigwedge_{g \in B} g)$.
+\end{definition}
 
-\subsection{???}
+In other words, we restrict focus to goal conjunctions and negations
+thereof, and we are interested solely in implications of the form
+$\entails{\plans}{\bigwedge_{g \in A} g}{\neg \bigwedge_{g \in B} g}$
+stating that, if we achieve all of $A$, we cannot achieve all of
+$B$. The PDO-CE then explains to the user how exactly different goal
+subsets exclude each other, identifying the fine-grained trade-off.
 
-\textit{If goal subset A is true at the end of the plan, 
-then ALL elements of goal subset B must be false at the end of the plan.}\\
 
-\begin{definition}[Disjunctive Exclusion]
-	Given a planning task $\Pi = (V,A,c,I,G)$ the tuples
-	$(A,B)$ with $A,B \subseteq G $ is a GFD2 if 
-	$\Pi$ with the goal $\bigwedge_{p \in A} p \wedge (\bigvee_{q \in B} q)$
-	is unsolvable. 
-	The subsumption relation is given by $\forall A,B,A',B': (A,B) \leq (A',B')$ iff $A \subseteq A'$
-	and $B \supseteq B'$.
-\end{definition}	
 
-	\noindent
-	Given all minimal GFD1s for $\Pi$ all minimal GFD2s can be derived according 
-	to the following relation.
+\subsection{Computing the PDO-CE}
+\label{goaldep:computing}
 
-	\rebecca{proof}
 
-	\vspace{-0.3cm}
-	\begin{align*}
-		GFD2 &:= \{(A,B) | 
-				\exists P \in GFD1:(
-				   A \subseteq P \wedge |P \setminus A | = 1 \wedge\\
-				   &\forall P' \in PPD1:
-					  A \subseteq P' \rightarrow P' \setminus A \subseteq B
-				)
-			 \}
-	\end{align*}
 
-\paragraph{Algorithm}
-From the minimal GFD1s we get a set:
-	$D = \{(A,B) | \exists P \in GFD1s, p \in P: A = P \setminus p \wedge
-	B = \{p\}\}$
+Describe computation of PDO for $\props = \props^{G} \cup \props^{C}$.
 
-These GFD2s are not necessary optimal, the B could be larger.
+\joerg{here's a depth-first algorithm that generates every goal subset
+  exactly once. ... hm doesn't work that way we need to know whether
+  or not the left-out subsets, below $i$ in the recursive call, are
+  solvable ... TBD}
 
-\rebecca{find a name for A and B}
+Initialize $\cal G :+ \emptyset$; assume $\goal = \{g_1, \dots,
+g_n\}$; call Recursive-PDO-CE($\goal$, $1$):
 
-\noindent
-To get the maximal set of goals which can not be achieved if we achieve A, 
-you have to merge all B's which belong to an A' which is a subset of A. 
+\begin{tabbing}
+Bo\=ol Recursive-PDO-CE($G'$, $i$) \{\\
+\> \textbf{if} $G'$ is solvable in \task\ \textbf{then return \true\ endif}\\
+\> flag := \true\\
+\> \textbf{for} \= $j = i \dots n$ where $g_j \in G'$ \textbf{do}\\
+\> \> \textbf{if} \= not Recursive-PDO-CE($G' \setminus \{g_j\}$, $j+1$) \textbf{then}\\
+\> \> \> flag := \false\\
+\> \> \textbf{endif}\\
+\> \textbf{endfor}\\
+\> \textbf{if} flag \textbf{then} $\cal G := \cal G \cup \{G'\}$\\
+\> return \false
+\end{tabbing}
 
-\begin{align*}
-	(A, \bigcup_{(A', B') \in \{(A'', B'') \in D | A' \subseteq A\}} B' \cup B)
-\end{align*}
 
-\rebecca{to many ticks}
 
-\rebecca{add example, from GFD1 to GFD2}
 
-\noindent
-If the planning task is not solvable for a goal fact at all, you can add 
-this goal fact to all B's.\\
+\subsection{Disjunctive Exclusion}
+\label{goaldep:disjunctive}
+
+
+
+%% \joerg{2. and 3. briefly and discuss
+%%   their derivability, to point out application to more XAIP-like
+%%   questions than just solvable goal sets}
+
+
+we then show
+that cPDAs for extensions, capturing exclusion dependencies, can be
+derived efficiently from a cPDA for $\props^{C}$. Later
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% JOERG: MY INITIAL NOTES
+
+
+%% \joerg{question: does our method compute the PDO alongside the PDA?
+%%   and is the PDA unique?} for 1.: We compute a cPDA: First, say G'
+%%   is maximal satisfiable; we prove that [G'] is in the cGPA. Assume
+%%   satisfiable G'' entails G'. Then G' \cup G'' is satisfiable, so
+%%   we must have G'' \subseteq G' by maximality of G'. But then, G'
+%%   entails G'' so they're equivalent. Vive versa, say that [G'] is
+%%   minimal satisfiable in PDO, and say that G'_0 is a set-inclusion
+%%   maximal superset of G' in [G']; then there is no satisfiable
+%%   superset G'' of G'_0 as otherwise [G'] would not be minimal; so
+%%   G'_0 is maximal satisfiable. Finally, each two maximal
+%%   satisfiable sets belog to different members of the PDA: if G'
+%%   \neq G'' maximal satisfiable, then neither implies the other as
+%%   otherwise G' \cup G'' would be larger satisfiable. We do not
+%%   compute the PDO as that may involve entailments due to planning
+%%   semantics, eg q entails p if the only way to achieve q is via
+%%   achieving p first.
+
+
+
+%% conjunctive exclusion properties $\props^{CE}$, $\bigwedge_{g \in A} g
+%% \wedge \bigwedge_{g \in B} g$; 3. disjunctive exclusion properties
+%% $\props^{DE}$, $\bigwedge_{g \in A} g \wedge \bigvee_{g \in B}
+%% g$. (alternative: take elements of intended exclusion implications as
+%% properties instead. don't do here as we don't actually compute a PDA
+%% for these, there may be other implications we don't see. general: if
+%% implications $A \rightarrow B$ are of interest, can use properties $A
+%% \wedge \neg B$ where PDA identifies maximal such implications ie where
+%% A is weakest and $\neg B$ is strongest. mention this explicitly in
+%% this subsec? introduce explusion implications of interest first, then
+%% specify encoding of these as plan props and cPDA analysis on those?
+
+%% Prove
+%% that the PDA for $\props^{G} \cup \props^{CE}$ and $\props^{G} \cup
+%% \props^{DE}$ are polynomially derivable from that (by specifying the
+%% required derivation functions $f$ and proving them correct).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% INITIAL TEXT IN THIS SECTION
+
+
+%% \subsection{???}
+
+%% \rebecca{start with a concrete example, in the truck domain}
+
+%% \emph{If goal subset A is true at the end of the plan, then at least one element of goal subset B
+%% must be false at the end of the plan.}
+
+%% \rebecca{if we are looking fore the minimal sets $A \cup B$ than B always contains 
+%% only one element}
+
+%% \begin{definition}[Conjunctive Exclusion]
+%% Given a planning task $\Pi = (V,A,c,I,G)$ $(A,B)$ with $A, B \subseteq G$ is a 
+%% GFD1 if $\Pi$ with the goal $A \cup B$, i.e., $\bigwedge_{p \in A \cup B} p$
+%% is unsolvable.
+%% The subsumption relation is given by $\forall A,B,A',B': (A,B) \leq (A',B')$ iff $A \cup B \subseteq 
+%% A' \cup B'$
+%% \end{definition}
+
+%% \paragraph{Algorithm}
+%% All minimal GFD1s can be computed through a search tree that starts at node $N_0$ containing
+%% all goal facts $G$ and where each search step on a node $N_i$ tests solvability of 
+%% $\Pi_i = (V,A,c,I,N_i)$. If $\Pi_i$ is not solvable, we generate one child 
+%% node $N'$ for every subset of $N_i$ obtained by removing one fact.  
+%% Upon termination all nodes with only solvable children are the \emph{minimal unsolvable 
+%% goal subsets (MUGS)}. (A,B) is a minimal GFD1 iff $A \cup B \in \text{MUGS}$, 
+%% $A \cap B = \emptyset$ and $|B| = 1$
+
+%% \rebecca{A is always solvable}
+
+%% \rebecca{add example, for fuel level 5}
+
+%% \subsection{???}
+
+%% \textit{If goal subset A is true at the end of the plan, 
+%% then ALL elements of goal subset B must be false at the end of the plan.}\\
+
+%% \begin{definition}[Disjunctive Exclusion]
+%% 	Given a planning task $\Pi = (V,A,c,I,G)$ the tuples
+%% 	$(A,B)$ with $A,B \subseteq G $ is a GFD2 if 
+%% 	$\Pi$ with the goal $\bigwedge_{p \in A} p \wedge (\bigvee_{q \in B} q)$
+%% 	is unsolvable. 
+%% 	The subsumption relation is given by $\forall A,B,A',B': (A,B) \leq (A',B')$ iff $A \subseteq A'$
+%% 	and $B \supseteq B'$.
+%% \end{definition}	
+
+%% 	\noindent
+%% 	Given all minimal GFD1s for $\Pi$ all minimal GFD2s can be derived according 
+%% 	to the following relation.
+
+%% 	\rebecca{proof}
+
+%% 	\vspace{-0.3cm}
+%% 	\begin{align*}
+%% 		GFD2 &:= \{(A,B) | 
+%% 				\exists P \in GFD1:(
+%% 				   A \subseteq P \wedge |P \setminus A | = 1 \wedge\\
+%% 				   &\forall P' \in PPD1:
+%% 					  A \subseteq P' \rightarrow P' \setminus A \subseteq B
+%% 				)
+%% 			 \}
+%% 	\end{align*}
+
+%% \paragraph{Algorithm}
+%% From the minimal GFD1s we get a set:
+%% 	$D = \{(A,B) | \exists P \in GFD1s, p \in P: A = P \setminus p \wedge
+%% 	B = \{p\}\}$
+
+%% These GFD2s are not necessary optimal, the B could be larger.
+
+%% \rebecca{find a name for A and B}
+
+%% \noindent
+%% To get the maximal set of goals which can not be achieved if we achieve A, 
+%% you have to merge all B's which belong to an A' which is a subset of A. 
+
+%% \begin{align*}
+%% 	(A, \bigcup_{(A', B') \in \{(A'', B'') \in D | A' \subseteq A\}} B' \cup B)
+%% \end{align*}
+
+%% \rebecca{to many ticks}
+
+%% \rebecca{add example, from GFD1 to GFD2}
+
+%% \noindent
+%% If the planning task is not solvable for a goal fact at all, you can add 
+%% this goal fact to all B's.\\
