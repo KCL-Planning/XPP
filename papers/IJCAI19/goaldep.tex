@@ -52,14 +52,14 @@ employ notions (\eg\ goal-fact rewards) of what it means to be
 ``maximally valuable''
 \cite{smith:icaps-04,domshlak:mirkis:jair-15}. Here we assume instead
 that the user's preferences over the soft goals are difficult to
-specify or elicitate, so that an in-depth characterization of the
+specify and/or elicitate, so that an in-depth characterization of the
 trade-offs between different goal sets -- their dependencies -- is of
 interest. In the terms of our framework, this means that the set
 \plans\ of \defined{plans} is simply the set of all action sequences
-$\plan = \langle a_1, \dots, a_n\rangle$ that are applicable in
-\init\ and where $\sum_{i=1}^n \cost(a_i) \leq \costbound$. An
-analysis over suitable sets of properties \props\ and dependencies
-\deps\ then yields the desired trade-off information.
+$\plan = \langle a_1, \dots, a_n\rangle$ applicable in \init\ and
+where $\sum_{i=1}^n \cost(a_i) \leq \costbound$. An analysis over
+suitable sets of properties \props\ and dependencies \deps\ then
+yields the desired trade-off information.
 
 
 
@@ -81,7 +81,7 @@ be an OSP task, and \plans\ its set of plans.
 The set $\props^{GA}$ of \defined{atomic goal properties} for
 \task\ contains the functions $\prop_g : \plans \mapsto \{\true,
 \false\}$ for $g \in \goal$, where $\prop_g(\plan) = \true$ iff $g \in
-s\init\apply{\plan}$.
+\init\apply{\plan}$.
 %
 The set $\props^{GC}$ of \defined{composed goal properties} for
 \task\ contains the functions $\prop_\phi : \plans \mapsto \{\true,
@@ -99,48 +99,86 @@ Let $\task =
 be an OSP task, and \plans\ its set of plans.  
 
 The \defined{PDO for conjunctive exclusion (PDO-CE)} is the PDO for
-\plans, the property set $\props^{CE} := \{\bigwedge_{g \in A} g \mid
-A \subseteq G\} \cup \{\neg \bigwedge_{g \in B} g \mid B \subseteq
-G\}$, and the dependency set $\deps^{CE} := (\bigwedge_{g \in A}
-g,\neg \bigwedge_{g \in B} g)$.
+\plans, the property set $\props^{CE} := \{\bigwedge_{g \in A}
+g\allowbreak\mid\allowbreak A \subseteq G\} \cup \{\neg \bigwedge_{g
+  \in B} g \allowbreak\mid\allowbreak B \subseteq G\}$, and the
+dependency set $\deps^{CE} := (\bigwedge_{g \in A} g,\allowbreak\neg
+\bigwedge_{g \in B} g)$.
 \end{definition}
 
 In other words, we restrict focus to goal conjunctions and negations
-thereof, and we are interested solely in implications of the form
+thereof, and we are interested only in implications of the form
 $\entails{\plans}{\bigwedge_{g \in A} g}{\neg \bigwedge_{g \in B} g}$
 stating that, if we achieve all of $A$, we cannot achieve all of
 $B$. The PDO-CE then explains to the user how exactly different goal
 subsets exclude each other, identifying the fine-grained trade-off.
 
+Observe that, given the focus on $\deps^{CE}$, the equivalence classes
+in the PDO-CE are singletons, so that there is a unique cPDO-CE that
+we shall identify with the PDO-CE itself.
+
+For compacting the information presented to a user, we use the
+sufficient criterion for entailment where $\bigwedge_{g \in A'} g
+\entailsuff \bigwedge_{g \in A} g$ iff $A' \supseteq A$ and $\neg
+\bigwedge_{g \in B} g \entailsuff \neg \bigwedge_{g \in B'} g$ iff $B
+\supseteq B'$. The dominant PDO-CE thus selects the entailments with
+minimal left-hand side conjunctions excluding maximal right-hand side
+conjunctions.
+%
+%The question remains how to compute the dominant PDO-CE.
 
 
-\subsection{Computing the PDO-CE}
+
+
+
+\subsection{Computing the Dominant PDO-CE}
 \label{goaldep:computing}
-
-
 
 Describe computation of PDO for $\props = \props^{G} \cup \props^{C}$.
 
-\joerg{here's a depth-first algorithm that generates every goal subset
-  exactly once. ... hm doesn't work that way we need to know whether
-  or not the left-out subsets, below $i$ in the recursive call, are
-  solvable ... TBD}
+%% \joerg{here's a depth-first algorithm that generates every goal subset
+%%   exactly once. ... hm doesn't work that way we need to know whether
+%%   or not the left-out subsets, below $i$ in the recursive call, are
+%%   solvable ... TBD}
 
-Initialize $\cal G :+ \emptyset$; assume $\goal = \{g_1, \dots,
-g_n\}$; call Recursive-PDO-CE($\goal$, $1$):
+%% Initialize $\cal G :+ \emptyset$; assume $\goal = \{g_1, \dots,
+%% g_n\}$; call Recursive-PDO-CE($\goal$, $1$):
 
-\begin{tabbing}
-Bo\=ol Recursive-PDO-CE($G'$, $i$) \{\\
-\> \textbf{if} $G'$ is solvable in \task\ \textbf{then return \true\ endif}\\
-\> flag := \true\\
-\> \textbf{for} \= $j = i \dots n$ where $g_j \in G'$ \textbf{do}\\
-\> \> \textbf{if} \= not Recursive-PDO-CE($G' \setminus \{g_j\}$, $j+1$) \textbf{then}\\
-\> \> \> flag := \false\\
-\> \> \textbf{endif}\\
-\> \textbf{endfor}\\
-\> \textbf{if} flag \textbf{then} $\cal G := \cal G \cup \{G'\}$\\
-\> return \false
-\end{tabbing}
+%% \begin{tabbing}
+%% Bo\=ol Recursive-PDO-CE($G'$, $i$) \{\\
+%% \> \textbf{if} $G'$ is solvable in \task\ \textbf{then return \true\ endif}\\
+%% \> flag := \true\\
+%% \> \textbf{for} \= $j = i \dots n$ where $g_j \in G'$ \textbf{do}\\
+%% \> \> \textbf{if} \= not Recursive-PDO-CE($G' \setminus \{g_j\}$, $j+1$) \textbf{then}\\
+%% \> \> \> flag := \false\\
+%% \> \> \textbf{endif}\\
+%% \> \textbf{endfor}\\
+%% \> \textbf{if} flag \textbf{then} $\cal G := \cal G \cup \{G'\}$\\
+%% \> return \false
+%% \end{tabbing}
+
+%% We fix the order of the goal facts: [g0, g1, …, gn]
+%% Then each goal subsets gets an unique id based on the contained goal facts:
+%% For example the subset [g0, g2] has in binary the id 101. The set bits indicate which goal facts are contained. (This limits our algorithm to 31 soft goals.)
+
+%% During search we cache all results and prune already solved goal subsets based on their id.
+%% The ids induce an expansion order on all possible nodes/subset, such that you always know if node with id1 has been solved before node with id2.
+
+
+%% If we expand a node in the meta search there exist three possible states for the children
+%% (which can easily be generated by setting one of the 1 bits of the parent id to 0 parent: 101 → children 001,100):
+
+
+%% 1: the child node is in the expansion order after its parent → add the node to the openlist
+
+%% 2. the child node is in the expansion oder before its parent:
+
+%%     2.1: the node with the given id exists already→ use this result
+
+%%     2.2: the node does not exists
+%%         reason: a superset of the goal facts has been proved solvable and therefore is not expanded further
+%%         → you know that this node is solvable without running the planner
+
 
 
 
@@ -159,6 +197,18 @@ we then show
 that cPDAs for extensions, capturing exclusion dependencies, can be
 derived efficiently from a cPDA for $\props^{C}$. Later
 
+
+\begin{definition}[Disjunctive Exclusion]
+Let $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
+be an OSP task, and \plans\ its set of plans.  
+
+The \defined{PDO for conjunctive exclusion (PDO-CE)} is the PDO for
+\plans, the property set $\props^{CE} := \{\bigwedge_{g \in A} g \mid
+A \subseteq G\} \cup \{\neg \bigvee_{g \in B} g \mid B \subseteq G\}$,
+and the dependency set $\deps^{CE} := (\bigwedge_{g \in A} g,\neg
+\bigvee_{g \in B} g)$.
+\end{definition}
 
 
 
