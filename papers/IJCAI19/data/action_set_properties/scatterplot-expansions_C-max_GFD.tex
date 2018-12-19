@@ -1,29 +1,33 @@
 \begin{tikzpicture}
 \begin{axis}[extra x tick style={grid=major}, extra x ticks=100000000, 
 	extra y tick style={grid=major}, extra y ticks=100000000, height=6cm, 
-	legend cell align=left, legend style={at={(1.3, -0.3)}}, title=expansions, 
+	legend cell align=left, legend style={at={(1.3, -0.5)}}, title=expansions, 
 	width=6cm, xlabel=asp-hmax-GFD, xmin=100, xmode=log, ylabel=asp-hc-GFD, ymin=100, ymode=log]
-\addplot[color=green, mark=*, mark options={{draw=black}}, only marks] coordinates {
+\addplot[color=blue, mark=*, mark options={{draw=black}}, only marks] coordinates {
 (14130, 4672) (100000000, 19516) (6949, 1387) (3003597, 14394) (51670929, 93760) (327036, 10492) (100000000, 39593) (119756, 8806) (21152030, 100000000) (4551, 606) (177854, 45225) (7770, 1227) (10157013, 72997) (87180, 3492) (481214, 5662) (47345, 1613) (802101, 17735) (10361851, 74595)
 };
 %\addlegendentry{blocked roads}
-\addplot[color=blue, mark=*, mark options={{draw=black}}, only marks] coordinates {
+\addplot[color=cyan, mark=*, mark options={{draw=black}}, only marks] coordinates {
 (11477521, 100000000) (127850, 11277) (369554, 8571) (122630, 3104) (454715, 5297) (190335, 5111) (33351, 1020) (433815, 5581) (42782, 2029)
 };
 %\addlegendentry{blocked roads 2T}
-\addplot[color=orange, mark=*, mark options={{draw=black}}, only marks] coordinates {
+\addplot[color=red, mark=*, mark options={{draw=black}}, only marks] coordinates {
 (2995530, 18623) (31395453, 100000000) (100843, 5361) (127212, 32109) (18512, 5374) (1083857, 6283) (336360, 27850) (10173, 1067) (28902543, 100000000) (50407796, 100000000) (473783, 87328) (97121, 4361) (5020, 1024) (556154, 11211) (24976, 3815) (23372256, 100000000)
 };
 %\addlegendentry{forced roads}
-\addplot[color=red, mark=*, mark options={{draw=black}}, only marks] coordinates {
+\addplot[color=orange, mark=*, mark options={{draw=black}}, only marks] coordinates {
 (30461900, 100000000) (164075, 15012) (276396, 54970) (43112, 9472) (442653, 73187) (45990, 5368) (86968, 8492) (379662, 47842) (662286, 10711) (261961, 83116)
 };
 %\addlegendentry{forced roads 2T}
-\addplot[color=violet, mark=*, mark options={{draw=black}}, only marks] coordinates {
+\addplot[color=yellow, mark=*, mark options={{draw=black}}, only marks] coordinates {
+(2476390, 155698) (2182985, 76718) (171406, 25523) (3709462, 78224) (306141, 33941) (9214575, 100000000) (182936, 10924) (1813256, 212276) (578050, 62426)
+};
+%\addlegendentry{forced roads 5 2T}
+\addplot[color=green, mark=*, mark options={{draw=black}}, only marks] coordinates {
 (15380934, 100000000) (25911962, 100000000) (33104624, 100000000) (5499358, 100000000) (1308157, 86092) (5635233, 100000000) (22855461, 100000000) (2962444, 100000000) (6945248, 100000000)
 };
 %\addlegendentry{same truck 2T}
-\addplot[color=yellow, mark=*, mark options={{draw=black}}, only marks] coordinates {
+\addplot[color=darkgreen, mark=*, mark options={{draw=black}}, only marks] coordinates {
 (9081, 176) (16558, 319) (2616728, 100000000) (6336, 462) (285248, 3635) (2108, 176) (39463, 1010) (104361, 234) (1653780, 21898) (44263267, 100000000)
 };
 %\addlegendentry{same truck with P0 2T}
