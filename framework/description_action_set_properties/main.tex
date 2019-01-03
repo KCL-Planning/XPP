@@ -1,0 +1,246 @@
+\documentclass{article}
+\pdfpagewidth=8.5in
+\pdfpageheight=11in
+
+\usepackage{times}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage{url}  %Required
+\usepackage{graphicx}  %Required
+
+%%%%%%%%%%%%%%%%%%%%%
+%%%% Packages
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgf-umlsd}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepgfplotslibrary{fillbetween}
+\usepackage{ragged2e}
+\usetikzlibrary{arrows,automata,fit,calc,positioning,shapes,shapes.multipart} %
+%\usepackage[inline]{enumitem}
+\usepackage{enumerate,url,soul}
+\usepackage{paralist}
+%\usepackage[usenames]{color} % Only used in comment commands
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{thmtools,thm-restate}
+\usepackage{listings}
+\usepackage{subcaption}
+
+
+\input{commands.tex}
+
+
+\begin{document}
+\section{Action Set Properties}
+
+\subsection{Syntax}
+
+To definition of an action set property consists of two parts. The definition of 
+the action subsets and the definition of the logical formula over the atoms 
+\emph{at least one action in set X has been applied}.
+
+\paragraph{Action Subsets}
+
+The action set definition starts with the keyword \texttt{set} followed by a unique
+name for the set and the number of actions contained in it.
+The \texttt{<list of actions>} consists of one action definition per line.
+An action definition consists of the action name followed by its arguments. 
+All parts are separated with one space. 
+The action parameters can either be object names or types. 
+A "type-parameter" is a wild card and instantiated with all objects with the given type.
+
+\begin{lstlisting}
+set <name> <number of actions>
+<list of actions>
+\end{lstlisting}
+
+\noindent
+\textbf{Example}
+
+\begin{lstlisting}
+set delwithT0 4
+unload p0 t0 location
+load p1 t0 location
+unload p1 t0 location
+load p1 t0 location
+
+set delwithT1 4
+unload p0 t1 location
+load p0 t1 location
+unload p1 t1 location
+load p1 t1 location
+\end{lstlisting}
+
+\paragraph{Property}
+
+A property definition starts with the keyword \texttt{[soft-]property} followed 
+by its unique name.
+In the next line a logical formula over the beforehand defined set names defines 
+the meaning of the property. Thereby the set names mean: \emph{at least one action in the set 
+has been executed}.
+
+
+The formula has to be in disjunctive normal form and in prefix notation.
+- not \texttt{!}
+- and \texttt{\&\&}
+- or \texttt{||}
+
+\begin{lstlisting}
+[soft-]property <name>
+<DNF>
+\end{lstlisting}
+
+A "soft-property" is included in the goal-fact dependency search while a "property" 
+has to be always satisfied.\\
+
+\noindent
+\textbf{Example}
+
+
+\begin{lstlisting}
+soft-property same_truck
+|| && delwithT0 ! delwithT1 && ! delwithT0 delwithT1
+\end{lstlisting}
+
+
+\paragraph{Propertyclass}
+You can also define property classes with reduce "copy and paste"
+
+\begin{lstlisting}
+propertyclass same_truck(px,py)
+{
+set delwithT0 4
+unload px t0 location
+load px t0 location
+unload py t0 location
+load py t0 location
+
+set delwithT1 4
+unload px t1 location
+load px t1 location
+unload py t1 location
+load py t1 location
+
+soft-property same_truck
+|| && delwithT0 ! delwithT1 && ! delwithT0 delwithT1
+}
+{
+same_truck(p0, p1)
+same_truck(p0, p2)
+same_truck(p0, p3)
+same_truck(p1, p2)
+same_truck(p1, p3)
+same_truck(p2, p3)
+}
+\end{lstlisting}
+
+
+\paragraph{Soft Goals}
+You can also declare some of the original goal facts to be soft goals at the end of the property file:
+
+\begin{lstlisting}
+soft-goals
+<list of goal facts>
+\end{lstlisting}
+
+\noindent
+\textbf{Example:}
+
+\begin{lstlisting}
+soft-goals
+at(p0, l5)
+\end{lstlisting}
+
+\subsection{Compilation}
+
+\paragraph{Variables}
+
+\begin{itemize}
+\item
+For each set a new binary variable with the name \texttt{used\_<setname>} is added to the planning task. 
+Initially this variables are 0. Every action in the set assigns the correponding variable to 1 in its effect. 
+Therefore \texttt{used\_<setname> = 0} means: no action in the set has been executed and \texttt{used\_<setname>=1}
+means at least one action in the set has been executed.
+
+\item 
+For each property a new binary variable with the name \texttt{sat\_<propertyname>} is added to the planning task.
+Initially this variables are 0. In the evaluation phase the variables are assigned 1 if the corresponding 
+property is satisfied.
+
+\item 
+An additional binary variable \texttt{eval\_phase} is added to indicate the phase of the plan, either execution 
+or evaluation phase. Initially the variable is 0 which corresponds to execution phase.
+\end{itemize}
+
+\paragraph{Actions}
+
+\begin{itemize}
+\item
+	To the precondition of every original action the condition \texttt{eval\_phase = 0} such that that
+	they can only be executed in the execution phase.
+
+\item
+	To the effect of every original action the fact \texttt{"used\_setx" = 1} is added, if the action
+	is contained in the set \texttt{setx}.
+
+\item 
+	To change from the evaluation to the execution phase an new action \texttt{change\_phase} with the
+	precondition \texttt{eval\_phase = 0} and effect \texttt{eval\_phase = 1}.
+
+\item 
+	For each clause in the DNF of the property definition one action is added to the planning task.
+	This action has the literals in the clause as preconditions and in its effect \texttt{sat\_propertynam = 1}. 
+	All these actions have as additional precondition \texttt{eval\_phase = 1}. This ensures that the 
+	property is first evaluated after all original actions are executed. 
+\end{itemize}
+
+\section{Goal Fact Relation Search}
+TODO
+
+\subsection{FD Output}
+The output first shows the soft and hard goals.
+Then all unsolvable minimal sub-goals are listed (only the soft goal part)
+
+
+Example:
+
+\begin{lstlisting}
+*********************************
+Size of tree: 128
+Hard goals: 
+Atom at(p3, l3)
+Atom at(p2, l5)
+Atom at(p1, l2)
+Soft goals: 
+soft_Atom at(p0, l5)
+soft_sat_same_truck_p0_p1
+soft_sat_same_truck_p0_p2
+soft_sat_same_truck_p0_p3
+soft_sat_same_truck_p1_p2
+soft_sat_same_truck_p1_p3
+soft_sat_same_truck_p2_p3
+*********************************
+Unsolvable:
+soft_sat_same_truck_p2_p3
+Unsolvable:
+soft_sat_same_truck_p1_p2
+Unsolvable:
+soft_sat_same_truck_p0_p2|soft_sat_same_truck_p1_p3
+Unsolvable:
+soft_sat_same_truck_p0_p2|soft_sat_same_truck_p0_p3
+Unsolvable:
+soft_Atom at(p0, l5)|soft_sat_same_truck_p1_p3
+Unsolvable:
+soft_Atom at(p0, l5)|soft_sat_same_truck_p0_p3
+Unsolvable:
+soft_Atom at(p0, l5)|soft_sat_same_truck_p0_p1
+*********************************
+Number of minimal unsolvable goal subsets: 7
+*********************************
+\end{lstlisting}
+
+
+\end{document}
+
+
