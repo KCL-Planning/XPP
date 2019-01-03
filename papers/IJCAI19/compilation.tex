@@ -30,15 +30,15 @@ where $A_i \subset A$, we introduce a compilation from such expressions.
 
 \begin{definition}
 	Let $\Pi = (V, A, c, I)$ be the original planning task and $A_P=\{A_0, \cdots, A_n\}$ 
-	a partition of $A$ \joerg{does it really have to be a partition? and does that restriction make sense? I think neither is the case: in the compilation, a single action could set several flags, one for each action set it belongs to; and certainly one can think of constraints where the relevant action sets overlap} and a propositional formal $\mathcal{P}$ over the atoms $\mathcal{F} = \{f_i | A_i \in A_p\}$. 
+	with $A_i \subseteq A$ 
+	%\joerg{does it really have to be a partition? and does that restriction make sense? I think neither is the case: in the compilation, a single action could set several flags, one for each action set it belongs to; and certainly one can think of constraints where the relevant action sets overlap} and a propositional formal $\mathcal{P}$ over the atoms $\mathcal{F} = \{f_i | A_i \in A_p\}$. 
 	Then the action set compilation $\Pi' = (V', A', c, I')$ is defined as: 
 	$V' = V \cup \{\text{used}_i | A_i \in A_P\} \cup \{\text{sat}_{\mathcal{P}}, \text{eval-phase}\}$ 
 	with $\mathcal{D}_{\text{used}_i} = \mathcal{D}_{\text{sat}_{\mathcal{P}}} = \mathcal{D}_{\text{eval-phase}} = \{0,1\}$, 
 	$I' = I \cup \{\text{used}_i = 0 | A_i \in A_P\} \cup \{\text{sat}_{P} = 0, \text{eval-phase} = 0\}$ 
 	and $A' = \{ a' | a \in A, 
-	\text{pre}_{a'} = \text{pre}_{a} \cup \{\text{eval-phase} = 0\} \text{eff}_{a'} = \text{eff}_a \cup 
-	\{\text{cp} | \text{pre}_{cp} = \{\text{eval-phase} = 0\}, \text{eff} = \{\text{eval-phase} = 1 \}\} \cup 	
-	\{\text{used}_i = 1 | a \in A_i \in A_P\} \cup  
+	\text{pre}_{a'} = \text{pre}_{a} \cup \{\text{eval-phase} = 0\} , \text{eff}_{a'} = \text{eff}_a \cup \{\text{used}_i = 1 | a \in A_i\}\} \cup 
+	\{\text{cp} | \text{pre}_{cp} = \{\text{eval-phase} = 0\}, \text{eff} = \{\text{eval-phase} = 1 \}\} \cup 
 	\{\text{actions to eval } \mathcal{P}\}$. 
 \end{definition}
 
