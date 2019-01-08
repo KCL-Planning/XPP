@@ -79,9 +79,42 @@
 \subsubsection*{Action Set Properties}
 
 \begin{figure}[ht]
-	\input{data/action_set_properties/scatterplot-expansions_C-max_GFD.tex}
-	\input{data/action_set_properties/scatterplot-search_time_C-max_GFD.tex}
-	\caption{Compare $h^C$ and $h^{max}$ with respect of different \emph{types} of action set properties. 
-	one truck: forced and blocked roads, two trucks: blocked roads, two packages in the same truck}
+	\begin{tabular}{l|r|rrrrrrrrrr}
+		& & \multicolumn{10}{c}{\# properties} \\
+		domain & \#goals & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\\hline
+		nomystery & 2 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10\\\hline
+				& 3 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10\\\hline
+				& 4 & 10 & 10 & 10 & 10 & 9 & 9 & 9 & 9 & 8 & 7\\\hline
+				& 5 & 10 & 10 & 10 & 10 & 10 & 8 & 4 & 2 & 2 & 2\\\hline
+				& 6 & 10 & 9 & 8 & 8 & 7 & 2 & 0 & 2 & 2 & 2\\\hline\hline
+		openstacks & 1 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & - \\\hline
+				& 1 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & - \\\hline
+				& 2 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & - \\\hline
+				& 3 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & - \\\hline
+				& 4 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & - \\\hline
+				& 5 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & - \\\hline
+				& 6 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & - \\\hline
+				& 7 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & - \\\hline
+				& 8 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & - \\\hline
+				& 9 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & - \\\hline\hline
+		rovers & 2 & 10 & 10 & 10 & 10 & 10 & 8 & 5 & 2 & 2 &- \\\hline
+				& 4 & 9 & 6 § & 6 & 2 & 0 & 0 & 0 & 0 & 0 & - \\\hline
+				& 6 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & - \\\hline 
+				& 8 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & - \\\hline 
+				& 10 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & - \\\hline 
+				& 12 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & - \\\hline 
+				& 14 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & - \\\hline 
+				& 16 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & - \\\hline 
+				& 18 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & - \\\hline\hline
+		TPP & 3 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10\\\hline
+			& 4 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10\\\hline
+			& 5 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 10 & 8 & 3\\\hline
+			& 6 & 10 & 10 & 10 & 10 & 10 & 8 & 3 & 1 & 1 & 1\\\hline
+
+
+	\end{tabular}
+	\caption{Coverage, 10 instances per \# goals and \# properties combination.
+	For nomystery and TPP is the size of the locations fixed to 6 locations respectively 5 markets.}
 \end{figure}
+
 
