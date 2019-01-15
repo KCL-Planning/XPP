@@ -23,7 +23,7 @@ exposition, henceforth we consider the \emph{finite-domain
 variables as used in the Fast Downward system \cite{helmert:jair-06}
 on which our implementation is based.
 
-An FDR planning \defined{\task} is a tuple $\task =
+An FDR task \defined{\task} is a tuple $\task =
 (\vars,\acts,\cost,\init,\goal)$ where \vars\ is the set of
 \defined{variables}, \acts\ is the set of \defined{actions}, $\cost:
 \acts \mapsto \reals^+_0$ is the action \defined{cost} function,
@@ -106,12 +106,13 @@ dependency set $\deps^{CE} := (\bigwedge_{g \in A} g,\allowbreak\neg
 \bigwedge_{g \in B} g)$.
 \end{definition}
 
-In other words, we restrict focus to goal conjunctions and negations
-thereof, and we are interested only in implications of the form
+We restrict focus to goal conjunctions and negations thereof, and we
+are interested only in implications of the form
 $\entails{\plans}{\bigwedge_{g \in A} g}{\neg \bigwedge_{g \in B} g}$
-stating that, if we achieve all of $A$, we cannot achieve all of
-$B$. The PDO-CE then explains to the user how exactly different goal
-subsets exclude each other, identifying the fine-grained trade-off.
+stating that, if we achieve all of $A$, we we have to forego at least
+one of $B$. The PDO-CE then explains to the user how exactly different
+goal subsets exclude each other, identifying the fine-grained
+trade-off.
 
 Observe that, given the focus on $\deps^{CE}$, the equivalence classes
 in the PDO-CE are singletons, so that there is a unique cPDO-CE that
@@ -130,56 +131,133 @@ conjunctions.
 
 
 
-
 \subsection{Computing the Dominant PDO-CE}
 \label{goaldep:computing}
 
-Describe computation of PDO for $\props = \props^{G} \cup \props^{C}$.
+The dominant PDO-CE can be read off the \defined{minimal unsolvable
+  goal subsets (MUGS)}, where $\goal' \subseteq \goal$ is a MUGS if
+$\goal'$ cannot be achieved but every $\goal'' \subsetneq \goal'$ can:
 
-%% \joerg{here's a depth-first algorithm that generates every goal subset
-%%   exactly once. ... hm doesn't work that way we need to know whether
-%%   or not the left-out subsets, below $i$ in the recursive call, are
-%%   solvable ... TBD}
+\begin{proposition}[MUGS vs.\ PDO-CE]
+Let $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
+be an OSP task, and \plans\ its set of plans.  
 
-%% Initialize $\cal G :+ \emptyset$; assume $\goal = \{g_1, \dots,
-%% g_n\}$; call Recursive-PDO-CE($\goal$, $1$):
+Then $\entails{\plans}{\bigwedge_{g \in A} g}{\neg \bigwedge_{g \in B}
+  g}$ is in the dominant PDO-CE iff $A \cup B$ is a MUGS.
+\end{proposition}
 
-%% \begin{tabbing}
-%% Bo\=ol Recursive-PDO-CE($G'$, $i$) \{\\
-%% \> \textbf{if} $G'$ is solvable in \task\ \textbf{then return \true\ endif}\\
-%% \> flag := \true\\
-%% \> \textbf{for} \= $j = i \dots n$ where $g_j \in G'$ \textbf{do}\\
-%% \> \> \textbf{if} \= not Recursive-PDO-CE($G' \setminus \{g_j\}$, $j+1$) \textbf{then}\\
-%% \> \> \> flag := \false\\
-%% \> \> \textbf{endif}\\
-%% \> \textbf{endfor}\\
-%% \> \textbf{if} flag \textbf{then} $\cal G := \cal G \cup \{G'\}$\\
-%% \> return \false
-%% \end{tabbing}
+\begin{proof}
+A \plans-entailment $\entails{\plans}{\bigwedge_{g \in A} g}{\neg
+  \bigwedge_{g \in B} g}$ clearly holds iff $A \cup B$ is
+unsolvable. Dominant entailments in the PDO-CE result from
+set-inclusion minimal $A$ and $B$, corresponding to the set-inclusion
+minimality of MUGS.
+\end{proof}
 
+Our computational problem thus boils down to computing all MUGS. We do
+so through a search over goal sets, that we will refer to as
+\defined{systematic weakening}:
+\begin{enumerate}[(1)]
+\item the start node of the search is \goal; 
+\item each search step selects an open node $\goal'$, calls a planner
+  to test whether $\goal'$ is solvable in \task, caches the result,
+  and expands $\goal'$ if it is unsolvable;
+\item the children of a node $\goal'$ are those $\goal'' \subset
+  \goal'$ where $|\goal''| = |\goal'|-1$.
+\end{enumerate}
+Upon termination, the MUGS are those nodes $\goal'$ all of whose
+children are solvable. 
+
+Note that each goal set can be reached from the start node by every
+permutation of goal-fact removal steps. Duplicate planner calls are
+avoided by caching. We give goal sets unique integer IDs, which serve
+for fast cache lookup, and which we also use to fix the expansion
+order, so that we always know whether or not we have generated a node
+before.
+
+% Rebecca's notes on the implementation:
+%
 %% We fix the order of the goal facts: [g0, g1, …, gn]
 %% Then each goal subsets gets an unique id based on the contained goal facts:
 %% For example the subset [g0, g2] has in binary the id 101. The set bits indicate which goal facts are contained. (This limits our algorithm to 31 soft goals.)
-
+%
 %% During search we cache all results and prune already solved goal subsets based on their id.
 %% The ids induce an expansion order on all possible nodes/subset, such that you always know if node with id1 has been solved before node with id2.
-
-
+%
 %% If we expand a node in the meta search there exist three possible states for the children
 %% (which can easily be generated by setting one of the 1 bits of the parent id to 0 parent: 101 → children 001,100):
-
-
+%
 %% 1: the child node is in the expansion order after its parent → add the node to the openlist
-
+%
 %% 2. the child node is in the expansion oder before its parent:
-
+%
 %%     2.1: the node with the given id exists already→ use this result
-
+%
 %%     2.2: the node does not exists
 %%         reason: a superset of the goal facts has been proved solvable and therefore is not expanded further
 %%         → you know that this node is solvable without running the planner
 
+We furthermore identify non-trivial synergy with recent nogood
+learning techniques \cite{steinmetz:hoffmann:ai-17}, which refine a
+critical-path heuristic \hc\ during forward search on a task \task,
+based on the unsolvable states encountered. The resulting heuristic
+\hc\ reasons about an enlarged set of conjunctions considered to be
+atomic, in a manner geared at quickly identifying unsolvable states in
+\task. Observe that this naturally lends itself to
+\defined{\hc\ transfer} in systematic weakening: the refined \hc\ from
+an unsolvable node $\goal'$ is likely to be a good unsolvability
+detector for the closely related children tasks $\goal'' \subset
+\goal'$ where $|\goal''| = |\goal'|-1$. We thus transfer the learned
+\hc\ functions from top to bottom along the search paths in systematic
+weakening, iteratively yielding stronger and stronger unsolvability
+detectors. 
+%
+% Joerg: proably more confusing than helpful
+%
+%% Similarly, we transfer the \defined{clauses} (nogood pruning rules)
+%% learned in this approach, transferring thjose that depend only on the
+%% goals still present in children nodes.
 
+
+\joerg{mention alternate bottom-up computation, starting at empty goal
+  set and adding goals til unsat? bottom-up alg generates set of
+  across-line unsolvabl sets; set-inclusion minimal amongst those are
+  the minimal unsolvable sets (they are unsolvable; any subset must be
+  solvable by construction; vice versa, anz minimal unsolv set results
+  from adding a goal to a maximal unsolvable one, so all the
+  maxunssets are there)}
+
+\joerg{diff to modcheck: computational leverage in addressing family
+  of related props; mention here? and/or in intro?}
+
+\joerg{mention relation of minimum unsolvable goal subsets/of PDE-CE
+  to pareto frontier somewhere?}
+
+
+
+% Joerg email top-down vs bottom-up
+%
+%% Both "top down" as we do now and "bottom up" as you suggest can be
+%% used to identify the minimum unsolvable goal sets (in the bottom-up
+%% case a post-processing step is needed, selecting from the
+%% unsolvable goal sets generated during meta-tree search the
+%% set-inclusion minimal ones; but this step is easy ie polynomial in
+%% the number of goal sets considered).
+%
+%% Which of the two is expected to work better is largely a function
+%% of how large the solvable goal subsets will be. It seems plausible
+%% that one or the other algorithm will often have substantial
+%% advantages. In particular, for severely limited resources one would
+%% expect bottom-up to be better.
+%
+%% So ideally we should experiment with both top-down and
+%% bottom-up. And in practice it would seem quite reasonablee to run
+%% both in parallel, so that a "best-of" also makes a lot of sense
+%% here.
+%
+%% (One can even think about interleaving bottom-up with top-down in
+%% an intelligent way, but that's for future work)
 
 
 
@@ -286,6 +364,21 @@ and the dependency set $\deps^{CE} := (\bigwedge_{g \in A} g,\neg
 
 
 
+%% Initialize $\cal G :+ \emptyset$; assume $\goal = \{g_1, \dots,
+%% g_n\}$; call Recursive-PDO-CE($\goal$, $1$):
+
+%% \begin{tabbing}
+%% Bo\=ol SystematicWeakening($G'$, $i$) \\
+%% \> \textbf{if} $G'$ is solvable in \task\ \textbf{then return \true\ endif}\\
+%% \> flag := \true\\
+%% \> \textbf{for} \= $j = i \dots n$ where $g_j \in G'$ \textbf{do}\\
+%% \> \> \textbf{if} \= not Recursive-PDO-CE($G' \setminus \{g_j\}$, $j+1$) \textbf{then}\\
+%% \> \> \> flag := \false\\
+%% \> \> \textbf{endif}\\
+%% \> \textbf{endfor}\\
+%% \> \textbf{if} flag \textbf{then} $\cal G := \cal G \cup \{G'\}$\\
+%% \> return \false
+%% \end{tabbing}
 
 
 

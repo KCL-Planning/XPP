@@ -148,7 +148,7 @@ $\entails{\plans}{\prop}{\propq}$, if $\modelsof{\plans}{\prop}
 %
 We say that \prop\ and \propq\ are \defined{\plans-equivalent},
 written $\iff{\plans}{\prop}{\propq}$, if $\modelsof{\plans}{\prop} =
-\modelsof{\plans}{\propq}$. The subset of \props\ \plans-equivalent
+\modelsof{\plans}{\propq}$. The set of properties \plans-equivalent
 with \prop\ is written $\equiv{\plans}{\prop} := \{\propq \mid \propq
 \in \props, \iff{\plans}{\prop}{\propq}\}$.
 \end{definition}
@@ -219,10 +219,11 @@ individual equivalence class may also be large, or even infinite.
 
 A concrete PDO can serve as a practical proxy if equivalence classes
 are large. Beyond that, it is clearly important to identify (i) more
-compact and/or (ii) more restricted plan-space explanations. Towards
-(i), a technique we will use in our concrete instantiation of this
-framework is \defined{subsumption} over \plans-entailment relations,
-relying on a sufficient criterion for \plans-entailment:
+compact and/or (ii) more restricted plan-space explanations. We do
+both here. Regarding (i), the technique we will use in our concrete
+instantiation of this framework is \defined{subsumption} over
+\plans-entailment relations, relying on an easy-to-test sufficient
+criterion for \plans-entailment:
 
 \begin{definition}[Dominant cPDO]\label{def:dcpdo}
 Let \task\ be a task, \plans\ a set of plans, and \props\ a set of
@@ -270,28 +271,27 @@ use the trivial \entailsuff\ where larger conjunctions (disjunctions)
 are stronger (weaker).
 
 We remark that an alternative to Definition~\ref{def:dcpdo} would be
-to consider a dominant PDO (at the level of equivalence classes
-$\equiv{\plans}{\prop})$) instead of a dominant cPDO (at the level of
-plan properties \prop). This alternative incurs complications as
+to consider a dominant PDO at the level of equivalence classes
+$\equiv{\plans}{\prop}$. This alternative incurs complications as
 equivalence under $\entailsuff$ is not the same as equivalence under
 full \plans-entailment, and \entailsuff\ would have to be transitive
-which is not necessarily the case for a ``cognitively easy''
-sufficient criterion. Nevertheless, dominant PDOs may be preferrable
-to dominant cPDOs in some application scenarios.
+which may be problematic restriction on ``cognitively easy'' criteria.
+%
+%% Nevertheless, dominant PDOs may be preferrable to dominant cPDOs in
+%% some application scenarios.
 
-As a form of (ii) more restricted plan-space explanations, what we
-will use in our concrete instantiation of this framework is simply the
-exclusive focus on a predefined subset \deps\ of dependencies of
-interest:
+As a form of (ii) more restricted plan-space explanations, a
+possibility is to restrict focus to a predefined subset \deps\ of
+dependencies of interest:
 
 \begin{definition}[Restricted (dc)PDO]
 Let \task\ be a task, \plans\ a set of plans, and \props\ a set of
 plan properties defined on \task\ and \plans.
 
 Let $\deps \subseteq \props \times \props$ be any binary relation on
-plan properties. Then a (dc)PDO for $\deps$ results from ignoring
-\plans-entailments $\entails{\plans}{\prop}{\propq}$ where $(\prop,\propq)
-\not\in \deps$.
+plan properties. Then a \defined{(dc)PDO for $\deps$} results from
+ignoring \plans-entailments $\entails{\plans}{\prop}{\propq}$ where
+$(\prop,\propq) \not\in \deps$.
 \end{definition}
 
 Some words are in order regarding finiteness and complexity. The PDO
@@ -364,6 +364,10 @@ size of a dcPDO is reasonably small for human inspection.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% VERSION OF Plan-Space Explanations SECTION WITH PDA AND WITHOUT SUBSUMPTION
+
+% PDA motivation: bit unclear, would need to be argued better. why is
+% this interesting? maximum solvable goal sets is a useful example but
+% also a trivial one with no interesting ''dependencies''
 
 %% \joerg{we use only the PDO later on. remove cPDO and PDA, and simplify
 %%   the discussion accordingly? ... can keep cPDO and PDA stuff for
