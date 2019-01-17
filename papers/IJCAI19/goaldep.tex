@@ -66,91 +66,103 @@ yields the desired trade-off information.
 
 
 
-\subsection{Conjunctive Exclusion}
-\label{goaldep:conjunctive}
+\subsection{Plan Properties}
+\label{goaldep:properties}
 
-The properties of interest will be different sub-classes of
-propositional formulas over goals, so we first introduce general
-notation for those:
+The plan properties we consider here are characterized by
+propositional formulas over goals:
 
 \begin{definition}[Goal Properties]
 Let $\task =
 (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
 be an OSP task, and \plans\ its set of plans. 
 
-The set $\props^{GA}$ of \defined{atomic goal properties} for
-\task\ contains the functions $\prop_g : \plans \mapsto \{\true,
-\false\}$ for $g \in \goal$, where $\prop_g(\plan) = \true$ iff $g \in
-\init\apply{\plan}$.
+An \defined{atomic goal property} for \task\ is a function $\prop_g :
+\plans \mapsto \{\true, \false\}$ where $g \in \goal$ and
+$\prop_g(\plan) = \true$ iff $g \in \init\apply{\plan}$.
 %
-The set $\props^{GC}$ of \defined{composed goal properties} for
-\task\ contains the functions $\prop_\phi : \plans \mapsto \{\true,
-\false\}$ for all propositional formulas $\phi$ over the atoms \goal,
-where $\prop_\phi(\plan) = \true$ iff $\phi$ evaluates to true given
-the values of $\prop_g(\plan)$.
+A \defined{composed goal property} for \task\ is a function
+$\prop_\phi : \plans \mapsto \{\true, \false\}$ where $\phi$ is a
+propositional formula over the atoms \goal, and $\prop_\phi(\plan) =
+\true$ iff $\phi$ evaluates to true given the values of
+$\prop_g(\plan)$.
 \end{definition}
 
-We first consider a class of properties and dependencies identifying
-exclusions between goal conjunctions:
+We identify goal properties $\prop_\phi$ with the characterizing
+formulas $\phi$. We consider a class of properties and dependencies
+identifying exclusions between goal conjunctions:
 
-\begin{definition}[Conjunctive Exclusion]
+\begin{definition}[Goal Exclusion]
 Let $\task =
 (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
 be an OSP task, and \plans\ its set of plans.  
 
-The \defined{PDO for conjunctive exclusion (PDO-CE)} is the PDO for
-\plans, the property set $\props^{CE} := \{\bigwedge_{g \in A}
+The \defined{PDO for goal exclusion (PDO-GE)} is the PDO for
+\plans, the property set $\geprops := \{\bigwedge_{a \in A}
 g\allowbreak\mid\allowbreak A \subseteq G\} \cup \{\neg \bigwedge_{g
-  \in B} g \allowbreak\mid\allowbreak B \subseteq G\}$, and the
-dependency set $\deps^{CE} := (\bigwedge_{g \in A} g,\allowbreak\neg
-\bigwedge_{g \in B} g)$.
+  \in B} b \allowbreak\mid\allowbreak B \subseteq G\}$, and the
+dependency set $\gedeps := \{(\bigwedge_{a \in A} a,\allowbreak\neg
+\bigwedge_{b \in B} b) \allowbreak\mid\allowbreak A \cap B =
+\emptyset\}$.
 \end{definition}
 
 We restrict focus to goal conjunctions and negations thereof, and we
 are interested only in implications of the form
-$\entails{\plans}{\bigwedge_{g \in A} g}{\neg \bigwedge_{g \in B} g}$
-stating that, if we achieve all of $A$, we we have to forego at least
-one of $B$. The PDO-CE then explains to the user how exactly different
+$\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigwedge_{b \in B} b}$
+stating that, if we achieve all of $A$, we have to forego at least one
+of $B$. The PDO-GE then explains to the user how exactly different
 goal subsets exclude each other, identifying the fine-grained
 trade-off.
 
-Observe that, given the focus on $\deps^{CE}$, the equivalence classes
-in the PDO-CE are singletons, so that there is a unique cPDO-CE that
-we shall identify with the PDO-CE itself.
+Observe that, given the restriction to $\gedeps$, the equivalence
+classes in the PDO-GE are singletons. Hence there is a unique cPDO-GE,
+that we identify with the PDO-GE itself.
 
 For compacting the information presented to a user, we use the
-sufficient criterion for entailment where $\bigwedge_{g \in A'} g
-\entailsuff \bigwedge_{g \in A} g$ iff $A' \supseteq A$ and $\neg
-\bigwedge_{g \in B} g \entailsuff \neg \bigwedge_{g \in B'} g$ iff $B
-\subseteq B'$. The dominant PDO-CE thus selects the entailments with
+sufficient criterion for entailment where $\bigwedge_{a \in A'} g
+\entailsuff \bigwedge_{a \in A} a$ iff $A' \supseteq A$ and $\neg
+\bigwedge_{b \in B} b \entailsuff \neg \bigwedge_{b \in B'} g$ iff $B
+\subseteq B'$. The dominant PDO-GE thus selects the entailments with
 minimal left-hand side conjunctions excluding minimal right-hand side
 conjunctions.
 %
-%The question remains how to compute the dominant PDO-CE.
+%The question remains how to compute the dominant PDO-GE.
+
+We remark that another class of dependencies that may be of interest
+is \defined{disjunctive goal exclusion}, that take the form
+$\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in B} b}$,
+where the strongest dependencies have small left-hand side
+conjunctions but large right-hand side disjunctions. The dominant PDO
+for such dependencies can, however, be derived from the dominant
+PDO-GE. This is because $\entails{\plans}{\bigwedge_{a \in A} a}{\neg
+  \bigvee_{b \in B} b}$ holds if and only if
+$\entails{\plans}{\bigwedge_{a \in A} a}{\neg b}$ holds for every $b
+\in B$.
 
 
 
 
-\subsection{Computing the Dominant PDO-CE}
+
+\subsection{Computing the Dominant PDO-GE}
 \label{goaldep:computing}
 
-The dominant PDO-CE can be read off the \defined{minimal unsolvable
+The dominant PDO-GE can be read off the \defined{minimal unsolvable
   goal subsets (MUGS)}, where $\goal' \subseteq \goal$ is a MUGS if
 $\goal'$ cannot be achieved but every $\goal'' \subsetneq \goal'$ can:
 
-\begin{proposition}[MUGS vs.\ PDO-CE]
+\begin{proposition}[PDO-GE from MUGS]
 Let $\task =
 (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
 be an OSP task, and \plans\ its set of plans.  
 
-Then $\entails{\plans}{\bigwedge_{g \in A} g}{\neg \bigwedge_{g \in B}
-  g}$ is in the dominant PDO-CE iff $A \cup B$ is a MUGS.
+Then $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigwedge_{b \in B}
+  b}$ is in the dominant PDO-GE if and only if $A \cup B$ is a MUGS.
 \end{proposition}
 
 \begin{proof}
-A \plans-entailment $\entails{\plans}{\bigwedge_{g \in A} g}{\neg
-  \bigwedge_{g \in B} g}$ clearly holds iff $A \cup B$ is
-unsolvable. Dominant entailments in the PDO-CE result from
+A \plans-entailment $\entails{\plans}{\bigwedge_{a \in A} a}{\neg
+  \bigwedge_{b \in B} b}$ clearly holds iff $A \cup B$ is
+unsolvable. Dominant entailments in the PDO-GE result from
 set-inclusion minimal $A$ and $B$, corresponding to the set-inclusion
 minimality of MUGS.
 \end{proof}
@@ -202,16 +214,15 @@ We furthermore identify non-trivial synergy with recent nogood
 learning techniques \cite{steinmetz:hoffmann:ai-17}, which refine a
 critical-path heuristic \hc\ during forward search on a task \task,
 based on the unsolvable states encountered. The resulting heuristic
-\hc\ reasons about an enlarged set of conjunctions considered to be
-atomic, in a manner geared at quickly identifying unsolvable states in
-\task. Observe that this naturally lends itself to
-\defined{\hc\ transfer} in systematic weakening: the refined \hc\ from
-an unsolvable node $\goal'$ is likely to be a good unsolvability
-detector for the closely related children tasks $\goal'' \subset
-\goal'$ where $|\goal''| = |\goal'|-1$. We thus transfer the learned
-\hc\ functions from top to bottom along the search paths in systematic
-weakening, iteratively yielding stronger and stronger unsolvability
-detectors. 
+\hc\ reasons about an enlarged set of conjunctions, in a manner geared
+at quickly identifying unsolvable states in \task. Observe that this
+naturally lends itself to \defined{\hc-transfer} in systematic
+weakening: the refined \hc\ from an unsolvable node $\goal'$ is likely
+to be a good unsolvability detector for the closely related children
+tasks with goals $\goal'' \subset \goal'$ where $|\goal''| =
+|\goal'|-1$. We thus transfer the learned \hc\ functions downwards
+along the search paths in systematic weakening, iteratively yielding
+stronger and stronger unsolvability detectors.
 %
 % Joerg: proably more confusing than helpful
 %
@@ -231,7 +242,7 @@ detectors.
 \joerg{diff to modcheck: computational leverage in addressing family
   of related props; mention here? and/or in intro?}
 
-\joerg{mention relation of minimum unsolvable goal subsets/of PDE-CE
+\joerg{mention relation of minimum unsolvable goal subsets/of PDE-GE
   to pareto frontier somewhere?}
 
 
@@ -261,32 +272,144 @@ detectors.
 
 
 
+%
+%
 \subsection{Disjunctive Exclusion}
 \label{goaldep:disjunctive}
 
+\joerg{this plays a very minor role in the paper. hence I
+  briefly merged it into the above discussion. remove this section for
+  paper}
 
+Another class of dependencies that may be of interest is
+\defined{disjunctive goal exclusion}:
 
-%% \joerg{2. and 3. briefly and discuss
-%%   their derivability, to point out application to more XAIP-like
-%%   questions than just solvable goal sets}
-
-
-we then show
-that cPDAs for extensions, capturing exclusion dependencies, can be
-derived efficiently from a cPDA for $\props^{C}$. Later
-
-
-\begin{definition}[Disjunctive Exclusion]
+\begin{definition}[Disjunctive Goal Exclusion]
 Let $\task =
 (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
 be an OSP task, and \plans\ its set of plans.  
 
-The \defined{PDO for conjunctive exclusion (PDO-CE)} is the PDO for
-\plans, the property set $\props^{CE} := \{\bigwedge_{g \in A} g \mid
-A \subseteq G\} \cup \{\neg \bigvee_{g \in B} g \mid B \subseteq G\}$,
-and the dependency set $\deps^{CE} := (\bigwedge_{g \in A} g,\neg
-\bigvee_{g \in B} g)$.
+The \defined{PDO for disjunctive goal exclusion (PDO-DGE)} is the PDO for
+\plans, the property set $\dgeprops := \{\bigwedge_{a \in A}
+g\allowbreak\mid\allowbreak A \subseteq G\} \cup \{\neg \bigvee_{g
+  \in B} b \allowbreak\mid\allowbreak B \subseteq G\}$, and the
+dependency set $\dgedeps := \{(\bigwedge_{a \in A} a,\allowbreak\neg
+\bigwedge_{b \in B} b) \allowbreak\mid\allowbreak A \cap B =
+\emptyset\}$.
 \end{definition}
+
+Observe that $\neg \bigvee_{b \in B} b$ is equivalent to $\bigwedge_{b
+  \in B} \neg b$, so that $\entails{\plans}{\bigwedge_{a \in A}
+  a}{\neg \bigvee_{b \in B} b}$ holds iff
+$\entails{\plans}{\bigwedge_{a \in A} a}{\neg b}$ holds for every $b
+\in B$. Indeed, the dominant PDO-DGE can be derived from the dominant
+PDO-GE. Precisely, say that an entailment
+$\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in B} b}$ is
+\defined{constructible} from the dominant PDO-GE if there exist $A[b]
+\subseteq A$, for $b \in B$, such that $\entails{\plans}{\bigwedge_{a
+    \in A[b]} a}{\neg b}$ is in the dominant PDO-GE and $\bigcup_{b
+  \in B} A[b] = A$. We have:
+
+\begin{proposition}[PDO-DGE from PDO-GE]\label{pro:pdodge-from-pdoge}
+Let $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
+be an OSP task, and \plans\ its set of plans.  
+
+Then $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in B}
+  b}$ is in the dominant PDO-DGE if and only if it is constructible
+from the dominant PDO-GE, and there is no $A' \subsetneq A$ such that
+$\entails{\plans}{\bigwedge_{a \in A'} a}{\neg \bigvee_{b \in B} b}$
+is constructible from the dominant PDO-GE.
+\end{proposition}
+
+\begin{proof}
+%
+Observe first that, for any entailment $\entails{\plans}{\bigwedge_{a
+    \in A} a}{\neg \bigvee_{b \in B} b}$ that holds, an entailment
+$\entails{\plans}{\bigwedge_{a \in A'} a}{\neg \bigvee_{b \in B} b}$
+with $A' \subseteq A$ is constructible from the dominant PDO-GE. This
+is because, for every entailment $\entails{\plans}{\bigwedge_{a \in A}
+  a}{\neg b}$ that holds, the dominant PDO-GE contains an entailment
+$\entails{\plans}{\bigwedge_{a \in A[b]} a}{\neg b}$ with $A[b]
+\subseteq A$.
+
+The 'only if' direction follows directly from this. For the 'if'
+direction, it suffices to observe additionally that, trivially, every
+entailment constructible from the dominant PDO-GE does in fact hold.
+%
+% Joerg: outdated attempt
+%
+%% For the 'if' direction, say that $\entails{\plans}{\bigwedge_{a \in A}
+%%   a}{\neg b_0}$ is in the dominant PDO-GE, and that
+%% $\entails{\plans}{\bigwedge_{a \in A[b]} a}{\neg b}$ is in the
+%% dominant PDO-GE for all $b_0 \neq b \in B$ with $A[b] \subseteq
+%% A$. Then, trivially, $\entails{\plans}{\bigwedge_{a \in A} a}{\neg
+%%   \bigvee_{b \in B} b}$. This entailment is dominant because 1)
+%% $\entails{\plans}{\bigwedge_{a \in A} a}{\neg b_0}$ is dominant so $A$
+%% cannot be smaller, and 2) any valid implication of a literal $\neg b$
+%% is represented in the dominant PDE-GE so $B$ cannot be larger.
+%
+%% 'only if': Assume for contradiction that
+%% $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in B} b}$ is
+%% in the dominant PDO-DGE but this claim does not hold. If there exists
+%% $b \in B$ for which no entailment $\entails{\plans}{\bigwedge_{a \in
+%%     A[b]} a}{\neg b}$ is in the dominant PDO-GE, then $\bigwedge_{a
+%%   \in A} a$ does not entail $\neg \bigvee_{b \in B} b$, in
+%% contradiction. If $A[b] \subsetneq A$ for every $b$.
+\end{proof}
+
+Observe that the dominant PDO-DGE may be exponentially larger than the
+dominant PDO-GE: in the worst case, every combination of
+$\entails{\plans}{\bigwedge_{a \in A} a}{\neg b}$ entailments in the
+dominant PDO-GE yields a different set-inclusion minimal left-hand
+side. However, using Proposition~\ref{pro:pdodge-from-pdoge}, the
+dominant PDO-DGE can be constructed from the dominant PDO-GE in time
+polynomial in the size of the output, simply by iteratively
+enumerating all entailments constructible from the dominant PDO-GE and
+checking for subsumptions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -342,9 +465,9 @@ and the dependency set $\deps^{CE} := (\bigwedge_{g \in A} g,\neg
 
 
 
-%% conjunctive exclusion properties $\props^{CE}$, $\bigwedge_{g \in A} g
-%% \wedge \bigwedge_{g \in B} g$; 3. disjunctive exclusion properties
-%% $\props^{DE}$, $\bigwedge_{g \in A} g \wedge \bigvee_{g \in B}
+%% conjunctive exclusion properties $\props^{CE}$, $\bigwedge_{a \in A} a
+%% \wedge \bigwedge_{b \in B} b$; 3. disjunctive exclusion properties
+%% $\props^{DE}$, $\bigwedge_{a \in A} a \wedge \bigvee_{b \in B}
 %% g$. (alternative: take elements of intended exclusion implications as
 %% properties instead. don't do here as we don't actually compute a PDA
 %% for these, there may be other implications we don't see. general: if
