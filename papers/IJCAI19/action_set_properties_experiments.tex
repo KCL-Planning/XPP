@@ -104,12 +104,12 @@
 				(1,10) (2,9) (3,8) (4,8) (5,7) (6,2) (7,0) (8,0) (9,0) (10,0)
 	};
 	
-	\legend{hc, hC no reuse, hmax}
+	\legend{hC, hC no reuse, hmax}
 	\end{axis}
 \end{tikzpicture}
-\caption{Nomystery domain with 2 trucks. Scale number of packages/goal facts between 2 and 6 and number of 
+\caption{Comparison of coverage between the differenct heuristic functions in Nomystery domain with 2 trucks. Scale number of packages/goal facts between 4 and 6 and number of 
 	properties between 1 and 10. The three property types blocked/forced road and two packages have
-	to be delivered in the same truck are added in a fixed order. }
+	to be delivered in the same truck are added in a fixed order. Meta search: top-down}
 \end{figure}
 
 \begin{figure}[ht]
@@ -194,9 +194,10 @@
 	\legend{forced road, blocked road, shared truck}
 	\end{axis}
 \end{tikzpicture}
-\caption{Nomystery domain with 2 trucks. Scale number of packages/goal facts between 2 and 6 and number of 
+\caption{Comparison of coverage using only one property type. Nomystery domain with 2 trucks. Scale number of packages/goal facts between 2 and 6 and number of 
 	properties between 1 and 10. For every combination of \#goals \#properties and property type 
-	there are 10 instances. }
+	there are 10 instances.  Meta search: top-down}
+	\rebecca{shared truck property means: px and py have to be delivered in the same truck}
 \end{figure}
 
 
@@ -207,6 +208,8 @@
 \centering
 \begin{tikzpicture}
 	\begin{axis}[
+		title={5 goals},
+		every axis title/.style={above right,at={(0,0)}},
 		height=4cm,
 		width=0.45\textwidth,
 		xlabel=\#properties,
@@ -238,6 +241,8 @@
 \end{tikzpicture}
 \begin{tikzpicture}
 	\begin{axis}[
+		title={6 goals},
+		every axis title/.style={above right,at={(0,0)}},
 		height=4cm,
 		width=0.45\textwidth,
 		xlabel=\#properties,
@@ -268,23 +273,38 @@
 	\legend{hC, hC no reuse, hmax}
 	\end{axis}
 \end{tikzpicture}
-\caption{TPP domain with 2 trucks. Scale number of packages between 3 and 6 and number of 
+\caption{Comparison of coverage between the different heuristic functions in the TPP domain with 2 trucks. Scale number of packages between 5 and 6 and number of 
 	properties between 1 and 10. The three property types blocked/forced road and one goods needs to be bought a 
-	specific market are added in a fixed order. }
-\end{figure}
-
-\begin{figure}[ht]
-\input{data/action_set_properties/scatterplot-expansions_C-Cnr_GFD.tex}
-\input{data/action_set_properties/scatterplot-search_time_C-Cnr_GFD.tex}
-\caption{nomystery}
+	specific market are added in a fixed order.  Meta search: top-down}
 \end{figure}
 
 
+\newpage
+\begin{figure}[ht]
+\small
+\input{data/action_set_properties/scatterplot-expansions_C-Cnr_nomystery_goals.tex}
+\input{data/action_set_properties/scatterplot-expansions_C-Cnr_nomystery_properties.tex}
+\caption{Comparison expansions per task in nomystery. hC: propagates the learned heuristic down the meta search tree, hC no reuse: computes the heuristic for every meta search node from scratch}
+\end{figure}
+\begin{figure}[ht]
+\small
+\input{data/action_set_properties/scatterplot-search_time_C-Cnr_nomystery_goals.tex}
+\input{data/action_set_properties/scatterplot-search_time_C-Cnr_nomystery_properties.tex}
+\caption{Comparison overall search time per task in nomystery. hC: propagates the learned heuristic down the meta search tree, hC no reuse: computes the heuristic for every meta search node from scratch}
+\end{figure}
 
 \begin{figure}[ht]
+\small
+\input{data/action_set_properties/scatterplot-avg_search_time_C-Cnr_nomystery_goals.tex}
+\input{data/action_set_properties/scatterplot-avg_search_time_C-Cnr_nomystery_properties.tex}
+\caption{Comparison average earch time per meta node per task in nomystery. hC: propagates the learned heuristic down the meta search tree, hC no reuse: computes the heuristic for every meta search node from scratch}
+\end{figure}
+
+%\newpage
+%\begin{figure}[ht]
 %\input{data/action_set_properties/scatterplot-expansions_C-Cnr_tpp_goals.tex}
-\input{data/action_set_properties/scatterplot-expansions_C-Cnr_tpp.tex}
-\input{data/action_set_properties/scatterplot-search_time_C-Cnr_tpp_props_goals.tex}
-\input{data/action_set_properties/scatterplot-search_time_C-Cnr_tpp.tex}
-\caption{tpp}
-\end{figure}
+%\input{data/action_set_properties/scatterplot-expansions_C-Cnr_tpp.tex}
+%\input{data/action_set_properties/scatterplot-search_time_C-Cnr_tpp_props_goals.tex}
+%\input{data/action_set_properties/scatterplot-search_time_C-Cnr_tpp.tex}
+%\caption{tpp}
+%\end{figure}
