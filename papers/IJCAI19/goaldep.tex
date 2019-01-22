@@ -132,12 +132,11 @@ We remark that another class of dependencies that may be of interest
 is \defined{disjunctive goal exclusion}, that take the form
 $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in B} b}$,
 where the strongest dependencies have small left-hand side
-conjunctions but large right-hand side disjunctions. The dominant PDO
-for such dependencies can, however, be derived from the dominant
-PDO-GE. This is because $\entails{\plans}{\bigwedge_{a \in A} a}{\neg
-  \bigvee_{b \in B} b}$ holds if and only if
-$\entails{\plans}{\bigwedge_{a \in A} a}{\neg b}$ holds for every $b
-\in B$.
+conjunctions but large right-hand side disjunctions. Observe that the
+dominant PDO for such dependencies can be derived from the dominant
+PDO-GE: $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in
+    B} b}$ holds if and only if $\entails{\plans}{\bigwedge_{a \in A}
+  a}{\neg b}$ holds for every $b \in B$.
 
 
 
@@ -272,101 +271,103 @@ stronger and stronger unsolvability detectors.
 
 
 
-%
-%
-\subsection{Disjunctive Goal Exclusion}
-\label{goaldep:disjunctive}
 
-\joerg{this plays a very minor role in the paper. hence I
-  briefly merged it into the above discussion. remove this section for
-  paper}
 
-Another class of dependencies that may be of interest is
-\defined{disjunctive goal exclusion}:
 
-\begin{definition}[Disjunctive Goal Exclusion]
-Let $\task =
-(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
-be an OSP task, and \plans\ its set of plans.  
 
-The \defined{PDO for disjunctive goal exclusion (PDO-DGE)} is the PDO for
-\plans, the property set $\dgeprops := \{\bigwedge_{a \in A}
-g\allowbreak\mid\allowbreak A \subseteq G\} \cup \{\neg \bigvee_{g
-  \in B} b \allowbreak\mid\allowbreak B \subseteq G\}$, and the
-dependency set $\dgedeps := \{(\bigwedge_{a \in A} a,\allowbreak\neg
-\bigwedge_{b \in B} b) \allowbreak\mid\allowbreak A \cap B =
-\emptyset\}$.
-\end{definition}
+%% \subsection{Disjunctive Goal Exclusion}
+%% \label{goaldep:disjunctive}
 
-Observe that $\neg \bigvee_{b \in B} b$ is equivalent to $\bigwedge_{b
-  \in B} \neg b$, so that $\entails{\plans}{\bigwedge_{a \in A}
-  a}{\neg \bigvee_{b \in B} b}$ holds iff
-$\entails{\plans}{\bigwedge_{a \in A} a}{\neg b}$ holds for every $b
-\in B$. Indeed, the dominant PDO-DGE can be derived from the dominant
-PDO-GE. Precisely, say that an entailment
-$\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in B} b}$ is
-\defined{constructible} from the dominant PDO-GE if there exist $A[b]
-\subseteq A$, for $b \in B$, such that $\entails{\plans}{\bigwedge_{a
-    \in A[b]} a}{\neg b}$ is in the dominant PDO-GE and $\bigcup_{b
-  \in B} A[b] = A$. We have:
+%% \joerg{this plays a very minor role in the paper. hence I
+%%   briefly merged it into the above discussion. remove this section for
+%%   paper}
 
-\begin{proposition}[PDO-DGE from PDO-GE]\label{pro:pdodge-from-pdoge}
-Let $\task =
-(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
-be an OSP task, and \plans\ its set of plans.  
+%% Another class of dependencies that may be of interest is
+%% \defined{disjunctive goal exclusion}:
 
-Then $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in B}
-  b}$ is in the dominant PDO-DGE if and only if it is constructible
-from the dominant PDO-GE, and there is no $A' \subsetneq A$ such that
-$\entails{\plans}{\bigwedge_{a \in A'} a}{\neg \bigvee_{b \in B} b}$
-is constructible from the dominant PDO-GE.
-\end{proposition}
+%% \begin{definition}[Disjunctive Goal Exclusion]
+%% Let $\task =
+%% (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
+%% be an OSP task, and \plans\ its set of plans.  
 
-\begin{proof}
-%
-Observe first that, for any entailment $\entails{\plans}{\bigwedge_{a
-    \in A} a}{\neg \bigvee_{b \in B} b}$ that holds, an entailment
-$\entails{\plans}{\bigwedge_{a \in A'} a}{\neg \bigvee_{b \in B} b}$
-with $A' \subseteq A$ is constructible from the dominant PDO-GE. This
-is because, for every entailment $\entails{\plans}{\bigwedge_{a \in A}
-  a}{\neg b}$ that holds, the dominant PDO-GE contains an entailment
-$\entails{\plans}{\bigwedge_{a \in A[b]} a}{\neg b}$ with $A[b]
-\subseteq A$.
+%% The \defined{PDO for disjunctive goal exclusion (PDO-DGE)} is the PDO for
+%% \plans, the property set $\dgeprops := \{\bigwedge_{a \in A}
+%% g\allowbreak\mid\allowbreak A \subseteq G\} \cup \{\neg \bigvee_{g
+%%   \in B} b \allowbreak\mid\allowbreak B \subseteq G\}$, and the
+%% dependency set $\dgedeps := \{(\bigwedge_{a \in A} a,\allowbreak\neg
+%% \bigwedge_{b \in B} b) \allowbreak\mid\allowbreak A \cap B =
+%% \emptyset\}$.
+%% \end{definition}
 
-The 'only if' direction follows directly from this. For the 'if'
-direction, it suffices to observe additionally that, trivially, every
-entailment constructible from the dominant PDO-GE does in fact hold.
-%
-% Joerg: outdated attempt
-%
-%% For the 'if' direction, say that $\entails{\plans}{\bigwedge_{a \in A}
-%%   a}{\neg b_0}$ is in the dominant PDO-GE, and that
-%% $\entails{\plans}{\bigwedge_{a \in A[b]} a}{\neg b}$ is in the
-%% dominant PDO-GE for all $b_0 \neq b \in B$ with $A[b] \subseteq
-%% A$. Then, trivially, $\entails{\plans}{\bigwedge_{a \in A} a}{\neg
-%%   \bigvee_{b \in B} b}$. This entailment is dominant because 1)
-%% $\entails{\plans}{\bigwedge_{a \in A} a}{\neg b_0}$ is dominant so $A$
-%% cannot be smaller, and 2) any valid implication of a literal $\neg b$
-%% is represented in the dominant PDE-GE so $B$ cannot be larger.
-%
-%% 'only if': Assume for contradiction that
+%% Observe that $\neg \bigvee_{b \in B} b$ is equivalent to $\bigwedge_{b
+%%   \in B} \neg b$, so that $\entails{\plans}{\bigwedge_{a \in A}
+%%   a}{\neg \bigvee_{b \in B} b}$ holds iff
+%% $\entails{\plans}{\bigwedge_{a \in A} a}{\neg b}$ holds for every $b
+%% \in B$. Indeed, the dominant PDO-DGE can be derived from the dominant
+%% PDO-GE. Precisely, say that an entailment
 %% $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in B} b}$ is
-%% in the dominant PDO-DGE but this claim does not hold. If there exists
-%% $b \in B$ for which no entailment $\entails{\plans}{\bigwedge_{a \in
-%%     A[b]} a}{\neg b}$ is in the dominant PDO-GE, then $\bigwedge_{a
-%%   \in A} a$ does not entail $\neg \bigvee_{b \in B} b$, in
-%% contradiction. If $A[b] \subsetneq A$ for every $b$.
-\end{proof}
+%% \defined{constructible} from the dominant PDO-GE if there exist $A[b]
+%% \subseteq A$, for $b \in B$, such that $\entails{\plans}{\bigwedge_{a
+%%     \in A[b]} a}{\neg b}$ is in the dominant PDO-GE and $\bigcup_{b
+%%   \in B} A[b] = A$. We have:
 
-Observe that the dominant PDO-DGE may be exponentially larger than the
-dominant PDO-GE: in the worst case, every combination of
-$\entails{\plans}{\bigwedge_{a \in A} a}{\neg b}$ entailments in the
-dominant PDO-GE yields a different set-inclusion minimal left-hand
-side. However, using Proposition~\ref{pro:pdodge-from-pdoge}, the
-dominant PDO-DGE can be constructed from the dominant PDO-GE in time
-polynomial in the size of the output, simply by iteratively
-enumerating all entailments constructible from the dominant PDO-GE and
-checking for subsumptions.
+%% \begin{proposition}[PDO-DGE from PDO-GE]\label{pro:pdodge-from-pdoge}
+%% Let $\task =
+%% (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
+%% be an OSP task, and \plans\ its set of plans.  
+
+%% Then $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in B}
+%%   b}$ is in the dominant PDO-DGE if and only if it is constructible
+%% from the dominant PDO-GE, and there is no $A' \subsetneq A$ such that
+%% $\entails{\plans}{\bigwedge_{a \in A'} a}{\neg \bigvee_{b \in B} b}$
+%% is constructible from the dominant PDO-GE.
+%% \end{proposition}
+
+%% \begin{proof}
+%% %
+%% Observe first that, for any entailment $\entails{\plans}{\bigwedge_{a
+%%     \in A} a}{\neg \bigvee_{b \in B} b}$ that holds, an entailment
+%% $\entails{\plans}{\bigwedge_{a \in A'} a}{\neg \bigvee_{b \in B} b}$
+%% with $A' \subseteq A$ is constructible from the dominant PDO-GE. This
+%% is because, for every entailment $\entails{\plans}{\bigwedge_{a \in A}
+%%   a}{\neg b}$ that holds, the dominant PDO-GE contains an entailment
+%% $\entails{\plans}{\bigwedge_{a \in A[b]} a}{\neg b}$ with $A[b]
+%% \subseteq A$.
+
+%% The 'only if' direction follows directly from this. For the 'if'
+%% direction, it suffices to observe additionally that, trivially, every
+%% entailment constructible from the dominant PDO-GE does in fact hold.
+%% %
+%% % Joerg: outdated attempt
+%% %
+%% %% For the 'if' direction, say that $\entails{\plans}{\bigwedge_{a \in A}
+%% %%   a}{\neg b_0}$ is in the dominant PDO-GE, and that
+%% %% $\entails{\plans}{\bigwedge_{a \in A[b]} a}{\neg b}$ is in the
+%% %% dominant PDO-GE for all $b_0 \neq b \in B$ with $A[b] \subseteq
+%% %% A$. Then, trivially, $\entails{\plans}{\bigwedge_{a \in A} a}{\neg
+%% %%   \bigvee_{b \in B} b}$. This entailment is dominant because 1)
+%% %% $\entails{\plans}{\bigwedge_{a \in A} a}{\neg b_0}$ is dominant so $A$
+%% %% cannot be smaller, and 2) any valid implication of a literal $\neg b$
+%% %% is represented in the dominant PDE-GE so $B$ cannot be larger.
+%% %
+%% %% 'only if': Assume for contradiction that
+%% %% $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in B} b}$ is
+%% %% in the dominant PDO-DGE but this claim does not hold. If there exists
+%% %% $b \in B$ for which no entailment $\entails{\plans}{\bigwedge_{a \in
+%% %%     A[b]} a}{\neg b}$ is in the dominant PDO-GE, then $\bigwedge_{a
+%% %%   \in A} a$ does not entail $\neg \bigvee_{b \in B} b$, in
+%% %% contradiction. If $A[b] \subsetneq A$ for every $b$.
+%% \end{proof}
+
+%% Observe that the dominant PDO-DGE may be exponentially larger than the
+%% dominant PDO-GE: in the worst case, every combination of
+%% $\entails{\plans}{\bigwedge_{a \in A} a}{\neg b}$ entailments in the
+%% dominant PDO-GE yields a different set-inclusion minimal left-hand
+%% side. However, using Proposition~\ref{pro:pdodge-from-pdoge}, the
+%% dominant PDO-DGE can be constructed from the dominant PDO-GE in time
+%% polynomial in the size of the output, simply by iteratively
+%% enumerating all entailments constructible from the dominant PDO-GE and
+%% checking for subsumptions.
 
 
 
