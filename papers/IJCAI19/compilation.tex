@@ -42,8 +42,6 @@ where $A_i \subset A$, we introduce a compilation from such expressions.
 	\{\text{actions to eval } \mathcal{P}\}$. 
 \end{definition}
 
-\rebecca{how to define the eval actions}
-
 For every action set $A_i$ in $A_P$ we introduce a new fact $\text{used}_i$ which is initially 
 \emph{false} and changed to \emph{true} by any action in $A_i$. The new variable $sat_{\mathcal{P}}$ indicates 
 if the property $\mathcal{P}$ is satisfied at the end of the plan. To prevent an 
@@ -51,17 +49,6 @@ evaluation of the property before the end of the plan we introduce an additional
 which indicates if we are in the execution or evaluation phase of the action sequence. Once the \textit{change-phase} (cp) action
 is applied no original actions can be executed anymore and the actions sequence is evaluated.
 
-\rebecca{
-	ideally you would add the goal facts to the \emph{change-phase} action to force a switch to the 
-	evaluation phase after all goals are achieved. This is not compatible with the search for the goal fact 
-	dependencies. You have to adapted the precondition of the action according to the current goal subset. 
-	(is possible but it is not clear to me if you can still reuse the heuristic for different subsets) 
-}
-
-
-\paragraph{Example} If we choose $A_P = \{A_1, A_2\}$ were $A_i$ contains all actions where truck $i$ 
-is involved, we can express the property \emph{"Only one truck is used"} with the 
-formula $(u_1 \wedge \neg u_2) \vee (\neg u_1 \wedge u_2)$.
 
 \subsection{LTL}
 

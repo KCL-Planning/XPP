@@ -34,9 +34,9 @@
 		coverage: coverage of \emph{Goal-Fact Dependencies 1} computation as fraction of the instances solved by \emph{lmcut} without a cost bound in 30 min, 
 		over the commonly solved instances:
 		avg time: average time per node in meta search tree,
-		\#gs: number of \emph{minimal unsolvable goal subsets},
-		\#n: number of solved nodes in meta search tree,
-		fn: fraction of solved nodes in the meta search tree with repect to the worst case size (all possible goal fact combinations $2^{\text{\# goal facts}}$, 
+		\#gs: average number of \emph{minimal unsolvable goal subsets},
+		\#n: average number of solved nodes in meta search tree,
+		fn: average fraction of solved nodes in the meta search tree with repect to the worst case size (all possible goal fact combinations $2^{\text{\# goal facts}}$, 
 		Benchmark: oversubscription IPC 
 		domains with bound $ = x \cdot $ optimal cost with $ x \in \{0.25, 0.5, 0.75\}$.
 		C: online learned dead-end detectors with bounded DFS which are propagated 
@@ -73,8 +73,8 @@
 	without the reuse of the heuristic for oversubscription IPC domains}
 \end{figure}
 
-\FloatBarrier
-\subsubsection{Top Down vs. Bottom Up}
+%\FloatBarrier
+%\subsubsection{Top Down vs. Bottom Up}
 %\input{data/IPC_cost_bound/compare_td_bu/scatterplot-avg_search_time_td-bu_IPC_GFD_0.5.tex}
 
 
@@ -143,10 +143,54 @@
 	The original goal facts are hard goals and the property-goal-facts are soft-goals.}
 \end{figure}
 
-\rebecca{
-	At least in nomystery it seams to be difficult to generated action set properties that can be satisfied if we use 
-	a constraint of 1 for the fuel. Therefore in most cases the MUGS are simply all goal-facts + one property.
-}
+\rebecca{Example}
+\begin{figure}
+	Nomystery: fuel 1.5 * minimal,
+	
+	$fuel(T_0) = 16$, $fuel(T_1) = 7$
+	\begin{center}
+	\begin{tikzpicture}
+		\node[draw, circle, label=above:{$I:P_0, P_1,P_2$}] (l0) at (0,0) {$L_0$};
+		\node[draw, circle, label=right:{$T_1$}] (l1) at (4,-1) {$L_1$};
+		\node[draw, circle] (l2) at (6,0) {$L_2$};
+		\node[draw, circle, label=right:{$P_1$}] (l3) at (6,-3) {$L_3$};
+		\node[draw, circle, label=below:{$P_0$}] (l4) at (2,-2) {$L_4$};
+		\node[draw, circle, label=below:{$T_0~P_2$}] (l5) at (0,-3) {$L_5$};
 
+		\draw[thick] (l0) to node[above] {5} (l2);
+		\draw[thick] (l0) to node[above] {2} (l1);
+		\draw[thick] (l0) to node[above] {3} (l4);
+		\draw[thick] (l0) to node[left] {4} (l5);
+		\draw[thick] (l2) to node[right] {1} (l3);
+		\draw[thick] (l4) to node[above] {2} (l1);
+		\draw[thick] (l4) to node[above] {5} (l3);
+		\draw[thick] (l5) to node[below] {5} (l3);
+	\end{tikzpicture}
+	\end{center}
+	\begin{minipage}[t]{0.2\textwidth}
+	Properties:
+	\begin{enumerate}
+		\item block $T_0$ $(L_1,L_5)$
+		\item force $T_0$ $(L_1,L_4)$
+		\item block $T_1$ $(L_0,L_4)$
+		\item same truck $P_0$ $P_1$
+		\item same truck $P_1$ $P_2$
+		\item force $T_0$ $(L_3,L_4)$
+	\end{enumerate}
+	\end{minipage}
+	\begin{minipage}[t]{0.2\textwidth}
+		MUGS:
+		\begin{itemize}
+			\item $\{6,5,1\}$
+			\item $\{4,5,1\}$
+		\end{itemize}
+	\end{minipage}
+\end{figure}
 
-\input{action_set_properties_experiments.tex}
+\begin{figure*}[ht]
+	\centering
+	nomystery
+	\includegraphics[scale=0.2]{data/action_set_properties/coverage_nomystery.pdf}
+	\caption{Comparison of coverage with respect to fuel bound (column, bound=xxx means x.xx times the minimal fuel), number of goal facts (row)
+		, number of properties (x-axis)}
+\end{figure*}
