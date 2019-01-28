@@ -45,38 +45,6 @@
 \end{figure*}
 
 
-\begin{figure}[ht]
-	\scriptsize
-	\begin{minipage}{0.5\textwidth}
-		\input{data/IPC_cost_bound/scatterplot-expansions_C-Cnr_IPC_GFD_0.25.tex}
-	\end{minipage}
-	%\hfill
-	%\begin{minipage}{0.2\textwidth}
-	%	\input{data/IPC_cost_bound/scatterplot-search_time_C-Cnr_IPC_GFD_0.25.tex}
-	%\end{minipage}
-	\begin{minipage}{0.2\textwidth}
-		\input{data/IPC_cost_bound/scatterplot-expansions_C-Cnr_IPC_GFD_0.5.tex}
-	\end{minipage}
-	\hfill
-	\begin{minipage}{0.2\textwidth}
-		\input{data/IPC_cost_bound/scatterplot-search_time_C-Cnr_IPC_GFD_0.5.tex}
-	\end{minipage}
-	\begin{minipage}{0.2\textwidth}
-		\input{data/IPC_cost_bound/scatterplot-expansions_C-Cnr_IPC_GFD_0.75.tex}
-	\end{minipage}
-	\hfill
-	\begin{minipage}{0.2\textwidth}
-		\input{data/IPC_cost_bound/scatterplot-search_time_C-Cnr_IPC_GFD_0.75.tex}
-	\end{minipage}
-
-	\caption{Comparison of expansions and search time per task of $h^{C}$ with and 
-	without the reuse of the heuristic for oversubscription IPC domains}
-\end{figure}
-
-%\FloatBarrier
-%\subsubsection{Top Down vs. Bottom Up}
-%\input{data/IPC_cost_bound/compare_td_bu/scatterplot-avg_search_time_td-bu_IPC_GFD_0.5.tex}
-
 
 \begin{figure*}[ht]
 	\small
@@ -87,15 +55,6 @@
 	Planner $A^*$ with $h^{max}$}
 \end{figure*}
 
-
-%\begin{figure}[ht]
-%\input{data/IPC_cost_bound/compare_td_bu/scatterplot-num_nodes_td-bu_IPC_GFD_0.25.tex}
-%\input{data/IPC_cost_bound/compare_td_bu/scatterplot-num_nodes_td-bu_IPC_GFD_0.5.tex}
-%\input{data/IPC_cost_bound/compare_td_bu/scatterplot-search_time_td-bu_IPC_GFD_0.5.tex}
-%\input{data/IPC_cost_bound/compare_td_bu/scatterplot-avg_search_time_td-bu_IPC_GFD_0.5.tex}
-%\caption{Comparison of the number of nodes in the meta search tree for the top-down and bottom-up meta search.
-%	Planner $A^*$ with $h^{max}$. Axis: log base 2.}
-%\end{figure}
 
 
 \FloatBarrier
@@ -143,49 +102,6 @@
 	The original goal facts are hard goals and the property-goal-facts are soft-goals.}
 \end{figure}
 
-\rebecca{Example}
-\begin{figure}
-	Nomystery: fuel 1.5 * minimal,
-	
-	$fuel(T_0) = 16$, $fuel(T_1) = 7$
-	\begin{center}
-	\begin{tikzpicture}
-		\node[draw, circle, label=above:{$I:P_0, P_1,P_2$}] (l0) at (0,0) {$L_0$};
-		\node[draw, circle, label=right:{$T_1$}] (l1) at (4,-1) {$L_1$};
-		\node[draw, circle] (l2) at (6,0) {$L_2$};
-		\node[draw, circle, label=right:{$P_1$}] (l3) at (6,-3) {$L_3$};
-		\node[draw, circle, label=below:{$P_0$}] (l4) at (2,-2) {$L_4$};
-		\node[draw, circle, label=below:{$T_0~P_2$}] (l5) at (0,-3) {$L_5$};
-
-		\draw[thick] (l0) to node[above] {5} (l2);
-		\draw[thick] (l0) to node[above] {2} (l1);
-		\draw[thick] (l0) to node[above] {3} (l4);
-		\draw[thick] (l0) to node[left] {4} (l5);
-		\draw[thick] (l2) to node[right] {1} (l3);
-		\draw[thick] (l4) to node[above] {2} (l1);
-		\draw[thick] (l4) to node[above] {5} (l3);
-		\draw[thick] (l5) to node[below] {5} (l3);
-	\end{tikzpicture}
-	\end{center}
-	\begin{minipage}[t]{0.2\textwidth}
-	Properties:
-	\begin{enumerate}
-		\item block $T_0$ $(L_1,L_5)$
-		\item force $T_0$ $(L_1,L_4)$
-		\item block $T_1$ $(L_0,L_4)$
-		\item same truck $P_0$ $P_1$
-		\item same truck $P_1$ $P_2$
-		\item force $T_0$ $(L_3,L_4)$
-	\end{enumerate}
-	\end{minipage}
-	\begin{minipage}[t]{0.2\textwidth}
-		MUGS:
-		\begin{itemize}
-			\item $\{6,5,1\}$
-			\item $\{4,5,1\}$
-		\end{itemize}
-	\end{minipage}
-\end{figure}
 
 \begin{figure*}[ht]
 	\centering
