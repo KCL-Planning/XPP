@@ -25,23 +25,27 @@
 	against the g function? or do we represent a discrete g function through a 
 	discrete state variable treating it like a resource?}
 
+\joerg{explain bechmarks; in particular, what about the other size parameters when 
+the number of goals increases?}
+
 \setlength{\tabcolsep}{1pt}
 \renewcommand{\arraystretch}{0.8}
 \begin{figure*}[ht]
-	\centering
-	\input{tables/coverage_IPC.tex}
-	\caption{
-		coverage: coverage of \emph{Goal-Fact Dependencies 1} computation as fraction of the instances solved by \emph{lmcut} without a cost bound in 30 min, 
-		over the commonly solved instances:
-		avg time: average time per node in meta search tree,
-		\#gs: average number of \emph{minimal unsolvable goal subsets},
-		\#n: average number of solved nodes in meta search tree,
-		fn: average fraction of solved nodes in the meta search tree with repect to the worst case size (all possible goal fact combinations $2^{\text{\# goal facts}}$, 
-		Benchmark: oversubscription IPC 
-		domains with bound $ = x \cdot $ optimal cost with $ x \in \{0.25, 0.5, 0.75\}$.
-		C: online learned dead-end detectors with bounded DFS which are propagated 
-		down the three, C nr: the learned heuristic is not reused, max: $h^{max}$ with $A^*$. 
-		time-out 30 min}
+	\centering \input{tables/coverage_IPC.tex} \caption{ coverage:
+	coverage of \emph{Goal-Fact Dependencies 1} computation as
+	fraction of the instances solved by \emph{lmcut} without a
+	cost bound in 30 min, over the commonly solved instances: avg
+	time: average time per node in meta search tree, \#gs: average
+	number of \emph{minimal unsolvable goal subsets}, \#n: average
+	number of solved nodes in meta search tree, fn: average
+	fraction of solved nodes in the meta search tree with repect
+	to the worst case size (all possible goal fact combinations
+	$2^{\text{\# goal facts}}$, Benchmark: oversubscription IPC
+	domains with bound $ = x \cdot $ optimal cost with $
+	x \in \{0.25, 0.5, 0.75\}$.  C: online learned dead-end
+	detectors with bounded DFS which are propagated down the
+	three, C nr: the learned heuristic is not reused, max:
+	$h^{max}$ with $A^*$.  time-out 30 min}
 \end{figure*}
 
 

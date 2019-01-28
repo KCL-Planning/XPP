@@ -138,6 +138,11 @@ PDO-GE: $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in
     B} b}$ holds if and only if $\entails{\plans}{\bigwedge_{a \in A}
   a}{\neg b}$ holds for every $b \in B$.
 
+Is there a logics equivalent to finding ``intermediate formulas
+between p and q''? Viewing formulas as assignment sets, starting at
+$[p]$ iteratively add a single more assignment from $[q]$ until
+reaching $[q]$?
+
 
 
 
@@ -165,6 +170,10 @@ unsolvable. Dominant entailments in the PDO-GE result from
 set-inclusion minimal $A$ and $B$, corresponding to the set-inclusion
 minimality of MUGS.
 \end{proof}
+
+\joerg{merge bottom-up computation in here. should be easy, make
+  additional list or, better, brief text par below list explaining the
+  dual bottom-up procedure.}
 
 Our computational problem thus boils down to computing all MUGS. We do
 so through a search over goal sets, that we will refer to as
