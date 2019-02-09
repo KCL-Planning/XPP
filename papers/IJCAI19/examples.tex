@@ -3,28 +3,26 @@
 \subsection{Nomystery}
 
 \subsubsection*{Explanation Domain}
-The goal in nomystery is to deliver packages from a initial location (labeled in red)
-to a goal location (labeled in green). There are two trucks with a separate fuel level.
+The goal in nomystery is to deliver packages from an initial location 
+to a goal location. There are two trucks with a separate fuel level.
 The amount of packages a truck can transport is not limited. A truck can either load or 
-unload a package or drive from one to an other location. Loading and unloading costs no fuel,
-driving costs between 1 and 5 fuels units (label at the edges).\\
+unload a package or drive from one to another location. 
 
-Properties:
+For this domain we consider the following properties, that will serve as the basis for addressing user questions:
+
 \begin{itemize}
 	\item don't use $T_i$ $(L_x,L_y)$: Truck $T_i$ should not drive from $L_x$ to
-		$L_y$ or vise versa
+		$L_y$ or vice versa;
 	\item use $T_i$ $(L_x,L_y)$: Truck $T_i$ should drive at least once from $L_x$ to
-		$L_y$ or vise versa
+		$L_y$ or vice versa;
 	\item same truck $P_x$ $P_y$: both packages have to be delivered by the same truck
-		(the packages are either only loaded and an unloaded by truck $T_0$ or by $T_1$)
+		(the packages are either only loaded and an unloaded by truck $T_0$ or by $T_1$).
 \end{itemize}
 
-\subsubsection*{Example 1}
-%\begin{figure}
-	The fuel limit is 1.5 times the minimal limit to deliver all packages.
+In this example we consider the problem shown in Figure, where all packages are in the initial location $L_0$ (labeled in red) and must be delivered in goal locations (labeled in green). 
+Loading and unloading costs no fuel, while driving costs between 1 and 5 fuels units (as indicated by edge labels).\\
+The fuel limit is 1.5 times the minimal limit to deliver all packages, and the initial fuel in trucks is:	$fuel(T_0) = 16$, $fuel(T_1) = 7$.
 
-	Initial fuel:
-	$fuel(T_0) = 16$, $fuel(T_1) = 7$
 
 	\begin{center}
 	\begin{tikzpicture}
@@ -46,15 +44,20 @@ Properties:
 		\draw[thick] (l4) to node[below] {4} (l5);
 	\end{tikzpicture}
 	\end{center}
+	
+Given the problem example, we then consider six instances of the properties above, and compute the corresponding set of MUGS.
+	\smallskip
+	\smallskip
+	
 	\begin{minipage}[t]{0.3\textwidth}
 	Properties:
 	\begin{enumerate}
-		\item use $T_0$ $(L_2,L_3)$
-		\item same truck $P_1$ $P_2$
-		\item use $T_0$ $(L_4,L_3)$
-		\item same truck $P_2$ $P_0$
-		\item don't use $T_0$ $(L_0,L_5)$
-		\item use $T_1$ $(L_5,L_4)$
+		\item [\textbf{Pr1}] use $T_0$ $(L_2,L_3)$
+		\item [\textbf{Pr2}] same truck $P_1$ $P_2$
+		\item [\textbf{Pr3}] use $T_0$ $(L_4,L_3)$
+		\item [\textbf{Pr4}] same truck $P_2$ $P_0$
+		\item [\textbf{Pr5}] don't use $T_0$ $(L_0,L_5)$
+		\item [\textbf{Pr6}] use $T_1$ $(L_5,L_4)$
 	\end{enumerate}
 	\end{minipage}
 	\begin{minipage}[t]{0.15\textwidth}
@@ -64,12 +67,34 @@ Properties:
 			\item $\{2,5,6\}$
 			\item $\{3,4,5\}$
 			\item $\{3,4,5\}$
-			\item $\{2,4,5\}$
+			\item $\textbf{\{2,4,5\}}$
 			\item $\{2,3,5\}$
 			\item $\{1,3,4\}$
 			\item $\{1,2,3\}$
 		\end{itemize}
 	\end{minipage}
+	
+The MUGS can then be used to generate explanations for plan inputs. In particular, each Pr\textit{i} corresponds to a possible action that a user would expect to see or not to see in the plan, and the MUGS are used to explain to the user that if they want one given action in the plan, then the user must necessary change some other things in the plan, as guaranteed by the MUG. And this is an interesting kind of explanation/advice that also a non-planning person can understand. In strictly more technical terms, the user doesn't know what properties they must relax in the plan in order to achieve what they want.
+
+Let us assume we have the following plan that solves the problem of Figure  (in [] we put the fuel cost if greater than zero):
+
+\begin{verbatim}
+(drive T0 L5 L0) [4]
+(load P0 T0 L0) 
+(load P1 T0 L0) 
+(load P2 T0 L0) 
+(drive T0 L0 L4) [3]
+(unload P0 T0 L4) 
+(drive T0 L4 L5) [4]
+(unload P2 T0 L5)
+(drive T0 L5 L3) [5]
+(unload P1 T0 L3)
+\end{verbatim}
+
+Given this plan, the user might ask \textit{''Why don't you avoid driving in the road $L_0-L_5$ as I know there is a lot of traffic there at the moment?"}. We note that this question is modelled by \textbf{Pr5}. At the same time, the plan already satisfies \textbf{Pr2} and \textbf{Pr4} given that only truck $T_0$ is used for all packages. However, one of the MUGS is \{2,4,5\}, and hence the answer to the user question would be: \textit{Because if you don't use that road you would not be able to deliver all packages using a single truck}.
+
+
+
 
 \subsection{Blocksworld}
 
