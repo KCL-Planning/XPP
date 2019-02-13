@@ -7,7 +7,7 @@ We now instantiate our framework with a concrete use case:
 dependencies between goals in oversubscription planning, where the
 question addressed is which combinations of (soft) goals exclude which
 other combinations. In Section~\ref{compilation}, we will show how to
-compile more powerful plan property languages into this special case.
+compile a more powerful plan property language into this special case.
 
 
 
@@ -138,11 +138,6 @@ PDO-GE: $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in
     B} b}$ holds if and only if $\entails{\plans}{\bigwedge_{a \in A}
   a}{\neg b}$ holds for every $b \in B$.
 
-Is there a logics equivalent to finding ``intermediate formulas
-between p and q''? Viewing formulas as assignment sets, starting at
-$[p]$ iteratively add a single more assignment from $[q]$ until
-reaching $[q]$?
-
 
 
 
@@ -171,13 +166,44 @@ set-inclusion minimal $A$ and $B$, corresponding to the set-inclusion
 minimality of MUGS.
 \end{proof}
 
-\joerg{merge bottom-up computation in here. should be easy, make
-  additional list or, better, brief text par below list explaining the
-  dual bottom-up procedure.}
 
-Our computational problem thus boils down to computing all MUGS. We do
-so through a search over goal sets, that we will refer to as
-\defined{systematic weakening}:
+%% \joerg{mention relation of minimum unsolvable goal subsets/of PDE-GE
+%%   to pareto frontier somewhere?}
+
+%% \joerg{mention alternate bottom-up computation, starting at empty goal
+%%   set and adding goals til unsat. bottom-up alg generates set of
+%%   across-line unsolvabl sets; set-inclusion minimal amongst those are
+%%   the minimal unsolvable sets (they are unsolvable; any subset must be
+%%   solvable by construction; vice versa, anz minimal unsolv set results
+%%   from adding a goal to a maximal unsolvable one, so all the
+%%   maxunssets are there)}
+%
+% Joerg email top-down vs bottom-up
+%
+%% Both "top down" as we do now and "bottom up" as you suggest can be
+%% used to identify the minimum unsolvable goal sets (in the bottom-up
+%% case a post-processing step is needed, selecting from the
+%% unsolvable goal sets generated during meta-tree search the
+%% set-inclusion minimal ones; but this step is easy ie polynomial in
+%% the number of goal sets considered).
+%
+%% Which of the two is expected to work better is largely a function
+%% of how large the solvable goal subsets will be. It seems plausible
+%% that one or the other algorithm will often have substantial
+%% advantages. In particular, for severely limited resources one would
+%% expect bottom-up to be better.
+%
+%% So ideally we should experiment with both top-down and
+%% bottom-up. And in practice it would seem quite reasonablee to run
+%% both in parallel, so that a "best-of" also makes a lot of sense
+%% here.
+%
+%% (One can even think about interleaving bottom-up with top-down in
+%% an intelligent way, but that's for future work)
+
+Our computational problem thus boils down to computing all MUGS. This
+can be done through a search over goal sets, that we refer to as
+\defined{systematic weakening (SysW)}:
 \begin{enumerate}[(1)]
 \item the start node of the search is \goal; 
 \item each search step selects an open node $\goal'$, calls a planner
@@ -189,12 +215,10 @@ so through a search over goal sets, that we will refer to as
 Upon termination, the MUGS are those nodes $\goal'$ all of whose
 children are solvable. 
 
-Note that each goal set can be reached from the start node by every
-permutation of goal-fact removal steps. Duplicate planner calls are
-avoided by caching. We give goal sets unique integer IDs, which serve
-for fast cache lookup, and which we also use to fix the expansion
-order, so that we always know whether or not we have generated a node
-before.
+Dually, \defined{systematic strenghtening (SysS)} starts from
+$\emptyset$, with search steps expanding solvable nodes, and children
+adding one more goal fact. Upon termination, the MUGS can be easily
+obtained from the unsolvable search nodes.
 
 % Rebecca's notes on the implementation:
 %
@@ -218,65 +242,46 @@ before.
 %%         reason: a superset of the goal facts has been proved solvable and therefore is not expanded further
 %%         → you know that this node is solvable without running the planner
 
-We furthermore identify non-trivial synergy with recent nogood
-learning techniques \cite{steinmetz:hoffmann:ai-17}, which refine a
-critical-path heuristic \hc\ during forward search on a task \task,
-based on the unsolvable states encountered. The resulting heuristic
-\hc\ reasons about an enlarged set of conjunctions, in a manner geared
-at quickly identifying unsolvable states in \task. Observe that this
-naturally lends itself to \defined{\hc-transfer} in systematic
-weakening: the refined \hc\ from an unsolvable node $\goal'$ is likely
-to be a good unsolvability detector for the closely related children
-tasks with goals $\goal'' \subset \goal'$ where $|\goal''| =
-|\goal'|-1$. We thus transfer the learned \hc\ functions downwards
-along the search paths in systematic weakening, iteratively yielding
-stronger and stronger unsolvability detectors.
+In both SysW and SysS, every goal set can be reached from the start
+node by every permutation of goal-fact removal/addition steps. We
+avoid duplicate planner calls by caching. We give goal sets unique
+integer IDs, which serve for fast cache lookup, and which we also use
+to fix the expansion order, so that we always know whether or not we
+have generated a node before.
 %
-% Joerg: proably more confusing than helpful
+We furthermore create synergy with recent nogood learning techniques,
+\emph{\hc-conjunction learning} \cite{steinmetz:hoffmann:ai-17} and
+\emph{trap learning} \cite{steinmetz:hoffmann:ijcai-17}, which refine
+dead-end detection methods (nogoods) based on the unsolvable states
+encountered in state space search on a planning task. As the children
+tasks in our searches are closely related to their parents, the
+refined nogoods are likely to be useful still. So we
+\defined{transfer} the nogoods along search paths, resulting in
+iteratively stronger and stronger nogoods. For both \hc-conjunction
+learning and trap learning, and for both SysW and SysS, simple methods
+suffice to identify those nogoods that remain valid in a child task.
 %
-%% Similarly, we transfer the \defined{clauses} (nogood pruning rules)
-%% learned in this approach, transferring thjose that depend only on the
-%% goals still present in children nodes.
+%% We furthermore identify non-trivial synergy with recent nogood
+%% learning techniques \cite{steinmetz:hoffmann:ai-17}, which refine a
+%% critical-path heuristic \hc\ during forward search on a task \task,
+%% based on the unsolvable states encountered. The resulting heuristic
+%% \hc\ reasons about an enlarged set of conjunctions, in a manner geared
+%% at quickly identifying unsolvable states in \task. Observe that this
+%% naturally lends itself to \defined{\hc-transfer} in systematic
+%% weakening: the refined \hc\ from an unsolvable node $\goal'$ is likely
+%% to be a good unsolvability detector for the closely related children
+%% tasks with goals $\goal'' \subset \goal'$ where $|\goal''| =
+%% |\goal'|-1$. We thus transfer the learned \hc\ functions downwards
+%% along the search paths in systematic weakening, iteratively yielding
+%% stronger and stronger unsolvability detectors.
+%% %
+%% % Joerg: proably more confusing than helpful
+%% %
+%% %% Similarly, we transfer the \defined{clauses} (nogood pruning rules)
+%% %% learned in this approach, transferring thjose that depend only on the
+%% %% goals still present in children nodes.
 
 
-\joerg{mention alternate bottom-up computation, starting at empty goal
-  set and adding goals til unsat? bottom-up alg generates set of
-  across-line unsolvabl sets; set-inclusion minimal amongst those are
-  the minimal unsolvable sets (they are unsolvable; any subset must be
-  solvable by construction; vice versa, anz minimal unsolv set results
-  from adding a goal to a maximal unsolvable one, so all the
-  maxunssets are there)}
-
-\joerg{diff to modcheck: computational leverage in addressing family
-  of related props; mention here? and/or in intro?}
-
-\joerg{mention relation of minimum unsolvable goal subsets/of PDE-GE
-  to pareto frontier somewhere?}
-
-
-
-% Joerg email top-down vs bottom-up
-%
-%% Both "top down" as we do now and "bottom up" as you suggest can be
-%% used to identify the minimum unsolvable goal sets (in the bottom-up
-%% case a post-processing step is needed, selecting from the
-%% unsolvable goal sets generated during meta-tree search the
-%% set-inclusion minimal ones; but this step is easy ie polynomial in
-%% the number of goal sets considered).
-%
-%% Which of the two is expected to work better is largely a function
-%% of how large the solvable goal subsets will be. It seems plausible
-%% that one or the other algorithm will often have substantial
-%% advantages. In particular, for severely limited resources one would
-%% expect bottom-up to be better.
-%
-%% So ideally we should experiment with both top-down and
-%% bottom-up. And in practice it would seem quite reasonablee to run
-%% both in parallel, so that a "best-of" also makes a lot of sense
-%% here.
-%
-%% (One can even think about interleaving bottom-up with top-down in
-%% an intelligent way, but that's for future work)
 
 
 

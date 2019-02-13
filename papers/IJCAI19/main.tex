@@ -89,9 +89,7 @@ oversubscription planning.
 %% computational efficiency. We show that more general plan properties
 %% can be compiled into this special case.
 %
-We show how to compile powerful plan properties, constraining action
-choices or imposing LTL formulas on the plan trajectory, into that
-special case.
+More powerful plan properties can be compiled into that special case.
 %
 We show experimentally that, in a variety of benchmarks, the suggested
 analyses can be feasible and produce compact results for human
@@ -108,7 +106,7 @@ inspection.
 %\item Marcel: try trap learning techniques, on fig 1 benchmarks as well as on new benchmarks with action constraints; see if tghey do better than hC learning / try to improve performance by navigating his algorithm configuration space
 %\item Rebecca \& Michael: design and run action-constraint experiments where original goals are hard; full cost bound; number of action constraints added is scaled from 1 to N (a priori, given a fixed order of action constraints, unless it turns out to be crucial for performance which of these constraints are added).
 %\item Perhaps later depending on outcome of previous item: design experiments where both the number of original goals and that of action constraints are scaled (2 dimensions); plus where suitable different cost bounds.
-\item Later: include some data also on LTL compilation. (might decide to remove this from paper later on depending on results and space, but let's keep it in for now)
+%% \item Later: include some data also on LTL compilation. (might decide to remove this from paper later on depending on results and space, but let's keep it in for now)
 \item Rebecca/Michael: check out the IPC net-benefit benchmarks. Reviwers may naturally expect us to experiment with those, given our strong focus on oversubscription planning (actually this question came up in the discussion with the NASA guys yesterday). In the net-bnefit benchmarks, goal facts have rewards which we don't need. The question is whether, stripping away these rewards and imposing a plan-cost bound, we would get benchmarks not already covered by bour IPC experiments anyway. If the answer is "no", we can just say so in the paper. If the answer is "yes", it would be good (though probably not absolitely necessary) to experiment with these domains as well. In any case, we should know what the answer is.
 %\item Rebecca/Marcel: experiment with bottom-up construction of minimal unsolvable goal sets, starting at empty set and adding more goals until unsat?
 \item Rebecca: update Figure 1, three parts coverage, explored fraction of meta search tree and goal size for top-down: hC, hC with propagation, trap learning; bottom-up: hmax, greedy best first search with hff, trap learning
