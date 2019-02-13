@@ -10,23 +10,28 @@
 
 \section{Experiments}
 
+\joerg{tentative plan, to simplify presentation and focus on the 
+main messages rather than algorothm-configuration space: use hFF
+throughout, and vary SysW (aka top-down) vs SysS (aka bottom-up)
+throughout; on IPC benchmarks, vary hC on vs off, where ``on'' means
+to include transfer; on action-set prop experiments, vary traps on vs
+off, where ``on'' means to include transfer. ... Rebecca to generate
+the missing data for IPC and nomystery, then we'll check and if it
+looks ok use this.}
+
 \rebecca{ 1-1.5 page(s) Michael/Rebecca }
 
 
 \joerg{Ideally, we should actually do something with existing oversubscription 
-	planning benchmarks. Carmel and Mirkis generated ones in their work 
-	(http://iew3.technion.ac.il/~dcarmel/Papers/Sources/ecai14b.pdf), 
-	from IPC benchmarks, by restricting plan cost to 25\%, 50\%, 75\%, and 100\% 
-	of optimal plan cost for all goals. Emulate this, for unit action costs, 
-	in a way that makes our current technology applicable.}
+	planning benchmarks. Carmel and Mirkis generated ones in their
+	work
+	(http://iew3.technion.ac.il/~dcarmel/Papers/Sources/ecai14b.pdf),
+	from IPC benchmarks, by restricting plan cost to 25\%, 50\%,
+	75\%, and 100\% of optimal plan cost for all goals. Emulate
+	this, for unit action costs, in a way that makes our current
+	technology applicable.}
 
-\joerg{	
-	Question: what about the nogood learning here? does the search just prune 
-	against the g function? or do we represent a discrete g function through a 
-	discrete state variable treating it like a resource?}
 
-\joerg{explain bechmarks; in particular, what about the other size parameters when 
-the number of goals increases?}
 
 \setlength{\tabcolsep}{1pt}
 \renewcommand{\arraystretch}{0.8}

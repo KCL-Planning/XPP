@@ -243,23 +243,33 @@ obtained from the unsolvable search nodes.
 %%         → you know that this node is solvable without running the planner
 
 In both SysW and SysS, every goal set can be reached from the start
-node by every permutation of goal-fact removal/addition steps. We
+node by permutations of the same goal-fact removal/addition steps. We
 avoid duplicate planner calls by caching. We give goal sets unique
-integer IDs, which serve for fast cache lookup, and which we also use
-to fix the expansion order, so that we always know whether or not we
-have generated a node before.
+integer IDs, for fast cache lookup, and to fix the expansion order so
+that we always know whether or not we have generated a node before.
+
+As a non-trivial search enhancement, we created synergy with recent
+nogood learning techniques, \defined{conjunction learning}
+\cite{steinmetz:hoffmann:ai-17} and \defined{trap learning}
+\cite{steinmetz:hoffmann:ijcai-17}. These techniques refine dead-end
+detection methods (nogoods) based on the unsolvable states encountered
+in state space search on a planning task. As the children tasks in our
+searches are closely related to their parents, the refined nogoods are
+likely to be useful still. So we \defined{transfer} the nogoods along
+search paths, resulting in iteratively stronger and stronger
+nogoods. For both conjunction learning and trap learning, the nogoods
+learned depend on the goal, so that only some of the nogoods remain
+valid for transfer in SysW where children remove goals. We designed
+simple methods to identify this nogood subset, keeping track of goal
+dependencies in conjunction learning, and re-asserting trap validity
+in trap learning.
 %
-We furthermore create synergy with recent nogood learning techniques,
-\emph{\hc-conjunction learning} \cite{steinmetz:hoffmann:ai-17} and
-\emph{trap learning} \cite{steinmetz:hoffmann:ijcai-17}, which refine
-dead-end detection methods (nogoods) based on the unsolvable states
-encountered in state space search on a planning task. As the children
-tasks in our searches are closely related to their parents, the
-refined nogoods are likely to be useful still. So we
-\defined{transfer} the nogoods along search paths, resulting in
-iteratively stronger and stronger nogoods. For both \hc-conjunction
-learning and trap learning, and for both SysW and SysS, simple methods
-suffice to identify those nogoods that remain valid in a child task.
+% Joerg: hC remains valid anyhow; when learning a clause from hC,
+% Marcel remembers the set of goals that became unreachable; validity
+% checking is then simply whether one of these goals is still
+% there. For traps, the validity check means to test for every end
+% node of the trap whether that node either is mutex with the goal
+% still, or is cut off by the h fn still.
 %
 %% We furthermore identify non-trivial synergy with recent nogood
 %% learning techniques \cite{steinmetz:hoffmann:ai-17}, which refine a
