@@ -11,17 +11,17 @@ unload a package or drive from one to another location.
 For this domain we consider the following properties, that will serve as the basis for addressing user questions:
 
 \begin{itemize}
-	\item don't use $T_i$ $(L_x,L_y)$: Truck $T_i$ should not drive from $L_x$ to
+	\item uses $T_i$ $(L_x,L_y)$: Truck $T_i$ drives at least once from $L_x$ to
 		$L_y$ or vice versa;
-	\item use $T_i$ $(L_x,L_y)$: Truck $T_i$ should drive at least once from $L_x$ to
+	\item doesn't use $T_i$ $(L_x,L_y)$: Truck $T_i$ does not drive from $L_x$ to
 		$L_y$ or vice versa;
-	\item same truck $P_x$ $P_y$: both packages have to be delivered by the same truck
+	\item same truck $P_x$ $P_y$: both packages are delivered by the same truck
 		(the packages are either only loaded and an unloaded by truck $T_0$ or by $T_1$).
 \end{itemize}
 
 In this example we consider the problem shown in Figure, where all packages are in the initial location $L_0$ (labeled in red) and must be delivered in goal locations (labeled in green). 
 Loading and unloading costs no fuel, while driving costs between 1 and 5 fuels units (as indicated by edge labels).\\
-The fuel limit is 1.5 times the minimal limit to deliver all packages, and the initial fuel in trucks is:	$fuel(T_0) = 16$, $fuel(T_1) = 7$.
+The amount of fuel available is 1.5 times higher than needed to deliver all packages; concretely, the initial fuel in trucks is $fuel(T_0) = 16$, $fuel(T_1) = 7$.
 
 
 	\begin{center}
@@ -52,12 +52,12 @@ Given the problem example, we then consider six instances of the properties abov
 	\begin{minipage}[t]{0.3\textwidth}
 	Properties:
 	\begin{enumerate}
-		\item [\textbf{Pr1}] use $T_0$ $(L_2,L_3)$
+		\item [\textbf{Pr1}] uses $T_0$ $(L_2,L_3)$
 		\item [\textbf{Pr2}] same truck $P_1$ $P_2$
-		\item [\textbf{Pr3}] use $T_0$ $(L_4,L_3)$
+		\item [\textbf{Pr3}] uses $T_0$ $(L_4,L_3)$
 		\item [\textbf{Pr4}] same truck $P_2$ $P_0$
-		\item [\textbf{Pr5}] don't use $T_0$ $(L_0,L_5)$
-		\item [\textbf{Pr6}] use $T_1$ $(L_5,L_4)$
+		\item [\textbf{Pr5}] doesn't use $T_0$ $(L_0,L_5)$
+		\item [\textbf{Pr6}] uses $T_1$ $(L_5,L_4)$
 	\end{enumerate}
 	\end{minipage}
 	\begin{minipage}[t]{0.15\textwidth}
@@ -74,7 +74,7 @@ Given the problem example, we then consider six instances of the properties abov
 		\end{itemize}
 	\end{minipage}
 	
-The MUGS can then be used to generate explanations for plan inputs. In particular, each Pr\textit{i} corresponds to a possible action that a user would expect to see or not to see in the plan, and the MUGS are used to explain to the user that if they want one given action in the plan, then the user must necessary change some other things in the plan, as guaranteed by the MUG. And this is an interesting kind of explanation/advice that also a non-planning person can understand. In strictly more technical terms, the user doesn't know what properties they must relax in the plan in order to achieve what they want.
+The MUGS can then be used to generate explanations for plan inputs. In particular, each Pr\textit{i} corresponds to a possible action that a user would expect to see or not to see in the plan, and the MUGS are used to explain to the user that if they want one given action in the plan, then the user must necessarily change some other things in the plan, as guaranteed by the MUG. And this is an interesting kind of explanation/advice that also a non-planning person can understand. In more technical terms, the explanation informs the user about what properties they must relax in the plan in order to achieve what they want.
 
 Let us assume we have the following plan that solves the problem of Figure  (in [] we put the fuel cost if greater than zero):
 
@@ -91,7 +91,7 @@ Let us assume we have the following plan that solves the problem of Figure  (in 
 (unload P1 T0 L3)
 \end{verbatim}
 
-Given this plan, the user might ask \textit{''Why don't you avoid driving in the road $L_0-L_5$ as I know there is a lot of traffic there at the moment?"}. We note that this question is modelled by \textbf{Pr5}. At the same time, the plan already satisfies \textbf{Pr2} and \textbf{Pr4} given that only truck $T_0$ is used for all packages. However, one of the MUGS is \{2,4,5\}, and hence the answer to the user question would be: \textit{Because if you don't use that road you would not be able to deliver all packages using a single truck}.
+Given this plan, the user might ask \textit{''Why don't you avoid driving in the road $L_0-L_5$ as I know there is a lot of traffic there at the moment?"}. This question corresponds to forcing \textbf{Pr5} to be satisfied. At the same time, the plan already satisfies \textbf{Pr2} and \textbf{Pr4} given that only truck $T_0$ is used for all packages. However, one of the MUGS is \{2,4,5\}, and hence the answer to the user question would be: \textit{Because if you don't use that road, then you would not be able to deliver all packages using a single truck}.
 
 
 
