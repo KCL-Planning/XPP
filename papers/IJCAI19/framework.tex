@@ -2,11 +2,12 @@
 \label{framework}
 
 We first introduce our approach making minimal assumptions on the
-planning context and plan properties concerned. This serves to
-identify the generic structure of the explainability problems we
-target. That structure can then be instantiated with concrete planning
-formalisms and plan-property languages of interest, as we will
-exemplify in later sections.
+planning context and plan properties concerned. The framework can then
+be instantiated with concrete planning formalisms and plan-property
+languages of interest, as we will exemplify in later sections. The
+framework uses standard notions from logics, and its main intention
+and contribution is to conceptualize the explainability problems we
+address.
 
 
 
@@ -90,34 +91,35 @@ may be exponentially larger than the user input, and may even be
 infinite.
 
 As a concrete instance we will consider later on, the user may be
-interested in a set $G$ of soft-goal facts, where for each $g \in G$
+interested in a set $G$ of soft-goal facts, where, for each $g \in G$,
 being or not being achieved by a plan $\plan \in \plans$ is an atomic
 plan property. But the interesting dependencies may be, not across
 individual $g$, but over conjunctions thereof (\eg\ if conjunctions,
 but not typically singletons, exclude the possibility to achieve other
-goals). The input to our analysis then is merely the set $G$, while
-the analysis considers dependencies across all conjunctions over $G$.
+goals). The input to our analysis then is the set $G$ (atomic,
+\propsatom), while the analysis considers dependencies across all
+conjunctions over $G$ (composed, \propscomp).
 
 The kind of dependency our framework focusses on is entailment over
 plan properties, in the space of truth-value assignments induced by
 the plan-candidate set \plans:
 
-\joerg{I deliberated adapting the following definitions and text to
-  explicitly use two sets of plan properties, enforced vs analyzed,
-  where the enforced ones replace the role currently taken by
-  \plans. This would be nice in that it makes visible how properties
-  can move between these two sides, and that entailment in the KB is
-  the same, then, as moving the required properties from the KB into
-  the LHS of an implication which is then valid in the reduced KB --
-  overall, this yields a nice match with the usual stuff one is used
-  to in logics. However, the definitions as stated here are 1)
-  strictly more general, as they allow such a setup in particular but
-  also allow explicitly given \plans; 2) better suited to the case
-  where \plans\ has optimality criteria as well, which can be captured
-  as plan properties but odd ones not computable in polynomial time;
-  3) better suited to our discussion here as they focus on the issue
-  of entailment in plan space, where the set of plans is a KB, which
-  is our main focus and new thing here.}
+%% \joerg{I deliberated adapting the following definitions and text to
+%%   explicitly use two sets of plan properties, enforced vs analyzed,
+%%   where the enforced ones replace the role currently taken by
+%%   \plans. This would be nice in that it makes visible how properties
+%%   can move between these two sides, and that entailment in the KB is
+%%   the same, then, as moving the required properties from the KB into
+%%   the LHS of an implication which is then valid in the reduced KB --
+%%   overall, this yields a nice match with the usual stuff one is used
+%%   to in logics. However, the definitions as stated here are 1)
+%%   strictly more general, as they allow such a setup in particular but
+%%   also allow explicitly given \plans; 2) better suited to the case
+%%   where \plans\ has optimality criteria as well, which can be captured
+%%   as plan properties but odd ones not computable in polynomial time;
+%%   3) better suited to our discussion here as they focus on the issue
+%%   of entailment in plan space, where the set of plans is a KB, which
+%%   is our main focus and new thing here.}
 
 %% \joerg{mention task properties? (ini state etc)? decided to not do
 %%   this here: 1) these make most intuitive sense when explcitly making
@@ -148,9 +150,8 @@ $\entails{\plans}{\prop}{\propq}$, if $\modelsof{\plans}{\prop}
 %
 We say that \prop\ and \propq\ are \defined{\plans-equivalent},
 written $\iff{\plans}{\prop}{\propq}$, if $\modelsof{\plans}{\prop} =
-\modelsof{\plans}{\propq}$. The set of properties \plans-equivalent
-with \prop\ is written $\equiv{\plans}{\prop} := \{\propq \mid \propq
-\in \props, \iff{\plans}{\prop}{\propq}\}$.
+\modelsof{\plans}{\propq}$. We denote $\equiv{\plans}{\prop} :=
+\{\propq \mid \propq \in \props, \iff{\plans}{\prop}{\propq}\}$.
 \end{definition}
 
 This definition essentially just views plans $\plan \in \plans$ as
@@ -178,10 +179,9 @@ the form $\entails{\plans}{p}{\neg (q_1 \wedge q_2 \wedge q_3)}$
 saying that we cannot have $p$ without foregoing either of $q_1$ or
 $q_2$ or $q_3$. Note that this is an entailment specific to \plans,
 which may not hold in general (\eg\ if cheaper actions are available,
-or if cheaper plans are admitted by removing some other hard
-goals). It is precisely the identification of such specific
-entailments -- specific to the space \plans\ of plans considered --
-that motivates our approach.
+or if cheaper plans are admitted by removing some other enforced
+goals). The identification of such specific entailments -- specific to
+the space \plans\ of plans considered -- is central to our framework.
 
 
 
@@ -210,18 +210,18 @@ $\equiv{\plans}{\prop}$ with exactly one $\prop \in
 The PDO explains the plan space \plans\ by making explicit how the
 analyzed plan properties depend on each other -- saying things like
 ``we cannot have $p$ without foregoing either of $q_1$ or $q_2$ or
-$q_3$''. The PDO is exhaustive, and in that sense the ideal plan-space
-explanation in principle. In practice though its size may be
-problematic. The number of equivalence classes is small if one is
-interested in atomic plan properties only. But if \props\ includes
-composed properties then that number may be prohibitively large. Each
-individual equivalence class may also be large, or even infinite.
+$q_3$''. The PDO is exhaustive, and in that sense ideal. Its size may
+be problematic though. The number of equivalence classes is small if
+one is interested in atomic plan properties only. But if
+\props\ includes composed properties then that number may be
+prohibitively large. Each individual equivalence class may also be
+large, or even infinite.
 
 A concrete PDO can serve as a practical proxy if equivalence classes
 are large. Beyond that, it is clearly important to identify (i) more
-compact and/or (ii) more restricted plan-space explanations. We do
-both here. Regarding (i), the technique we will use in our concrete
-instantiation of this framework is \defined{subsumption} over
+compact and/or (ii) more restricted plan-space explanations. We
+introduce variants of both here. Regarding (i), in our concrete
+instantiation of this framework we use \defined{subsumption} over
 \plans-entailment relations, relying on an easy-to-test sufficient
 criterion for \plans-entailment:
 
@@ -232,8 +232,8 @@ plan properties defined on \task\ and \plans.
 Let $\entailsuff \subseteq \props \times \props$ be such that, if $\prop
 \entailsuff \propq$, then $\entails{\plans}{\prop}{\propq}$.
 %
-In a cPDO, we say that $\prop \pdo{\plans} \propq$ \defined{subsumes}
-$\prop' \pdo{\plans} \propq'$ given $\entailsuff$ if $\prop'
+In a cPDO, we say that $\prop \pdo{\plans} \propq$ \defined{subsumes
+  $\prop' \pdo{\plans} \propq'$ given $\entailsuff$} if $\prop'
 \entailsuff \prop$ and $\propq \entailsuff \propq'$.
 
 A \defined{dominant cPDO (dcPDO)} for \plans\ and \props\ given
@@ -248,34 +248,40 @@ in a cPDO.
 
 An entailment $\prop \pdo{\plans} \propq$ subsumes another one $\prop'
 \pdo{\plans} \propq'$ if its left-hand side is weaker ($\prop'
-\pdo{\plans} \prop$) and its right-hand side is stronger ($\propq
-\pdo{\plans} \propq'$): in this case, $\prop' \pdo{\plans} \propq'$
+\entailsuff \prop$) and its right-hand side is stronger ($\propq
+\entailsuff \propq'$): in this case, $\prop' \pdo{\plans} \propq'$
 follows from $\prop \pdo{\plans} \propq$. A dominant cPDO thus selects
 only the strongest \plans-entailments in a cPDO, as a more compact
-representation of the information present in that cPDO.
+representation of the information present in that cPDO.%
 %
 %% For example, if entailments over conjunctions are considered, then the
 %% strongest entailments have small conjunctions on the left-hand side
 %% and large conjunctions on the right-hand side.
 
-The role of \entailsuff\ in Definition~\ref{def:dcpdo} is to qualify
-the amount of information we are allowed to use in identifying this
-compact representation. This is important because, if we show
-compacted information to a user, then the user should be able to
-de-compact this information -- to obtain whichever information the
-user is actually interested in -- effortlessly. A canonical
-restriction is for \entailsuff\ to be computable in polynomial time,
-but other criteria may apply given cognitive restrictions. In our
-experiments, we consider goal-fact conjunctions and disjunctions, and
-use the trivial \entailsuff\ where larger conjunctions (disjunctions)
-are stronger (weaker).
+The role of \entailsuff\ here is to qualify the amount of information
+we are allowed to use in identifying this compact representation. This
+is important because, if we show compacted information to a user, then
+the user should be able to de-compact this information -- to obtain
+whichever information the user is actually interested in --
+effortlessly. A simple restriction is for \entailsuff\ to be
+computable in polynomial time, but cognitive abilities may necessitate
+stronger restrictions. Here we will consider goal-fact conjunctions
+and disjunctions, and use the trivial \entailsuff\ where larger
+conjunctions are stronger while larger disjunctions are weaker.
 
-We remark that an alternative to Definition~\ref{def:dcpdo} would be
-to consider a dominant PDO at the level of equivalence classes
-$\equiv{\plans}{\prop}$. This alternative incurs complications as
-equivalence under $\entailsuff$ is not the same as equivalence under
-full \plans-entailment, and \entailsuff\ would have to be transitive
-which may be problematic restriction on ``cognitively easy'' criteria.
+% Joerg: save space ... also, this issue is a bit itchy, as in our def
+% we have a form of information loss, where the individual formulas in
+% the cPDO pretend to stand for the entire equivalence class while the
+% user can cognitively deal only with entailsuff ... probably wiser to
+% discuss this only if the reviewers are bothered by it.
+%
+%% We remark that an alternative to Definition~\ref{def:dcpdo} would
+%% be to consider a dominant PDO at the level of equivalence classes
+%% $\equiv{\plans}{\prop}$. This alternative incurs complications as
+%% equivalence under $\entailsuff$ is not the same as equivalence
+%% under full \plans-entailment, and \entailsuff\ would have to be
+%% transitive which may be problematic for ``cognitively easy''
+%% criteria.
 %
 %% Nevertheless, dominant PDOs may be preferrable to dominant cPDOs in
 %% some application scenarios.
@@ -334,8 +340,7 @@ This is exacerbated by the potentially exponential size of the PDO for
 composed plan properties. Certainly, a (dc)PDO should ideally be
 computed offline, prior to interaction with a user. As our
 experimental results show, however, in a variety of benchmarks,
-computing a dcPDO has similar scalability as optimal planning, and the
-size of a dcPDO is reasonably small for human inspection.
+computing a dcPDO has similar scalability as optimal planning.
 
 
 % Joerg: a fully formal frame here would need to talk about
