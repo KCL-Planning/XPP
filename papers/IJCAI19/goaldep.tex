@@ -1,4 +1,4 @@
-\section{Goal Dependencies in Oversubscription Planning}
+\section{Goal Dependencies}
 \label{goaldep}
 
 %% \joerg{0.75 -- 1 page(s) joerg}
@@ -84,7 +84,7 @@ $\prop_g(\plan) = \true$ iff $g \in \init\apply{\plan}$.
 A \defined{composed goal property} for \task\ is a function
 $\prop_\phi : \plans \mapsto \{\true, \false\}$ where $\phi$ is a
 propositional formula over the atoms \goal, and $\prop_\phi(\plan) =
-\true$ iff $\phi$ evaluates to true given the values of
+\true$ iff $\phi$ evaluates to \true\ given the values of
 $\prop_g(\plan)$.
 \end{definition}
 
@@ -97,8 +97,8 @@ Let $\task =
 (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
 be an OSP task, and \plans\ its set of plans.  
 
-The \defined{PDO for goal exclusion (PDO-GE)} is the PDO for
-\plans, the property set $\geprops := \{\bigwedge_{a \in A}
+The \defined{PDO for goal exclusion (PDO-GE)} is the PDO for \plans,
+the property set $\geprops := \{\bigwedge_{a \in A}
 g\allowbreak\mid\allowbreak A \subseteq G\} \cup \{\neg \bigwedge_{g
   \in B} b \allowbreak\mid\allowbreak B \subseteq G\}$, and the
 dependency set $\gedeps := \{(\bigwedge_{a \in A} a,\allowbreak\neg
@@ -114,9 +114,9 @@ of $B$. The PDO-GE then explains to the user how exactly different
 goal subsets exclude each other, identifying the fine-grained
 trade-off.
 
-Observe that, given the restriction to $\gedeps$, the equivalence
-classes in the PDO-GE are singletons. Hence there is a unique cPDO-GE,
-that we identify with the PDO-GE itself.
+Given the restriction to $\gedeps$, the equivalence classes in the
+PDO-GE are singletons. Hence there is a unique cPDO-GE, that we
+identify with the PDO-GE itself.
 
 For compacting the information presented to a user, we use the
 sufficient criterion for entailment where $\bigwedge_{a \in A'} g
@@ -128,16 +128,15 @@ conjunctions.
 %
 %The question remains how to compute the dominant PDO-GE.
 
+\joerg{I think this is more distracting than useful; probably, remove}
+%
 We remark that another class of dependencies that may be of interest
-is \defined{disjunctive goal exclusion}, that take the form
-$\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in B} b}$,
-where the strongest dependencies have small left-hand side
-conjunctions but large right-hand side disjunctions. Observe that the
-dominant PDO for such dependencies can be derived from the dominant
-PDO-GE: $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in
-    B} b}$ holds if and only if $\entails{\plans}{\bigwedge_{a \in A}
-  a}{\neg b}$ holds for every $b \in B$.
-
+take the form $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b
+    \in B} b}$. The dominant PDO for such dependencies can be derived
+from the dominant PDO-GE: $\entails{\plans}{\bigwedge_{a \in A}
+  a}{\neg \bigvee_{b \in B} b}$ holds if and only if
+$\entails{\plans}{\bigwedge_{a \in A} a}{\neg b}$ holds for every $b
+\in B$.
 
 
 
