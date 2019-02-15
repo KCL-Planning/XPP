@@ -73,32 +73,43 @@ $\{(\task,\plan) \mid \plan \in \plans\}$.
 Example plan properties are goal facts/goal formulas (true at end of
 plan?), temporal plan trajectory constraints, constraints on subsets
 of actions used/not used, deadlines, bounds on resource consumption,
-etc. We presume that $\prop$ is computable in time polynomial in the
-size of its input, though that is not, strictly speaking, a
-requirement of our framework.
+etc. We expect that, typically, $\prop$ will be computable in time
+polynomial in the size of its input (though that is not a requirement
+of our framework).
 
 We assume a set \props\ of plan properties (the analyzed ones) as part
-of our input. In this context, a distinction not necessary for our
-generic definitions, but important in practice, is that between
-\defined{atomic} vs.\ \defined{composed} plan properties. The set
-\propsatom\ of atomic properties is listed explicitly in the input,
-whereas the composed properties \propscomp\ arise from a compact
-specification how properties can be combined. For example, one may
-define \propscomp\ to be propositional formulas over the atoms
-\propsatom. Note that, given this, the set $\props = \propsatom \cup
-\propscomp$ of plan properties whose dependencies are being analyzed
-may be exponentially larger than the user input, and may even be
-infinite.
-
-As a concrete instance we will consider later on, the user may be
-interested in a set $G$ of soft-goal facts, where, for each $g \in G$,
-being or not being achieved by a plan $\plan \in \plans$ is an atomic
-plan property. But the interesting dependencies may be, not across
-individual $g$, but over conjunctions thereof (\eg\ if conjunctions,
-but not typically singletons, exclude the possibility to achieve other
-goals). The input to our analysis then is the set $G$ (atomic,
-\propsatom), while the analysis considers dependencies across all
-conjunctions over $G$ (composed, \propscomp).
+of our input. That set might be specified compactly, \ie, may be
+exponentially large in the size of the input. An example we will
+explore later is that where the user is interested in dependencies
+between subsets of a set $G$ of soft-goal facts. The set \props\ of
+interest then are the conjunctions $\phi$ over $G$ (functions checking
+whether $\phi$ is true at the end of a plan). But the input to our
+analysis specifies only $G$.
+%
+% Joerg: Text highlighting atomic vs composed; simplified to save space
+%
+%% We assume a set \props\ of plan properties (the analyzed ones) as part
+%% of our input. In this context, a distinction not necessary for our
+%% generic definitions, but important in practice, is that between
+%% \defined{atomic} vs.\ \defined{composed} plan properties. The set
+%% \propsatom\ of atomic properties is listed explicitly in the input,
+%% whereas the composed properties \propscomp\ arise from a compact
+%% specification how properties can be combined. For example, one may
+%% define \propscomp\ to be propositional formulas over the atoms
+%% \propsatom. Note that, given this, the set $\props = \propsatom \cup
+%% \propscomp$ of plan properties whose dependencies are being analyzed
+%% may be exponentially larger than the user input, and may even be
+%% infinite.
+%
+%% As a concrete instance we will consider later on, the user may be
+%% interested in a set $G$ of soft-goal facts, where, for each $g \in G$,
+%% being or not being achieved by a plan $\plan \in \plans$ is an atomic
+%% plan property. But the interesting dependencies may be, not across
+%% individual $g$, but over conjunctions thereof (\eg\ if conjunctions,
+%% but not typically singletons, exclude the possibility to achieve other
+%% goals). The input to our analysis then is the set $G$ (atomic,
+%% \propsatom), while the analysis considers dependencies across all
+%% conjunctions over $G$ (composed, \propscomp).
 
 The kind of dependency our framework focusses on is entailment over
 plan properties, in the space of truth-value assignments induced by
@@ -158,9 +169,9 @@ This definition essentially just views plans $\plan \in \plans$ as
 truth-value assignments in the obvious manner. Entailment and
 equivalence over plan properties are then defined straightforwardly,
 with \plans\ in the role traditionally taken by a knowledge base that
-restricts the truth-value assignments under consideration. Recall that
-formulas over plan properties can be encoded as individual composed
-plan properties, so that defining \plans-entailment over individual plan
+restricts the truth-value assignments under consideration. Observe
+that formulas over plan properties can be encoded as individual plan
+properties, so that defining \plans-entailment over individual plan
 properties is enough to permit logical combinations thereof.
 
 Importantly, the role of \plans\ as a knowledge base means that
@@ -211,19 +222,34 @@ The PDO explains the plan space \plans\ by making explicit how the
 analyzed plan properties depend on each other -- saying things like
 ``we cannot have $p$ without foregoing either of $q_1$ or $q_2$ or
 $q_3$''. The PDO is exhaustive, and in that sense ideal. Its size may
-be problematic though. The number of equivalence classes is small if
-one is interested in atomic plan properties only. But if
-\props\ includes composed properties then that number may be
-prohibitively large. Each individual equivalence class may also be
-large, or even infinite.
+be problematic though. A concrete PDO can serve as a practical proxy
+if equivalence classes are large. Beyond that, it is clearly important
+to identify (i) more compact and/or (ii) more restricted plan-space
+explanations. We introduce variants of both here. 
 
-A concrete PDO can serve as a practical proxy if equivalence classes
-are large. Beyond that, it is clearly important to identify (i) more
-compact and/or (ii) more restricted plan-space explanations. We
-introduce variants of both here. Regarding (i), in our concrete
-instantiation of this framework we use \defined{subsumption} over
-\plans-entailment relations, relying on an easy-to-test sufficient
-criterion for \plans-entailment:
+Regarding (i), in our concrete instantiation of this framework we use
+\defined{subsumption} over \plans-entailment relations, relying on an
+easy-to-test sufficient criterion for \plans-entailment:
+%
+% Joerg: Text highlighting atomic vs composed; simplified to save space
+%
+%% The PDO explains the plan space \plans\ by making explicit how the
+%% analyzed plan properties depend on each other -- saying things like
+%% ``we cannot have $p$ without foregoing either of $q_1$ or $q_2$ or
+%% $q_3$''. The PDO is exhaustive, and in that sense ideal. Its size may
+%% be problematic though. The number of equivalence classes is small if
+%% one is interested in atomic plan properties only. But if
+%% \props\ includes composed properties then that number may be
+%% prohibitively large. Each individual equivalence class may also be
+%% large, or even infinite.
+%
+%% A concrete PDO can serve as a practical proxy if equivalence classes
+%% are large. Beyond that, it is clearly important to identify (i) more
+%% compact and/or (ii) more restricted plan-space explanations. We
+%% introduce variants of both here. Regarding (i), in our concrete
+%% instantiation of this framework we use \defined{subsumption} over
+%% \plans-entailment relations, relying on an easy-to-test sufficient
+%% criterion for \plans-entailment:
 
 \begin{definition}[Dominant cPDO]\label{def:dcpdo}
 Let \task\ be a task, \plans\ a set of plans, and \props\ a set of
@@ -286,8 +312,8 @@ conjunctions are stronger while larger disjunctions are weaker.
 %% Nevertheless, dominant PDOs may be preferrable to dominant cPDOs in
 %% some application scenarios.
 
-As a form of (ii) more restricted plan-space explanations, a
-possibility is to restrict focus to a predefined subset \deps\ of
+As a simple form of (ii) more restricted plan-space explanations, we
+will employ the restriction of focus to a predefined subset \deps\ of
 dependencies of interest:
 
 \begin{definition}[Restricted (dc)PDO]
@@ -300,48 +326,58 @@ ignoring \plans-entailments $\entails{\plans}{\prop}{\propq}$ where
 $(\prop,\propq) \not\in \deps$.
 \end{definition}
 
-Some words are in order regarding finiteness and complexity. The PDO
-is obviously finite if \props\ is, \eg\ if only atomic properties are
-considered. In the presence of an infinite set of composed plan
-properties (such as propositional formulas), the number of equivalence
-classes may still be finite. In particular, that is so if the set of
-plans \plans\ of interest is finite (\eg\ if the action set is finite,
-plan schedules are discrete, and plan size can be finitely bounded),
-as then there is only a finite number of non-equivalent plan
-properties.
-%
-% Joerg: not true because entailsuff is on formulas not equiv classes;
-% anyway, should be Ok to leave out.
-%
-%% When the PDO is finite, minimal elements exist in any \entailsuff\ and
-%% thus any dcPDO is non-empty.
-
-Regarding complexity, if \plans\ is implicitly given, then testing
-\plans-entailment encompasses the plan existence problem even for
-extremely simple plan properties (\eg, asking whether the plan
-achieves some fact $p$).
-%
-%% Regarding complexity, if \plans\ is implicitly given, then testing
-%% plan-property satisfiability encompasses the plan existence problem
-%% even for extremely simple plan properties (\eg, asking whether the
-%% plan achieves some fact $p$). Similarly for \plans-entailments
-%% $\entails{\plans}{\prop}{\propq}$, proving which corresponds to
-%% proving a planning task unsolvable (there exists no plan that
-%% satisfies \prop\ but not \propq).
-%
-% Joerg: generating all of Pi is not needed necessarily. simpler to
-% just leave this out.
-%
-%% Tractable cases are limited to explicitly given \plans, and planning
-%% fragments where \plans\ -- the set of all plans -- can be generated in
-%% polynomial time. 
-%
-This is exacerbated by the potentially exponential size of the PDO for
-composed plan properties. Certainly, a (dc)PDO should ideally be
-computed offline, prior to interaction with a user. As our
+Some words are in order regarding complexity. if \plans\ is implicitly
+given, then testing \plans-entailment encompasses the plan existence
+problem even for extremely simple plan properties (\eg, asking whether
+the plan achieves some fact $p$). This is exacerbated by the
+potentially exponential size of the PDO. Certainly, a (dc)PDO should
+ideally be computed offline, prior to interaction with a user. As our
 experimental results show, however, in a variety of benchmarks,
 computing a dcPDO has similar scalability as optimal planning.
+%
+% Joerg: Text highlighting atomic vs composed; simplified to save space
+%
+%% Some words are in order regarding finiteness and complexity. The PDO
+%% is obviously finite if \props\ is, \eg\ if only atomic properties are
+%% considered. In the presence of an infinite set of composed plan
+%% properties (such as propositional formulas), the number of equivalence
+%% classes may still be finite. In particular, that is so if the set of
+%% plans \plans\ of interest is finite (\eg\ if the action set is finite,
+%% plan schedules are discrete, and plan size can be finitely bounded),
+%% as then there is only a finite number of non-equivalent plan
+%% properties.
+%% %
+%% % Joerg: not true because entailsuff is on formulas not equiv classes;
+%% % anyway, should be Ok to leave out.
+%% %
+%% %% When the PDO is finite, minimal elements exist in any \entailsuff\ and
+%% %% thus any dcPDO is non-empty.
 
+%% Regarding complexity, if \plans\ is implicitly given, then testing
+%% \plans-entailment encompasses the plan existence problem even for
+%% extremely simple plan properties (\eg, asking whether the plan
+%% achieves some fact $p$).
+%% %
+%% %% Regarding complexity, if \plans\ is implicitly given, then testing
+%% %% plan-property satisfiability encompasses the plan existence problem
+%% %% even for extremely simple plan properties (\eg, asking whether the
+%% %% plan achieves some fact $p$). Similarly for \plans-entailments
+%% %% $\entails{\plans}{\prop}{\propq}$, proving which corresponds to
+%% %% proving a planning task unsolvable (there exists no plan that
+%% %% satisfies \prop\ but not \propq).
+%% %
+%% % Joerg: generating all of Pi is not needed necessarily. simpler to
+%% % just leave this out.
+%% %
+%% %% Tractable cases are limited to explicitly given \plans, and planning
+%% %% fragments where \plans\ -- the set of all plans -- can be generated in
+%% %% polynomial time. 
+%% %
+%% This is exacerbated by the potentially exponential size of the PDO for
+%% composed plan properties. Certainly, a (dc)PDO should ideally be
+%% computed offline, prior to interaction with a user. As our
+%% experimental results show, however, in a variety of benchmarks,
+%% computing a dcPDO has similar scalability as optimal planning.
 
 % Joerg: a fully formal frame here would need to talk about
 % compilations, also of planning tasks ... overkill, instead formulate
