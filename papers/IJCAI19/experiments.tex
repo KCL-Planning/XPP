@@ -50,108 +50,26 @@ looks ok use this.}
 	}
 \end{figure*}
 
-\begin{figure}[ht]
-\scriptsize
-\begin{subfigure}[t]{0.22\textwidth}
-\begin{tikzpicture}
-	\begin{axis}
-		 [
-			grid,
-			width=4.5cm,
-			height=4.5cm,
-			log origin = 0,
-			% ymode = log,
-			xtick = {0.25,0.5,0.75},
-			legend style={at={(0.95,-0.15)}},
-			legend columns=2,
-			ybar,
-			bar width=2pt,
-			enlarge x limits=0.3,
-		 ]
-		\addplot+[blue] coordinates
-			{(0.25, 0.48) (0.5, 1.44) (0.75, 4.02)};
-		\addplot+[red] coordinates
-			{(0.25, 0.0099) (0.5, 1.34) (0.75, 3.02)};
-		\addplot+[yellow] coordinates
-			{(0.25, 0.53) (0.5, 2.22) (0.75, 6.87)};
-		\addplot+[darkgreen] coordinates
-			{(0.25, 0.0038) (0.5, 1.06) (0.75, 4.26)};
-		\legend{hff bu, hC hff bu, hff td, hC hff td}
-	\end{axis}
-\end{tikzpicture}
-\caption{}
-\label{fig:avg-search-time}
-\end{subfigure}
-\begin{subfigure}[t]{0.22\textwidth}
-\begin{tikzpicture}
-	\begin{axis}
-		 [
-			width=4.5cm,
-			height=4.5cm,
-			ymin= 0.3,
-			ymax = 1,
-			%grid,
-			%ymode = log,
-			xtick = {0.25,0.5,0.75},
-			ytick = {0.4,0.5,0.6,0.7,0.8,0.9},
-			%yticklabels = {0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0},
-			legend style={at={(0.95,-0.38)}},
-			legend columns=4,
-			yticklabel pos=right
-		 ]
-		\addplot+[sharp plot] coordinates
-			{(0.25, 0.40) (0.5, 0.63) (0.75, 0.84)};
-		\addplot+[sharp plot] coordinates
-			{(0.25, 0.88) (0.5, 0.83) (0.75, 0.65)};
-		\legend{bu, td}
-	\end{axis}
-	\begin{axis}
-		 [
-			width=4.5cm,
-			height=4.5cm,
-			%grid,
-			ymode = log,
-			xtick = {0.25,0.5,0.75},
-			ytick = {10,100,1000,10000},
-			%yticklabels = {0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0},
-			legend style={at={(0.95,-0.38)}},
-			legend columns=4,
-			yticklabel pos=left,
-			ybar,
-			bar width=2pt,
-		 ]
-		\addplot+[] coordinates
-			{(0.25, 158) (0.5, 268) (0.75, 220)};
-		\addplot+[] coordinates
-			{(0.25, 7735) (0.5, 2337) (0.75, 415)};
-	\end{axis}
-\end{tikzpicture}
-\caption{}
-\label{fig:frac-meta-search-tree}
-\end{subfigure}
-\caption{(a) average search time per meta search node; 
-	(b) average fraction of explored meta search tree} 
-\end{figure}
-
 
 
 \subsubsection*{Action Set Properties}
 
-
-\FloatBarrier
 \begin{figure*}[ht]
-\input{coverage_nomystery.tex}
+\input{data/action_set_properties/coverage_nomystery_hff.tex}
 \caption{nomystery}
 \end{figure*}
 
-
 \begin{figure*}[ht]
-\input{coverage_tpp.tex}
+\input{data/action_set_properties/coverage_tpp_hff.tex}
 \caption{TPP}
 \end{figure*}
 
-
 \begin{figure*}[ht]
-\input{coverage_rovers.tex}
+\input{data/action_set_properties/coverage_rovers_hff.tex}
 \caption{rovers}
 \end{figure*}
+
+%\begin{figure*}[ht]
+%\input{data/action_set_properties/coverage_blocks_hff.tex}
+%\caption{rovers}
+%\end{figure*}
