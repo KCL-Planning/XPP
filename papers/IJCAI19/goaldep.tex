@@ -77,15 +77,23 @@ Let $\task =
 (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
 be an OSP task, and \plans\ its set of plans. 
 
-An \defined{atomic goal property} for \task\ is a function $\prop_g :
-\plans \mapsto \{\true, \false\}$ where $g \in \goal$ and
-$\prop_g(\plan) = \true$ iff $g \in \init\apply{\plan}$.
+A \defined{goal property} for \task\ is a function $\prop_\phi :
+\plans \mapsto \{\true, \false\}$ where $\phi$ is a propositional
+formula over the atoms \goal, and $\prop_\phi(\plan) = \true$ iff
+$\phi$ evaluates to \true\ under the truth value assignment where $g
+\in \goal$ is \true\ iff $g \in \init\apply{\plan}$.
 %
-A \defined{composed goal property} for \task\ is a function
-$\prop_\phi : \plans \mapsto \{\true, \false\}$ where $\phi$ is a
-propositional formula over the atoms \goal, and $\prop_\phi(\plan) =
-\true$ iff $\phi$ evaluates to \true\ given the values of
-$\prop_g(\plan)$.
+% Joerg: Text highlighting atomic vs composed; simplified to save space
+%
+%% An \defined{atomic goal property} for \task\ is a function $\prop_g :
+%% \plans \mapsto \{\true, \false\}$ where $g \in \goal$ and
+%% $\prop_g(\plan) = \true$ iff $g \in \init\apply{\plan}$.
+%% %
+%% A \defined{composed goal property} for \task\ is a function
+%% $\prop_\phi : \plans \mapsto \{\true, \false\}$ where $\phi$ is a
+%% propositional formula over the atoms \goal, and $\prop_\phi(\plan) =
+%% \true$ iff $\phi$ evaluates to \true\ given the values of
+%% $\prop_g(\plan)$.
 \end{definition}
 
 We identify goal properties $\prop_\phi$ with the characterizing
@@ -128,15 +136,15 @@ conjunctions.
 %
 %The question remains how to compute the dominant PDO-GE.
 
-\joerg{I think this is more distracting than useful; probably, remove}
-%
-We remark that another class of dependencies that may be of interest
-take the form $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b
-    \in B} b}$. The dominant PDO for such dependencies can be derived
-from the dominant PDO-GE: $\entails{\plans}{\bigwedge_{a \in A}
-  a}{\neg \bigvee_{b \in B} b}$ holds if and only if
-$\entails{\plans}{\bigwedge_{a \in A} a}{\neg b}$ holds for every $b
-\in B$.
+%% \joerg{I think this is more distracting than useful; probably, remove}
+%% %
+%% We remark that another class of dependencies that may be of interest
+%% take the form $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b
+%%     \in B} b}$. The dominant PDO for such dependencies can be derived
+%% from the dominant PDO-GE: $\entails{\plans}{\bigwedge_{a \in A}
+%%   a}{\neg \bigvee_{b \in B} b}$ holds if and only if
+%% $\entails{\plans}{\bigwedge_{a \in A} a}{\neg b}$ holds for every $b
+%% \in B$.
 
 
 
