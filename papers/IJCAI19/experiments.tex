@@ -11,6 +11,7 @@
 \section{Experiments}
 
 We implemented our approach in Fast Downward (FD) \cite{helmert:jair-06}.  
+\rebecca{Genral setting of experiments, timeout memory, processor ...}
 
 \joerg{tentative plan, to simplify presentation and focus on the 
 main messages rather than algorothm-configuration space: use hFF
@@ -25,12 +26,22 @@ looks ok use this.}
 
 \subsubsection*{Oversubscription IPC Domains}
 
-As a benchmark we used a oversubscription version of the IPC domains \rebecca{cite} up to
-2018. It includes all instances which are solvable with a 30 min timeout and 4 GB of 
-memory limit by $A^*$ with \emph{lmcut}. We introduced
-a cost bound by scaling the optimal cost with $0.25$, $0.5$ and $0.75$.
+As a benchmark we used a oversubscription version of the optimal STRIPS IPC domains \rebecca{cite} up to
+IPC'18. It includes all instances which are solvable with a 30 min timeout and 4 GB of 
+memory limit by $A^*$ with \emph{lmcut} and have less then 31 goal facts. 
+The goals fact limitation is introduced by the duplicate checking of the sub-goals.
+We introduced a cost bound by scaling the optimal cost with $0.25$, $0.5$ and $0.75$.
 
-The base planner 
+The base planner configurations, used to solve/prove unsolvebility of a meta search node,
+are greedy best first search with $h^{\text{ff}}$ and preferred operators ($h^{\text{ff}}$) and  
+conjunction learning $h^C$ with $h^{\text{ff}}$ as its base heuristic. \rebecca{ask Marcel how it is called}
+\rebecca{Modification of hC to find deadends with an cost bound}
+
+The results are displayed in Table \ref{table:coverage_ipc}.
+We compare the coverage to two baselines, the number of instances which are solved by \emph{lmcut} without
+a cost bound (left column in the baseline part) and the number of instances which are proved
+unsolvable with all goals given the corresponding cost bound (right columns in the baseline part). 
+The second baseline corresponds to the first node in the \emph{SysW} search tree.
 
 
 
@@ -44,6 +55,7 @@ The base planner
 		x \in \{0.25, 0.5, 0.75\}$, solvable with lmcut with no cost bound in 
 		30 min and with less then 31 goal facts(limitation of implementation).
 	}
+	\label{table:coverage_ipc}
 \end{figure*}
 
 
@@ -51,24 +63,24 @@ The base planner
 \subsubsection*{Action Set Properties}
 
 \begin{figure*}[ht]
-\input{data/action_set_properties/coverage_nomystery_hff.tex}
+%\input{data/action_set_properties/coverage_nomystery_hff.tex}
 \caption{nomystery: reference coverage first node in top-down meta search tree;
 	optimal coverage always 10}
 \end{figure*}
 
 \begin{figure*}[ht]
-\input{data/action_set_properties/coverage_tpp_hff.tex}
+%\input{data/action_set_properties/coverage_tpp_hff.tex}
 \caption{TPP: reference coverage first node in top-down meta search tree;
 	optimal coverage always 10}
 \end{figure*}
 
 \begin{figure*}[ht]
-\input{data/action_set_properties/coverage_rovers_hff.tex}
+%\input{data/action_set_properties/coverage_rovers_hff.tex}
 \caption{rovers: reference optimal coverage; coverage first node in top down meta search
 	tree always 10}
 \end{figure*}
 
 \begin{figure*}[ht]
-\input{data/action_set_properties/coverage_blocks_hff_easy.tex}
+%\input{data/action_set_properties/coverage_blocks_hff_easy.tex}
 \caption{blocksworld}
 \end{figure*}
