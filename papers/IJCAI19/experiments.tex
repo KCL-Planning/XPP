@@ -18,50 +18,49 @@ We implemented our approach in Fast Downward (FD) \cite{helmert:jair-06}.
 
 \subsubsection*{Oversubscription IPC Domains}
 
-As a benchmark we used a oversubscription version of the optimal STRIPS IPC domains \rebecca{cite} up to
-IPC'18. It includes all instances which are solvable with a 30 min timeout and 4 GB of 
-memory limit by $A^*$ with \emph{lmcut} and have less then 31 goal facts. 
-The goals fact limitation is introduced by the duplicate checking of the sub-goals.
-We introduced a cost bound by scaling the optimal cost with $0.25$, $0.5$ and $0.75$.
+As a benchmark we used oversubscription versions of the optimal STRIPS IPC domains~\rebecca{cite} up to IPC'18. This includes all instances that are solvable with a 30 min timeout and 4GB of memory by $A^*$ with \emph{lmcut}~\cite{x}. All have less than 31 goal facts. This goal fact limitation is introduced by the duplicate checking of the sub-goals. We introduced a cost bound by scaling the optimal cost with $0.25$, $0.5$ and $0.75$.
 
-The base planner configurations, used to solve/prove unsolvebility of a meta search node,
-are greedy best first search with $h^{\text{ff}}$ and preferred operators ($h^{\text{ff}}$) and  
-conjunction learning $h^C$ with $h^{\text{ff}}$ as its base heuristic. \rebecca{ask Marcel how it is called}
+The base planner configurations, used to solve/prove unsolvability of a meta search node,
+are greedy best first search with $\hff$ and preferred operators ($hff$) and  
+conjunction learning $\hc$ with $\hff$ as its base heuristic. \rebecca{ask Marcel how it is called}
 \rebecca{Modification of hC to find deadends with an cost bound}
 
-We compare the coverage to two baselines, the number of instances which are solved by \emph{lmcut} without
-a cost bound (left column in the baseline part) and the number of instances which are proved
-unsolvable with all goals given the corresponding cost bound (right columns in the baseline part). 
-The second baseline corresponds to the first node in the \emph{SysW} search tree.
+We compare the coverage against two baselines, the number of instances which are solved by \emph{lmcut} without a cost bound and the number of instances which are proved unsolvable by $\hc$ given a cost bound. The second baseline corresponds to the start node in the \emph{SysW} search.
+The results are displayed in Table~\ref{table:coverage_ipc}.
 
+The table provides some insight into how much harder it is to compute MUGS vs. solving the unbounded and cost-bounded problems. Table~\ref{table:coverage_ipc} shows cost bounds of 0.25/0.5/0.75 vs. the lmcut baseline results in 9/23/31 domains with lower coverage.
+Proving unsolvability with the $\hc$ baseline for the same cost bounds has better coverage in 8/21/26 domains.
 
-The results are displayed in Table \ref{table:coverage_ipc}.
+Comparing SysS and SysW, with cost bound 0.25 both show better coverage in 4 domains. Among those domains, in \woodworking\ and \openstacks\ SysS explores a much smaller fraction of the meta-search tree than SysW (0.02 vs. 0.99 and 0.06 vs. 0.99). With a cost bound of 0.5 SysW has better coverage in more domains (8 vs. 6). With cost 0.75 both show better coverage in 7 domains. Although SysW explores the smaller fraction of the meta-search tree, SysS still demonstrates better coverage overall. \rebecca{In this setting, finding a plan is easier than proving unsolvability?}
 
-\begin{itemize}
-	\item conjunction learning is useful with every cost bound in SysW,
-		if you use SysS only for cost bound 0.25
-	\item for cost bound 0.25: SysS has a better overall coverage 
-		bestOfSysS vs bestOfSysW 4 vs 4
-		based on the large difference in the meta search tree coverage of openstacks and woodworking.
-	\item for cost bound 0.5: SysW slightly better overall coverage 
-		bestOfSysS vs bestOfSysW 8 vs 6
-	\item for cost bound 0.5: SysS  better overall coverage 
-		bestOfSysS vs bestOfSysW 7 vs 7
-		although the meta search space is larger for SysS, checking solvebility
-		works better than proving unsolvebility
-	\item best of 0.25/0.5/0.75 vs lmcut baseline: 9/23/31 solved less
-	\item best of 0.25/0.5/0.75 vs first SysW node baseline: 8/21/26 solved less
-	\item  For the cost bound $0.25$ SysS has clearly a smaller 
-		meta search space, you only have to add e few goals until the task is unsolvable. 
-	\item increase cost bound -> SysS meta search space get smaller and SysW gets larger
-		for cost bound 0.75 SysW has a smaller search space
-	\item \# MUGS reasonable small for explanation ?
-	\item \# MUGS increases and than decreases again why ?
-	\item \rebecca{not only the number of MUGS but also their size could be interesting}
-\end{itemize}
+The table shows that $\hc$ is useful with SysW, but for SysS only with cost bound is $0.25$.
 
+The average MUGS size for a cost bound of 0.25 is small (1.32). It is often the case that for these problems, you cannot reach any of the goal facts. In that case, the MUGS will be the goals.
 
+\michael{Say something more about the \# MUGS, or remove the columns.}
 
+%\begin{itemize}
+%	\item conjunction learning is useful with every cost bound in SysW,
+%		if you use SysS only for cost bound 0.25
+%	\item for cost bound 0.25: SysS has a better overall coverage 
+%		bestOfSysS vs bestOfSysW 4 vs 4
+%		based on the large difference in the meta search tree coverage of openstacks and woodworking.
+%	\item for cost bound 0.5: SysW slightly better overall coverage 
+%		bestOfSysS vs bestOfSysW 8 vs 6
+%	\item for cost bound 0.75: SysS  better overall coverage 
+%		bestOfSysS vs bestOfSysW 7 vs 7
+%		although the meta search space is larger for SysS, checking solvebility
+%		works better than proving unsolvebility
+%	\item best of 0.25/0.5/0.75 vs lmcut baseline: 9/23/31 solved less
+%	\item best of 0.25/0.5/0.75 vs first SysW node baseline: 8/21/26 solved less
+%	\item  For the cost bound $0.25$ SysS has clearly a smaller 
+%		meta search space, you only have to add e few goals until the task is unsolvable. 
+%	\item increase cost bound -> SysS meta search space get smaller and SysW gets larger
+%		for cost bound 0.75 SysW has a smaller search space
+%	\item \# MUGS reasonable small for explanation ?
+%	\item \# MUGS increases and than decreases again why ?
+%	\item \rebecca{not only the number of MUGS but also their size could be interesting}
+%\end{itemize}
 
 \setlength{\tabcolsep}{2pt}
 \renewcommand{\arraystretch}{0.8}
@@ -83,39 +82,40 @@ The results are displayed in Table \ref{table:coverage_ipc}.
 
 \michael{Experimental setup, mention STRIPS versions, etc.}
 
-We included four IPC domains:
+To benchmark the action set properties we compile the properties into goal facts as described above and perform the meta-search over these goals. The original goals of the problems remain as ``hard goals'' that must be achieved.
+We introduce a cost bound by scaling the optimal cost for solving only the hard goals by 1, 1.5 and 2.
+We included four IPC domains.
 \begin{enumerate}
-\item The resource constrained \textit{rovers} domain. Problems were generated with 2 rovers and 5 waypoints. Action properties are to use a specific rover for a sample or an observation, or to use a specific camera for an observation. 
+\item The resource constrained \textit{rovers} domain. Problems were generated with 2 rovers, 5 waypoints. Action properties are to use a specific rover for a sample or an observation, or to use a specific camera for an observation. 
 \item The \textit{blocksworld} domain with 2 grippers, modified such that picking up or unstacking a block costs high or low energy depending upon which gripper is used. Problems were generated scaling from 3 to 10 blocks. Action properties are to use a specific gripper to pick up a specific block, or to use any gripper to stack a specific pair of blocks at any point in the plan.
-\item The \textit{TPP} domain,
-\item the \textit{nomystery} domain, 
+\item The resource constrained \textit{TPP} domain. Problems were generated with 5 markets and 1 depot. Properties are to use or not use particular road segments, and preferred markets for goods.
+\item The resource constrained \textit{nomystery} domain, described in the example. Problems were generated with 6 locations and 2 trucks.
 \end{enumerate}
+For each domain, we vary the number of action set properties between 1 and 10 and the number of hard goals from 4 to 7. For each property and goal count combination, we generated 10 variants.
 
-nomystery
+As a baseline we compare against the coverage of lmcut solving both the hard goals and properties with no cost bound. Figure~\ref{fig:barcharts} displays a cross-section of the results. We chose the goal count for which the scaling behaviour can most eaily be seen.
 
-TPP
-
-\michael{results desscription}
+Each row show the coverage results for one domain and goal count, with cost bounds 1, 1.5, and 2 times the optimal cost of the hard goals only. For each property count we show results for SysS and SysW, with \hff and trap-learning with \hff as its base heuristic. The solid black line shows the coverage of the lmcut baseline. The dotted black line shows the coverage for solving the start node of meta-search tree with the trap-learning.
 
 \begin{figure*}[ht]
-%\input{data/action_set_properties/coverage_nomystery_hff.tex}
+\input{data/action_set_properties/coverage_nomystery_hff.tex}
 \caption{nomystery: reference coverage first node in top-down meta search tree;
 	optimal coverage always 10}
 \end{figure*}
 
 \begin{figure*}[ht]
-%\input{data/action_set_properties/coverage_tpp_hff.tex}
+\input{data/action_set_properties/coverage_tpp_hff.tex}
 \caption{TPP: reference coverage first node in top-down meta search tree;
 	optimal coverage always 10}
 \end{figure*}
 
 \begin{figure*}[ht]
-%\input{data/action_set_properties/coverage_rovers_hff.tex}
+\input{data/action_set_properties/coverage_rovers_hff.tex}
 \caption{rovers: reference optimal coverage; coverage first node in top down meta search
 	tree always 10}
 \end{figure*}
 
 \begin{figure*}[ht]
-%\input{data/action_set_properties/coverage_blocks_hff_easy.tex}
+\input{data/action_set_properties/coverage_blocks_hff_easy.tex}
 \caption{blocksworld}
 \end{figure*}
