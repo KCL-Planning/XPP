@@ -37,17 +37,44 @@ are greedy best first search with $h^{\text{ff}}$ and preferred operators ($h^{\
 conjunction learning $h^C$ with $h^{\text{ff}}$ as its base heuristic. \rebecca{ask Marcel how it is called}
 \rebecca{Modification of hC to find deadends with an cost bound}
 
-The results are displayed in Table \ref{table:coverage_ipc}.
 We compare the coverage to two baselines, the number of instances which are solved by \emph{lmcut} without
 a cost bound (left column in the baseline part) and the number of instances which are proved
 unsolvable with all goals given the corresponding cost bound (right columns in the baseline part). 
 The second baseline corresponds to the first node in the \emph{SysW} search tree.
 
 
+The results are displayed in Table \ref{table:coverage_ipc}.
+
+\begin{itemize}
+	\item conjunction learning is useful with every cost bound in SysW,
+		if you use SysS only for cost bound 0.25
+	\item for cost bound 0.25: SysS has a better overall coverage 
+		bestOfSysS vs bestOfSysW 4 vs 4
+		based on the large difference in the meta search tree coverage of openstacks and woodworking.
+	\item for cost bound 0.5: SysW slightly better overall coverage 
+		bestOfSysS vs bestOfSysW 8 vs 6
+	\item for cost bound 0.5: SysS  better overall coverage 
+		bestOfSysS vs bestOfSysW 7 vs 7
+		although the meta search space is larger for SysS, checking solvebility
+		works better than proving unsolvebility
+	\item best of 0.25/0.5/0.75 vs lmcut baseline: 9/23/31 solved less
+	\item best of 0.25/0.5/0.75 vs first SysW node baseline: 8/21/26 solved less
+	\item  For the cost bound $0.25$ SysS has clearly a smaller 
+		meta search space, you only have to add e few goals until the task is unsolvable. 
+	\item increase cost bound -> SysS meta search space get smaller and SysW gets larger
+		for cost bound 0.75 SysW has a smaller search space
+	\item \# MUGS reasonable small for explanation ?
+	\item \# MUGS increases and than decreases again why ?
+	\item \rebecca{not only the number of MUGS but also their size could be interesting}
+\end{itemize}
+
+
+
 
 \setlength{\tabcolsep}{2pt}
 \renewcommand{\arraystretch}{0.8}
 \begin{figure*}[ht]
+	\tiny
 	\centering \input{tables/coverage_IPC.tex} 
 	\caption{
 		Benchmark: oversubscription IPC
@@ -70,6 +97,7 @@ We included four IPC domains:
 \item The \textit{blocksworld} domain with 2 grippers, modified such that picking up or unstacking a block costs high or low energy depending upon which gripper is used. Problems were generated scaling from 3 to 10 blocks. Action properties are to use a specific gripper to pick up a specific block, or to use any gripper to stack a specific pair of blocks at any point in the plan.
 \item The \textit{TPP} domain,
 \item the \textit{nomystery} domain, 
+\end{enumerate}
 
 nomystery
 
