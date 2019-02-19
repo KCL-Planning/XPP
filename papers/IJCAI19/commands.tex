@@ -16,21 +16,15 @@ Proof.}\hspace*{0.5em}}{\qed}
 %%%%% General
 \definecolor{CommentColor}{rgb}{0.90,0.16,0} %red
 
-\iftrue % use iffalse to remove comments
-
 \newcommand{\joerg}[1]{\textbf{\color{CommentColor} /* (Joerg) #1  (Joerg) */}}
 \newcommand{\rebecca}[1]{\textbf{\color{CommentColor} /* (Rebecca) #1  (Rebecca) */}}
 \newcommand{\dan}[1]{\textbf{\color{CommentColor} /* (Dan) #1  (Dan) */}}
 \newcommand{\michael}[1]{\textbf{\color{CommentColor} /* (Michael) #1  (Michael) */}}
 
-\else
-
-\newcommand{\joerg}[1]{}
-\newcommand{\rebecca}[1]{}
-\newcommand{\dan}[1]{}
-\newcommand{\michael}[1]{}
-
-\fi
+%% \renewcommand{\joerg}[1]{}
+%% \renewcommand{\rebecca}[1]{}
+%% \renewcommand{\dan}[1]{}
+%% \renewcommand{\michael}[1]{}
 
 \newcommand{\citep}[1]{\citeauthor{#1}~\shortcite{#1}}
 

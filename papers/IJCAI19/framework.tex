@@ -1,55 +1,69 @@
 \section{Generic Framework}
 \label{framework}
 
-We first introduce our approach making minimal assumptions on the
-planning context and plan properties concerned. The framework can then
-be instantiated with concrete planning formalisms and plan-property
-languages of interest, as we will exemplify in later sections. The
-framework uses standard notions from logics, and its main intention
-and contribution is to conceptualize the explainability problems we
-address.
-
-
-
-
-\subsection{Planning Tasks and Plans}
+% Joerg: not needed anymopre, said in intro
+%
+%% We first introduce our approach making minimal assumptions on the
+%% planning context and plan properties concerned. The framework can
+%% then be instantiated with concrete planning formalisms and
+%% plan-property languages of interest, as we will exemplify in later
+%% sections. The framework uses standard notions from logics, and its
+%% main intention and contribution is to conceptualize the
+%% explainability problems we address.
 
 We assume some formalism defining planning \defined{tasks} \task. We
 do not need any assumptions about that formalism, except that it
 defines a concept of \defined{plans} \plan, where that concept can
 again be arbitrary (action sequence/schedule/partial order/etc). 
-
-Our definitions are relative to a set of plans \plans\ of
+%
+Our definitions are relative to a set \plans\ of plans of
 interest. The canonical setup we have in mind is that where \plans\ is
-\defined{implicit}, induced by \task: \plans\ may be the set of action
-sequences applicable in the initial state; or it may be the set of
-plans which satisfy a set of \defined{enforced} plan properties (and,
-potentially, some optimality criterion). But if the user wants to
-focus the analysis on a narrow/small subset of candidate plans, then
-\defined{explicit} \plans, given as a list of plans in the input, can
-also be relevant. In either case, our framework addresses dependencies
-between \defined{analyzed} plan properties within \plans.
+induced by \task, as the set of action sequences applicable in the
+initial state, or as the set of plans that achieve a goal. It could
+also be useful in some cases though to focus the analysis on a small
+set of candidate plans listed as part of the input.
+
+
+% Joerg: Text highlighting enforced vs analyzed; simplified to save space
 %
-% Joerg: previous text here
-%
-%% Our definitions are relative to a set of plans \plans\ of interest:
-%% the set of plan \emph{candidates} the human user is considering, and
-%% whose property dependencies we should thus analyze. The canonical
-%% setup we have in mind is that where \plans\ is \defined{implicit},
-%% induced by \task\ as the set of \plan\ that achieve a set of
-%% \defined{hard} goals/constraints (in general: \defined{plan
-%%   properties}, see below) which the user is not willing to forego
-%% under any circumstance. But \defined{explicit} \plans, given as a list
-%% of plans in the input, can also be relevant if the user wants to focus
-%% the analysis on a narrow/small subset of candidate plans. Whichever is
-%% the case, the analysis considers dependencies between \defined{soft}
-%% plan properties within \plans. These properties can be soft goals as
-%% in oversubscription planning, but they can also be arbitrary
-%% constraints characterizing the manner in which the hard plan
-%% properties are achieved. For example, in classical planning,
-%% \plans\ can simply be the set of (cost-optimal) plans achieving the
-%% goal, where our analysis answers questions about the properties of
-%% such plans.
+%% \subsection{Planning Tasks and Plans}
+
+%% We assume some formalism defining planning \defined{tasks} \task. We
+%% do not need any assumptions about that formalism, except that it
+%% defines a concept of \defined{plans} \plan, where that concept can
+%% again be arbitrary (action sequence/schedule/partial order/etc). 
+
+%% Our definitions are relative to a set of plans \plans\ of
+%% interest. The canonical setup we have in mind is that where \plans\ is
+%% \defined{implicit}, induced by \task: \plans\ may be the set of action
+%% sequences applicable in the initial state; or it may be the set of
+%% plans which satisfy a set of \defined{enforced} plan properties (and,
+%% potentially, some optimality criterion). But if the user wants to
+%% focus the analysis on a narrow/small subset of candidate plans, then
+%% \defined{explicit} \plans, given as a list of plans in the input, can
+%% also be relevant. In either case, our framework addresses dependencies
+%% between \defined{analyzed} plan properties within \plans.
+%% %
+%% % Joerg: previous text here
+%% %
+%% %% Our definitions are relative to a set of plans \plans\ of interest:
+%% %% the set of plan \emph{candidates} the human user is considering, and
+%% %% whose property dependencies we should thus analyze. The canonical
+%% %% setup we have in mind is that where \plans\ is \defined{implicit},
+%% %% induced by \task\ as the set of \plan\ that achieve a set of
+%% %% \defined{hard} goals/constraints (in general: \defined{plan
+%% %%   properties}, see below) which the user is not willing to forego
+%% %% under any circumstance. But \defined{explicit} \plans, given as a list
+%% %% of plans in the input, can also be relevant if the user wants to focus
+%% %% the analysis on a narrow/small subset of candidate plans. Whichever is
+%% %% the case, the analysis considers dependencies between \defined{soft}
+%% %% plan properties within \plans. These properties can be soft goals as
+%% %% in oversubscription planning, but they can also be arbitrary
+%% %% constraints characterizing the manner in which the hard plan
+%% %% properties are achieved. For example, in classical planning,
+%% %% \plans\ can simply be the set of (cost-optimal) plans achieving the
+%% %% goal, where our analysis answers questions about the properties of
+%% %% such plans.
 
 
 
@@ -77,14 +91,13 @@ etc. We expect that, typically, $\prop$ will be computable in time
 polynomial in the size of its input (though that is not a requirement
 of our framework).
 
-We assume a set \props\ of plan properties (the analyzed ones) as part
-of our input. That set might be specified compactly, \ie, may be
-exponentially large in the size of the input. An example we will
-explore later is that where the user is interested in dependencies
-between subsets of a set $G$ of soft-goal facts. The set \props\ of
-interest then are the conjunctions $\phi$ over $G$ (functions checking
-whether $\phi$ is true at the end of a plan). But the input to our
-analysis specifies only $G$.
+We assume a set \props\ of plan properties as part of our input. That
+set may be exponentially large in the size of its specification. An
+example we will explore later is that where the user is interested in
+dependencies between subsets of a set $G$ of soft-goal facts. The set
+\props\ of interest then are the conjunctions $\phi$ over $G$
+(functions checking whether $\phi$ is true at the end of a plan), but
+the input to our analysis specifies only $G$.
 %
 % Joerg: Text highlighting atomic vs composed; simplified to save space
 %
@@ -219,13 +232,13 @@ $\equiv{\plans}{\prop}$ with exactly one $\prop \in
 \end{definition}
 
 The PDO explains the plan space \plans\ by making explicit how the
-analyzed plan properties depend on each other -- saying things like
-``we cannot have $p$ without foregoing either of $q_1$ or $q_2$ or
-$q_3$''. The PDO is exhaustive, and in that sense ideal. Its size may
-be problematic though. A concrete PDO can serve as a practical proxy
-if equivalence classes are large. Beyond that, it is clearly important
-to identify (i) more compact and/or (ii) more restricted plan-space
-explanations. We introduce variants of both here. 
+plan properties depend on each other -- saying things like ``we cannot
+have $p$ without foregoing either of $q_1$ or $q_2$ or $q_3$''. The
+PDO is exhaustive, and in that sense ideal. Its size may be
+problematic though. A concrete PDO can serve as a practical proxy if
+equivalence classes are large. Beyond that, it is clearly important to
+identify (i) more compact and/or (ii) more restricted plan-space
+explanations. We introduce variants of both here.
 
 Regarding (i), in our concrete instantiation of this framework we use
 \defined{subsumption} over \plans-entailment relations, relying on an
@@ -326,14 +339,18 @@ ignoring \plans-entailments $\entails{\plans}{\prop}{\propq}$ where
 $(\prop,\propq) \not\in \deps$.
 \end{definition}
 
-Some words are in order regarding complexity. if \plans\ is implicitly
-given, then testing \plans-entailment encompasses the plan existence
-problem even for extremely simple plan properties (\eg, asking whether
-the plan achieves some fact $p$). This is exacerbated by the
-potentially exponential size of the PDO. Certainly, a (dc)PDO should
-ideally be computed offline, prior to interaction with a user. As our
-experimental results show, however, in a variety of benchmarks,
-computing a dcPDO has similar scalability as optimal planning.
+Some words are in order regarding complexity. Testing
+\plans-entailment encompasses the plan existence problem even for
+extremely simple plan properties (asking whether the plan achieves a
+fact $p$). This is exacerbated by the size of the PDO. Certainly, a
+(dc)PDO should ideally be computed offline, prior to interaction with
+a user. 
+%
+% Joerg: repetition, not really needed here. also, really the picture
+% is complicated and this pitch incurs the risk of wrong expectations.
+%
+%% As our experimental results show, however, in a variety of benchmarks,
+%% computing a dcPDO has similar scalability as optimal planning.
 %
 % Joerg: Text highlighting atomic vs composed; simplified to save space
 %

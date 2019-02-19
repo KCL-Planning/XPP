@@ -1,8 +1,58 @@
-\section{Conclusion}
+\section{Discussion and Outlook}
 \label{conclusion}
 
+\joerg{use some of the following text pars as a brief post-hoc
+  discussion of related work? or leave this in the intro?}
 
-\joerg{mention WHY and HOW questions from NASA discussions? ie WHY
-  finding additional properties zooming in on a given dependency, HOW
-  finding a minimal relaxation of enforced props under which a given
-  dependency disappears.}
+% current intro text
+%
+%% We remark that our approach can be viewed as a generalization of
+%% domain/task analysis (as done \eg\ by \cite{fox:long:jair-98}), and as
+%% an instance of model checking applied to planning models (related
+%% \eg\ to \cite{vaquero:etal:keq-13}). Our contribution lies in
+%% introducing this intermediate problem suited to XAIP as outlined, and
+%% instantiating that formulation with initial technology showing promise
+%% in practice.
+
+Another alternate view of our approach is as a form of domain analysis
+(actually: task analysis), identifying particular properties of plan
+space ahead of time. Indeed, various popular task analyses can be cast
+as instances of our framework. A fact pair $(p,q)$ is mutually
+exclusive \cite{blum:furst:ai-97} iff $p$-true-at-end entails $\neg
+q$-true-at-end in the space of all applicable action sequences; a fact
+$p$ is a landmark \cite{hoffmann:etal:jair-04} iff $\true$ entails
+$p$-true-at-some-point; other examples presumably exist. From this
+point of view, we generalize previous concepts to a broader
+perspective aimed at addressing arbitrary user questions. At the same
+time, our approach itself can be viewed as an instance of model
+checking of planning models \cite{clarke:etal:01},\footnote{There has
+  been little work on this subject; Vaquero et
+  al.\ \shortcite{vaquero:etal:keq-13} use Petri nets to capture and
+  check dynamic aspects of planning models in itSIMPLE.}
+systematically checking all entailments between plan properties. Again
+the value of our framework lies in its suitability for XAIP (plus
+computational gains from considering all \props\ dependencies in
+unison rather than running individual entailment checks).
+
+Identifying the trade-off between soft goals in an iterative
+oversubscription planning process relates, in terms of purpose, to the
+work by Yu et al.\ \cite{yu:etal:jair-17}. A major difference is that
+Yu et al.\ address conditional temporal problems, a form of
+conditional temporal plans, instead of PDDL-style compactly specified
+general planning problems. This more restricted focus allows to
+leverage previous conflict analysis methods in that area. It remains a
+question for future work whether such conflict analysis could inspire
+more effective analysis methods in our framework.
+
+
+
+
+
+\joerg{insert brief discussion of future work}
+
+An interesting yet challenging question for future work is how one can
+automatically identify relevant plan properties \props\ to analyze.
+... mention WHY and HOW questions from NASA discussions? ie WHY
+finding additional properties zooming in on a given dependency, HOW
+finding a minimal relaxation of enforced props under which a given
+dependency disappears.

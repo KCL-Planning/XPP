@@ -1,144 +1,200 @@
 \section{Introduction}
 \label{introduction}
 
-\joerg{IJCAI'19 page limit: 6 pages main text, 1 page refs}
-
-\joerg{1 page Joerg/Dan; Dan to make first go, then Joerg to make a
-  pass. ... as our key point here is introducing a new
-  framework/approach, we need to be real careful to push the right
-  knobs / to set the right expectations and avoid misunderstandings or
-  reviewer questions a la ``isn't this the same as ...''}
-
-
-
-\cite{fox:etal:ijcai-ws-17}
-
-
-\joerg{discuss relation to domain analysis / model checking?
-  basically, our approach can be viewed as a form of domain analysis
-  checking the truth of formulas over plan space. it seems to me that
-  ``domain analysis'' should definitely be mentioned in our
-  introduction, as another frame of reference besides
-  XAIP. ... regarding model checking, our analysis can be viewed as a
-  systematic form of checking a set of properties of interest; we
-  structure this form of analysis as makes sense in explainable
-  planning; computationally we exploit synergies in addressing the
-  entire set of properties rather than checking each possible
-  dependency in isolation; in the long-term, a highly relevant
-  research line is how to discover relevant properties in the first
-  place. ... as a concrete literature link, I know that some people
-  from Brasil worked on using model checkers as a domaiun analysis
-  tool, in the ICKEPS context; but I don't have the concrete
-  references in mind/ don't know whether and where this has been
-  published. ... we could perhaps mention in this context (currently
-  mentioned in my text snippet below, but this could be moved
-  elsewhere) that ultimately one may want to identify interesting plan
-  properties automatically, which is then clearly beyond anything
-  addressed in model checking.}
-
-
-
-
-There is a growing enthusiasm around Explainable AI (XAI), with great
-attention not only in academia but also in the private sector, mainly
-motivated by the need to allow the user of AI systems to become
-confident on their behaviour and to trust the decisions they
-made. [add links to key related work and workshops].
-
-A recent analysis by Tim Miller \joerg{cite?
-  \cite{contrastive_miller}?} on the insights we can get from the
-social science for making explanations more effective, highlighted
-that questions for explanations are \textit{contrastive}, meaning that
-if the user asks "Why this?" they actually mean "Why this
-\textit{rather than something else}?".  This implies that explanatory
-systems should be able to analyse the space of alternative solutions,
-and allow the user to understand the consequences of that
-\textit{something else} happening.
-
-\joerg{it seems to me this text par fits better above, as 2nd text
-  par?}
-%
-Within XAI, Planning is starting to play a very relevant role, and
-[add more related work and workshops]...  Crucially, planning fits
-very well with the paradigm of contrastive explanations
-\cite{xaip_magazzeni, contrastive_miller}.
-
-\joerg{this needs to be merged with my text fragments below}
-%
-In this paper, we propose a formal approach for providing contrastive
-explanations by considering the space of (alternative) plans through
-plan-property dependencies. In this setting, a property of the plan
-corresponds to actions that the user would expect to see or not to see
-in the plan, and the plan-property dependency analysis allows
-explaining to the user that in order for the desired property to hold,
-something else must necessarily change in the plan, as formally
-guaranteed by the framework we present in this paper.
-
-\joerg{what's still missing here in my view is: motivation of our
-  approach and contrasting to previous suggestions of generating
-  alternate plans: universal instead of existential statements made;
-  mention of domain analysis, and briefly model checking, and also
-  briefly (at least a cite) on Brian William's work finding goals to
-  drop based on conflict analysis.}
-
-
-\joerg{my previous text fragments follow}
-%
-Our framework assumes a planning task \task, inducing a space of plans
-\plans. The target is to answer user questions about properties of the
-plans \plans, where a property is some Boolean function on plans. For
-example, a question ``Why does the plan satisfy $A$ rather than $B$?''
-is addressed by analyzing what would happen in the opposite case, \ie,
-determining what other properties are entailed by a plan property of
-the form ``$\neg A \wedge B$'' \joerg{this needs more discussion of
-  inhowfar this is an explanation, and needs to be placed into the
-  explanation literature}. 
-
-\joerg{this statement sits awkwardly here; remove?}
-%
-We assume that the set \props\ of plan properties whose dependencies
-are of interest within \plans\ is given in the input. An interesting
-yet challenging question for future work is how one can automatically
-identify relevant plan properties \props\ to analyze.
-
-Observe that \plans\ itself may be naturally defined as the set of
-plans satisfying a given set of plan properties. For example, these
-properties may ask to achieve a set of goal facts. In such a setting,
-it makes sense to distinguish between \defined{enforced} plan
-properties, that induce \plans; vs.\ \defined{analyzed} plan
-properties, whose entailment relations within \plans\ we wish to
-identify. 
-
-Enforced vs.\ analyzed properties can play different roles depending
-on the application scenario. In classical planning, the analyzed
-properties may capture relevant plan phenomena in a user quest to
-understand causal relationships between these phenomena
-(\eg\ dependencies between action subsets used). Another use case is a
-user quest to identify a preferred plan in oversubscription planning
-\cite{smith:icaps-04,domshlak:mirkis:jair-15}, where the analyzed
-properties capture ``soft goals'', and the enforced properties are
-``hard goals''. The analysis then identifies the precise trade-offs
-between the soft goals; one may include additional analyzed properties
-aimed at identifying the causes behind these trade-offs. In that
-setting, our approach also supports an iterative planning process
-along the lines suggested by \cite{smith:aaai-12}: if the consequences
-of analyzed property $p = \neg A \wedge B$ are tolerable to the user,
-she may choose to enforce $p$, gradually narrowing the space
-\plans\ of candidate plans.
-
-
-%% \joerg{Text snippet from previous abstract below. ... I think that
-%%   interactive planning is the 2nd point, not the 1st one (as in the
-%%   proposal: it's something enabled by our approach but the approach
-%%   remains relevant without it), so I have removed this from the
-%%   abstract. ... Also, explanation in terms of the search space is a
-%%   bit itchy as here algorithm-specific, rather than task-specific,
-%%   aspects come into play; need to think carefully abouyt whether to
-%%   mention this and if so how.}
+%% \joerg{To save space, I think this text par could be significantly
+%%   shortened, removing the discussions of XAI in general and of
+%%   previous model-based techniques}
 %% %
-%% In an interactive planning process, it is important for human users to
-%% understand the decision rationale behind the suggested plans: Why is
-%% this plan better than the alternatives?  In principle this can be
-%% explained through the search space explored by the planner.  But how
-%% to make a vast search space understandable to a human user? 
+%% There is growing enthusiasm around Explainable AI (XAI), with great
+%% attention not only in academia but also in the private sector, mainly
+%% motivated by the need for users of AI systems to become more confident
+%% in the behaviour of AI systems, and to trust the decisions they make
+%% (\eg\ \cite{citekeyrelatedworks}). 
+%% %
+%% \joerg{adding this due to a recent AIJ board discussion where some
+%%   people where adamant that XAI has been done long before
+%%   already})
+%% %
+%% Model-based techniques are well-suited to provide explanations in
+%% principle (and research towards such capabilities has a long tradition
+%% \cite{citekeyrelatedworks}).
+%% %
+%% AI Planning in particular is relevant to XAI as a decision-making
+%% methodology. Consequently, research on Explainable AI Planning (XAIP)
+%% has received increasing interest in recent years
+%% (\eg\ \cite{citekeyrelatedworks}).
+%
+Explainable AI (XAI) is concerned with making AI systems' decisions
+more lucid and thus trustworthy. AI Planning is relevant to XAI as a
+decision-making methodology, model-based and thus suited to provide
+explanations in principle. Consequently, research on Explainable AI
+Planning (XAIP) has received increasing interest in recent years
+(\eg\ \cite{citekeyrelatedworks}).
+
+A recent analysis \cite{miller:ai-19} of insights from social sciences
+highlights that user questions are often \emph{contrastive}. A
+question ``Why this?'' actually means ``Why this \emph{rather than
+  something else}?''. To address such queries, explanatory systems
+should analyse alternative solutions, and allow the user to understand
+the consequences of the ``something else'' in question.
+%
+AI planning fits well with the paradigm of contrastive explanations
+\cite{fox:etal:ijcai-ws-17,miller:corr-18}. 
+
+Our work is motivated by an approach to contrastive explanations
+suggested earlier \cite{fox:etal:ijcai-ws-17}: given a plan $\plan$
+and a user question ``Why does $\plan$ start with action $A$ rather
+than $B$?'', generate a new plan $\plan'$ starting with $B$, and
+answer the question based on comparing the two plans. Undesirable
+properties of $\plan'$ serve to explain the planner's decision. While
+this idea is natural, a key weakness is the potentially arbitrary
+nature of $\plan'$. One difficulty is that the planner might choose to
+simply undo $B$ and re-insert $A$. More generally, there may be
+differences between \plan\ and $\plan'$ unrelated to the use of $A$
+vs.\ $B$. For optimal planning, comparisons of the objective-function
+values of \plan\ vs.\ $\plan'$ are well justified. Yet all other
+comparisons (\eg\ which other actions are used, or which ``soft''
+objectives are/are not satisfied) remain of a speculative nature.
+
+Here we address the same kind of explanation problem, but we replace
+the \emph{existential} answer generating a single alternative plan
+$\plan'$ with a \emph{universal} answer determining shared properties
+of \emph{all} possible such alternatives. In this way, the analysis we
+propose aims at explaining the entire space of possible plans, rather
+than pointing out examples.
+
+Our proposed analysis works at the level of \defined{plan properties}:
+Boolean functions on plans that capture aspects of plans the user
+cares about (whether or not the plan starts with a particular action,
+whether or not a particular soft objective is satisfied, etc). We
+assume that the set \props\ of plan properties of interest is given as
+part of the input.\footnote{{\color{red}in or out?}An interesting yet
+  challenging question for future work is how one can automatically
+  identify relevant plan properties.} Our analysis then determines the
+\defined{dependencies} across plan properties, in terms of
+\defined{plan-space entailments}. The ``plan space'' here is the set
+\plans\ of candidate plans to be considered (canonically, the set of
+plans for an input planning task). A plan property $p$
+\defined{entails} another property $p'$ in \plans\ if every $\plan \in
+\plans$ that satisfies $p$ also satisfies $p'$. A user question ``Why
+does the current plan \plan\ satisfy $p$ rather than $q$?'' can then
+be answered in terms of the properties $q'$ not true in \plan\ but
+entailed by $q$: things that will \emph{necessarily} change when
+satisfying $q$.
+
+Our approach also supports iterative planning, along the lines
+suggested by Smith \shortcite{smith:aaai-12}. Given a current plan
+$\plan \in \plans$ and a user question ``Why achieve $p$ rather than
+$q$?'', if the consequences of $q$ are tolerable to the user, she may
+choose to enforce $q$, gradually narrowing the plan-candidate space
+\plans.
+%
+% Joerg: Text highlighting enforced vs analyzed; simplified to save space
+%
+%% Observe that \plans\ itself may be viewed as being defined through a
+%% set of \emph{enforced} plan properties (like achieving a set of goal
+%% facts). Such enforced properties are then distinguished from the
+%% \emph{analyzed} properties whose dependencies we wish to identify.
+%% %
+%% These two classes of properties can play different roles depending on
+%% the application scenario. In contrastive explanations as outlined
+%% above, the enforced properties are fixed. However, our approach also
+%% supports an iterative planning process for oversubscription planning
+%% (\eg\ \cite{smith:icaps-04,domshlak:mirkis:jair-15}), along the lines
+%% suggested by Smith \shortcite{smith:aaai-12}. The analyzed properties
+%% then capture ``soft goals'', while the enforced properties capture
+%% ``hard goals''. Given a currently suggested plan $\plan \in \plans$
+%% and a user question ``Why $p$ rather than $q$?'', if the consequences
+%% of analyzed property $q$ are tolerable to the user, she may choose to
+%% enforce $q$, gradually narrowing the plan-candidate space \plans.
+%% %
+%% % Joerg: shortetened to save space
+%% %
+%% %% Observe that \plans\ itself may be naturally defined as the set of
+%% %% plans satisfying a given set of plan properties. For example, these
+%% %% properties may ask to achieve a set of goal facts. In such a setting,
+%% %% it makes sense to distinguish between \defined{enforced} plan
+%% %% properties, that induce \plans; vs.\ \defined{analyzed} plan
+%% %% properties, whose entailment relations within \plans\ we wish to
+%% %% identify. 
+%% %
+%% %% Enforced vs.\ analyzed properties can play different roles depending
+%% %% on the application scenario. In classical planning, the analyzed
+%% %% properties may capture relevant plan phenomena in a user quest to
+%% %% understand causal relationships between these phenomena
+%% %% (\eg\ dependencies between action subsets used). Another use case is a
+%% %% user quest to identify a preferred plan in oversubscription planning
+%% %% (\eg\ \cite{smith:icaps-04,domshlak:mirkis:jair-15}), where the
+%% %% analyzed properties capture ``soft goals'', and the enforced
+%% %% properties are ``hard goals''. The analysis then identifies the
+%% %% precise trade-offs between the soft goals.
+%% %% %
+%% %% % Joerg: too complicated/more distracting than helpful
+%% %% %
+%% %% %% ; one may include additional analyzed properties aimed at identifying
+%% %% %% the causes behind these trade-offs.
+%% %% %
+%% %% In that setting, our approach also supports an iterative planning
+%% %% process along the lines suggested by Smith \shortcite{smith:aaai-12}:
+%% %% given a currently suggested plan $\plan \in \plans$ and a user
+%% %% question ``Why $p$ rather than $q$?'', if the consequences of analyzed
+%% %% property $q$ are tolerable to the user, she may choose to enforce $q$,
+%% %% gradually narrowing the candidate space \plans.
+
+We remark that our approach can be viewed as a generalization of
+domain/task analysis (as done \eg\ by \cite{fox:long:jair-98}), and as
+an instance of model checking applied to planning models (related
+\eg\ to \cite{vaquero:etal:keq-13}). Our contribution lies in
+formulating this intermediate problem suited to XAIP as outlined, and
+instantiating that formulation with initial technology showing promise
+in practice.
+%
+% Joerg: Detailed discussion of domain analysis and model checking;
+% simplified to save space/not be distracting here.
+%
+%% Another alternate view of our approach is as a form of domain analysis
+%% (actually: task analysis), identifying particular properties of plan
+%% space ahead of time. Indeed, various popular task analyses can be cast
+%% as instances of our framework. A fact pair $(p,q)$ is mutually
+%% exclusive \cite{blum:furst:ai-97} iff $p$-true-at-end entails $\neg
+%% q$-true-at-end in the space of all applicable action sequences; a fact
+%% $p$ is a landmark \cite{hoffmann:etal:jair-04} iff $\true$ entails
+%% $p$-true-at-some-point; other examples presumably exist. From this
+%% point of view, we generalize previous concepts to a broader
+%% perspective aimed at addressing arbitrary user questions. At the same
+%% time, our approach itself can be viewed as an instance of model
+%% checking of planning models \cite{clarke:etal:01},\footnote{There has
+%%   been little work on this subject; Vaquero et
+%%   al.\ \shortcite{vaquero:etal:keq-13} use Petri nets to capture and
+%%   check dynamic aspects of planning models in itSIMPLE.}
+%% systematically checking all entailments between plan properties. Again
+%% the value of our framework lies in its suitability for XAIP (plus
+%% computational gains from considering all \props\ dependencies in
+%% unison rather than running individual entailment checks).
+
+% Joerg: I usually find such content overviews boring, but in case if
+% this rather unusual paper I think this serves well.
+%
+Section~\ref{framework} introduces our framework making minimal
+assumptions on the planning context and plan properties concerned,
+serving to conceptualize the explainability problems we
+address. Section~\ref{goaldep} instantiates the framework with
+goal-fact conjunction dependencies in oversubscription planning
+(\eg\ \cite{smith:icaps-04,domshlak:mirkis:jair-15}), and devises
+analysis algorithms for that purpose. Section~\ref{compilation} points
+out that more general plan properties -- in particular,
+\defined{action-set properties} -- can be compiled into goal facts and
+thus into that analysis. Section~\ref{experiments} evaluates our
+techniques on international planning competition (IPC) benchmarks
+modified for oversubscription planning, and on IPC benchmarks extended
+with action-set properties. 
+%
+% Joerg: I contemplated making this more concrete, along the lines of
+% my previous pitch ``similar scalability as optimal planning'', but
+% really the picture is complicated and that pitch incurs the risk of
+% wrong expectations.
+%
+We find that, in a variety of benchmark studies, the suggested
+analyses can be feasible and produce compact results for human
+inspection.
 
