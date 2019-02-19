@@ -11,57 +11,111 @@
 \section{Experiments}
 \label{experiments}
 
+We implemented our approach in Fast Downward (FD) \cite{helmert:jair-06}.  
+\rebecca{Genral setting of experiments, timeout memory, processor ...}
+
 \joerg{Rebecca/Michael: check out the IPC net-benefit benchmarks. Reviewers may naturally expect us to experiment with those, given our strong focus on oversubscription planning (actually this question came up in the discussion with the NASA guys yesterday). In the net-bnefit benchmarks, goal facts have rewards which we don't need. The question is whether, stripping away these rewards and imposing a plan-cost bound, we would get benchmarks not already covered by bour IPC experiments anyway. If the answer is "no", we can just say so in the paper. If the answer is "yes", it would be good (though probably not absolitely necessary) to experiment with these domains as well. In any case, we should know what the answer is.}
+
+\subsubsection*{Oversubscription IPC Domains}
+
+As a benchmark we used a oversubscription version of the optimal STRIPS IPC domains \rebecca{cite} up to
+IPC'18. It includes all instances which are solvable with a 30 min timeout and 4 GB of 
+memory limit by $A^*$ with \emph{lmcut} and have less then 31 goal facts. 
+The goals fact limitation is introduced by the duplicate checking of the sub-goals.
+We introduced a cost bound by scaling the optimal cost with $0.25$, $0.5$ and $0.75$.
+
+The base planner configurations, used to solve/prove unsolvebility of a meta search node,
+are greedy best first search with $h^{\text{ff}}$ and preferred operators ($h^{\text{ff}}$) and  
+conjunction learning $h^C$ with $h^{\text{ff}}$ as its base heuristic. \rebecca{ask Marcel how it is called}
+\rebecca{Modification of hC to find deadends with an cost bound}
+
+We compare the coverage to two baselines, the number of instances which are solved by \emph{lmcut} without
+a cost bound (left column in the baseline part) and the number of instances which are proved
+unsolvable with all goals given the corresponding cost bound (right columns in the baseline part). 
+The second baseline corresponds to the first node in the \emph{SysW} search tree.
+
+
+The results are displayed in Table \ref{table:coverage_ipc}.
+
+\begin{itemize}
+	\item conjunction learning is useful with every cost bound in SysW,
+		if you use SysS only for cost bound 0.25
+	\item for cost bound 0.25: SysS has a better overall coverage 
+		bestOfSysS vs bestOfSysW 4 vs 4
+		based on the large difference in the meta search tree coverage of openstacks and woodworking.
+	\item for cost bound 0.5: SysW slightly better overall coverage 
+		bestOfSysS vs bestOfSysW 8 vs 6
+	\item for cost bound 0.5: SysS  better overall coverage 
+		bestOfSysS vs bestOfSysW 7 vs 7
+		although the meta search space is larger for SysS, checking solvebility
+		works better than proving unsolvebility
+	\item best of 0.25/0.5/0.75 vs lmcut baseline: 9/23/31 solved less
+	\item best of 0.25/0.5/0.75 vs first SysW node baseline: 8/21/26 solved less
+	\item  For the cost bound $0.25$ SysS has clearly a smaller 
+		meta search space, you only have to add e few goals until the task is unsolvable. 
+	\item increase cost bound -> SysS meta search space get smaller and SysW gets larger
+		for cost bound 0.75 SysW has a smaller search space
+	\item \# MUGS reasonable small for explanation ?
+	\item \# MUGS increases and than decreases again why ?
+	\item \rebecca{not only the number of MUGS but also their size could be interesting}
+\end{itemize}
+
+
 
 
 \setlength{\tabcolsep}{2pt}
 \renewcommand{\arraystretch}{0.8}
 \begin{figure*}[ht]
+	\tiny
 	\centering \input{tables/coverage_IPC.tex} 
 	\caption{
 		Benchmark: oversubscription IPC
 		domains with bound $ = x \cdot $ optimal cost with $
 		x \in \{0.25, 0.5, 0.75\}$, solvable with lmcut with no cost bound in 
 		30 min and with less then 31 goal facts(limitation of implementation).
-		hff: $h^{FF}$ with gready-best-first-search and preferred operators and 
-		bottom-up meta search; maxbu: $h^{max}$ with $A^*$ and bottom-up meta search;
-		maxtd: $h^{max}$ with $A^*$ and top-down meta search; hC(p): online learned
-		dead-end detectors with bounded DFS with and without propagation of the
-		learn detectors through the top-down meta search three.
 	}
-\end{figure*}
-
-
-\begin{figure*}[ht]
-	\centering \input{tables/coverage_IPC_hff.tex} 
-	\caption{
-		Benchmark: oversubscription IPC
-		domains with bound $ = x \cdot $ optimal cost with $
-		x \in \{0.25, 0.5, 0.75\}$, solvable with lmcut with no cost bound in 
-		30 min and with less then 31 goal facts(limitation of implementation).
-	}
+	\label{table:coverage_ipc}
 \end{figure*}
 
 
 
 \subsubsection*{Action Set Properties}
 
+\michael{Experimental setup, mention STRIPS versions, etc.}
+
+We included four IPC domains:
+\begin{enumerate}
+\item The resource constrained \textit{rovers} domain. Problems were generated with 2 rovers and 5 waypoints. Action properties are to use a specific rover for a sample or an observation, or to use a specific camera for an observation. 
+\item The \textit{blocksworld} domain with 2 grippers, modified such that picking up or unstacking a block costs high or low energy depending upon which gripper is used. Problems were generated scaling from 3 to 10 blocks. Action properties are to use a specific gripper to pick up a specific block, or to use any gripper to stack a specific pair of blocks at any point in the plan.
+\item The \textit{TPP} domain,
+\item the \textit{nomystery} domain, 
+\end{enumerate}
+
+nomystery
+
+TPP
+
+\michael{results desscription}
+
 \begin{figure*}[ht]
-\input{data/action_set_properties/coverage_nomystery_hff.tex}
-\caption{nomystery}
+%\input{data/action_set_properties/coverage_nomystery_hff.tex}
+\caption{nomystery: reference coverage first node in top-down meta search tree;
+	optimal coverage always 10}
 \end{figure*}
 
 \begin{figure*}[ht]
-\input{data/action_set_properties/coverage_tpp_hff.tex}
-\caption{TPP}
+%\input{data/action_set_properties/coverage_tpp_hff.tex}
+\caption{TPP: reference coverage first node in top-down meta search tree;
+	optimal coverage always 10}
 \end{figure*}
 
 \begin{figure*}[ht]
-\input{data/action_set_properties/coverage_rovers_hff.tex}
-\caption{rovers}
+%\input{data/action_set_properties/coverage_rovers_hff.tex}
+\caption{rovers: reference optimal coverage; coverage first node in top down meta search
+	tree always 10}
 \end{figure*}
 
-%\begin{figure*}[ht]
-%\input{data/action_set_properties/coverage_blocks_hff.tex}
-%\caption{rovers}
-%\end{figure*}
+\begin{figure*}[ht]
+%\input{data/action_set_properties/coverage_blocks_hff_easy.tex}
+\caption{blocksworld}
+\end{figure*}
