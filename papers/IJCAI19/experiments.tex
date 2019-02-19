@@ -10,6 +10,8 @@
 
 \section{Experiments}
 
+We implemented our approach in Fast Downward (FD) \cite{helmert:jair-06}.  
+
 \joerg{tentative plan, to simplify presentation and focus on the 
 main messages rather than algorothm-configuration space: use hFF
 throughout, and vary SysW (aka top-down) vs SysS (aka bottom-up)
@@ -21,6 +23,7 @@ looks ok use this.}
 
 \joerg{Rebecca/Michael: check out the IPC net-benefit benchmarks. Reviewers may naturally expect us to experiment with those, given our strong focus on oversubscription planning (actually this question came up in the discussion with the NASA guys yesterday). In the net-bnefit benchmarks, goal facts have rewards which we don't need. The question is whether, stripping away these rewards and imposing a plan-cost bound, we would get benchmarks not already covered by bour IPC experiments anyway. If the answer is "no", we can just say so in the paper. If the answer is "yes", it would be good (though probably not absolitely necessary) to experiment with these domains as well. In any case, we should know what the answer is.}
 
+\subsubsection*{Oversubscription IPC Domains}
 
 \setlength{\tabcolsep}{2pt}
 \renewcommand{\arraystretch}{0.8}
@@ -40,20 +43,23 @@ looks ok use this.}
 
 \begin{figure*}[ht]
 \input{data/action_set_properties/coverage_nomystery_hff.tex}
-\caption{nomystery}
+\caption{nomystery: reference coverage first node in top-down meta search tree;
+	optimal coverage always 10}
 \end{figure*}
 
 \begin{figure*}[ht]
 \input{data/action_set_properties/coverage_tpp_hff.tex}
-\caption{TPP}
+\caption{TPP: reference coverage first node in top-down meta search tree;
+	optimal coverage always 10}
 \end{figure*}
 
 \begin{figure*}[ht]
 \input{data/action_set_properties/coverage_rovers_hff.tex}
-\caption{rovers}
+\caption{rovers: reference optimal coverage; coverage first node in top down meta search
+	tree always 10}
 \end{figure*}
 
 \begin{figure*}[ht]
-\input{data/action_set_properties/coverage_blocks_hff.tex}
+\input{data/action_set_properties/coverage_blocks_hff_easy.tex}
 \caption{blocksworld}
 \end{figure*}
