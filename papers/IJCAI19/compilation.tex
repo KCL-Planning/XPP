@@ -69,8 +69,9 @@ $\task'$
   evaluating each $\prop_\phi$ based on these (following
   \cite{gazen:knoblock:ecp-97,nebel:jair-00}), setting Boolean flags
   $\mathit{isTrue}_\phi$ storing the outcome values;
-\item[3)] introduce separate planning vs.\ formula-evaluation phases
-  and a switch action allowing to go from the former to the latter.
+\item[3)] introduce a separate 1) \emph{planning phase} vs.\ 2)
+  \emph{formula-evaluation phase}, and a switch action allowing to go
+  from 1) to 2).
 \end{itemize}
 Then the planning-phase prefixes in $\task'$ are in one-to-one
 correspondence with \plans, and given such a prefix \plan\ the
@@ -88,13 +89,12 @@ computing the PDO-GE for $\task'$ with goal set
 $\{\mathit{isTrue}_\phi \mid \phi \in \props\}$, and identifying each
 $\mathit{isTrue}_\phi$ with $\phi$ in the outcome.
 
-Clearly, similar compilation techniques can in principle be used for
-much more powerful property languages, in particular LTL for which
-compilations into planning are known
-\cite{edelkamp:icaps-06,baier:etal:ai-09}. It remains a question for
-future work whether and how this can be made practically effective;
-here, we focus on the simpler action-set properties as a first
-demonstration of the approach.
+Clearly, similar compilation techniques can be used for much more
+powerful property languages. In a preliminary exploration, we
+implemented a compilation for LTL properties based on previous work
+\cite{edelkamp:icaps-06,baier:etal:ai-09}. Our results indicate that
+this renders the PDO analysis infeasible computationally. It remains
+an open question how LTL properties can be addressed more effectively.
 
 
 

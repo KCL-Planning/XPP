@@ -39,16 +39,16 @@ such queries, explanatory systems should analyse alternative
 solutions, and support the user in understanding the consequences of
 the ``something else'' in question.
 %
-AI planning fits well for this kind of analysis, and indeed two prior
-works designed variants thereof already
+AI planning fits well for this kind of analysis. Two prior works
+designed variants thereof
 \cite{fox:etal:ijcai-ws-17,miller:corr-18}. The work by Fox et al.\ is
 the starting point of our work here.
 
 Fox et al.\ suggest, given a plan $\plan$ and a user question ``Why
 does $\plan$ start with action $A$ rather than $B$?'', to generate a
 new plan $\plan'$ starting with $B$, and answer the question based on
-comparing the two plans. Undesirable properties of $\plan'$ serve to
-explain the planner's decision. While this idea is natural, a key
+comparing the two plans: undesirable properties of $\plan'$ serve to
+explain the previous decision. While this idea is natural, a key
 weakness is
 %
 %%the potentially arbitrary nature of $\plan'$.
@@ -57,12 +57,15 @@ weakness is
 %% simply undo $B$ and re-insert $A$. More generally, t
 %
 that there may be differences between \plan\ and $\plan'$ unrelated to
-the use of $A$ vs.\ $B$. If optimal planning techniques are used,
-comparisons of the objective-function values of \plan\ vs.\ $\plan'$
-are well justified. Yet all other comparisons (\eg\ which other
-actions are used, or which ``soft'' objectives are/are not satisfied)
-are potentially subject to arbitrary decisions in the planner's
-search.
+the use of $A$ vs.\ $B$. Many comparison aspects (\eg\ which other
+actions are used, or which ``soft'' objectives are satisfied) may be
+affected by arbitrary decisions in the planner's search.
+%
+%% If optimal planning techniques are used, comparisons of the
+%% objective-function values of \plan\ vs.\ $\plan'$ are well
+%% justified. Yet all other comparisons (\eg\ which other actions are
+%% used, or which ``soft'' objectives are satisfied) may be affected
+%% by arbitrary decisions in the planner's search.
 
 Here we address the same kind of explanation problem, but we replace
 the \emph{existential} answer generating a single alternative plan
