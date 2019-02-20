@@ -18,10 +18,10 @@ again be arbitrary (action sequence/schedule/partial order/etc).
 %
 Our definitions are relative to a set \plans\ of plans of
 interest. The canonical setup we have in mind is that where \plans\ is
-induced by \task, as the set of action sequences applicable in the
-initial state, or as the set of plans that achieve a goal. It could
-also be useful in some cases though to focus the analysis on a small
-set of candidate plans listed as part of the input.
+induced by \task, \eg\ as the set of action sequences applicable in
+the initial state, or as the set of plans that achieve a goal. It
+could also be useful in some cases though to focus the analysis on a
+small set of candidate plans listed as part of the input.
 
 
 % Joerg: Text highlighting enforced vs analyzed; simplified to save space
@@ -91,13 +91,13 @@ etc. We expect that, typically, $\prop$ will be computable in time
 polynomial in the size of its input (though that is not a requirement
 of our framework).
 
-We assume a set \props\ of plan properties as part of our input. That
-set may be exponentially large in the size of its specification. An
-example we will explore later is that where the user is interested in
-dependencies between subsets of a set $G$ of soft-goal facts. The set
-\props\ of interest then are the conjunctions $\phi$ over $G$
-(functions checking whether $\phi$ is true at the end of a plan), but
-the input to our analysis specifies only $G$.
+We assume a set \props\ of plan properties as part of our
+input. \props\ may be exponentially large in the size of its
+specification though. An example we will explore later is that where
+the user is interested in dependencies between subsets of a set $G$ of
+soft-goal facts. The set \props\ of interest then are the conjunctions
+$\phi$ over $G$ (functions checking whether $\phi$ is true at the end
+of a plan), but the input to our analysis specifies only $G$.
 %
 % Joerg: Text highlighting atomic vs composed; simplified to save space
 %
@@ -124,7 +124,7 @@ the input to our analysis specifies only $G$.
 %% \propsatom), while the analysis considers dependencies across all
 %% conjunctions over $G$ (composed, \propscomp).
 
-The kind of dependency our framework focusses on is entailment over
+The kind of dependency our framework focuses on is entailment over
 plan properties, in the space of truth-value assignments induced by
 the plan-candidate set \plans:
 
@@ -196,14 +196,14 @@ that $\entails{\plans}{\phi}{\psi}$, simply because any (plan-end)
 state that satisfies $\phi$ must satisfy $\psi$. But not vice versa:
 \eg\ if facts $p, q$ are mutex in the task then
 $\entails{\plans}{p}{\neg q}$. As a more motivating example, say the
-plan properties are goals (like having scientific observations in
-satellite planning) as well as resource constraints (like consuming at
+plan properties are soft goals (like having scientific observations in
+satellite planning) as well as resource preferences (like consuming at
 most a given amount of energy). Then entailments of interest can take
 the form $\entails{\plans}{p}{\neg (q_1 \wedge q_2 \wedge q_3)}$
 saying that we cannot have $p$ without foregoing either of $q_1$ or
 $q_2$ or $q_3$. Note that this is an entailment specific to \plans,
 which may not hold in general (\eg\ if cheaper actions are available,
-or if cheaper plans are admitted by removing some other enforced
+or if cheaper plans are admitted by removing some other hard
 goals). The identification of such specific entailments -- specific to
 the space \plans\ of plans considered -- is central to our framework.
 
@@ -213,8 +213,8 @@ the space \plans\ of plans considered -- is central to our framework.
 
 \subsection{Plan-Space Explanations}
 
-Our plan-space explanations identify the \plans-entailment relation on
-\props\ given the knowledge base \plans:
+Our plan-space explanations are based on the \plans-entailment
+relation on \props\ given the knowledge base \plans:
 
 \begin{definition}[PDO, cPDO]
 Let \task\ be a task, \plans\ a set of plans, and \props\ a set of
@@ -231,14 +231,18 @@ $\equiv{\plans}{\prop}$ with exactly one $\prop \in
 \equiv{\plans}{\prop}$.
 \end{definition}
 
-The PDO explains the plan space \plans\ by making explicit how the
-plan properties depend on each other -- saying things like ``we cannot
-have $p$ without foregoing either of $q_1$ or $q_2$ or $q_3$''. The
-PDO is exhaustive, and in that sense ideal. Its size may be
-problematic though. A concrete PDO can serve as a practical proxy if
-equivalence classes are large. Beyond that, it is clearly important to
-identify (i) more compact and/or (ii) more restricted plan-space
-explanations. We introduce variants of both here.
+The PDO makes explicit how the plan properties \props\ depend on each
+other. For all contrastive user questions of the form ``Why $r$ rather
+than $p$?'', the answer can be directly extracted from the PDO, in
+terms of the properties entailed by $p$. For example, the answer may
+be ``we cannot have $p$ without foregoing either of $q_1$ or $q_2$ or
+$q_3$''.
+
+However, the PDO and the answers it provides can be large. A concrete
+PDO can be a practical proxy if equivalence classes are large. Beyond
+that, it is clearly important to identify (i) more compact and/or (ii)
+more restricted plan-space explanations. We introduce variants of both
+here.
 
 Regarding (i), in our concrete instantiation of this framework we use
 \defined{subsumption} over \plans-entailment relations, relying on an

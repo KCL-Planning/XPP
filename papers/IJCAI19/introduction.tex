@@ -25,62 +25,69 @@
 %% (\eg\ \cite{citekeyrelatedworks}).
 %
 Explainable AI (XAI) is concerned with making AI systems' decisions
-more lucid and thus trustworthy. AI Planning is relevant to XAI as a
+more lucid and thus trustworthy. AI planning is relevant to XAI as a
 decision-making methodology, model-based and thus suited to provide
-explanations in principle. Consequently, research on Explainable AI
-Planning (XAIP) has received increasing interest in recent years
-(\eg\ \cite{citekeyrelatedworks}).
+explanations in principle. Consequently, research on explainable AI
+planning (XAIP) has received increasing interest in recent years
+(\eg\ \cite{seegebarth:etal:icaps-12,smith:aaai-12,langley:etal:aaai-17,fox:etal:ijcai-ws-17,chakraborti:etal:ijcai-17,chakraborti:icaps-19}).
 
-A recent analysis \cite{miller:ai-19} of insights from social sciences
-highlights that user questions are often \emph{contrastive}. A
-question ``Why this?'' actually means ``Why this \emph{rather than
-  something else}?''. To address such queries, explanatory systems
-should analyse alternative solutions, and allow the user to understand
-the consequences of the ``something else'' in question.
+A recent analysis \cite{miller:ai-19} of lessons to be learned for XAI
+from social sciences highlights that user questions are often
+\emph{contrastive}. A question ``Why this?'' actually means ``Why this
+\emph{rather than something else} that I would expect?''. To address
+such queries, explanatory systems should analyse alternative
+solutions, and support the user in understanding the consequences of
+the ``something else'' in question.
 %
-AI planning fits well with the paradigm of contrastive explanations
-\cite{fox:etal:ijcai-ws-17,miller:corr-18}. 
+AI planning fits well for this kind of analysis, and indeed two prior
+works designed variants thereof already
+\cite{fox:etal:ijcai-ws-17,miller:corr-18}. The work by Fox et al.\ is
+the starting point of our work here.
 
-Our work is motivated by an approach to contrastive explanations
-suggested earlier \cite{fox:etal:ijcai-ws-17}: given a plan $\plan$
-and a user question ``Why does $\plan$ start with action $A$ rather
-than $B$?'', generate a new plan $\plan'$ starting with $B$, and
-answer the question based on comparing the two plans. Undesirable
-properties of $\plan'$ serve to explain the planner's decision. While
-this idea is natural, a key weakness is the potentially arbitrary
-nature of $\plan'$. One difficulty is that the planner might choose to
-simply undo $B$ and re-insert $A$. More generally, there may be
-differences between \plan\ and $\plan'$ unrelated to the use of $A$
-vs.\ $B$. For optimal planning, comparisons of the objective-function
-values of \plan\ vs.\ $\plan'$ are well justified. Yet all other
-comparisons (\eg\ which other actions are used, or which ``soft''
-objectives are/are not satisfied) remain of a speculative nature.
+Fox et al.\ suggest, given a plan $\plan$ and a user question ``Why
+does $\plan$ start with action $A$ rather than $B$?'', to generate a
+new plan $\plan'$ starting with $B$, and answer the question based on
+comparing the two plans. Undesirable properties of $\plan'$ serve to
+explain the planner's decision. While this idea is natural, a key
+weakness is
+%
+%%the potentially arbitrary nature of $\plan'$.
+%
+%% One difficulty is that the planner might choose to
+%% simply undo $B$ and re-insert $A$. More generally, t
+%
+that there may be differences between \plan\ and $\plan'$ unrelated to
+the use of $A$ vs.\ $B$. If optimal planning techniques are used,
+comparisons of the objective-function values of \plan\ vs.\ $\plan'$
+are well justified. Yet all other comparisons (\eg\ which other
+actions are used, or which ``soft'' objectives are/are not satisfied)
+are potentially subject to arbitrary decisions in the planner's
+search.
 
 Here we address the same kind of explanation problem, but we replace
 the \emph{existential} answer generating a single alternative plan
 $\plan'$ with a \emph{universal} answer determining shared properties
 of \emph{all} possible such alternatives. In this way, the analysis we
-propose aims at explaining the entire space of possible plans, rather
-than pointing out examples.
+propose aims at explaining the space of possible plans, rather than
+pointing out examples.
 
 Our proposed analysis works at the level of \defined{plan properties}:
 Boolean functions on plans that capture aspects of plans the user
 cares about (whether or not the plan starts with a particular action,
 whether or not a particular soft objective is satisfied, etc). We
 assume that the set \props\ of plan properties of interest is given as
-part of the input.\footnote{{\color{red}in or out?}An interesting yet
-  challenging question for future work is how one can automatically
-  identify relevant plan properties.} Our analysis then determines the
-\defined{dependencies} across plan properties, in terms of
-\defined{plan-space entailments}. The ``plan space'' here is the set
-\plans\ of candidate plans to be considered (canonically, the set of
-plans for an input planning task). A plan property $p$
-\defined{entails} another property $p'$ in \plans\ if every $\plan \in
-\plans$ that satisfies $p$ also satisfies $p'$. A user question ``Why
-does the current plan \plan\ satisfy $p$ rather than $q$?'' can then
-be answered in terms of the properties $q'$ not true in \plan\ but
-entailed by $q$: things that will \emph{necessarily} change when
-satisfying $q$.
+part of the input.\footnote{An interesting yet challenging question
+  for future work is how one can automatically identify relevant plan
+  properties.} Our analysis then determines the \defined{dependencies}
+across plan properties, \ie, \defined{plan-space entailments} which we
+define as follows. The ``plan space'' is the set \plans\ of candidate
+plans to be considered (canonically, the set of plans for an input
+planning task). A plan property $p$ \defined{entails} another property
+$p'$ in \plans\ if every $\plan \in \plans$ that satisfies $p$ also
+satisfies $p'$. A user question ``Why does the current plan
+\plan\ satisfy $p$ rather than $q$?'' can then be answered in terms of
+the properties $q'$ not true in \plan\ but entailed by $q$: things
+that will \emph{necessarily} change when satisfying $q$.
 
 Our approach also supports iterative planning, along the lines
 suggested by Smith \shortcite{smith:aaai-12}. Given a current plan
@@ -141,13 +148,11 @@ choose to enforce $q$, gradually narrowing the plan-candidate space
 %% %% property $q$ are tolerable to the user, she may choose to enforce $q$,
 %% %% gradually narrowing the candidate space \plans.
 
-We remark that our approach can be viewed as a generalization of
-domain/task analysis (as done \eg\ by \cite{fox:long:jair-98}), and as
-an instance of model checking applied to planning models (related
-\eg\ to \cite{vaquero:etal:keq-13}). Our contribution lies in
-formulating this intermediate problem suited to XAIP as outlined, and
-instantiating that formulation with initial technology showing promise
-in practice.
+We remark that our approach can be viewed as an intermediate between
+domain/task analysis (\eg\ \cite{fox:long:jair-98}), which our
+approach generalizes; and model checking applied to planning models,
+which our approach is an instance of (related to
+\cite{vaquero:etal:keq-13}). 
 %
 % Joerg: Detailed discussion of domain analysis and model checking;
 % simplified to save space/not be distracting here.
@@ -172,22 +177,26 @@ in practice.
 %% computational gains from considering all \props\ dependencies in
 %% unison rather than running individual entailment checks).
 
-% Joerg: I usually find such content overviews boring, but in case if
-% this rather unusual paper I think this serves well.
+
+Our contributions are as follows. 
 %
-Section~\ref{framework} introduces our framework making minimal
-assumptions on the planning context and plan properties concerned,
-serving to conceptualize the explainability problems we
-address. Section~\ref{goaldep} instantiates the framework with
-goal-fact conjunction dependencies in oversubscription planning
-(\eg\ \cite{smith:icaps-04,domshlak:mirkis:jair-15}), and devises
-analysis algorithms for that purpose. Section~\ref{compilation} points
-out that more general plan properties -- in particular,
+%% lies in formulating this intermediate problem suited to XAIP as
+%% outlined, and instantiating that formulation with initial
+%% technology showing promise in practice.
+%
+We conceptualize the explainability problems we address, through a
+generic framework making minimal assumptions on the planning context
+and plan properties concerned (Section~\ref{framework}). We
+instantiate the framework with goal-fact conjunction dependencies in
+oversubscription planning
+(\eg\ \cite{smith:icaps-04,domshlak:mirkis:jair-15}), and devise
+analysis algorithms for that purpose (Section~\ref{goaldep}). We show
+that more general plan properties -- in particular,
 \defined{action-set properties} -- can be compiled into goal facts and
-thus into that analysis. Section~\ref{experiments} evaluates our
+thus into that analysis (Section~\ref{compilation}). We evaluate our
 techniques on international planning competition (IPC) benchmarks
 modified for oversubscription planning, and on IPC benchmarks extended
-with action-set properties. 
+with action-set properties (Section~\ref{experiments}).
 %
 % Joerg: I contemplated making this more concrete, along the lines of
 % my previous pitch ``similar scalability as optimal planning'', but
@@ -195,6 +204,6 @@ with action-set properties.
 % wrong expectations.
 %
 We find that, in a variety of benchmark studies, the suggested
-analyses can be feasible and produce compact results for human
+analyses can be feasible and produce compact answers for human
 inspection.
 
