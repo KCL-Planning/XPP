@@ -1,5 +1,23 @@
+\newlength{\mywidth}
+\setlength{\mywidth}{16.5cm}
+
 \begin{tikzpicture}
+\node[] (c1) at (2.5,2.2) {$c=1.0$};
+\node[] (c15) at (8,2.2) {$c=1.5$};
+\node[] (c2) at (13.5,2.2) {$c=2.0$};
+
+
 \input{data/action_set_properties/selected_rows/blocksworld.tex}
 \input{data/action_set_properties/selected_rows/nomystery.tex}
+\input{data/action_set_properties/selected_rows/rovers.tex}
+\input{data/action_set_properties/selected_rows/tpp.tex}
 
+\node[draw] (test) at (8,-7.2) {
+\ref{plot:properties_hff_bu_39} $\hff$ sysS
+\ref{plot:properties_hff_td_39} $\hff$ sysW
+\ref{plot:properties_trap_prefop_bu_39} trap sysS
+\ref{plot:properties_trap_prefop_td_39} trap sysW
+\ref{plot:baseline_sysW_node} sysW start node
+\ref{plot:baseline_lmcut} optimal 
+};
 \end{tikzpicture}

@@ -1,15 +1,16 @@
 \begin{axis}[
-width = 7cm,
-height=4cm,
+width = 6.5cm,
+height=3.5cm,
 enlarge x limits = 0.1,
 enlarge y limits = 0.1,
 ybar,
 bar width=1pt,
 ymin = 0,
 ymax = 10,
-at={(0.0\linewidth,-0.0)},
+at={(0.0\mywidth,-0.0)},
 compat=1.6,
-ylabel={blocks g=6},
+ylabel={\blocksworld},
+xticklabels={,,}
 ]
 \addplot+[ybar, bar shift =-2.5pt, red,
 ]
@@ -72,21 +73,52 @@ plot coordinates {
 };
 \label{plot:properties_trap_prefop_td_21}
 
+%start node sysW
+\addplot+[only marks, mark = -, mark options = {thick}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(01, 10)
+(02, 10)
+(03, 8)
+(04, 8)
+(05, 8)
+(06, 8)
+(07, 8)
+(08, 8)
+(09, 9)
+(10, 9)
+};
+%optimal
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(01, 10)
+(02, 10)
+(03, 10)
+(04, 10)
+(05, 10)
+(06, 10)
+(07, 10)
+(08, 10)
+(09, 10)
+(10, 10)
+};
 \end{axis}
 \hfill
 
 
 \begin{axis}[
-width = 7cm,
-height=4cm,
+width = 6.5cm,
+height=3.5cm,
 enlarge x limits = 0.1,
 enlarge y limits = 0.1,
 ybar,
 bar width=1pt,
 ymin = 0,
 ymax = 10,
-at={(0.333333333333\linewidth,0.0)},
+at={(0.333333333333\mywidth,0.0)},
 compat=1.6,
+xticklabels={,,}
 ]
 \addplot+[ybar, bar shift =-2.5pt, red,
 ]
@@ -149,21 +181,52 @@ plot coordinates {
 };
 \label{plot:properties_trap_prefop_td_21}
 
+%start node sysW
+\addplot+[only marks, mark = -, mark options = {thick}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(01, 10)
+(02, 10)
+(03, 5)
+(04, 3)
+(05, 1)
+(06, 1)
+(07, 3)
+(08, 2)
+(09, 0)
+(10, 0)
+};
+%optimal
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(01, 10)
+(02, 10)
+(03, 10)
+(04, 10)
+(05, 10)
+(06, 10)
+(07, 10)
+(08, 10)
+(09, 10)
+(10, 10)
+};
 \end{axis}
 \hfill
 
 
 \begin{axis}[
-width = 7cm,
-height=4cm,
+width = 6.5cm,
+height=3.5cm,
 enlarge x limits = 0.1,
 enlarge y limits = 0.1,
 ybar,
 bar width=1pt,
 ymin = 0,
 ymax = 10,
-at={(0.666666666667\linewidth,0.0)},
+at={(0.666666666667\mywidth,0.0)},
 compat=1.6,
+xticklabels={,,}
 ]
 \addplot+[ybar, bar shift =-2.5pt, red,
 ]
@@ -226,5 +289,35 @@ plot coordinates {
 };
 \label{plot:properties_trap_prefop_td_21}
 
+%start node sysW
+\addplot+[only marks, mark = -, mark options = {thick}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(01, 9)
+(02, 8)
+(03, 4)
+(04, 5)
+(05, 4)
+(06, 1)
+(07, 2)
+(08, 0)
+(09, 0)
+(10, 0)
+};
+%optimal
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(01, 10)
+(02, 10)
+(03, 10)
+(04, 10)
+(05, 10)
+(06, 10)
+(07, 10)
+(08, 10)
+(09, 10)
+(10, 10)
+};
 \end{axis}
 
