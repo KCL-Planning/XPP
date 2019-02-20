@@ -11,7 +11,15 @@
 \section{Experiments}
 \label{experiments}
 
-\joerg{number of MUFS = worst-case answer size! (pick one fact from each MUG)... describe and discuss as such in the text}
+% The net-benefit benchmarks don't give us anything new (the ones we
+% could use are adopted from IPC ben chmarks anyhow).
+%
+%% \joerg{Rebecca/Michael: check out the IPC net-benefit benchmarks. Reviewers may naturally expect us to experiment with those, given our strong focus on oversubscription planning (actually this question came up in the discussion with the NASA guys yesterday). In the net-bnefit benchmarks, goal facts have rewards which we don't need. The question is whether, stripping away these rewards and imposing a plan-cost bound, we would get benchmarks not already covered by bour IPC experiments anyway. If the answer is "no", we can just say so in the paper. If the answer is "yes", it would be good (though probably not absolitely necessary) to experiment with these domains as well. In any case, we should know what the answer is.}
+
+46 domains
+
+\joerg{number of MUGS = worst-case answer size! (pick one fact from each MUG)... 
+describe and discuss as such in the text}
 
 We implemented our approach in Fast Downward (FD) \cite{helmert:jair-06}.  
 \rebecca{Genral setting of experiments, timeout memory, processor ...}
@@ -41,7 +49,6 @@ We implemented our approach in Fast Downward (FD) \cite{helmert:jair-06}.
 \label{fig:barcharts}
 \end{figure*}
 
-\joerg{Rebecca/Michael: check out the IPC net-benefit benchmarks. Reviewers may naturally expect us to experiment with those, given our strong focus on oversubscription planning (actually this question came up in the discussion with the NASA guys yesterday). In the net-bnefit benchmarks, goal facts have rewards which we don't need. The question is whether, stripping away these rewards and imposing a plan-cost bound, we would get benchmarks not already covered by bour IPC experiments anyway. If the answer is "no", we can just say so in the paper. If the answer is "yes", it would be good (though probably not absolitely necessary) to experiment with these domains as well. In any case, we should know what the answer is.}
 
 As a benchmark we used oversubscription versions of the optimal STRIPS IPC domains~\rebecca{cite} up to IPC'18. This includes all instances that are solvable with a 30 min timeout and 4GB of memory by $A^*$ with \emph{lmcut}~\cite{x}. All have less than 31 goal facts. This goal fact limitation is introduced by the duplicate checking of the sub-goals. We introduced a cost bound by scaling the optimal cost with $0.25$, $0.5$ and $0.75$.
 
