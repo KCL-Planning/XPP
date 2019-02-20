@@ -1,10 +1,10 @@
 % 3 * 5 coverage, 3 * goal size, 3 * 2 fraction search tree
-\begin{tabular}{l|rrrr|rrrr|rrrr|rrrr||rrr||rr|rr|rr}
-	domain & \multicolumn{4}{c|}{baseline}  & \multicolumn{12}{c||}{coverage} & \multicolumn{3}{c||}{\# MUGS} & \multicolumn{6}{c}{fraction meta search tree} \\
-	   & lmcut & \multicolumn{3}{c|}{$\hc$} & \multicolumn{4}{c|}{0.25} & \multicolumn{4}{c|}{0.5} & \multicolumn{4}{c||}{0.75} & 0.25 & 0.5 & 0.75 & \multicolumn{2}{c|}{0.25} & \multicolumn{2}{c|}{0.5} & \multicolumn{2}{c}{0.75} \\\hline
-					   & & \multicolumn{3}{c|}{cost bound} & \multicolumn{2}{c|}{SysS} & \multicolumn{2}{c|}{SysW}& \multicolumn{2}{c|}{SysS} & \multicolumn{2}{c|}{SysW}& \multicolumn{2}{c|}{SysS} & \multicolumn{2}{c||}{SysW} 
+\begin{tabular}{l|rrrr||rrrr|rrrr|rrrr||rrr||rr|rr|rr}
+	& \multicolumn{4}{c||}{Reference Points}  & \multicolumn{12}{c||}{Coverage, $x=$} & \multicolumn{3}{c||}{\# MUGS, $x=$} & \multicolumn{6}{c}{Search Tree Fraction, $x=$} \\
+	   & \hlmcut & \multicolumn{3}{c||}{$\hc$} & \multicolumn{4}{c|}{0.25} & \multicolumn{4}{c|}{0.5} & \multicolumn{4}{c||}{0.75} & 0.25 & 0.5 & 0.75 & \multicolumn{2}{c|}{0.25} & \multicolumn{2}{c|}{0.5} & \multicolumn{2}{c}{0.75} \\\hline
+					   & & \multicolumn{3}{c||}{$x=$} & \multicolumn{2}{c}{SysS} & \multicolumn{2}{c|}{SysW}& \multicolumn{2}{c}{SysS} & \multicolumn{2}{c|}{SysW}& \multicolumn{2}{c}{SysS} & \multicolumn{2}{c||}{SysW} 
 					   & & & & \multicolumn{2}{c|}{Sys} & \multicolumn{2}{c|}{Sys} & \multicolumn{2}{c}{Sys}  \\
-					   & - & 0.25 & 0.5 & 0.75 & $\hff$ & $\hc$ & $\hff$ & $\hc$ & $\hff$ & $\hc$  & $\hff$ & $\hc$ & $\hff$ & $\hc$ & $\hff$ & $\hc$ & & & & S & W & S & W & S & W \\\hline
+					   domain  & - & 0.25 & 0.5 & 0.75 &  & $\hc$ &  & $\hc$ &  & $\hc$  &  & $\hc$ &  & $\hc$ &  & $\hc$ & & & & S & W & S & W & S & W \\\hline
 	agricola (20) &	0 & - &- & -& - & - & - & - & - & - & - & - & -
 				  & - &- & -& - & - & - & - & - & - & - & - & - \\
 	airport (50) &	28 & 28 & 24 & 17  
@@ -142,7 +142,6 @@
 	zenotravel (20) &	13 & 13 & 12 & 9 
 					& \textbf{13}  & \textbf{13}  & 12 & \textbf{13}  & \textbf{9}  & \textbf{9}  & 8 & \textbf{9}  & 8 & \textbf{9}  & 8 & \textbf{9}
 					& 8.3 & 3.8 & 2.4 & \textbf{0.36} & 0.94 & \textbf{0.67} & 0.89 & 0.87 & \textbf{0.66}\\\hline
-	Sum (1583) & 862 & 828 & 776 & 670
-				& 733 & \textbf{740}  & 688 & 732 & 630 & 624 & 592 & \textbf{636}  & \textbf{556}  & 517 & 523 & 528
-			   & 12.1 & 13.3 & 6.6 & \textbf{0.38} & 0.90 & \textbf{0.63} & 0.82 & 0.83 & \textbf{0.65}\\
+	Sum (1583) / Average & 862 & 828 & 776 & 670
+				& 733 & \textbf{740}  & 688 & 732 & 630 & 624 & 592 & \textbf{636}  & \textbf{556}  & 517 & 523 & 528 & 12.1 & 13.3 & 6.6 & \textbf{0.38} & 0.90 & \textbf{0.63} & 0.82 & 0.83 & \textbf{0.65}\\
 \end{tabular}
