@@ -1,0 +1,65 @@
+\documentclass[crop=true, tikz=true, border={0.1cm 1cm 1cm 0.1cm}]{standalone}
+
+\usepackage{times}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage{url}  %Required
+\usepackage{graphicx}  %Required
+
+%%%%%%%%%%%%%%%%%%%%%
+%%%% Packages
+\usepackage{amsthm,amsmath,amssymb}
+%\usepackage{tikz}
+\usetikzlibrary{matrix}
+\usepackage{pgf-umlsd}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepgfplotslibrary{fillbetween}
+\usepackage{ragged2e}
+\usetikzlibrary{arrows,automata,fit,calc,positioning,shapes,shapes.multipart} %
+%\usepackage[inline]{enumitem}
+\usepackage{enumerate,url,soul}
+\usepackage{paralist}
+%\usepackage[usenames]{color} % Only used in comment commands
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{thmtools,thm-restate}
+\usepackage{listings}
+\usepackage{subcaption}
+\usepackage{arydshln}
+
+\input{../../../commands.tex}
+
+\usepackage{geometry}
+%\geometry{
+%paperwidth=215mm,
+%paperheight=27cm,
+%margin=0.5cm
+%}
+
+\newlength{\mywidth}
+\setlength{\mywidth}{16.5cm}
+
+\begin{document}
+
+\begin{tikzpicture}
+\node[] (c1) at (2.5,2.2) {$x=1.0$};
+\node[] (c15) at (8,2.2) {$x=1.5$};
+\node[] (c2) at (13.5,2.2) {$x=2.0$};
+
+
+\input{../selected_rows/blocksworld.tex}
+\input{../selected_rows/nomystery.tex}
+\input{../selected_rows/rovers.tex}
+\input{../selected_rows/tpp.tex}
+
+\node[draw] (test) at (8,-7.2) {
+\ref{plot:properties_hff_bu_39} $\hff$ SysS
+\ref{plot:properties_hff_td_39} $\hff$ SysW
+\ref{plot:properties_trap_prefop_bu_39} trap SysS
+\ref{plot:properties_trap_prefop_td_39} trap SysW
+\ref{plot:baseline_sysW_node} trap
+\ref{plot:baseline_lmcut} \hlmcut 
+};
+\end{tikzpicture}
+
+\end{document}
