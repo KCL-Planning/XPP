@@ -75,15 +75,17 @@
 \maketitle
 
 \begin{abstract}
-A key problem in explainable AI planning is to answer user questions
-asking to elucidate decision rationales, \eg, ``Why do A rather than
-B?'' This requires an explanation of the space of possible plans. We
-propose to address this through the analysis of a set of plan
-properties, identifying their dependencies in terms of entailment
-relations in plan space. We introduce a generic formal framework for
-such dependency analysis. We instantiate and operationalize that
-framework for the case of dependencies between goals in
-oversubscription planning.
+A key problem in explainable AI planning is to elucidate decision
+rationales. User questions in this context are often contrastive,
+taking the form ``Why do A rather than B?''. Answering such a question
+requires a statement about the space of possible plans. We propose to
+do so through plan-property dependencies, where plan properties are
+Boolean properties of plans the user is interested in, and
+dependencies are entailment relations in plan space. The answer to the
+above question then consists of those properties C entailed by B. We
+introduce a formal framework for such dependency analysis. We
+instantiate and operationalize that framework for the case of
+dependencies between goals in oversubscription planning.
 %
 % Joerg: the nogood learning is after all not super important for
 % performance; whereas the compilations really are central to this
@@ -96,8 +98,32 @@ oversubscription planning.
 More powerful plan properties can be compiled into that special case.
 %
 We show experimentally that, in a variety of benchmarks, the suggested
-analyses can be feasible and produce compact results for human
+analyses can be feasible and produce compact answers for human
 inspection.
+%
+%% A key problem in explainable AI planning is to answer user questions
+%% asking to elucidate decision rationales, \eg, ``Why do A rather than
+%% B?'' This requires an explanation of the space of possible plans. We
+%% propose to address this through the analysis of a set of plan
+%% properties, identifying their dependencies in terms of entailment
+%% relations in plan space. We introduce a generic formal framework for
+%% such dependency analysis. We instantiate and operationalize that
+%% framework for the case of dependencies between goals in
+%% oversubscription planning.
+%% %
+%% % Joerg: the nogood learning is after all not super important for
+%% % performance; whereas the compilations really are central to this
+%% % paper.
+%% %
+%% %% , leveraging and extending recent nogood learning methods for
+%% %% computational efficiency. We show that more general plan properties
+%% %% can be compiled into this special case.
+%% %
+%% More powerful plan properties can be compiled into that special case.
+%% %
+%% We show experimentally that, in a variety of benchmarks, the suggested
+%% analyses can be feasible and produce compact answers for human
+%% inspection.
 \end{abstract}
 
 %\joerg{TODO:}
@@ -131,7 +157,7 @@ inspection.
 
 \input{conclusion}
 
-\input{examples}
+%\input{examples}
 
 %% \section*{Acknowledgments}
 %
