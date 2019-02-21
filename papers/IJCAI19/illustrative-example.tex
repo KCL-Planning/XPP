@@ -19,22 +19,23 @@ goal locations are $L_4$, $L_3$,and $L_5$ (shown in red).
 
 \begin{wrapfigure}{r}{0.5\columnwidth}
 \vspace{-0.4cm} \hspace{-0.4cm} \begin{tikzpicture}[scale=0.5]
-  \node[draw, circle, label=above:{\small \textcolor{blue}{$P_0, P_1,P_2$}}] (l0) at (0,0) {$L_0$};
-  \node[draw, circle, label=right:{\small $T_1$}] (l1) at (4,-1) {$L_1$};
-  \node[draw, circle] (l2) at (6,0) {\small $L_2$};
-  \node[draw, circle, label=below:{\small \textcolor{red}{$P_1$}}] (l3) at (6,-3) {$L_3$};
-  \node[draw, circle, label=below:{\small \textcolor{red}{$P_0$}}] (l4) at (2,-2) {$L_4$};
-  \node[draw, circle, label=below:{\small $T_0$ \textcolor{red}{$P_2$}}] (l5) at (0,-3) {$L_5$};
+	\scriptsize
+  \node[draw, circle, inner sep=1pt, label=above:{\textcolor{blue}{$P_0, P_1,P_2$}}] (l0) at (0,0) {$L_0$};
+  \node[draw, circle, inner sep=1pt, label=right:{$T_1$}] (l1) at (4,-1) {$L_1$};
+  \node[draw, circle, inner sep=1pt] (l2) at (6,0) {$L_2$};
+  \node[draw, circle, inner sep=1pt, label=below:{\textcolor{red}{$P_1$}}] (l3) at (6,-3) {$L_3$};
+  \node[draw, circle, inner sep=1pt, label=above:{\textcolor{red}{$P_0$}}] (l4) at (2,-2) {$L_4$};
+  \node[draw, circle, inner sep=1pt, label=below:{$T_0$ \textcolor{red}{$P_2$}}] (l5) at (0,-3) {$L_5$};
 
-  \draw[thick] (l0) to node[above] {\small 5} (l2);
-  \draw[thick] (l0) to node[above] {\small 2} (l1);
-  \draw[thick] (l0) to node[above] {\small 3} (l4);
-  \draw[thick] (l0) to node[left] {\small 4} (l5);
-  \draw[thick] (l2) to node[right] {\small 1} (l3);
-  \draw[thick] (l4) to node[above] {\small 2} (l1);
-  \draw[thick] (l4) to node[above] {\small 5} (l3);
-  \draw[thick] (l5) to node[below] {\small 5} (l3);
-  \draw[thick] (l4) to node[below] {\small 4} (l5);
+  \draw[thick] (l0) to node[above] {5} (l2);
+  \draw[thick] (l0) to node[above, pos=0.75] {2} (l1);
+  \draw[thick] (l0) to node[below, pos=0.4] {3} (l4);
+  \draw[thick] (l0) to node[left] {4} (l5);
+  \draw[thick] (l2) to node[right] {1} (l3);
+  \draw[thick] (l4) to node[below, pos=0.6] {2} (l1);
+  \draw[thick] (l4) to node[above] {5} (l3);
+  \draw[thick] (l5) to node[below] {5} (l3);
+  \draw[thick] (l4) to node[above] {4} (l5);
 \end{tikzpicture}
 \vspace{-0.2cm}
 \hspace{-0.6cm} \caption{Illustrative IPC NoMystery example.}
