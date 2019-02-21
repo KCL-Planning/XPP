@@ -27,6 +27,7 @@
 \usepackage{subcaption}
 \usepackage{arydshln}
 
+\def\longflagdefined{}
 \input{../../../commands.tex}
 
 \usepackage{geometry}
@@ -53,12 +54,12 @@
 \input{../selected_rows/tpp.tex}
 
 \node[draw] (test) at (8,-7.2) {
-\ref{plot:properties_hff_bu_39} $\hff$ SysS
-\ref{plot:properties_hff_td_39} $\hff$ SysW
-\ref{plot:properties_trap_prefop_bu_39} trap SysS
-\ref{plot:properties_trap_prefop_td_39} trap SysW
+\ref{plot:properties_hff_bu_39}  SysS
+\ref{plot:properties_hff_td_39}  SysW
+\ref{plot:properties_trap_prefop_bu_39} SysS trap 
+\ref{plot:properties_trap_prefop_td_39} SysW trap 
+\ref{plot:baseline_lmcut} \hlmcut
 \ref{plot:baseline_sysW_node} trap
-\ref{plot:baseline_lmcut} \hlmcut 
 };
 \end{tikzpicture}
 
