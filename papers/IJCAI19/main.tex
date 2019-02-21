@@ -174,12 +174,25 @@ inspection.
 %% thank J.\ Benton, Minh Do, Jeremy Frank, and David Smith for
 %% insightful discussions.
 
+\ifdefined\longflagdefined
+
+\bibliographystyle{named}
+\bibliography{abbreviations,biblio,crossref}
+
+\else 
+
 \bibliographystyle{named}
 \bibliography{abbreviations,biblio,crossref-short}
 
-\appendix
+\fi
+
+
+
+
 
 \ifdefined\suppflagdefined
+
+\appendix
 
 \input{data-action-set-properties}
 
