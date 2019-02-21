@@ -66,9 +66,11 @@ SysS and SysW.
 \renewcommand{\arraystretch}{0.8}
 \begin{figure*}[h!]
 	\tiny
-	\centering \input{tables/coverage_IPC.tex} 
+	%\centering \input{tables/coverage_IPC.tex} 
+	\centering \input{tables/coverage_IPC_max_mugs.tex} 
         \vspace{-0.2cm}
 	\caption{Results on IPC benchmarks modified for oversubscription planning. Reference Points: related classical planning tasks (see text). Coverage: of our MUGS algorithms SysS and SysW, with vs.\ without conjunction learning \hc. \#MUGS: average number of MUGS per domain, indicating explanation size (see text). Search Tree Fraction: fraction of worst-case search tree explored by SysS and SysW. Best performance in each part shown in \textbf{boldface}. Cost bounds set to $x$ times optimal cost.}
+	\rebecca{new mugs max columns}
 	\label{table:coverage_ipc}
         \vspace{-0.5cm}
 \end{figure*}
