@@ -11,14 +11,14 @@
 
 To illustrate our approach and the kind of explanations it provides,
 consider the IPC NoMystery domain, a classical transportation domain
-with fuel consumption. Figure~\ref{fig:nomystery-example} illustrates
-an example task with two trucks and three packages. Fuel costs are
-indicated at road segments (initial fuel is $16$ for $T_0$ and $7$ for
-$T_1$). The packages are initially at $L_0$ (shown in blue); their
-goal locations are $L_4$, $L_3$,and $L_5$ (shown in red).
-
-\begin{wrapfigure}{r}{0.5\columnwidth}
-\vspace{-0.4cm} \hspace{-0.4cm} \begin{tikzpicture}[scale=0.5]
+with fuel consumption. We consider the example task with two trucks
+and three packages as illustrated below. Fuel costs are indicated at
+road segments (initial fuel is $16$ for $T_0$ and $7$ for $T_1$). The
+packages are initially at $L_0$ (shown in blue); their goal locations
+are $L_4$, $L_3$,and $L_5$ (shown in red). We define three kinds %
+%
+\begin{wrapfigure}{r}{0.4\columnwidth}
+\vspace{-0.3cm} \hspace{-0.7cm} \begin{tikzpicture}[scale=0.5]
 	\scriptsize
   \node[draw, circle, inner sep=1pt, label=above:{\textcolor{blue}{$P_0, P_1,P_2$}}] (l0) at (0,0) {$L_0$};
   \node[draw, circle, inner sep=1pt, label=right:{$T_1$}] (l1) at (4,-1) {$L_1$};
@@ -37,25 +37,12 @@ goal locations are $L_4$, $L_3$,and $L_5$ (shown in red).
   \draw[thick] (l5) to node[below] {5} (l3);
   \draw[thick] (l4) to node[above] {4} (l5);
 \end{tikzpicture}
-\vspace{-0.2cm}
-\hspace{-0.6cm} \caption{Illustrative IPC NoMystery example.}
-\label{fig:nomystery-example}
-\vspace{-0.2cm}
+%% \vspace{-0.25cm} \hspace{-0.6cm} \caption{Illustrative IPC NoMystery example.}
+%% \label{fig:nomystery-example}
+\vspace{-0.3cm}
 \end{wrapfigure}
-
-
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{0.8}
-\begin{figure*}[h!]
-	\tiny
-	\centering \input{tables/coverage_IPC.tex} 
-        \vspace{-0.2cm}
-	\caption{Empirical results on IPC benchmarks modified for oversubscription planning. Reference Points: comparison performance for classical planning problems (see discussion in text). Coverage: coverage of our MUGS algorithms SysS and SysW, with vs.\ without conjunction learning \hc. \# MUGS: Average number of MUGS per domain, indicating explanation size (see text). Search Tree Fraction: fraction of worst-case search tree explored by SysS and SysW. Best performance in each part shown in \textbf{boldface}. Cost bounds set to $x$ times optimal cost.}
-	\label{table:coverage_ipc}
-        \vspace{-0.4cm}
-\end{figure*}
-
-We define three kinds of action-set properties for this domain:
+%
+of action-set properties for this domain:
 \emph{uses $T_i$ $(L_x,L_y)$} (truck $T_i$ drives at least once from
 $L_x$ to $L_y$ or vice versa); \emph{doesn't use $T_i$ $(L_x,L_y)$}
 (the opposite); \emph{same truck $P_x$ $P_y$} (both packages are

@@ -49,11 +49,10 @@
 
 We introduced a framework for plan-space explanation via plan-property
 dependencies. We believe that the framework is useful conceptually as
-a problem formulation shaping a relevant part of XAIP; our techniques
-for first instantiations of the framework exhibit promising
-computational performance in IPC benchmark studies. The computed
-explanations tend to be small and thus potentially feasible for human
-inspection.
+a problem formulation shaping a relevant part of XAIP. Our techniques
+for first instantiations of the framework exhibit reasonable
+performance in IPC benchmark studies. The computed explanations are
+often small and thus potentially feasible for human inspection.
 
 
 
@@ -77,11 +76,11 @@ reasons behind an entailment
 $\entails{\plans}{\prop}{\propq}$. Possible ideas are to include
 additional properties into \props, elucidating the causal chain
 between \prop\ and \propq; or to find a minimal relaxation (superset)
-of the plan set \plans\ under which \prop\ no longer entails \propq,
+of the plan set \plans\ for which \prop\ no longer entails \propq,
 thus elucidating the circumstances under which that entailment
 holds. Last but not least, of course our framework and algorithms can
-and should be extended to richer classes of planning problems and plan
-properties.
+and should be extended to richer planning frameworks and plan property
+languages.
 
 
 
