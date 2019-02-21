@@ -1,15 +1,4 @@
 
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{0.8}
-\begin{figure*}[h!]
-	\tiny
-	\centering \input{tables/coverage_IPC.tex} 
-        \vspace{-0.2cm}
-	\caption{Empirical results on IPC benchmarks modified for oversubscription planning. Reference Points: comparison performance for classical planning problems (see discussion in text). Coverage: coverage of our MUGS algorithms SysS and SysW, with vs.\ without conjunction learning \hc. \# MUGS: Average number of MUGS per domain, indicating explanation size (see text). Search Tree Fraction: fraction of worst-case search tree explored by SysS and SysW. Best performance in each part shown in \textbf{boldface}. Cost bounds set to $x$ times optimal cost.}
-	\label{table:coverage_ipc}
-        \vspace{-0.4cm}
-\end{figure*}
-
 \section{An Illustrative Example}
 \label{illustrative-example}
 
@@ -20,14 +9,13 @@
 %% concretely, the initial fuel in trucks is $fuel(T_0) = 16$, $fuel(T_1)
 %% = 7$.
 
-To illustrate our approach and the kind of answers it provides to user
-questions, let us briefly consider the IPC NoMystery domain, a
-classical transportation domain with fuel
-consumption. Figure~\ref{fig:nomystery-example} illustrates an example
-instance with two trucks and three packages. Fuel costs are indicated
-at road segments (initial fuel is $16$ for $T_0$ and $7$ for
-$T_1$). All packages are initially at $L_0$ (shown in blue); they need
-to be delivered to individual goal locations (shown in red).
+To illustrate our approach and the kind of explanations it provides,
+consider the IPC NoMystery domain, a classical transportation domain
+with fuel consumption. Figure~\ref{fig:nomystery-example} illustrates
+an example task with two trucks and three packages. Fuel costs are
+indicated at road segments (initial fuel is $16$ for $T_0$ and $7$ for
+$T_1$). The packages are initially at $L_0$ (shown in blue); their
+goal locations are $L_4$, $L_3$,and $L_5$ (shown in red).
 
 \begin{wrapfigure}{r}{0.5\columnwidth}
 \vspace{-0.4cm} \hspace{-0.4cm} \begin{tikzpicture}[scale=0.5]
@@ -54,21 +42,32 @@ to be delivered to individual goal locations (shown in red).
 \vspace{-0.2cm}
 \end{wrapfigure}
 
+
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{0.8}
+\begin{figure*}[h!]
+	\tiny
+	\centering \input{tables/coverage_IPC.tex} 
+        \vspace{-0.2cm}
+	\caption{Empirical results on IPC benchmarks modified for oversubscription planning. Reference Points: comparison performance for classical planning problems (see discussion in text). Coverage: coverage of our MUGS algorithms SysS and SysW, with vs.\ without conjunction learning \hc. \# MUGS: Average number of MUGS per domain, indicating explanation size (see text). Search Tree Fraction: fraction of worst-case search tree explored by SysS and SysW. Best performance in each part shown in \textbf{boldface}. Cost bounds set to $x$ times optimal cost.}
+	\label{table:coverage_ipc}
+        \vspace{-0.4cm}
+\end{figure*}
+
 We define three kinds of action-set properties for this domain:
 \emph{uses $T_i$ $(L_x,L_y)$} (truck $T_i$ drives at least once from
 $L_x$ to $L_y$ or vice versa); \emph{doesn't use $T_i$ $(L_x,L_y)$}
-(truck $T_i$ does not drive from $L_x$ to $L_y$ or vice versa);
-\emph{same truck $P_x$ $P_y$} (both packages are delivered by the same
-truck). We consider six instances of these properties: 1.\ uses $T_0$
-$(L_2,L_3)$; 2.\ same truck $P_1$ $P_2$; 3.\ uses $T_0$ $(L_4,L_3)$;
-4.\ same truck $P_2$ $P_0$; 5.\ doesn't use $T_0$ $(L_0,L_5)$;
-6.\ uses $T_1$ $(L_5,L_4)$.
+(the opposite); \emph{same truck $P_x$ $P_y$} (both packages are
+delivered by the same truck). In our example task, we consider six
+instances of these properties: 1.\ uses $T_0$ $(L_2,L_3)$; 2.\ same
+truck $P_1$ $P_2$; 3.\ uses $T_0$ $(L_4,L_3)$; 4.\ same truck $P_2$
+$P_0$; 5.\ doesn't use $T_0$ $(L_0,L_5)$; 6.\ uses $T_1$ $(L_5,L_4)$.
 
-Fixing the package destinations as hard goals (defining the set of
-plans \plans\ considered), and computing the MUGS over these six
-action-set properties using the algorithms previously described, it
-turns out there are 7 minimal unsolvable subsets of these properties,
-each of size 3.
+We fix the package destinations as hard goals, defining the set of
+plans \plans\ considered. Computing the MUGS over the six action-set
+properties using the algorithms previously described, it turns out
+there are seven minimal unsolvable subsets of these properties, each
+of size three.
 
 Say now that the current plan uses $T_0$ only, and includes the action
 (drive T0 L5 L0). The user might ask \emph{''Why don't you avoid the

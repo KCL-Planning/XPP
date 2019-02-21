@@ -9,17 +9,6 @@
 
 
 
-\begin{figure*}[htb]
-\centering\centering
-%\input{data/action_set_properties/domain_selection.tex}
-\includegraphics{data/action_set_properties/barchart/barchart.pdf}
-\vspace{-0.6cm}
-\caption{Coverage results on IPC benchmarks extended with action-set properties.}
-\label{fig:barcharts}
-\vspace{-0.2cm}
-\end{figure*}
-
-
 \section{Experiments}
 \label{experiments}
 
@@ -53,11 +42,11 @@ GB).
 %
 %% \joerg{Rebecca/Michael: check out the IPC net-benefit benchmarks. Reviewers may naturally expect us to experiment with those, given our strong focus on oversubscription planning (actually this question came up in the discussion with the NASA guys yesterday). In the net-bnefit benchmarks, goal facts have rewards which we don't need. The question is whether, stripping away these rewards and imposing a plan-cost bound, we would get benchmarks not already covered by bour IPC experiments anyway. If the answer is "no", we can just say so in the paper. If the answer is "yes", it would be good (though probably not absolitely necessary) to experiment with these domains as well. In any case, we should know what the answer is.}
 
-To evaluate our analysis of goal dependencies in oversubscription
-planning as per Section~\ref{goaldep}, we modified all
-optimal-planning STRIPS IPC domains up to IPC'18. Following Domshlak
-and Mirkis \shortcite{domshlak:mirkis:jair-15}, for each benchmark
-task we ran an optimal planner (\astar
+To evaluate our analysis of goal dependencies as per
+Section~\ref{goaldep}, we modified all optimal-planning STRIPS IPC
+domains up to IPC'18. Following Domshlak and
+Mirkis \shortcite{domshlak:mirkis:jair-15}, for each benchmark task we
+ran an optimal planner (\astar
 with \hlmcut\ \cite{helmert:domshlak:icaps-09}) to determine the
 optimal plan cost $C$, then obtained OSP tasks by setting the cost
 bound to $b = x * C$ where $x \in \{0.25, 0.5, 0.75\}$. Our benchmark
@@ -68,10 +57,9 @@ optimal planner, and where the number of goal facts is $\leq 32$.
 %% could be overcome in principle, though computing all MUGS for that
 %% many goals is presumably typically infeasible anyway.
 %
-We extended conjunction learning as per Steinmetz and
-Hoffmann \shortcite{steinmetz:hoffmann:ai-17} to deal with cost
-bounds, thus enabling nogood learning and transfer in SysS and
-SysW. 
+We extended conjunction learning \cite{steinmetz:hoffmann:ai-17} to
+deal with cost bounds, thus enabling nogood learning and transfer in
+SysS and SysW.
 
 Figure~\ref{table:coverage_ipc} shows our data. Consider first the
 coverage data (leftmost two parts). To have some sort of measure of
@@ -79,42 +67,42 @@ how computationally difficult our proposed analysis is, we use
 reference points from classical planning. First, the \hlmcut\ column
 gives coverage for \astar\ with \hlmcut\ run on the original IPC
 instance without a cost bound. This provides a comparison to solvable
-optimal planning. Second, the \hc\ columns give coverage for search
-with nogood learning on the respective cost-bounded instances, when
+optimal planning. Second, the \hc\ columns give coverage for search,
+with nogood learning, on the respective cost-bounded instances, when
 all goals must be achieved and thus the task is unsolvable. This
-provides a comparison to proving unsolvability in the situation where
-our approach computes all MUGS. 
+provides a comparison to proving unsolvability, in the same situation
+where our approach computes all MUGS.
 %
 It is expected that our algorithms, solving a more complex problem,
 will perform worse than the reference points.\footnote{Indeed, the
 first reference point is an upper bound to our coverage, as only
 solved instances are included in our benchmark set; and the second
 reference point is an upper bound for SysW as it constitutes the first
-search node in that algorithm.} The question is, how much worse? 
+search node in that algorithm.} The question is, \emph{how much
+worse?}
 
 As a short summary of the answer provided by
 Figure~\ref{table:coverage_ipc} to that question, compared to
-the \hlmcut\ reference point, for $x=0.25$ the best of our four
-configurations has equal coverage in 37 of the 46 domains, and in that
-sense is ``not much'' worse than optimal planning. For larger cost
-bounds, the solvable goal subsets become larger, and accordingly our
-analysis becomes harder. For $x=0.5$ we get equal coverage in 23
-domains, for $x=0.75$ in 15. The comparison to the \hc\
-proving-unsolvability reference points is qualitatively similar, with
-equal coverage in 38, 25, and 20 domains for $x=0.25, 0.5, 0.75$
-respectively. Overall, it seems fair to say that our analyses can be
-feasible in many cases (about half of the IPC domains), in the sense
-of not being more infeasible than the most closely related classical
-planning problems.
+the \hlmcut\ reference point, taking the per-domain best of our four
+algorithm configurations, for $x=0.25$ we get equal coverage in 37 of
+the 46 domains, and in that sense are ``not much worse'' than optimal
+planning. For larger cost bounds, the solvable goal subsets become
+larger, and accordingly our analysis becomes harder. For $x=0.5$ we
+get equal coverage in 23 domains, for $x=0.75$ in 15. The comparison
+to the \hc\ proving-unsolvability reference points is qualitatively
+similar, with equal coverage in 38, 25, and 20 domains for $x=0.25,
+0.5, 0.75$ respectively. Overall, it seems fair to say that our
+analyses can be feasible in many cases, in the sense of not being more
+infeasible than the most closely related classical planning problems.
 
 While comparing our algorithm configurations against each other is not
 our focus here, observe in the rightmost part of
 Figure~\ref{table:coverage_ipc} that both SysS and SysW suffer from
 larger cost bounds, but that is less so for SysW. This is because, for
 small cost bounds, solvable goal sets are small and thus SysS
-terminates early; while for large cost bounds, solvable goal sets are
-large and thus SysW terminates early. Conjunction learning (\hc\ in
-the table) is moderately beneficial.
+terminates earlier; while for large cost bounds, solvable goal sets
+are large and thus SysW terminates earlier. Conjunction learning (\hc\
+in the table) is moderately beneficial.
 %
 %% Comparing SysS and SysW, with cost bound 0.25 both show better
 %% coverage in 4 domains. Among those domains, in \woodworking\
@@ -130,17 +118,16 @@ the table) is moderately beneficial.
 %% The table shows that $\hc$ is useful with SysW, but for SysS only
 %% with cost bound is $0.25$.
 
-Consider finally the \# MUGS part of
+Consider finally the \#MUGS part of
 Figure~\ref{table:coverage_ipc}. Observe that, if the user asks a
 question ``Why $r$ rather than $p$?'', the answer are the properties
 entailed by $p$, represented here through the smallest conjunctions
 excluded by $p$. The number of such conjunctions is at most the number
-of MUGS. So \# MUGS corresponds to worst-case answer/explanation
-size. As the data shows quite vividly, on average per domain that size
-tends to be small, of a scale that seems feasible for human
-inspection. (Taking the maximum rather than average per domain, the
-average across domains is 31.8, 30.2, 13.3 for $x=0.25, 0.5, 0.75$
-respectively.)
+of MUGS. So \#MUGS corresponds to worst-case answer/explanation
+size. As the data shows, that size tends to be small, of a scale that
+seems feasible for human inspection. (Taking the maximum rather than
+average per domain, the average across domains is 31.8, 30.2, 13.3 for
+$x=0.25, 0.5, 0.75$ respectively.)
 
 %
 %% The average MUGS size for a cost bound of 0.25 is small (1.32). It
@@ -153,9 +140,26 @@ respectively.)
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% SUBMISSION VERSION
 
+\ifdefined\longflagdefined
+
+\else
 
 \subsubsection*{Action Set Properties}
+
+\begin{figure*}[htb]
+\centering\centering
+%\input{data/action_set_properties/domain_selection.tex}
+\includegraphics{data/action_set_properties/barchart/barchart.pdf}
+\vspace{-0.6cm}
+\caption{Coverage results on IPC benchmarks extended with action-set properties.}
+\label{fig:barcharts}
+\vspace{-0.2cm}
+\end{figure*}
 
 To evaluate the use of our framework with more complex plan
 properties, beyond goal facts, we experimented with the compilation of
@@ -203,25 +207,89 @@ instance size. Trap learning and transfer turns out to be extremely
 useful here, vastly outperforming the non-learning algorithm in many
 cases.
 
-%\begin{figure*}[ht]
-%\input{data/action_set_properties/coverage_nomystery_hff.tex}
-%\caption{nomystery: reference coverage first node in top-down meta search tree;
-%	optimal coverage always 10}
-%\end{figure*}
+\fi
 
-%\begin{figure*}[ht]
-%\input{data/action_set_properties/coverage_tpp_hff.tex}
-%\caption{TPP: reference coverage first node in top-down meta search tree;
-%	optimal coverage always 10}
-%\end{figure*}
 
-%\begin{figure*}[ht]
-%\input{data/action_set_properties/coverage_rovers_hff.tex}
-%\caption{rovers: reference optimal coverage; coverage first node in top down meta search
-%	tree always 10}
-%\end{figure*}
+%%%% END SUBMISSION VERSION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\begin{figure*}[ht]
-%\input{data/action_set_properties/coverage_blocks_hff_easy.tex}
-%\caption{blocksworld}
-%\end{figure*}
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% PRE-FINAL AND SUPPLEMENTARY MATERIAL VERSION
+
+\ifdefined\longflagdefined
+
+\subsubsection*{Action Set Properties}
+
+\begin{figure*}[htb]
+\centering\centering
+%\input{data/action_set_properties/domain_selection.tex}
+\includegraphics{data/action_set_properties/barchart/barchart.pdf}
+\vspace{-0.6cm}
+\caption{Coverage results on IPC benchmarks extended with action-set properties.}
+\label{fig:barcharts}
+\vspace{-0.2cm}
+\end{figure*}
+
+To evaluate the use of our framework with more complex plan
+properties, beyond goal facts, we experimented with the compilation of
+action-set properties as per Section~\ref{compilation}. We selected
+four IPC domains for extension with action-set properties, namely
+NoMystery, Rovers, and TPP as considered in resource-constrained
+planning \cite{nakhost:etal:icaps-12}, where optimal resource
+requirements can be controlled through available problem generators;
+plus the Blocksworld as an intuitively rather differently structured
+domain. In all four domains, we use discrete resource consumption
+encoded into the STRIPS model. We set the available resources to
+$x \in \{1.0,1.5, 2.0\}$ times the minimum needed, and we chose the
+size parameters in a way targetting the borderline of computational
+feasibility given our time/memory limits. We vary the number of hard
+goals between 4 and 7, and the number of action set properties between
+1 and 10. In NoMystery, the action-set properties are as in the
+illustrative example given in Section~\ref{illustrative-example}. In
+Blocksworld, we include two gripper hands and the action-set
+properties ask whether a particular gripper is used to pick up a
+particular block, or to stack a particular pair of blocks. In Rovers,
+the properties ask whether a particular rover or camera is used for a
+particular observation. In TPP, they ask whether particular road
+segments are used, and whether particular goods are bought at
+particular markets.
+
+%% \begin{enumerate}
+%% \item The resource constrained \textit{rovers} domain. Problems were generated with 2 rovers, 5 waypoints. Action properties are to use a specific rover for a sample or an observation, or to use a specific camera for an observation. 
+%% \item The \textit{blocksworld} domain with 2 grippers, modified such that picking up or unstacking a block costs high or low energy depending upon which gripper is used. Problems were generated scaling from 3 to 10 blocks. Action properties are to use a specific gripper to pick up a specific block, or to use any gripper to stack a specific pair of blocks at any point in the plan.
+%% \item The resource constrained \textit{TPP} domain. Problems were generated with 5 markets and 1 depot. Properties are to use or not use particular road segments, and preferred markets for goods.
+%% \item The resource constrained \textit{nomystery} domain, described in the example. Problems were generated with 6 locations and 2 trucks.
+%% \end{enumerate}
+
+Figure~\ref{fig:barcharts} shows coverage data, comparing against the
+same reference points as before. For space reasons, we show only one
+row per domain, fixing the number of hard goals at the feasibility
+borderline (smaller numbers of hard goals tend to be quite easy,
+larger ones largely infeasible, with variance depending on the domain
+etc). Our algorithm configurations here are SysS and SysW as before,
+now with vs.\ without trap learning (which can deal only with STRIPS,
+not with the cost bounds used in oversubscription planning
+above). Similarly as for Figure~\ref{table:coverage_ipc}, the data
+shows that our analyses can be feasible compared to the reference
+points; although that depends, of course, on the domain and on
+instance size. Trap learning and transfer turns out to be extremely
+useful here, vastly outperforming the non-learning algorithm in many
+cases.
+
+\fi
+
+%%%% END PRE-FINAL AND SUPPLEMENTARY MATERIAL VERSION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
