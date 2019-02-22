@@ -14,8 +14,7 @@ ymin = 0,
 ymax = 10,
 at={(0.0\linewidth,-0.0)},
 compat=1.6,
-title=c 100,
-ylabel=goals 4,
+ylabel=\small \#goals 4,
 ]
 \addplot+[ybar, bar shift =-2.5pt, red,
 ]
@@ -91,6 +90,20 @@ plot coordinates {
 (06, 10)
 (05, 10)
 };
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(02, 10)
+(01, 10)
+(04, 10)
+(03, 10)
+(07, 10)
+(08, 10)
+(06, 10)
+(10, 10)
+(05, 10)
+(09, 10)
+};
 
 \end{axis}
 \hfill
@@ -107,7 +120,6 @@ ymin = 0,
 ymax = 10,
 at={(0.333333333333\linewidth,-0.0)},
 compat=1.6,
-title=c 150,
 ]
 \addplot+[ybar, bar shift =-2.5pt, red,
 ]
@@ -183,6 +195,20 @@ plot coordinates {
 (06, 10)
 (10, 10)
 };
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(02, 10)
+(01, 10)
+(04, 10)
+(03, 10)
+(07, 10)
+(08, 10)
+(06, 10)
+(10, 10)
+(05, 10)
+(09, 10)
+};
 
 \end{axis}
 \hfill
@@ -199,7 +225,6 @@ ymin = 0,
 ymax = 10,
 at={(0.666666666667\linewidth,-0.0)},
 compat=1.6,
-title=c 200,
 ]
 \addplot+[ybar, bar shift =-2.5pt, red,
 ]
@@ -275,6 +300,20 @@ plot coordinates {
 (06, 10)
 (02, 10)
 };
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(02, 10)
+(01, 10)
+(04, 10)
+(03, 10)
+(07, 10)
+(08, 10)
+(06, 10)
+(10, 10)
+(05, 10)
+(09, 10)
+};
 
 \end{axis}
 \hfill
@@ -291,7 +330,7 @@ ymin = 0,
 ymax = 10,
 at={(0.0\linewidth,-160.0)},
 compat=1.6,
-ylabel=goals 5,
+ylabel=\small \#goals 5,
 ]
 \addplot+[ybar, bar shift =-2.5pt, red,
 ]
@@ -366,6 +405,20 @@ plot coordinates {
 (05, 10)
 (10, 10)
 (02, 10)
+};
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(02, 10)
+(01, 10)
+(04, 10)
+(03, 10)
+(07, 10)
+(08, 10)
+(06, 10)
+(10, 10)
+(05, 10)
+(09, 10)
 };
 
 \end{axis}
@@ -458,6 +511,20 @@ plot coordinates {
 (08, 10)
 (03, 10)
 };
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(02, 10)
+(01, 10)
+(04, 10)
+(03, 10)
+(07, 10)
+(08, 10)
+(06, 10)
+(10, 10)
+(05, 10)
+(09, 10)
+};
 
 \end{axis}
 \hfill
@@ -549,6 +616,20 @@ plot coordinates {
 (01, 10)
 (08, 10)
 };
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(02, 10)
+(01, 10)
+(04, 10)
+(03, 10)
+(07, 10)
+(08, 10)
+(06, 10)
+(10, 10)
+(05, 10)
+(09, 10)
+};
 
 \end{axis}
 \hfill
@@ -565,7 +646,7 @@ ymin = 0,
 ymax = 10,
 at={(0.0\linewidth,-320.0)},
 compat=1.6,
-ylabel=goals 6,
+ylabel=\small \#goals 6,
 ]
 \addplot+[ybar, bar shift =-2.5pt, red,
 ]
@@ -640,6 +721,20 @@ plot coordinates {
 (01, 10)
 (02, 10)
 (08, 10)
+};
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(02, 10)
+(01, 10)
+(04, 10)
+(03, 10)
+(07, 10)
+(08, 10)
+(06, 10)
+(10, 10)
+(05, 10)
+(09, 10)
 };
 
 \end{axis}
@@ -732,6 +827,20 @@ plot coordinates {
 (04, 10)
 (05, 10)
 };
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(02, 10)
+(01, 10)
+(04, 10)
+(03, 10)
+(07, 10)
+(08, 10)
+(06, 10)
+(10, 10)
+(05, 10)
+(09, 10)
+};
 
 \end{axis}
 \hfill
@@ -823,15 +932,354 @@ plot coordinates {
 (07, 10)
 (10, 10)
 };
+\label{plot:baseline_sysW_node}
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(02, 10)
+(01, 10)
+(04, 10)
+(03, 10)
+(07, 10)
+(08, 10)
+(06, 10)
+(10, 10)
+(05, 10)
+(09, 10)
+};
+\label{plot:baseline_lmcut}
+
+\end{axis}
+\hfill
+\begin{axis}[
+width = 7cm,
+height=4cm,
+enlarge x limits = 0.1,
+enlarge y limits = 0.1,
+ybar,
+bar width=1pt,
+ymin = 0,
+ymax = 10,
+at={(0.0\linewidth,-480.0)},
+compat=1.6,
+ylabel=\small \#goals 7,
+]
+\addplot+[ybar, bar shift =-2.5pt, red,
+]
+plot coordinates {
+(09, 1)
+(03, 9)
+(04, 7)
+(06, 3)
+(08, 1)
+(02, 10)
+(10, 1)
+(07, 2)
+(01, 10)
+(05, 5)
+};
+\label{plot:properties_hff_bu_10}
+\addplot+[ybar, bar shift =-1.0pt, blue,
+]
+plot coordinates {
+(09, 0)
+(03, 8)
+(04, 5)
+(06, 1)
+(08, 0)
+(02, 10)
+(10, 0)
+(07, 0)
+(01, 10)
+(05, 2)
+};
+\label{plot:properties_hff_td_10}
+\addplot+[ybar, bar shift =1.0pt, darkgreen,
+]
+plot coordinates {
+(09, 10)
+(03, 10)
+(04, 10)
+(06, 10)
+(08, 10)
+(02, 10)
+(10, 10)
+(07, 10)
+(01, 10)
+(05, 10)
+};
+\label{plot:properties_trap_prefop_bu_10}
+\addplot+[ybar, bar shift =2.5pt, orange,
+]
+plot coordinates {
+(09, 9)
+(03, 10)
+(04, 10)
+(06, 10)
+(08, 10)
+(02, 10)
+(10, 8)
+(07, 10)
+(01, 10)
+(05, 10)
+};
+\label{plot:properties_trap_prefop_td_10}
+\addplot+[only marks, mark = -, mark options = {thick}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(04, 10)
+(05, 10)
+(02, 10)
+(03, 10)
+(08, 10)
+(09, 10)
+(01, 10)
+(06, 10)
+(07, 10)
+(10, 10)
+};
+\label{plot:baseline_sysW_node}
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(02, 10)
+(01, 10)
+(04, 10)
+(03, 10)
+(07, 10)
+(08, 10)
+(06, 10)
+(10, 10)
+(05, 10)
+(09, 10)
+};
 
 \end{axis}
 \hfill
 
-\node[draw] (test) at (8,-8) {
-\ref{plot:properties_hff_bu_47} properties-hff-bu
-\ref{plot:properties_hff_td_47} properties-hff-td
-\ref{plot:properties_trap_prefop_bu_47} properties-trap-prefop-bu
-\ref{plot:properties_trap_prefop_td_47} properties-trap-prefop-td
+
+\begin{axis}[
+width = 7cm,
+height=4cm,
+enlarge x limits = 0.1,
+enlarge y limits = 0.1,
+ybar,
+bar width=1pt,
+ymin = 0,
+ymax = 10,
+at={(0.333333333333\linewidth,-480.0)},
+compat=1.6,
+]
+\addplot+[ybar, bar shift =-2.5pt, red,
+]
+plot coordinates {
+(06, 5)
+(08, 3)
+(04, 8)
+(10, 2)
+(02, 10)
+(07, 4)
+(05, 6)
+(09, 3)
+(01, 10)
+(03, 10)
+};
+\label{plot:properties_hff_bu_10}
+\addplot+[ybar, bar shift =-1.0pt, blue,
+]
+plot coordinates {
+(06, 6)
+(08, 4)
+(04, 8)
+(10, 3)
+(02, 10)
+(07, 5)
+(05, 7)
+(09, 4)
+(01, 10)
+(03, 10)
+};
+\label{plot:properties_hff_td_10}
+\addplot+[ybar, bar shift =1.0pt, darkgreen,
+]
+plot coordinates {
+(06, 5)
+(08, 3)
+(04, 9)
+(10, 2)
+(02, 10)
+(07, 4)
+(05, 8)
+(09, 2)
+(01, 10)
+(03, 10)
+};
+\label{plot:properties_trap_prefop_bu_10}
+\addplot+[ybar, bar shift =2.5pt, orange,
+]
+plot coordinates {
+(06, 9)
+(08, 6)
+(04, 10)
+(10, 3)
+(02, 10)
+(07, 8)
+(05, 9)
+(09, 5)
+(01, 10)
+(03, 10)
+};
+\label{plot:properties_trap_prefop_td_10}
+\addplot+[only marks, mark = -, mark options = {thick}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(04, 10)
+(05, 9)
+(02, 10)
+(03, 10)
+(08, 10)
+(09, 10)
+(01, 10)
+(06, 9)
+(07, 10)
+(10, 9)
+};
+\label{plot:baseline_sysW_node}
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(02, 10)
+(01, 10)
+(04, 10)
+(03, 10)
+(07, 10)
+(08, 10)
+(06, 10)
+(10, 10)
+(05, 10)
+(09, 10)
+};
+
+\end{axis}
+\hfill
+
+
+\begin{axis}[
+width = 7cm,
+height=4cm,
+enlarge x limits = 0.1,
+enlarge y limits = 0.1,
+ybar,
+bar width=1pt,
+ymin = 0,
+ymax = 10,
+at={(0.666666666667\linewidth,-480.0)},
+compat=1.6,
+]
+\addplot+[ybar, bar shift =-2.5pt, red,
+]
+plot coordinates {
+(05, 10)
+(07, 10)
+(03, 10)
+(01, 10)
+(08, 10)
+(04, 10)
+(06, 10)
+(10, 7)
+(02, 10)
+(09, 10)
+};
+\label{plot:properties_hff_bu_10}
+\addplot+[ybar, bar shift =-1.0pt, blue,
+]
+plot coordinates {
+(05, 10)
+(07, 10)
+(03, 10)
+(01, 10)
+(08, 10)
+(04, 10)
+(06, 10)
+(10, 10)
+(02, 10)
+(09, 10)
+};
+\label{plot:properties_hff_td_10}
+\addplot+[ybar, bar shift =1.0pt, darkgreen,
+]
+plot coordinates {
+(05, 8)
+(07, 4)
+(03, 10)
+(01, 10)
+(08, 2)
+(04, 9)
+(06, 6)
+(10, 1)
+(02, 10)
+(09, 2)
+};
+\label{plot:properties_trap_prefop_bu_10}
+\addplot+[ybar, bar shift =2.5pt, orange,
+]
+plot coordinates {
+(05, 9)
+(07, 10)
+(03, 10)
+(01, 10)
+(08, 10)
+(04, 10)
+(06, 9)
+(10, 9)
+(02, 10)
+(09, 10)
+};
+\label{plot:properties_trap_prefop_td_10}
+\addplot+[only marks, mark = -, mark options = {thick}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(04, 10)
+(05, 9)
+(02, 10)
+(03, 10)
+(08, 10)
+(09, 10)
+(01, 10)
+(06, 9)
+(07, 10)
+(10, 9)
+};
+\label{plot:baseline_sysW_node}
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(02, 10)
+(01, 10)
+(04, 10)
+(03, 10)
+(07, 10)
+(08, 10)
+(06, 10)
+(10, 10)
+(05, 10)
+(09, 10)
+};
+
+\end{axis}
+
+
+\node[] (c1) at (2.5,2.8) {\small $x=1.0$};
+\node[] (c15) at (8.4,2.8) {\small $x=1.5$};
+\node[] (c2) at (14.3,2.8) {\small $x=2.0$};
+
+\node[draw] (test) at (8,-10.5) {
+\ref{plot:properties_hff_bu_47}  SysS
+\ref{plot:properties_hff_td_47}  SysW
+\ref{plot:properties_trap_prefop_bu_47} SysS trap 
+\ref{plot:properties_trap_prefop_td_47} SysW trap 
+\ref{plot:baseline_lmcut} \hlmcut
+\ref{plot:baseline_sysW_node} trap
 };
 
 \end{tikzpicture}

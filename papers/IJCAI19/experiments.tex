@@ -66,7 +66,8 @@ SysS and SysW.
 \renewcommand{\arraystretch}{0.8}
 \begin{figure*}[h!]
 	\tiny
-	\centering \input{tables/coverage_IPC.tex} 
+	%\centering \input{tables/coverage_IPC.tex} 
+	\centering \input{tables/coverage_IPC_max_mugs.tex} 
         \vspace{-0.2cm}
 	\caption{Results on IPC benchmarks modified for oversubscription planning. Reference Points: related classical planning tasks (see text). Coverage: of our MUGS algorithms SysS and SysW, with vs.\ without conjunction learning \hc. \#MUGS: average number of MUGS per domain, indicating explanation size (see text). Search Tree Fraction: fraction of worst-case search tree explored by SysS and SysW. Best performance in each part shown in \textbf{boldface}. Cost bounds set to $x$ times optimal cost.}
 	\label{table:coverage_ipc}
@@ -140,6 +141,7 @@ size. As the data shows, that size is often small, of a scale that
 seems feasible for human inspection. (Taking the maximum rather than
 average per domain, the average across domains is 113.4, 45.6, 24.0
 for $x=0.25, 0.5, 0.75$ respectively.)
+\rebecca{discus new mugs max columns}
 
 %
 %% The average MUGS size for a cost bound of 0.25 is small (1.32). It
@@ -195,7 +197,7 @@ respectively trap learning on tasks where all (original goal facts
 plus) action-set properties are hard goals.
 
 For lack of space, we only summarize our data (full plots are at
-{\color{red}http://anonymous.org}).
+\url{https://www.dropbox.com/sh/boq29booqajj7ab/AACbKpiR6jdbeEzCldrvLfk4a?dl=0}).
 %
 %% \footnote{The complete data is available in supplementary material
 %% at the following anonymized link \joerg{insert URL here}.}
