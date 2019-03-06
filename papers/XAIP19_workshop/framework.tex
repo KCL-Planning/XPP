@@ -1,0 +1,571 @@
+\section{Generic Framework}
+\label{framework}
+
+% Joerg: not needed anymopre, said in intro
+%
+%% We first introduce our approach making minimal assumptions on the
+%% planning context and plan properties concerned. The framework can
+%% then be instantiated with concrete planning formalisms and
+%% plan-property languages of interest, as we will exemplify in later
+%% sections. The framework uses standard notions from logics, and its
+%% main intention and contribution is to conceptualize the
+%% explainability problems we address.
+
+We assume some formalism defining planning \defined{tasks} \task. We
+do not need any assumptions about that formalism, except that it
+defines a concept of \defined{plans} \plan, where that concept can
+again be arbitrary (action sequence/schedule/partial order/etc). 
+%
+Our definitions are relative to a set \plans\ of plans of
+interest. The canonical setup we have in mind is that where \plans\ is
+induced by \task, \eg\ as the set of action sequences applicable in
+the initial state, or as the set of plans that achieve a goal. It
+could also be useful in some cases though to focus the analysis on a
+small set of candidate plans listed as part of the input.
+
+
+% Joerg: Text highlighting enforced vs analyzed; simplified to save space
+%
+%% \subsection{Planning Tasks and Plans}
+
+%% We assume some formalism defining planning \defined{tasks} \task. We
+%% do not need any assumptions about that formalism, except that it
+%% defines a concept of \defined{plans} \plan, where that concept can
+%% again be arbitrary (action sequence/schedule/partial order/etc). 
+
+%% Our definitions are relative to a set of plans \plans\ of
+%% interest. The canonical setup we have in mind is that where \plans\ is
+%% \defined{implicit}, induced by \task: \plans\ may be the set of action
+%% sequences applicable in the initial state; or it may be the set of
+%% plans which satisfy a set of \defined{enforced} plan properties (and,
+%% potentially, some optimality criterion). But if the user wants to
+%% focus the analysis on a narrow/small subset of candidate plans, then
+%% \defined{explicit} \plans, given as a list of plans in the input, can
+%% also be relevant. In either case, our framework addresses dependencies
+%% between \defined{analyzed} plan properties within \plans.
+%% %
+%% % Joerg: previous text here
+%% %
+%% %% Our definitions are relative to a set of plans \plans\ of interest:
+%% %% the set of plan \emph{candidates} the human user is considering, and
+%% %% whose property dependencies we should thus analyze. The canonical
+%% %% setup we have in mind is that where \plans\ is \defined{implicit},
+%% %% induced by \task\ as the set of \plan\ that achieve a set of
+%% %% \defined{hard} goals/constraints (in general: \defined{plan
+%% %%   properties}, see below) which the user is not willing to forego
+%% %% under any circumstance. But \defined{explicit} \plans, given as a list
+%% %% of plans in the input, can also be relevant if the user wants to focus
+%% %% the analysis on a narrow/small subset of candidate plans. Whichever is
+%% %% the case, the analysis considers dependencies between \defined{soft}
+%% %% plan properties within \plans. These properties can be soft goals as
+%% %% in oversubscription planning, but they can also be arbitrary
+%% %% constraints characterizing the manner in which the hard plan
+%% %% properties are achieved. For example, in classical planning,
+%% %% \plans\ can simply be the set of (cost-optimal) plans achieving the
+%% %% goal, where our analysis answers questions about the properties of
+%% %% such plans.
+
+
+
+
+
+\subsection{Plan Properties and Property Entailment}
+
+Plan properties, in their most general form, are simply functions
+mapping a task and plan to a Boolean value indicating whether or not
+the property is satisfied:
+
+\begin{definition}[Plan Property]
+Denoting by \alltasks\ the set of all tasks and by \allplans\ the set
+of all plans, a \emph{plan property} is a partial function $\prop :
+\alltasks \times \allplans \mapsto \{\true, \false\}$. Given a task
+\task\ and a set of plans \plans, we say that \prop\ is a plan
+property defined on \task\ and \plans\ if its domain includes
+$\{(\task,\plan) \mid \plan \in \plans\}$.
+\end{definition}
+
+Example plan properties are goal facts/goal formulas (true at end of
+plan?), temporal plan trajectory constraints, constraints on subsets
+of actions used/not used, deadlines, bounds on resource consumption,
+etc. We expect that, typically, $\prop$ will be computable in time
+polynomial in the size of its input (though that is not a requirement
+of our framework).
+
+We assume a set \props\ of plan properties as part of our
+input. \props\ may be exponentially large in the size of its
+specification though. An example we will explore later is that where
+the user is interested in dependencies between subsets of a set $G$ of
+soft-goal facts. The set \props\ of interest then are the conjunctions
+$\phi$ over $G$ (functions checking whether $\phi$ is true at the end
+of a plan), but the input to our analysis specifies only $G$.
+%
+% Joerg: Text highlighting atomic vs composed; simplified to save space
+%
+%% We assume a set \props\ of plan properties (the analyzed ones) as part
+%% of our input. In this context, a distinction not necessary for our
+%% generic definitions, but important in practice, is that between
+%% \defined{atomic} vs.\ \defined{composed} plan properties. The set
+%% \propsatom\ of atomic properties is listed explicitly in the input,
+%% whereas the composed properties \propscomp\ arise from a compact
+%% specification how properties can be combined. For example, one may
+%% define \propscomp\ to be propositional formulas over the atoms
+%% \propsatom. Note that, given this, the set $\props = \propsatom \cup
+%% \propscomp$ of plan properties whose dependencies are being analyzed
+%% may be exponentially larger than the user input, and may even be
+%% infinite.
+%
+%% As a concrete instance we will consider later on, the user may be
+%% interested in a set $G$ of soft-goal facts, where, for each $g \in G$,
+%% being or not being achieved by a plan $\plan \in \plans$ is an atomic
+%% plan property. But the interesting dependencies may be, not across
+%% individual $g$, but over conjunctions thereof (\eg\ if conjunctions,
+%% but not typically singletons, exclude the possibility to achieve other
+%% goals). The input to our analysis then is the set $G$ (atomic,
+%% \propsatom), while the analysis considers dependencies across all
+%% conjunctions over $G$ (composed, \propscomp).
+
+The kind of dependency our framework focuses on is entailment over
+plan properties, in the space of truth-value assignments induced by
+the plan-candidate set \plans:
+
+%% \joerg{I deliberated adapting the following definitions and text to
+%%   explicitly use two sets of plan properties, enforced vs analyzed,
+%%   where the enforced ones replace the role currently taken by
+%%   \plans. This would be nice in that it makes visible how properties
+%%   can move between these two sides, and that entailment in the KB is
+%%   the same, then, as moving the required properties from the KB into
+%%   the LHS of an implication which is then valid in the reduced KB --
+%%   overall, this yields a nice match with the usual stuff one is used
+%%   to in logics. However, the definitions as stated here are 1)
+%%   strictly more general, as they allow such a setup in particular but
+%%   also allow explicitly given \plans; 2) better suited to the case
+%%   where \plans\ has optimality criteria as well, which can be captured
+%%   as plan properties but odd ones not computable in polynomial time;
+%%   3) better suited to our discussion here as they focus on the issue
+%%   of entailment in plan space, where the set of plans is a KB, which
+%%   is our main focus and new thing here.}
+
+%% \joerg{mention task properties? (ini state etc)? decided to not do
+%%   this here: 1) these make most intuitive sense when explcitly making
+%%   them enforced properties, that define the space of plans \plans\ we
+%%   are interested in; 2) it's rather a side line here, and distracting
+%%   from the main focus of our discussion introducing the framework,
+%%   which already covers many aspects and can be confusing.}
+
+\begin{definition}[\plans-Entailment]
+Let \task\ be a task, \plans\ a set of plans, and \props\ a set of
+plan properties defined on \task\ and \plans.
+
+Let $\plan \in \plans$. We identify \plan\ with the truth-value
+assignment $\plan : \props \mapsto \{\true, \false\}$ where
+$\plan(\prop) := \prop(\task,\plan)$. We identify \plans\ with the set
+of such truth-value assignments. We say that
+\plan\ \defined{satisfies} \prop, written $\plan \models \prop$, if
+$\plan(\prop) = \true$. We denote by $\modelsof{\plans}{\prop} :=
+\{\plan \mid \plan \in \plans, \plan \models \prop\}$ the models of
+\prop. 
+%
+%% We say that \prop\ is \defined{satisfiable} in \plans\ if
+%% $\modelsof{\plans}{\prop} \neq \emptyset$.
+
+We say that \prop\ \defined{\plans-entails} \propq, written
+$\entails{\plans}{\prop}{\propq}$, if $\modelsof{\plans}{\prop}
+\subseteq \modelsof{\plans}{\propq}$.
+%
+We say that \prop\ and \propq\ are \defined{\plans-equivalent},
+written $\iff{\plans}{\prop}{\propq}$, if $\modelsof{\plans}{\prop} =
+\modelsof{\plans}{\propq}$. We denote $\equiv{\plans}{\prop} :=
+\{\propq \mid \propq \in \props, \iff{\plans}{\prop}{\propq}\}$.
+\end{definition}
+
+This definition essentially just views plans $\plan \in \plans$ as
+truth-value assignments in the obvious manner. Entailment and
+equivalence over plan properties are then defined straightforwardly,
+with \plans\ in the role traditionally taken by a knowledge base that
+restricts the truth-value assignments under consideration. Observe
+that formulas over plan properties can be encoded as individual plan
+properties, so that defining \plans-entailment over individual plan
+properties is enough to permit logical combinations thereof.
+
+Importantly, the role of \plans\ as a knowledge base means that
+\plans-entailment is more than standard entailment: the latter implies
+the former, but not vice versa. As a simple example, say the plan
+properties \props\ are propositional formulas $\phi$ over facts,
+evaluated at the end of the plan. Then $\phi \Rightarrow \psi$ implies
+that $\entails{\plans}{\phi}{\psi}$, simply because any (plan-end)
+state that satisfies $\phi$ must satisfy $\psi$. But not vice versa:
+\eg\ if facts $p, q$ are mutex in the task then
+$\entails{\plans}{p}{\neg q}$. As a more motivating example, say the
+plan properties are soft goals (like having scientific observations in
+satellite planning) as well as resource preferences (like consuming at
+most a given amount of energy). Then entailments of interest can take
+the form $\entails{\plans}{p}{\neg (q_1 \wedge q_2 \wedge q_3)}$
+saying that we cannot have $p$ without foregoing either of $q_1$ or
+$q_2$ or $q_3$. Note that this is an entailment specific to \plans,
+which may not hold in general (\eg\ if cheaper actions are available,
+or if cheaper plans are admitted by removing some other hard
+goals). The identification of such specific entailments -- specific to
+the space \plans\ of plans considered -- is central to our framework.
+
+
+
+
+
+\subsection{Plan-Space Explanations}
+
+Our plan-space explanations are based on the \plans-entailment
+relation on \props\ given the knowledge base \plans:
+
+\begin{definition}[PDO, cPDO]
+Let \task\ be a task, \plans\ a set of plans, and \props\ a set of
+plan properties defined on \task\ and \plans.
+
+The \defined{plan-property dependency order (PDO)} for \plans\ and
+\props\ is the partial order $\pdo{\plans}$ over the equivalence
+classes $\equiv{\plans}{\prop}$, where $\equiv{\plans}{\prop}
+\pdo{\plans} \equiv{\plans}{\propq}$ iff
+$\entails{\plans}{\prop}{\propq}$.
+
+A \defined{concrete PDO (cPDO)} replaces each equivalence class
+$\equiv{\plans}{\prop}$ with exactly one $\prop \in
+\equiv{\plans}{\prop}$.
+\end{definition}
+
+The PDO makes explicit how the plan properties \props\ depend on each
+other. For all contrastive user questions of the form ``Why $r$ rather
+than $p$?'', the answer can be directly extracted from the PDO, in
+terms of the properties entailed by $p$. For example, the answer may
+be ``we cannot have $p$ without foregoing either of $q_1$ or $q_2$ or
+$q_3$''.
+
+However, the PDO and the answers it provides can be large. A concrete
+PDO can be a practical proxy if equivalence classes are large. Beyond
+that, it is clearly important to identify (i) more compact and/or (ii)
+more restricted plan-space explanations. We introduce variants of both
+here.
+
+Regarding (i), in our concrete instantiation of this framework we use
+\defined{subsumption} over \plans-entailment relations, relying on an
+easy-to-test sufficient criterion for \plans-entailment:
+%
+% Joerg: Text highlighting atomic vs composed; simplified to save space
+%
+%% The PDO explains the plan space \plans\ by making explicit how the
+%% analyzed plan properties depend on each other -- saying things like
+%% ``we cannot have $p$ without foregoing either of $q_1$ or $q_2$ or
+%% $q_3$''. The PDO is exhaustive, and in that sense ideal. Its size may
+%% be problematic though. The number of equivalence classes is small if
+%% one is interested in atomic plan properties only. But if
+%% \props\ includes composed properties then that number may be
+%% prohibitively large. Each individual equivalence class may also be
+%% large, or even infinite.
+%
+%% A concrete PDO can serve as a practical proxy if equivalence classes
+%% are large. Beyond that, it is clearly important to identify (i) more
+%% compact and/or (ii) more restricted plan-space explanations. We
+%% introduce variants of both here. Regarding (i), in our concrete
+%% instantiation of this framework we use \defined{subsumption} over
+%% \plans-entailment relations, relying on an easy-to-test sufficient
+%% criterion for \plans-entailment:
+
+\begin{definition}[Dominant cPDO]\label{def:dcpdo}
+Let \task\ be a task, \plans\ a set of plans, and \props\ a set of
+plan properties defined on \task\ and \plans.
+
+Let $\entailsuff \subseteq \props \times \props$ be such that, if $\prop
+\entailsuff \propq$, then $\entails{\plans}{\prop}{\propq}$.
+%
+In a cPDO, we say that $\prop \pdo{\plans} \propq$ \defined{subsumes
+  $\prop' \pdo{\plans} \propq'$ given $\entailsuff$} if $\prop'
+\entailsuff \prop$ and $\propq \entailsuff \propq'$.
+
+A \defined{dominant cPDO (dcPDO)} for \plans\ and \props\ given
+$\entailsuff$ is the subset of non-subsumed $\prop \pdo{\plans} \propq$
+in a cPDO.
+%
+%% set $\Psi$ of ordered pairs $\prop \pdo{\plans} \propq$ where there
+%% exists a cPDO $\Phi$ such that $\Phi \subseteq \Psi$ is the subset of
+%% $\prop \pdo{\plans} \propq$ in $\Phi$ not subsumed by any other
+%% $\prop' \pdo{\plans} \propq'$ in $\Phi$ given $\entailsuff$.
+\end{definition}
+
+An entailment $\prop \pdo{\plans} \propq$ subsumes another one $\prop'
+\pdo{\plans} \propq'$ if its left-hand side is weaker ($\prop'
+\entailsuff \prop$) and its right-hand side is stronger ($\propq
+\entailsuff \propq'$): in this case, $\prop' \pdo{\plans} \propq'$
+follows from $\prop \pdo{\plans} \propq$. A dominant cPDO thus selects
+only the strongest \plans-entailments in a cPDO, as a more compact
+representation of the information present in that cPDO.%
+%
+%% For example, if entailments over conjunctions are considered, then the
+%% strongest entailments have small conjunctions on the left-hand side
+%% and large conjunctions on the right-hand side.
+
+The role of \entailsuff\ here is to qualify the amount of information
+we are allowed to use in identifying this compact representation. This
+is important because, if we show compacted information to a user, then
+the user should be able to de-compact this information -- to obtain
+whichever information the user is actually interested in --
+effortlessly. A simple restriction is for \entailsuff\ to be
+computable in polynomial time, but cognitive abilities may necessitate
+stronger restrictions. Here we will consider goal-fact conjunctions
+and disjunctions, and use the trivial \entailsuff\ where larger
+conjunctions are stronger while larger disjunctions are weaker.
+
+% Joerg: save space ... also, this issue is a bit itchy, as in our def
+% we have a form of information loss, where the individual formulas in
+% the cPDO pretend to stand for the entire equivalence class while the
+% user can cognitively deal only with entailsuff ... probably wiser to
+% discuss this only if the reviewers are bothered by it.
+%
+%% We remark that an alternative to Definition~\ref{def:dcpdo} would
+%% be to consider a dominant PDO at the level of equivalence classes
+%% $\equiv{\plans}{\prop}$. This alternative incurs complications as
+%% equivalence under $\entailsuff$ is not the same as equivalence
+%% under full \plans-entailment, and \entailsuff\ would have to be
+%% transitive which may be problematic for ``cognitively easy''
+%% criteria.
+%
+%% Nevertheless, dominant PDOs may be preferrable to dominant cPDOs in
+%% some application scenarios.
+
+As a simple form of (ii) more restricted plan-space explanations, we
+will employ the restriction of focus to a predefined subset \deps\ of
+dependencies of interest:
+
+\begin{definition}[Restricted (dc)PDO]
+Let \task\ be a task, \plans\ a set of plans, and \props\ a set of
+plan properties defined on \task\ and \plans.
+
+Let $\deps \subseteq \props \times \props$ be any binary relation on
+plan properties. Then a \defined{(dc)PDO for $\deps$} results from
+ignoring \plans-entailments $\entails{\plans}{\prop}{\propq}$ where
+$(\prop,\propq) \not\in \deps$.
+\end{definition}
+
+Some words are in order regarding complexity. Testing
+\plans-entailment encompasses the plan existence problem even for
+extremely simple plan properties (asking whether the plan achieves a
+fact $p$). This is exacerbated by the size of the PDO. Certainly, a
+(dc)PDO should ideally be computed offline, prior to interaction with
+a user. 
+%
+% Joerg: repetition, not really needed here. also, really the picture
+% is complicated and this pitch incurs the risk of wrong expectations.
+%
+%% As our experimental results show, however, in a variety of benchmarks,
+%% computing a dcPDO has similar scalability as optimal planning.
+%
+% Joerg: Text highlighting atomic vs composed; simplified to save space
+%
+%% Some words are in order regarding finiteness and complexity. The PDO
+%% is obviously finite if \props\ is, \eg\ if only atomic properties are
+%% considered. In the presence of an infinite set of composed plan
+%% properties (such as propositional formulas), the number of equivalence
+%% classes may still be finite. In particular, that is so if the set of
+%% plans \plans\ of interest is finite (\eg\ if the action set is finite,
+%% plan schedules are discrete, and plan size can be finitely bounded),
+%% as then there is only a finite number of non-equivalent plan
+%% properties.
+%% %
+%% % Joerg: not true because entailsuff is on formulas not equiv classes;
+%% % anyway, should be Ok to leave out.
+%% %
+%% %% When the PDO is finite, minimal elements exist in any \entailsuff\ and
+%% %% thus any dcPDO is non-empty.
+
+%% Regarding complexity, if \plans\ is implicitly given, then testing
+%% \plans-entailment encompasses the plan existence problem even for
+%% extremely simple plan properties (\eg, asking whether the plan
+%% achieves some fact $p$).
+%% %
+%% %% Regarding complexity, if \plans\ is implicitly given, then testing
+%% %% plan-property satisfiability encompasses the plan existence problem
+%% %% even for extremely simple plan properties (\eg, asking whether the
+%% %% plan achieves some fact $p$). Similarly for \plans-entailments
+%% %% $\entails{\plans}{\prop}{\propq}$, proving which corresponds to
+%% %% proving a planning task unsolvable (there exists no plan that
+%% %% satisfies \prop\ but not \propq).
+%% %
+%% % Joerg: generating all of Pi is not needed necessarily. simpler to
+%% % just leave this out.
+%% %
+%% %% Tractable cases are limited to explicitly given \plans, and planning
+%% %% fragments where \plans\ -- the set of all plans -- can be generated in
+%% %% polynomial time. 
+%% %
+%% This is exacerbated by the potentially exponential size of the PDO for
+%% composed plan properties. Certainly, a (dc)PDO should ideally be
+%% computed offline, prior to interaction with a user. As our
+%% experimental results show, however, in a variety of benchmarks,
+%% computing a dcPDO has similar scalability as optimal planning.
+
+% Joerg: a fully formal frame here would need to talk about
+% compilations, also of planning tasks ... overkill, instead formulate
+% what's needed in the concrete instances here when we get there.
+%
+%% A property we will rely on in the following sections is that sometimes
+%% a PDA for a plan-property set $\props^B$ can be easily obtained from
+%% that for a plan-property set $\props^A$:
+%
+%% \begin{definition}[PDA Derivability]
+%% Let $\props^A$ and $\props^B$ be sets of plan properties. We say that
+%% a PDA for $\props^B$ is \defined{polynomially derivable} from that for
+%% $\props^A$ if there exists an algorithm that runs in time polynomial
+%% in the size of its input and that, for any task \task\ on which all
+%% $\prop \in \props^A \cup \props^B$ are defined, transforms a PDA for
+%% $\props^A$ into one for $\props^B$.
+%% \end{definition}
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% VERSION OF Plan-Space Explanations SECTION WITH PDA AND WITHOUT SUBSUMPTION
+
+% PDA motivation: bit unclear, would need to be argued better. why is
+% this interesting? maximum solvable goal sets is a useful example but
+% also a trivial one with no interesting ''dependencies''
+
+%% \joerg{we use only the PDO later on. remove cPDO and PDA, and simplify
+%%   the discussion accordingly? ... can keep cPDO and PDA stuff for
+%%   journal paper, if suitable later on ... what's missing though here
+%%   is a compact representation of the PDO, not through a PDA, but
+%%   instead through showing only the strongest dependencies, where all
+%%   other dependencies are subsumed ... so this is the notion we should
+%%   insert and discuss here instead? not sure though whether there is a
+%%   generic notion of ``subsumption'' that makes sense ... hmwell I
+%%   guess one could say that $\entails{\plans}{\prop}{\propq}$ subsumes
+%%   $\entails{\plans}{\prop'}{\propq'}$ if
+%%   $\entails{\plans}{\prop}{\prop'}$ and
+%%   $\entails{\plans}{\propq'}{\propq}$, ie, if its LHS is weaker while
+%%   its RHS is stronger. but then, this subsumption relation is not
+%%   easily computable by the user, so it is useless in practice. in our
+%%   concrete use cases, we instead say that
+%%   $\entails{\plans}{\prop}{\propq}$ subsumes
+%%   $\entails{\plans}{\prop'}{\propq'}$ if $\prop\Rightarrow\prop'$ and
+%%   $\propq'\Rightarrow\propq$, in sub-classes of formulas where
+%%   $\Rightarrow$ is easily testable. this makes practical sense; one
+%%   could impose a restriction on testability of the entailment relation
+%%   used in subsumption ... or we could leave this out of the framework
+%%   altogether and merely introduce it later... what I don't like about
+%%   this simple solution is that, then, the framework does not contain
+%%   an essential aspect of what makes our concrete stuff later on
+%%   feasible, namely that the PDO can be represented in terms of a small
+%%   set of strongest entailments. TBD.}
+
+%% Our plan-space explanations identify the entailment relation on
+%% \props\ given the knowledge base \plans:
+
+%% \begin{definition}[PDO and PDA]
+%% Let \task\ be a task and \plans\ a set of plans. Let \props\ be a set
+%% of plan properties defined on \task\ and \plans.
+
+%% The \defined{plan-property dependency order (PDO)} for \plans\ and
+%% \props\ is the partial order $\pdo{\plans}$ over the equivalence
+%% classes $\equiv{\plans}{\prop}$, where $\equiv{\plans}{\prop}
+%% \pdo{\plans} \equiv{\plans}{\propq}$ iff
+%% $\entails{\plans}{\prop}{\propq}$.
+%% %
+%% The \defined{plan-property dependency axiomatization (PDA)} for
+%% \plans\ and \props\ is the set of minimal elements of $\pdo{\plans}$
+%% restricted to \prop\ satisfiable in \plans.
+
+%% A \defined{concrete PDO (cPDO)} (\defined{concrete PDA (cPDA)}) is
+%% like the PDO (PDA) but representing each equivalence class
+%% $\equiv{\plans}{\prop}$ by exactly one $\prop \in
+%% \equiv{\plans}{\prop}$. Given a subset $D \subseteq \props \times
+%% \props$, a (c)PDO (PDA) for $D$ results from restricting the
+%% entailment relation $\entails{\plans}{\prop}{\propq}$ to
+%% $(\prop,\propq) \in \deps$.
+%% \end{definition}
+
+%% % Joerg: not really needed
+%% %
+%% %% We refer by the \defined{PDO problem} to the computational problem of
+%% %% computing the PDO given \task\ as well as a (compact) specification of
+%% %% \props. Accordingly for the \defined{PDA problem}.
+
+%% The PDO explains plan space by making explicit how the analyzed plan
+%% properties depend on each other -- saying things like ``we cannot have
+%% $p$ without foregoing either of $q_1$ or $q_2$ or $q_3$''. The PDO is
+%% exhaustive, and in that sense the ideal plan-space explanation in
+%% principle. In practice though its size, \ie, the number of equivalence
+%% classes, may be problematic. If one is interested in atomic plan
+%% properties only, specified explicitly in the user input, then
+%% \props\ and hence the PDO is small. If \props\ includes composed
+%% properties though, then the PDA may be more suited to show as overview
+%% information.
+
+%% The PDA captures the strongest properties, that together entail all
+%% other properties given \plans, thus forming an axiomatization for
+%% \plans. Unsatisfiable properties are not of interest here as they
+%% trivially entail everything. 
+%% %
+%% % Joerg: misleading wrpto what we actually do later 
+%% %
+%% %% For example, in oversubscription planning, when plan properties are
+%% %% conjunctions of soft goals, larger conjunctions entail smaller ones
+%% %% and the PDA specifies the maximal solvable conjunctions.
+
+%% %% We remark that the PDO is a meet-semilattice if $\props$ is closed
+%% %% under conjunction, \ie, for every satisfiable $p, q \in \props$ there
+%% %% is a satisfiable $r \in \props$ which is true if both $p$ and $q$ are
+%% %% true. In this case, the PDA is a single plan property ... JOERG:
+%% %% whatever. not gonna happen/who cares.
+%% %
+%% %% \joerg{reg lattices: $O$ is a ``meet-semilattice'' if $\Phi$ is closed
+%% %%   under conjunction: in a lattice, every two elements need to have a
+%% %%   common ancestor. in standard logic, entailment over formula
+%% %%   equivalence classes is a lattice because for any $\phi$ and $\psi$
+%% %%   $\phi \wedge \psi$ is a common ancestor; actually a bounded lattice,
+%% %%   with a unique element that is an ancestor to (that implies)
+%% %%   everything else. the same is true here if $\Phi$ is closed under
+%% %%   conjunction (because if each of $\phi$ and $\psi$ is valid, then so
+%% %%   is $\phi \wedge \psi$). In this case, the PDA is the unique common
+%% %%   ancestor, which can basically be thought of as a conjunction of
+%% %%   axioms. In lattice terminology, the unique common ancestor is called
+%% %%   a ``least element'', ``minimum'', or ``bottom'' element; but I think
+%% %%   none of these names makes much sense in our context so I would leave
+%% %%   it at the above definition, maybe briefly remarking here that $O$ is
+%% %%   a meet-semilattice if $\Phi$ is closed under conjunction.}
+
+%% A concrete PDO/PDA is a practical proxy if equivalence classes are
+%% large or infinite. If only a subset \deps\ of potential entailment
+%% relationships are of interest, then a (c)PDO/PDA restricts focus to
+%% those.
+
+%% The PDO is obviously finite if \props\ is, \eg\ if only atomic
+%% properties are considered. In the presence of an infinite set of
+%% composed plan properties (such as propositional formulas), the PDO may
+%% still be finite due to considering equivalence classes. In particular,
+%% the latter is necessarily the case if the set of plans \plans\ of
+%% interest is finite (as is the case \eg\ if the action set is finite
+%% and plan size can be finitely bounded), because then there is only a
+%% finite number of non-equivalent plan properties.
+%% %
+%% When the PDO is finite, minimal elements exist and thus the PDA is
+%% non-empty.
+
+%% Regarding complexity, if \plans\ is implicitly given, then testing
+%% plan-property satisfiability encompasses the plan existence problem
+%% even for extremely simple plan properties (\eg, asking whether the
+%% plan achieves some fact $p$). Similarly for plan-property entailments
+%% $\entails{\plans}{\prop}{\propq}$, proving which corresponds to
+%% proving a planning task unsolvable (there exists no plan that
+%% satisfies \prop\ but not \propq). Tractable cases are limited to
+%% explicitly given \plans, and planning fragments where \plans\ -- the
+%% set of all plans -- can be generated in polynomial time. This is
+%% exacerbated by the potentially exponential size of the PDO, and the
+%% PDA, for composed plan properties. Certainly, the PDO/PDA should
+%% ideally be computed offline, prior to interaction with a user. As our
+%% experimental results show, however, in a variety of benchmarks,
+%% computing a cPDA has similar scalability as optimal planning, and the
+%% size of a cPDA is reasonably small for human inspection.
+
+
+

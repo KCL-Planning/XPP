@@ -1,0 +1,646 @@
+\section{Goal Dependencies}
+\label{goaldep}
+
+%% \joerg{0.75 -- 1 page(s) joerg}
+
+We now instantiate our framework with a concrete use case:
+dependencies between goals in oversubscription planning, where the
+question addressed is which combinations of (soft) goals exclude which
+other combinations. In Section~\ref{compilation}, we will show how to
+compile a more powerful plan property language into this special case.
+
+
+
+
+\subsection{Planning Framework}
+\label{goaldep:planning}
+
+Most of the techniques we introduce in what follows are applicable to
+a broad range of planning frameworks. Nevertheless, for a concrete
+exposition, henceforth we consider the \emph{finite-domain
+  representation (FDR)} framework
+\cite{backstrom:nebel:ci-95,helmert:ai-09}, with finite-domain state
+variables as used in the Fast Downward system \cite{helmert:jair-06}
+on which our implementation is based.
+
+An FDR task \defined{\task} is a tuple $\task =
+(\vars,\acts,\cost,\init,\goal)$ where \vars\ is the set of
+\defined{variables}, \acts\ is the set of \defined{actions}, $\cost:
+\acts \mapsto \reals^+_0$ is the action \defined{cost} function,
+\init\ is the \defined{initial state}, and \goal\ is the
+\defined{goal}. A \defined{state}, in particular \init, is a complete
+assignment to $\vars$; \goal\ is a partial assignment to \vars; each
+action $a \in \acts$ has a \defined{precondition} $\pre_a$ and an
+effect $\eff_a$, both partial assignments to \vars. We will refer to
+variable-value pairs $v=d$ as \defined{facts}, and we will identify
+partial variable assignments with sets of facts.
+%
+An action $a$ is \defined{applicable} in a state $s$ if $\pre_a
+\subseteq s$. The outcome state $s\apply{a}$ is like $s$ except that
+$s\apply{a}(v) = \eff_a(v)$ for those $v$ on which $\eff_a$ is
+defined. The outcome state of an iteratively applicable action
+sequence $\plan$ is denoted $s\apply{\plan}$.
+
+We address an oversubscription variant of FDR, where an
+\defined{oversubscription planning (OSP) task} is a tuple $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
+exactly like an FDR task but with an additional \defined{cost bound}
+$\costbound \in \reals^+_0$. Intuitively, the goals \goal\ are
+``soft'', and the challenge is to achieve a maximally valuable subset
+of \goal\ within the cost bound. OSP frameworks in the literature
+employ notions (\eg\ goal-fact rewards) of what it means to be
+``maximally valuable''. Here we assume instead that the user's
+preferences over the soft goals are difficult to specify and/or
+elicitate, so that an in-depth characterization of the trade-offs
+between different goal sets -- their dependencies -- is of
+interest. In the terms of our framework, this means that the set
+\plans\ of \defined{plans} is simply the set of all action sequences
+$\plan = \langle a_1, \dots, a_n\rangle$ applicable in \init\ and
+where $\sum_{i=1}^n \cost(a_i) \leq \costbound$. An analysis over
+suitable sets of properties \props\ and dependencies \deps\ then
+yields the desired trade-off information.
+
+
+
+
+
+
+\subsection{Plan Properties}
+\label{goaldep:properties}
+
+The plan properties we consider here are characterized by
+propositional formulas over goals:
+
+\begin{definition}[Goal Properties]
+Let $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
+be an OSP task, and \plans\ its set of plans. 
+
+A \defined{goal property} for \task\ is a function $\prop_\phi :
+\plans \mapsto \{\true, \false\}$ where $\phi$ is a propositional
+formula over the atoms \goal, and $\prop_\phi(\plan) = \true$ iff
+$\phi$ evaluates to \true\ under the truth value assignment where $g
+\in \goal$ is \true\ iff $g \in \init\apply{\plan}$.
+%
+% Joerg: Text highlighting atomic vs composed; simplified to save space
+%
+%% An \defined{atomic goal property} for \task\ is a function $\prop_g :
+%% \plans \mapsto \{\true, \false\}$ where $g \in \goal$ and
+%% $\prop_g(\plan) = \true$ iff $g \in \init\apply{\plan}$.
+%% %
+%% A \defined{composed goal property} for \task\ is a function
+%% $\prop_\phi : \plans \mapsto \{\true, \false\}$ where $\phi$ is a
+%% propositional formula over the atoms \goal, and $\prop_\phi(\plan) =
+%% \true$ iff $\phi$ evaluates to \true\ given the values of
+%% $\prop_g(\plan)$.
+\end{definition}
+
+We identify goal properties $\prop_\phi$ with the characterizing
+formulas $\phi$. We consider a class of properties and dependencies
+identifying exclusions between goal conjunctions:
+
+\begin{definition}[Goal Exclusion]
+Let $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
+be an OSP task, and \plans\ its set of plans.  
+
+The \defined{PDO for goal exclusion (PDO-GE)} is the PDO for \plans,
+the property set $\geprops := \{\bigwedge_{a \in A}
+g\allowbreak\mid\allowbreak A \subseteq G\} \cup \{\neg \bigwedge_{g
+  \in B} b \allowbreak\mid\allowbreak B \subseteq G\}$, and the
+dependency set $\gedeps := \{(\bigwedge_{a \in A} a,\allowbreak\neg
+\bigwedge_{b \in B} b) \allowbreak\mid\allowbreak A \cap B =
+\emptyset\}$.
+\end{definition}
+
+We restrict focus to goal conjunctions and negations thereof, and we
+are interested only in implications of the form
+$\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigwedge_{b \in B} b}$
+stating that, if we achieve all of $A$, we have to forego at least one
+of $B$. The PDO-GE then explains to the user how exactly different
+goal subsets exclude each other, identifying the fine-grained
+trade-off.
+
+Given the restriction to $\gedeps$, the equivalence classes in the
+PDO-GE are singletons. Hence there is a unique cPDO-GE, that we
+identify with the PDO-GE itself.
+
+For compacting the information presented to a user, we use the
+sufficient criterion for entailment where $\bigwedge_{a \in A'} g
+\entailsuff \bigwedge_{a \in A} a$ iff $A' \supseteq A$ and $\neg
+\bigwedge_{b \in B} b \entailsuff \neg \bigwedge_{b \in B'} g$ iff $B
+\subseteq B'$. The dominant PDO-GE thus selects the entailments with
+minimal left-hand side conjunctions excluding minimal right-hand side
+conjunctions.
+%
+%The question remains how to compute the dominant PDO-GE.
+
+%% \joerg{I think this is more distracting than useful; probably, remove}
+%% %
+%% We remark that another class of dependencies that may be of interest
+%% take the form $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b
+%%     \in B} b}$. The dominant PDO for such dependencies can be derived
+%% from the dominant PDO-GE: $\entails{\plans}{\bigwedge_{a \in A}
+%%   a}{\neg \bigvee_{b \in B} b}$ holds if and only if
+%% $\entails{\plans}{\bigwedge_{a \in A} a}{\neg b}$ holds for every $b
+%% \in B$.
+
+
+
+
+\subsection{Computing the Dominant PDO-GE}
+\label{goaldep:computing}
+
+The dominant PDO-GE can be read off the \defined{minimal unsolvable
+  goal subsets (MUGS)}, where $\goal' \subseteq \goal$ is a MUGS if
+$\goal'$ cannot be achieved but every $\goal'' \subsetneq \goal'$ can:
+
+\begin{proposition}[PDO-GE from MUGS]
+Let $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
+be an OSP task, and \plans\ its set of plans.  
+
+Then $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigwedge_{b \in B}
+  b}$ is in the dominant PDO-GE if and only if $A \cup B$ is a MUGS.
+\end{proposition}
+
+\begin{proof}
+A \plans-entailment $\entails{\plans}{\bigwedge_{a \in A} a}{\neg
+  \bigwedge_{b \in B} b}$ clearly holds iff $A \cup B$ is
+unsolvable. Dominant entailments in the PDO-GE result from
+set-inclusion minimal $A$ and $B$, corresponding to the set-inclusion
+minimality of MUGS.
+\end{proof}
+
+
+%% \joerg{mention relation of minimum unsolvable goal subsets/of PDE-GE
+%%   to pareto frontier somewhere?}
+
+%% \joerg{mention alternate bottom-up computation, starting at empty goal
+%%   set and adding goals til unsat. bottom-up alg generates set of
+%%   across-line unsolvabl sets; set-inclusion minimal amongst those are
+%%   the minimal unsolvable sets (they are unsolvable; any subset must be
+%%   solvable by construction; vice versa, anz minimal unsolv set results
+%%   from adding a goal to a maximal unsolvable one, so all the
+%%   maxunssets are there)}
+%
+% Joerg email top-down vs bottom-up
+%
+%% Both "top down" as we do now and "bottom up" as you suggest can be
+%% used to identify the minimum unsolvable goal sets (in the bottom-up
+%% case a post-processing step is needed, selecting from the
+%% unsolvable goal sets generated during meta-tree search the
+%% set-inclusion minimal ones; but this step is easy ie polynomial in
+%% the number of goal sets considered).
+%
+%% Which of the two is expected to work better is largely a function
+%% of how large the solvable goal subsets will be. It seems plausible
+%% that one or the other algorithm will often have substantial
+%% advantages. In particular, for severely limited resources one would
+%% expect bottom-up to be better.
+%
+%% So ideally we should experiment with both top-down and
+%% bottom-up. And in practice it would seem quite reasonablee to run
+%% both in parallel, so that a "best-of" also makes a lot of sense
+%% here.
+%
+%% (One can even think about interleaving bottom-up with top-down in
+%% an intelligent way, but that's for future work)
+
+Our computational problem thus boils down to computing all MUGS. This
+can be done through a search over goal sets, that we refer to as
+\defined{systematic weakening (SysW)}:
+\begin{enumerate}[(1)]
+\item the start node of the search is \goal; 
+\item each search step selects an open node $\goal'$, calls a planner
+  to test whether $\goal'$ is solvable in \task, caches the result,
+  and expands $\goal'$ if it is unsolvable;
+\item the children of a node $\goal'$ are those $\goal'' \subset
+  \goal'$ where $|\goal''| = |\goal'|-1$.
+\end{enumerate}
+Upon termination, the MUGS are those nodes $\goal'$ all of whose
+children are solvable. 
+
+Dually, \defined{systematic strenghtening (SysS)} starts from
+$\emptyset$, with search steps expanding solvable nodes, and children
+adding one more goal fact. Upon termination, the MUGS can be easily
+obtained from the unsolvable search nodes.
+
+% Rebecca's notes on the implementation:
+%
+%% We fix the order of the goal facts: [g0, g1, …, gn]
+%% Then each goal subsets gets an unique id based on the contained goal facts:
+%% For example the subset [g0, g2] has in binary the id 101. The set bits indicate which goal facts are contained. (This limits our algorithm to 31 soft goals.)
+%
+%% During search we cache all results and prune already solved goal subsets based on their id.
+%% The ids induce an expansion order on all possible nodes/subset, such that you always know if node with id1 has been solved before node with id2.
+%
+%% If we expand a node in the meta search there exist three possible states for the children
+%% (which can easily be generated by setting one of the 1 bits of the parent id to 0 parent: 101 → children 001,100):
+%
+%% 1: the child node is in the expansion order after its parent → add the node to the openlist
+%
+%% 2. the child node is in the expansion oder before its parent:
+%
+%%     2.1: the node with the given id exists already→ use this result
+%
+%%     2.2: the node does not exists
+%%         reason: a superset of the goal facts has been proved solvable and therefore is not expanded further
+%%         → you know that this node is solvable without running the planner
+
+In both SysW and SysS, every goal set can be reached from the start
+node by permutations of the same goal-fact removal/addition steps. We
+avoid duplicate planner calls by caching. We give goal sets unique
+integer IDs, for fast cache lookup, and to fix the expansion order so
+that we always know whether or not we have generated a node before.
+
+As a non-trivial search enhancement, we created synergy with recent
+nogood learning techniques, \defined{conjunction learning}
+\cite{steinmetz:hoffmann:ai-17} and \defined{trap learning}
+\cite{steinmetz:hoffmann:ijcai-17}. These techniques refine dead-end
+detection methods (nogoods) based on the unsolvable states encountered
+in state space search on a planning task. As the children tasks in our
+searches are closely related to their parents, the refined nogoods are
+likely to be useful still. So we \defined{transfer} the nogoods along
+search paths, resulting in iteratively stronger and stronger
+nogoods. For both conjunction learning and trap learning, the nogoods
+learned depend on the goal, so that only some of the nogoods remain
+valid for transfer in SysW where children remove goals. We designed
+simple methods to identify this nogood subset, keeping track of goal
+dependencies in conjunction learning, and re-asserting trap validity
+in trap learning.
+%
+% Joerg: hC remains valid anyhow; when learning a clause from hC,
+% Marcel remembers the set of goals that became unreachable; validity
+% checking is then simply whether one of these goals is still
+% there. For traps, the validity check means to test for every end
+% node of the trap whether that node either is mutex with the goal
+% still, or is cut off by the h fn still.
+%
+%% We furthermore identify non-trivial synergy with recent nogood
+%% learning techniques \cite{steinmetz:hoffmann:ai-17}, which refine a
+%% critical-path heuristic \hc\ during forward search on a task \task,
+%% based on the unsolvable states encountered. The resulting heuristic
+%% \hc\ reasons about an enlarged set of conjunctions, in a manner geared
+%% at quickly identifying unsolvable states in \task. Observe that this
+%% naturally lends itself to \defined{\hc-transfer} in systematic
+%% weakening: the refined \hc\ from an unsolvable node $\goal'$ is likely
+%% to be a good unsolvability detector for the closely related children
+%% tasks with goals $\goal'' \subset \goal'$ where $|\goal''| =
+%% |\goal'|-1$. We thus transfer the learned \hc\ functions downwards
+%% along the search paths in systematic weakening, iteratively yielding
+%% stronger and stronger unsolvability detectors.
+%% %
+%% % Joerg: proably more confusing than helpful
+%% %
+%% %% Similarly, we transfer the \defined{clauses} (nogood pruning rules)
+%% %% learned in this approach, transferring thjose that depend only on the
+%% %% goals still present in children nodes.
+
+Yu et al.\ \shortcite{yu:etal:jair-17} perform an analysis related to
+MUGS, to suggest goals to drop in oversubscribed situations. They
+address conditional temporal problems (a form of conditional temporal
+plans), and leverage previous conflict analysis methods in that
+area. It remains a question for future work whether such conflict
+analysis could inspire different analysis methods in our planning
+framework.
+
+
+
+
+
+
+
+
+
+%% \subsection{Disjunctive Goal Exclusion}
+%% \label{goaldep:disjunctive}
+
+%% \joerg{this plays a very minor role in the paper. hence I
+%%   briefly merged it into the above discussion. remove this section for
+%%   paper}
+
+%% Another class of dependencies that may be of interest is
+%% \defined{disjunctive goal exclusion}:
+
+%% \begin{definition}[Disjunctive Goal Exclusion]
+%% Let $\task =
+%% (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
+%% be an OSP task, and \plans\ its set of plans.  
+
+%% The \defined{PDO for disjunctive goal exclusion (PDO-DGE)} is the PDO for
+%% \plans, the property set $\dgeprops := \{\bigwedge_{a \in A}
+%% g\allowbreak\mid\allowbreak A \subseteq G\} \cup \{\neg \bigvee_{g
+%%   \in B} b \allowbreak\mid\allowbreak B \subseteq G\}$, and the
+%% dependency set $\dgedeps := \{(\bigwedge_{a \in A} a,\allowbreak\neg
+%% \bigwedge_{b \in B} b) \allowbreak\mid\allowbreak A \cap B =
+%% \emptyset\}$.
+%% \end{definition}
+
+%% Observe that $\neg \bigvee_{b \in B} b$ is equivalent to $\bigwedge_{b
+%%   \in B} \neg b$, so that $\entails{\plans}{\bigwedge_{a \in A}
+%%   a}{\neg \bigvee_{b \in B} b}$ holds iff
+%% $\entails{\plans}{\bigwedge_{a \in A} a}{\neg b}$ holds for every $b
+%% \in B$. Indeed, the dominant PDO-DGE can be derived from the dominant
+%% PDO-GE. Precisely, say that an entailment
+%% $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in B} b}$ is
+%% \defined{constructible} from the dominant PDO-GE if there exist $A[b]
+%% \subseteq A$, for $b \in B$, such that $\entails{\plans}{\bigwedge_{a
+%%     \in A[b]} a}{\neg b}$ is in the dominant PDO-GE and $\bigcup_{b
+%%   \in B} A[b] = A$. We have:
+
+%% \begin{proposition}[PDO-DGE from PDO-GE]\label{pro:pdodge-from-pdoge}
+%% Let $\task =
+%% (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
+%% be an OSP task, and \plans\ its set of plans.  
+
+%% Then $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in B}
+%%   b}$ is in the dominant PDO-DGE if and only if it is constructible
+%% from the dominant PDO-GE, and there is no $A' \subsetneq A$ such that
+%% $\entails{\plans}{\bigwedge_{a \in A'} a}{\neg \bigvee_{b \in B} b}$
+%% is constructible from the dominant PDO-GE.
+%% \end{proposition}
+
+%% \begin{proof}
+%% %
+%% Observe first that, for any entailment $\entails{\plans}{\bigwedge_{a
+%%     \in A} a}{\neg \bigvee_{b \in B} b}$ that holds, an entailment
+%% $\entails{\plans}{\bigwedge_{a \in A'} a}{\neg \bigvee_{b \in B} b}$
+%% with $A' \subseteq A$ is constructible from the dominant PDO-GE. This
+%% is because, for every entailment $\entails{\plans}{\bigwedge_{a \in A}
+%%   a}{\neg b}$ that holds, the dominant PDO-GE contains an entailment
+%% $\entails{\plans}{\bigwedge_{a \in A[b]} a}{\neg b}$ with $A[b]
+%% \subseteq A$.
+
+%% The 'only if' direction follows directly from this. For the 'if'
+%% direction, it suffices to observe additionally that, trivially, every
+%% entailment constructible from the dominant PDO-GE does in fact hold.
+%% %
+%% % Joerg: outdated attempt
+%% %
+%% %% For the 'if' direction, say that $\entails{\plans}{\bigwedge_{a \in A}
+%% %%   a}{\neg b_0}$ is in the dominant PDO-GE, and that
+%% %% $\entails{\plans}{\bigwedge_{a \in A[b]} a}{\neg b}$ is in the
+%% %% dominant PDO-GE for all $b_0 \neq b \in B$ with $A[b] \subseteq
+%% %% A$. Then, trivially, $\entails{\plans}{\bigwedge_{a \in A} a}{\neg
+%% %%   \bigvee_{b \in B} b}$. This entailment is dominant because 1)
+%% %% $\entails{\plans}{\bigwedge_{a \in A} a}{\neg b_0}$ is dominant so $A$
+%% %% cannot be smaller, and 2) any valid implication of a literal $\neg b$
+%% %% is represented in the dominant PDE-GE so $B$ cannot be larger.
+%% %
+%% %% 'only if': Assume for contradiction that
+%% %% $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in B} b}$ is
+%% %% in the dominant PDO-DGE but this claim does not hold. If there exists
+%% %% $b \in B$ for which no entailment $\entails{\plans}{\bigwedge_{a \in
+%% %%     A[b]} a}{\neg b}$ is in the dominant PDO-GE, then $\bigwedge_{a
+%% %%   \in A} a$ does not entail $\neg \bigvee_{b \in B} b$, in
+%% %% contradiction. If $A[b] \subsetneq A$ for every $b$.
+%% \end{proof}
+
+%% Observe that the dominant PDO-DGE may be exponentially larger than the
+%% dominant PDO-GE: in the worst case, every combination of
+%% $\entails{\plans}{\bigwedge_{a \in A} a}{\neg b}$ entailments in the
+%% dominant PDO-GE yields a different set-inclusion minimal left-hand
+%% side. However, using Proposition~\ref{pro:pdodge-from-pdoge}, the
+%% dominant PDO-DGE can be constructed from the dominant PDO-GE in time
+%% polynomial in the size of the output, simply by iteratively
+%% enumerating all entailments constructible from the dominant PDO-GE and
+%% checking for subsumptions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% JOERG: MY INITIAL NOTES
+
+
+%% \joerg{question: does our method compute the PDO alongside the PDA?
+%%   and is the PDA unique?} for 1.: We compute a cPDA: First, say G'
+%%   is maximal satisfiable; we prove that [G'] is in the cGPA. Assume
+%%   satisfiable G'' entails G'. Then G' \cup G'' is satisfiable, so
+%%   we must have G'' \subseteq G' by maximality of G'. But then, G'
+%%   entails G'' so they're equivalent. Vive versa, say that [G'] is
+%%   minimal satisfiable in PDO, and say that G'_0 is a set-inclusion
+%%   maximal superset of G' in [G']; then there is no satisfiable
+%%   superset G'' of G'_0 as otherwise [G'] would not be minimal; so
+%%   G'_0 is maximal satisfiable. Finally, each two maximal
+%%   satisfiable sets belog to different members of the PDA: if G'
+%%   \neq G'' maximal satisfiable, then neither implies the other as
+%%   otherwise G' \cup G'' would be larger satisfiable. We do not
+%%   compute the PDO as that may involve entailments due to planning
+%%   semantics, eg q entails p if the only way to achieve q is via
+%%   achieving p first.
+
+
+
+%% conjunctive exclusion properties $\props^{CE}$, $\bigwedge_{a \in A} a
+%% \wedge \bigwedge_{b \in B} b$; 3. disjunctive exclusion properties
+%% $\props^{DE}$, $\bigwedge_{a \in A} a \wedge \bigvee_{b \in B}
+%% g$. (alternative: take elements of intended exclusion implications as
+%% properties instead. don't do here as we don't actually compute a PDA
+%% for these, there may be other implications we don't see. general: if
+%% implications $A \rightarrow B$ are of interest, can use properties $A
+%% \wedge \neg B$ where PDA identifies maximal such implications ie where
+%% A is weakest and $\neg B$ is strongest. mention this explicitly in
+%% this subsec? introduce explusion implications of interest first, then
+%% specify encoding of these as plan props and cPDA analysis on those?
+
+%% Prove
+%% that the PDA for $\props^{G} \cup \props^{CE}$ and $\props^{G} \cup
+%% \props^{DE}$ are polynomially derivable from that (by specifying the
+%% required derivation functions $f$ and proving them correct).
+
+
+
+
+
+
+%% Initialize $\cal G :+ \emptyset$; assume $\goal = \{g_1, \dots,
+%% g_n\}$; call Recursive-PDO-CE($\goal$, $1$):
+
+%% \begin{tabbing}
+%% Bo\=ol SystematicWeakening($G'$, $i$) \\
+%% \> \textbf{if} $G'$ is solvable in \task\ \textbf{then return \true\ endif}\\
+%% \> flag := \true\\
+%% \> \textbf{for} \= $j = i \dots n$ where $g_j \in G'$ \textbf{do}\\
+%% \> \> \textbf{if} \= not Recursive-PDO-CE($G' \setminus \{g_j\}$, $j+1$) \textbf{then}\\
+%% \> \> \> flag := \false\\
+%% \> \> \textbf{endif}\\
+%% \> \textbf{endfor}\\
+%% \> \textbf{if} flag \textbf{then} $\cal G := \cal G \cup \{G'\}$\\
+%% \> return \false
+%% \end{tabbing}
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% INITIAL TEXT IN THIS SECTION
+
+
+%% \subsection{???}
+
+%% \rebecca{start with a concrete example, in the truck domain}
+
+%% \emph{If goal subset A is true at the end of the plan, then at least one element of goal subset B
+%% must be false at the end of the plan.}
+
+%% \rebecca{if we are looking fore the minimal sets $A \cup B$ than B always contains 
+%% only one element}
+
+%% \begin{definition}[Conjunctive Exclusion]
+%% Given a planning task $\Pi = (V,A,c,I,G)$ $(A,B)$ with $A, B \subseteq G$ is a 
+%% GFD1 if $\Pi$ with the goal $A \cup B$, i.e., $\bigwedge_{p \in A \cup B} p$
+%% is unsolvable.
+%% The subsumption relation is given by $\forall A,B,A',B': (A,B) \leq (A',B')$ iff $A \cup B \subseteq 
+%% A' \cup B'$
+%% \end{definition}
+
+%% \paragraph{Algorithm}
+%% All minimal GFD1s can be computed through a search tree that starts at node $N_0$ containing
+%% all goal facts $G$ and where each search step on a node $N_i$ tests solvability of 
+%% $\Pi_i = (V,A,c,I,N_i)$. If $\Pi_i$ is not solvable, we generate one child 
+%% node $N'$ for every subset of $N_i$ obtained by removing one fact.  
+%% Upon termination all nodes with only solvable children are the \emph{minimal unsolvable 
+%% goal subsets (MUGS)}. (A,B) is a minimal GFD1 iff $A \cup B \in \text{MUGS}$, 
+%% $A \cap B = \emptyset$ and $|B| = 1$
+
+%% \rebecca{A is always solvable}
+
+%% \rebecca{add example, for fuel level 5}
+
+%% \subsection{???}
+
+%% \textit{If goal subset A is true at the end of the plan, 
+%% then ALL elements of goal subset B must be false at the end of the plan.}\\
+
+%% \begin{definition}[Disjunctive Exclusion]
+%% 	Given a planning task $\Pi = (V,A,c,I,G)$ the tuples
+%% 	$(A,B)$ with $A,B \subseteq G $ is a GFD2 if 
+%% 	$\Pi$ with the goal $\bigwedge_{p \in A} p \wedge (\bigvee_{q \in B} q)$
+%% 	is unsolvable. 
+%% 	The subsumption relation is given by $\forall A,B,A',B': (A,B) \leq (A',B')$ iff $A \subseteq A'$
+%% 	and $B \supseteq B'$.
+%% \end{definition}	
+
+%% 	\noindent
+%% 	Given all minimal GFD1s for $\Pi$ all minimal GFD2s can be derived according 
+%% 	to the following relation.
+
+%% 	\rebecca{proof}
+
+%% 	\vspace{-0.3cm}
+%% 	\begin{align*}
+%% 		GFD2 &:= \{(A,B) | 
+%% 				\exists P \in GFD1:(
+%% 				   A \subseteq P \wedge |P \setminus A | = 1 \wedge\\
+%% 				   &\forall P' \in PPD1:
+%% 					  A \subseteq P' \rightarrow P' \setminus A \subseteq B
+%% 				)
+%% 			 \}
+%% 	\end{align*}
+
+%% \paragraph{Algorithm}
+%% From the minimal GFD1s we get a set:
+%% 	$D = \{(A,B) | \exists P \in GFD1s, p \in P: A = P \setminus p \wedge
+%% 	B = \{p\}\}$
+
+%% These GFD2s are not necessary optimal, the B could be larger.
+
+%% \rebecca{find a name for A and B}
+
+%% \noindent
+%% To get the maximal set of goals which can not be achieved if we achieve A, 
+%% you have to merge all B's which belong to an A' which is a subset of A. 
+
+%% \begin{align*}
+%% 	(A, \bigcup_{(A', B') \in \{(A'', B'') \in D | A' \subseteq A\}} B' \cup B)
+%% \end{align*}
+
+%% \rebecca{to many ticks}
+
+%% \rebecca{add example, from GFD1 to GFD2}
+
+%% \noindent
+%% If the planning task is not solvable for a goal fact at all, you can add 
+%% this goal fact to all B's.\\
