@@ -1,0 +1,126 @@
+
+======================================================================================================
+======================================================================================================
+Review #210401 
+
+The paper proposes a framework for generating explanations of the form "I chose a plan satisfying property p rather than q, because the latter would have implied undesirable property q'."
+The framework formulates the notion of properties of plans and of their dependencies (via an entailment relation saying that p entails p' given the plan space), together with a subsumption relation over  those dependencies. This framework is then instantiated to the case of goal dependencies for over-subscription planning, where the dependencies are of the form:
+achieving a conjunction of goals => we can't achieve a conjunction of other goals
+As is typical in other fields, the set of minimal unsolvable goal subset can then be found by searching over the space  of goal sets, systematically strengthening from the empty set or weakening from the full set of goals, using conflicts to prune the search. Then the paper briefly discusses how other types  of properties can be handled using this instantiated framework by compilation into goals.
+
+Obviously the work is very relevant to AI. Due to the popularity of black box models and ML-based approaches which are extremely difficult to explain, Explainable AI (the old field of Explanations or Explanation Generation) has come back has a topic of great interest for the AI community. And the problem is far from solved even for the model-based (non black-box) approaches, found in planning, scheduling, constraints, optimization and so on.
+
+The idea of using dependencies to provide contrastive explanations seems significant to me, and is a good fit with planning search spaces. I also appreciate the fact that experiments have been conducted to check computational feasibility on a all IPC benchamarks. Of course, the usefulness of the work would have to be tested by presenting explanations to users and that's lacking for now.  It is a bit disappointing that the approach doesn't seem to scale to LTL properties, but maybe the trick is not to use compilation and just to generate a plan satisfying the LTL formulas as part of the test in the algorithm (but then maybe you wouldn't have the conflicts implementation for free?)
+
+The work is also original from a planning point of view as far as I am aware. The weakest point of the paper however is the positioning of the work with respect to the broader AI literature. How does all this relate to areas such as model-based diagnosis, explanations, ATMS. For instance, with the exception of the "dependencies" there are pretty strong connections between the framework and techniques used here and those used in model-based diagnosis to generate all minimal diagnoses in circuits or discrete-event systems, see for instance the seminal work by Reiter, right up to more recent work by Grastien for discrete-event system. In fact, except for the original idea of using plan dependencies, the rest of the machinery used, including the weakening/strengthening algorithm, the planning approach to do the checks, the compilations and so on aren't so original. But the paper brings them together in a nice way.
+
+The writing of the paper  is OK. I have a feeling that the generic framework could be tightened up and the notation improved. I had to reread it several times for the definitions to really stick. Due to space, the presentation of some of the section is rather sketchy, for instance section 3.3 and section 4,  which means it will be difficult for non-specialists of planning to understand what you are doing.
+
+Before section 2.2: "we cannot have p without forgoing either of q1 or q2 or q3". Do you mean without forgoing at least one of q1, q2, or q3?
+Definition 4: I am having difficulties understanding the relationship between   =>_suff and {\cal M}_{\Pi}(p) \subseteq {\cal M}_{\Pi}(q) in definition 2.
+Under Definition 7: I could not understand why "Given the restriction to D^{GE}, the equivalence classes in the PDO-GE a re singletons". Maybe I am overloaded with the notations, or maybe the sentence means something different than what I think it means.
+
+In your rebuttal: please comment on the positioning wrt the broader AI literature, and not just the latest explainable AI wave.
+
+
+References:
+
+Johan de Kleer: Extending the ATMS. Artif. Intell. 28(2): 163-196 (1986): https://www.sciencedirect.com/science/article/abs/pii/0004370286900810?via%3Dihub
+Raymond Reiter: A Theory of Diagnosis from First Principles. Artif. Intell. 32(1): 57-95 (1987) https://www.sciencedirect.com/science/article/pii/0004370287900622
+Alban Grastien, Patrik Haslum, Sylvie Thiébaux. Exhaustive diagnosis of discrete event systems through exploration of the hypothesis space. DX-11 http://www.grastien.net/ban/articles/ght-dx11.pdf
+Alban Grastien, Patrik Haslum, Sylvie Thiébaux: Conflict-Based Diagnosis of Discrete Event Systems: Theory and Practice. KR 2012 https://www.aaai.org/ocs/index.php/KR/KR12/paper/view/4558
+
+
+======================================================================================================
+======================================================================================================
+Review #256505 New
+
+Comments to Authors.
+
+I found the paper nice and interesting to read. The topic is quite popular nowadays: Explainable AI.
+In particular it focuses on how to explain plans.
+The structure of the paper is quite clear. After introducing the problem and references to closest approaches it proceeds by discussing:
+- the concept: the is based on defining plan properties and dependencies which entail them
+- a formal framework for plan explanations based on the finite domain representation framework
+- application of the framework to a particular problem of oversubscribed planning
+- experimental evaluation based on four IPC domains
+
+As far as I understood, the plan explanation approach here described depends on the quality of the knowledge base represented by the set of plans $\Pi$. This can actually represent a limitation in applying this approach to the general case.
+How the approach can be used inside a decision support system? Does the calculation of $\Pi$ require a significant time? Will this be acceptable by the end-user?
+Maybe, if significant, the authors can add the computational times in the case of the four domains of the empirical evaluation
+
+There is one aspect I would like the authors to comment.
+As other previous works, this approach is based on computing an explanation a posteriori.
+Have the authors consider the possibility of creating this explanation while generating a plan?
+This probably might require to change the way plans are generated. And maybe considering to have less optimal but explainable by construction plans could be acceptable.
+
+
+Minor: in the example I found a bit confusing that the user's question refers to a concept, the traffic, that it is not part of the model.
+
+
+
+======================================================================================================
+======================================================================================================
+Review #261148 New
+
+This paper describes a framework for exploring the space of possible plans to answer contrastive questions about the plan under consideration, i.e. questions of the form “Why to do action A rather than action B?” The framework is based on the analysis of plans to discover dependencies among plan properties. The general method presented in the first part of the paper is then operationalized in the context of oversubscription planning, in the second part of the article.
+
+The paper is clear and well written, and the technical part seems to be sound. The authors did an excellent job in motivating the framework and fitting both an abstract description and a more specific presentation in the same paper. It looks like a good idea to investigate the space of plans to formulate plan explanations. However, the article leaves me with several perplexities. My first (and probably the most difficult to tackle) comment is that, if this paper is about producing useful explanations for users, the experimental work is incomplete at the moment as it does not present any user studies. This is the only rigorous way to assess whether the method achieves its objectives regarding explainability. I am aware this is not trivial, but such studies are performed in many fields of CS and can be done by the AI planning community too. 
+
+Besides, I am not entirely sure that the explanations provided within this setting would be that useful for the user. In my view, an explanation should offer both a rationale behind a choice and the reasoning process that has led to that choice. In the method presented by the authors, this reasoning process remains opaque to the users, as far as I understand. Also, in this framework, it seems possible to generate complex explanations. How do the authors envisage to moderate this complexity? 
+
+Another problematic part is that the properties are considered an input. It will be non-trivial to identify them in advance in such a way to predict possible user questions. How do the authors count to do that? Are they thinking to do it collaboration with the users? 
+
+Finally, the framework is instantiated only for one particular problem in planning, oversubscription planning. It would be interesting to consider another example and show that the same concepts work in a different context. I realize this might be difficult given the space limitations.
+
+Overall, this paper is very interesting, but I believe it is somewhat in a preliminary stage, in particular, the experimental part, which does not help in assessing the technique in the context in which it is situated by the authors themselves, i.e. explainable AI.
+
+As a minor point, in the introduction there is a misalignment between the question “Why do A rather than B?” and “Why does the current plan π satisfy p rather than q?”. While if one keeps reading the paper, the mismatch gets resolved, I believe it would be beneficial to clarify since the beginning that the two questions can be mapped into each other within the framework. Finally, related work should be discussed more in depth.
+
+
+
+======================================================================================================
+======================================================================================================
+Review #261149 New
+
+Although I am not an expert in explainable AI, I find the idea
+presented here to be interesting. A primary drawback is the
+formalisation, which has problems causing me to not fully understand
+the presented ideas. I think the formalisation (i.e. defining PDOs and
+cPDOs) is an overkill since the authors do not develop methods that
+address questions other than those representable as MUGS. In
+particular, in the context of the example in Sec.5, it is not clear to
+me why do you not just add the user's requested property to the
+properties already achieved by the plan and output that it is
+impossible to achieve the user's request, if no plan achieving all properties can be found? To
+me this seems more efficient than computing all possible MUGS's and
+then seeing if the user's requested property added to the current goal
+is a MUGS already encountered.
+
+The work would be much more interesting if the authors answer more
+general questions using that framework, or even if the authors discuss
+the possibility of answering more general forms of questions.
+
+Detailed comments:
+
+  - "a plan property is a partial function p : T × P → {true, false}":
+    would it be simpler to represent it as a relation?
+
+  - Should "D^{GE} := {( a\in A a,\neg b\in B b) | A \cap B =
+    \emptyset}" be "D^{GE} := {( a\in A a,\neg b\in B b) | A \cap B =
+    \emptyset \wedge (A \cup \B) \subseteq G}" ?
+
+  - "We say that p Π-entails q, written..": could you clarify whether
+    "p" can be a general propositional formula? If it can, then you
+    seem to overload the right-arrow between your meta-logic and
+    object-logic, e.g. in "φ ⇒ ψ" vs. "Π |= φ ⇒ ψ" on page 2.
+
+  - What does "\bigwedge_{a\in A} a" mean if "A = \emptyset"
+
+
+  - Proposition 1 seems false to me: suppose A and B are non-empty
+    sets. Suppose that there are no plans that satisfy any "a \in
+    A". Then we have "Π |= /\_{a \in A} ⇒ P", for any P. However, "A
+    \cup B" is not a MUGS, since "A \subset B", but there are not
+    plans achieving all properties in A.
+
