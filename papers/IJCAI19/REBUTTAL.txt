@@ -47,12 +47,28 @@ discussion of related work (see next).
 > idea of using plan dependencies, the rest of the machinery used,
 > including the weakening/strengthening algorithm, the planning
 > approach to do the checks, the compilations and so on aren't so
-> original.
+> original. But the paper brings them together in a nice way.
 
-TODO: Need a reply to this! The reviewer requests one, in
-fact. Rebecca, please read the 4 papers the reviewer names here (and
-perhaps a few more if relevant); draft an answer, which we can then
-discuss on Wednesday. 
+TODO: Draft reply, Daniele please check.
+
+Indeed the weakening/strengthening algorithms are similar to various
+methods in the literature, solving problems requiring to find the
+borderline between solvable vs. unsolvable (in some sense) nodes in a
+preference lattice. This pertains to ATMS, and in particular to works
+on diagnosis where the lattice of goal conjunctions can be viewed as a
+lattice of hypotheses. We agree with you that it was an ommission on
+our part to not mention these connections. We will fix that ommission
+in the final version if accepted. As you point out yourself though,
+our main contribution is not in these algorithms per se (and we did
+not mean to claim they were), but in the overall framework, its
+instantiation, and empirical evaluation.
+
+That said, regarding the planning approach we use to do the checks in
+SysW and SysS, and ŕegarding compilations, we have included the
+relevant citations -- the planning algorithms we use, and a
+representative selection of papers on compilation methods.
+
+NOTE:
 
 I think we should add a related work section like I oririginally
 thought; this is the best way I can think of to discuss such more
@@ -61,13 +77,114 @@ we should not mention a new related work section in the rebuttal, or
 else the reviewers may say "well this section should have been in the
 submission already").
 
-Johan de Kleer: Extending the ATMS. Artif. Intell. 28(2): 163-196 (1986): https://www.sciencedirect.com/science/article/abs/pii/0004370286900810?via%3Dihub
+NOTE:
 
-Raymond Reiter: A Theory of Diagnosis from First Principles. Artif. Intell. 32(1): 57-95 (1987) https://www.sciencedirect.com/science/article/pii/0004370287900622
+Here follow detailed notes on each of the 4 papers.
 
-Alban Grastien, Patrik Haslum, Sylvie Thiébaux. Exhaustive diagnosis of discrete event systems through exploration of the hypothesis space. DX-11 http://www.grastien.net/ban/articles/ght-dx11.pdf
+> Johan de Kleer: Extending the ATMS. Artif. Intell. 28(2): 163-196
+> (1986):
+> https://www.sciencedirect.com/science/article/abs/pii/0004370286900810?via%3Dihub
 
-Alban Grastien, Patrik Haslum, Sylvie Thiébaux: Conflict-Based Diagnosis of Discrete Event Systems: Theory and Practice. KR 2012 https://www.aaai.org/ocs/index.php/KR/KR12/paper/view/4558
+ATMS (previous paper introduces them, AIJ 1986) associate a "datum"
+determined by a "problem solver" with the set of environments that
+entail that datum. An environment is a set of assumptions. The set of
+environments shuld be complete (represent all environments that entail
+the datum) as well as minimal. Hence one gets a lattice of
+environments and needs to identify the borderline between entailing
+and non-entailing ones, which is equivalent to a borderline between
+solvable and unsolvable formulas. This seems the only connection to
+our work.
+
+> Raymond Reiter: A Theory of Diagnosis from First
+> Principles. Artif. Intell. 32(1): 57-95 (1987)
+> https://www.sciencedirect.com/science/article/pii/0004370287900622
+
+From description of static diagnosis in papers below: set of
+components c; if c is non-faulty it implies a formula phi; a diagnosis
+candidate is a set of c whose faultiness leads to consistency of the
+set of phi; task is to find all minimal diagnosis candidates; this is
+done in an iterative strengthening fashion, starting with the empty
+diagnosis and, in any leaf node, adding one more faulty component in
+case the node is not a diagnosis candidate ie still contains a
+conflict; children need only be generated for faulty components
+responsible for the conflict (something not doable/relevant in our
+context as it relies on the simple representation).
+
+
+> Alban Grastien, Patrik Haslum, Sylvie Thiébaux: Conflict-Based
+> Diagnosis of Discrete Event Systems: Theory and Practice. KR 2012
+> https://www.aaai.org/ocs/index.php/KR/KR12/paper/view/4558
+
+Very general framework for diagnosis, where there is a system model M
+desribing transition behaviour of a system (event sequences); a subset
+o of observable events, were the input to diagnosis is the subsequence
+of observed events; and a hypothesis space H with a function
+hypo(sigma) that maps each event sequence to exactly one
+hypothesis. In our setting, M is the planning task, events being
+actions; o is empty because the MUGS analysis receives no observations
+on which action sequences are possible; and H is the set of all goal
+conjunctions, with hypo(sigma) being the goal conjunction true at the
+end of sigma.
+
+With this correspondence, the diagnosis (Def 2 in the paper) is the
+set of all goal conjunctions for which there exists an action sequence
+achieving that conjunction -- ie, the set of all solvable goal
+conjunctions. The preference relation is superset, and the minimal
+diagnosis (Def 3 in the paper) is the set of maximal solvable goal
+conjunctions (from which the MUGS can be derived easily).
+
+The preferred-first algorithm, Algorithm 1, given in the paper starts
+from the most preferred hypothesis (here: the conjunction of all
+goals). It pops a node from the queue, tests whether it is part of the
+diagnosis (here: whether it is solvable); if so, the node is added to
+the result res, if not its direct descendants (here: the conjunctions
+reduced by removing a single goal) are inserted into the queue. So
+this is exactly like our systematic weakening except that res collects
+the solvable nodes, not the unsolvable ones with solvable children
+only.
+
+In this sense, our systematic weakening algorithm is an instance of
+their framework. They use SAT solvers though for the test in each
+node.
+
+The most interesting aspects pertain to conflict analysis:
+
+1. Algorithm 1 in the paper contains a pruning mechanism that
+essentially asks whether a node can lead to any solvable descendants
+that are not already reflected in res or in the nodes still open; if
+not, the node is pruned. Essentially, this is saying that one may be
+able to prune nodes based on the results generated so far, with
+additional solver tests whether the node can go beyond these
+results. We do not use this yet, and it is not clear whether it will
+be effective in our setting; but it is a possible direction for future
+work we could look into.
+
+2. The tests in the paper re all done independently, i.e. they do not
+transfer information. In contrast, our tests do through nogood
+transfer. This is a possible improvement to their work.
+
+3. Algorithm 1 in the paper is extended with "conflicts", ie
+additional hypotheses that the test solver determined to fail. In our
+setting, this means that the planner called determins not only th
+given goal conjunction to be unsolvable, but others as well. This
+corresponds to nogoods valid in the initial state. We coukd in
+principle derive such nogoods, by continuing the nogood learning after
+the search tree is already completed and we know the task/the current
+goal conjunction to be unsolvable. This would incur overhead for the
+additional nogood learning (which can be quite substantial, see our
+AIJ paper), but may help to reduce the meta-search. So, another
+possible direction for future work we could look into.
+
+> Alban Grastien, Patrik Haslum, Sylvie Thiébaux. Exhaustive diagnosis
+> of discrete event systems through exploration of the hypothesis
+> space. DX-11 http://www.grastien.net/ban/articles/ght-dx11.pdf
+
+Diagnosis framework similar to the one above. Top-down algorithm
+(called pfs here) also similar, but less elaborated. In addition,
+bottom-up style algorithm (called pls) starting with empty set of
+diagnosis candidates, and iteratively adding a new candidate not
+dominated by the ones already collected. Encodings into planning and
+SAT.
 
 
 > Before section 2.2: "we cannot have p without forgoing either of q1
