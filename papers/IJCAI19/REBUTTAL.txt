@@ -262,8 +262,7 @@ yet, but it could be an interesting question for future research.
 > question refers to a concept, the traffic, that it is not part of
 > the model.
 
-TODO: Daniele, do you wanna comment on this?
-
+We kept the model simple for brevity, but it could easily include traffic information (e.g. google-maps scenario), but we agree mentioning traffic in the question might be confusing, and we'll remove the reference. (TODO: Not sure whether we want to keep this last bit of removing the text).
 
 ======================================================================================================
 ======================================================================================================
@@ -290,11 +289,13 @@ these results into the paper).
 > performed in many fields of CS and can be done by the AI planning
 > community too.
 
-We agree, and we mention this as future work in the conclusion. As a
+We completely agree on that the effectiveness of explanations should be properly assessed by user studies, and indeed we mention this as future work in the conclusion. 
+At this stage, in this work we evaluate the feasibility of computing the proposed explanations from a technical point of view. And as a
 proof of concept that our answers *may* be suitable for user
 inspection in principle, we include in our evaluation the #MUGS data,
 which shows that, often, even the full PDO (the full plan space
 explanation in our framework) can be compactly described.
+The future work will include assessing the quality of the proposed explanations and for that user studies will be conducted.
 
 > Besides, I am not entirely sure that the explanations provided
 > within this setting would be that useful for the user. In my view,
