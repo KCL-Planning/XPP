@@ -1,3 +1,184 @@
+======================================================================================================
+REBUTTAL TO REVIEW 1
+
+===LTL: 
+
+This remains a challenge, yes. Recent findings suggest that there is
+room for improvement in compilation design. But yes, not using
+compilation may be the way to go.
+
+Side note: we did not quite get the nogood learning "for free". We
+added only a brief description for space reasons, but the extensions
+are not trivial. We plan to buy additional space for the final version
+if accepted, mainly to add the empirical results from the
+supplementary material. This will also allow to add a more detailed
+description of the nogood learning extensions as well as more
+discussion of related work (see next).
+
+===Positioning to literature: 
+
+Indeed the weakening/strengthening algorithms are similar to various
+methods in the literature, solving problems requiring to find the
+borderline between solvable vs. unsolvable nodes in a preference
+lattice. This pertains to ATMS, and in particular to works on
+diagnosis where the lattice of goal conjunctions can be viewed as a
+lattice of hypotheses. We agree that it was an ommission to not
+mention these connections. We will fix this in the final version if
+accepted. As you point out yourself though, our main contribution is
+not in these algorithms per se (and we did not mean to claim they
+were), but in the overall framework.
+
+Regarding the planning approach we use to do the checks in SysW and
+SysS, and ŕegarding compilations, we have included the relevant
+citations -- the planning algorithms we use, and a representative
+selection of papers on compilation methods.
+
+===Def 4: 
+
+{\cal M}_{\Pi}(p) \subseteq {\cal M}_{\Pi}(q) characterizes
+plan-property entailment. =>_suff denotes an easy-to-test sufficient
+criterion for such entailment.
+
+===Under Def 7: 
+
+In a retricted PDO, we disconsider all entailments outside the given
+set D. For D^{GE} we thus consider only entailments of the form "A ==>
+not B". So no two formulas in P^{GE} can entail each other.
+
+
+
+
+======================================================================================================
+REBUTTAL TO REVIEW 2
+
+===Runtime:
+
+As our experiments show, our analysis often is "feasible"
+computationally, in the sense of not being more infeasible than the
+most closely related classical planning problems.
+
+===Empirical results on 4 domains we extended with action-set
+properties:
+
+These results are provided in the supplementary material. We plan to
+buy additional space for the final version if accepted, to add these
+results to the paper.
+
+===A-posteriori computation of explanation:
+
+Note that a PDO can actually be computed offline, prior to planning,
+in principle. The limiting factor in that setting is the set P of plan
+properties considered, that must then be fixed a priori. In some
+applications at least, it will probably be necessary to identify new
+relevant plan properties online as part of the user interaction,
+e.g. in an iterative planning process as briefly mentioned in the
+introduction. In such a context, new entailment relations must be
+computed online. Your question how to combine this with the planning
+process is then very relevant. We don't have concrete ideas on this
+yet, but it could be an interesting question for future research.
+
+===Traffic in example:
+
+We kept the model simple for brevity, but it could easily include
+traffic information (e.g. google-maps scenario). We will reformulate
+to make this clearer.
+
+
+======================================================================================================
+REBUTTAL TO REVIEW 3
+
+We agree that the open issues you point out should be addressed. But
+in our view they are clearly beyond scope of this first paper
+initiating the work line. As you say yourself, we managed to fit both
+the abstract problem and a specific instantiation into the paper. With
+the empirical evaluation, the paper is full to the brim. 
+
+===User studies:
+
+We agree that the usefulness of explanations must ultimately be
+assessed by user studies. Indeed we mention this as future work in the
+conclusion. At this stage, as a proof of concept that our answers
+*may* be suitable for user inspection in principle, we include in our
+evaluation the #MUGS data, which shows that, often, even the full PDO
+can be compactly described.
+
+===Explanation of reasoning process:
+
+We agree that also the reasons for plan-property dependencies should
+be explainable: "why does this dependency hold?". In the conclusion,
+we mention two concrete ideas to answer such questions. Embarking on
+these ideas is among our next steps.
+
+===Complex explanations:
+
+For specific questions "why A not B?" the answer is just a fragment of
+the PDO (the properties C entailed by B). Beyond this, it seems
+promising to investigate relevance filters, based eg on a preceding
+interaction context.
+
+===Automatically finding the plan properties:
+
+Another interesting future issue (cf our footnote in Sec 1). Possible
+ideas are interacting with the user, eg in an example-critiquing
+fashion; or iteratively broadening an initial set P by generalizing
+from differences between example plans that do vs do not satisfy some
+p in P.
+
+===Instantiations beyond oversubscription planning:
+
+This is impossible in the given space. 
+
+===Experiments design:
+
+In our view, given the complex decision problems involved in our
+analysis, a computational evaluation is absolutely necessary. It seems
+fair to say that not including such an evaluation would have been
+reason to reject for most review panels.
+
+
+======================================================================================================
+REBUTTAL TO REVIEW 4
+
+===Formal framework and MUGS:
+
+In our view, the generic framework is useful to outline the approach
+and problem beyond the special case of goal dependencies. This also
+gives much more room for other researchers to build upon our work/to
+explore new aspects of the problem, than a much more narrow paper
+focussing entirely on goal dependencies.
+
+MUGS lend themselves to addressing powerful plan-property languages
+via compilation. We exemplify this with action-set properties (Sec
+4). Furthermore, LTL can be dealt with by plugging in known
+compilation techniques. Indeed we have already implemented this
+prototypically. We briefly mention this at the end of Sec 4, but it
+may be too under-emphasized in the current write-up. We will expand
+this discussion if accepted.
+
+===Your suggestion to merely test whether an additional property can
+be achieved (referring to Sec 5):
+
+The answer given by the MUGS is much more specific. The test you
+suggest would only say that we cannot enforce property 5; yet the MUGS
+specify the conflicting property (here: transporting all packages with
+a single truck). A goal subset minimization step is necessary to do
+so. One could, of course, do that minimization step on the fly
+instead, as part of the interaction with a user. This comes down to
+computing a subset of the PDO on the fly.
+
+===Proposition 1, suggested counter-example where all a in A are
+unsolvable:
+
+Here we do have "A ==> not B", but that implication is not part of the
+dominant cPDO as per Def 4. We use the sufficient criterion ==>_suff
+for entailment given at the end of Section 3.2 (larger conjunctions
+entail smaller ones, smaller negated conjunctions entail larger
+ones). Given this, the entailment "{a} ==> not B" for each a in A
+subsumes (see Def 4) "A ==> not B". Similarly, "{a} ==> not {}"
+subsumes "{a} ==> not B" for each a in A. So the dominant PDO-GE
+contains exactly the entailments "{a} ==> not {}" for a in A, in
+1-to-1 correspondence with the MUGS {a} for a in A.
+
 
 
 
@@ -5,7 +186,17 @@
 
 ======================================================================================================
 ======================================================================================================
-Review #210401 
+======================================================================================================
+======================================================================================================
+======================================================================================================
+======================================================================================================
+REVIEW SNIPPETS WITH ANSWERS, AND NOTES, FOLLOW
+
+
+
+======================================================================================================
+======================================================================================================
+Review #210401 -- 1
 
 Thanks for your thoughtful comments. 
 
@@ -214,7 +405,7 @@ not B". So no two formulas in P^{GE} can entail each other.
 
 ======================================================================================================
 ======================================================================================================
-Review #256505
+Review #256505 -- 2
 
 Thanks for your thoughtful comments. 
 
@@ -262,11 +453,14 @@ yet, but it could be an interesting question for future research.
 > question refers to a concept, the traffic, that it is not part of
 > the model.
 
-We kept the model simple for brevity, but it could easily include traffic information (e.g. google-maps scenario), but we agree mentioning traffic in the question might be confusing, and we'll remove the reference. (TODO: Not sure whether we want to keep this last bit of removing the text).
+We kept the model simple for brevity, but it could easily include
+traffic information (e.g. google-maps scenario). We will reformulate
+to make this clearer.
+
 
 ======================================================================================================
 ======================================================================================================
-Review #261148
+Review #261148 -- 3
 
 Thanks for your thoughtful comments. The open issues you point out are
 on the spot in our view. We agree that these things should be done
@@ -289,13 +483,16 @@ these results into the paper).
 > performed in many fields of CS and can be done by the AI planning
 > community too.
 
-We completely agree on that the effectiveness of explanations should be properly assessed by user studies, and indeed we mention this as future work in the conclusion. 
-At this stage, in this work we evaluate the feasibility of computing the proposed explanations from a technical point of view. And as a
-proof of concept that our answers *may* be suitable for user
-inspection in principle, we include in our evaluation the #MUGS data,
-which shows that, often, even the full PDO (the full plan space
-explanation in our framework) can be compactly described.
-The future work will include assessing the quality of the proposed explanations and for that user studies will be conducted.
+We completely agree on that the effectiveness of explanations should
+be properly assessed by user studies, and indeed we mention this as
+future work in the conclusion.  At this stage, in this work we
+evaluate the feasibility of computing the proposed explanations from a
+technical point of view. And as a proof of concept that our answers
+*may* be suitable for user inspection in principle, we include in our
+evaluation the #MUGS data, which shows that, often, even the full PDO
+(the full plan space explanation in our framework) can be compactly
+described. Future work will include assessing the quality of the
+proposed explanations, and for that user studies will be conducted.
 
 > Besides, I am not entirely sure that the explanations provided
 > within this setting would be that useful for the user. In my view,
@@ -372,7 +569,7 @@ Thanks. We will try to improve for a final version of accepted.
 
 ======================================================================================================
 ======================================================================================================
-Review #261149
+Review #261149 -- 4
 
 Thanks for your thoughtful comments. 
 
