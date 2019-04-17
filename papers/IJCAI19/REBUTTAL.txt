@@ -7,6 +7,8 @@
 ======================================================================================================
 Review #210401 
 
+Thanks for your thoughtful comments. 
+
 > The idea of using dependencies to provide contrastive explanations
 > seems significant to me, and is a good fit with planning search
 > spaces. I also appreciate the fact that experiments have been
@@ -19,17 +21,17 @@ Review #210401
 > as part of the test in the algorithm (but then maybe you wouldn't
 > have the conflicts implementation for free?)
 
-LTL remains a major challenge, yes. Our most recent findings suggest
-that there is room for improvement in compilation design. But yes, not
+LTL remains a challenge, yes. Our most recent findings suggest that
+there is room for improvement in compilation design. But yes, not
 using compilation may be the way to go.
 
 As a side note here: we did not quite get the conflicts
 analysis/nogood learning methods "for free". We have added only a
-brief description for space reasons, but the extensions are
-(relatively straightforward yet) not trivial. We plan to buy
-additional space for the final version, which will allow to add the
-empirical results from the supplementary material, a more detailed
-description of the nogood learning extensions, as well as more
+brief description for space reasons, but the extensions, while not
+exceedingly deep, are not trivial. We plan to buy additional space for
+the final version if accepted, mainly to add the empirical results
+from the supplementary material. This will also allow to add a more
+detailed description of the nogood learning extensions as well as more
 discussion of related work (see next).
 
 
@@ -83,7 +85,7 @@ plan-property entailment. =>_suff denotes an easy-to-test sufficient
 criterion for such entailment.
 
 > Under Definition 7: I could not understand why "Given the
-> restriction to D^{GE}, the equivalence classes in the PDO-GE a re
+> restriction to D^{GE}, the equivalence classes in the PDO-GE are
 > singletons". Maybe I am overloaded with the notations, or maybe the
 > sentence means something different than what I think it means.
 
@@ -95,7 +97,9 @@ not B". So no two formulas in P^{GE} can entail each other.
 
 ======================================================================================================
 ======================================================================================================
-Review #256505 New
+Review #256505
+
+Thanks for your thoughtful comments. 
 
 > As far as I understood, the plan explanation approach here described
 > depends on the quality of the knowledge base represented by the set
@@ -104,9 +108,9 @@ Review #256505 New
 > inside a decision support system? Does the calculation of $\Pi$
 > require a significant time?
 
-As our experimenrs how, our analysis often is "feasible" on the sense
-of not being more infeasible than the most closely related classical
-planning problems.
+As our experiments show, our analysis often is "feasible"
+computationally, in the sense of not being more infeasible than the
+most closely related classical planning problems.
 
 > Maybe, if significant, the authors can add the computational times
 > in the case of the four domains of the empirical evaluation
@@ -127,14 +131,15 @@ TODO: Daniele here is a draft but I'm not sure about it; not sure if I
 understand the question well.
 
 Note that a PDO can actually be computed offline, prior to planning,
-in principle. The only limiting factor here is the set P of plan
-properties considered, that then must be fixed a priori. But, in some
+in principle. The limiting factor in that setting is the set P of plan
+properties considered, that must then be fixed a priori. In some
 applications at least, it will probably be necessary to identify new
-relevant properties online as part of the user interaction, e.g. in an
-iterative planning process as briefly mentioned in the
+relevant plan properties online as part of the user interaction,
+e.g. in an iterative planning process as briefly mentioned in the
 introduction. In such a context, new entailment relations must be
-computed online, and your question how to combine this with the
-planning process is very relevant. 
+computed online. Your question how to combine this with the planning
+process is then very relevant. We don't have concrete ideas on this
+yet, but it could be an interesting question for future research.
 
 > Minor: in the example I found a bit confusing that the user's
 > question refers to a concept, the traffic, that it is not part of
@@ -145,17 +150,19 @@ TODO: Daniele, do you wanna comment on this?
 
 ======================================================================================================
 ======================================================================================================
-Review #261148 New
+Review #261148
 
 Thanks for your thoughtful comments. The open issues you point out are
-on the spot in our view. We absolutely agree that these things must be
-done -- but we respectfully point out that they are beyond scope of
-this first paper initiating a large work line. As you say yourself, we
+on the spot in our view. We agree that these things should be done
+eventually -- but we respectfully point out that they are beyond scope
+of this first paper initiating the work line. As you say yourself, we
 managed to fit both the abstract problem description and a specific
 instantiation into the paper. With the empirical evaluation of
 computational aspects, the paper is full to the brim; indeed the part
 of our experiments pertaining to the more powerful action-set
-properties had to be moved to the supplementary material.
+properties had to be moved to the supplementary material (we plan to
+buy additional space for the final version, if accepted, to include
+these results into the paper).
 
 > My first (and probably the most difficult to tackle) comment is
 > that, if this paper is about producing useful explanations for
@@ -167,10 +174,10 @@ properties had to be moved to the supplementary material.
 > community too.
 
 We agree, and we mention this as future work in the conclusion. As a
-proof of concepts that our answers *may* be suitable for user
+proof of concept that our answers *may* be suitable for user
 inspection in principle, we include in our evaluation the #MUGS data,
 which shows that, often, even the full PDO (the full plan space
-explanation in our framework) is compact.
+explanation in our framework) can be compactly described.
 
 > Besides, I am not entirely sure that the explanations provided
 > within this setting would be that useful for the user. In my view,
@@ -179,12 +186,12 @@ explanation in our framework) is compact.
 > presented by the authors, this reasoning process remains opaque to
 > the users, as far as I understand.
 
-In the present paper, yes, we provide the plan-property
-dependencies. We completely agree that, in the long term, also the
-reasons behind these dependencies need to be explained, answering
-"why" questions. In the conclusion, we mention two concrete ideas to
-answer such "why" questions. Embarking on these ideas is among our
-next steps.
+In the present paper, yes, we provide merely the plan-property
+dependencies themselves. We agree that, in the long term, also the
+reasons behind these dependencies should be explainable, answering
+"why does this dependency hold true?" questions. In the conclusion, we
+mention two concrete ideas to answer such questions. Embarking on
+these ideas is among our next steps.
 
 > Also, in this framework, it seems possible to generate complex
 > explanations. How do the authors envisage to moderate this
@@ -194,7 +201,7 @@ Our #MUGS data shows that, at least in the analysis of goal
 dependencies, the full plan-space explanation -- the complete PDO --
 can often be communicated compactly. In general, of course, this is
 not the case. But for specific questions "why A not B?" the answer is
-a small fragment of the PDO (the properties C entailed by B). Beyond
+just a fragment of the PDO (the properties C entailed by B). Beyond
 this, in the long term it seems promising to investigate relevance
 filters, based e.g. on prior experience with the same user, or on a
 preceding interaction context.
@@ -208,8 +215,9 @@ Automatically finding/mining the plan properties indeed is one of the
 most interesting avenues ahead (see our footnote in the
 introduction). Possible ideas towards this are, yes,
 collaborating/interacting with the user, e.g. in an example-critiquing
-fashion; or iteratively broadening a given set P by identifying
-differences between example plans that do vs. do not satisfy p \in P.
+fashion; or iteratively broadening a given set P by generalizing from
+differences between example plans that do vs. do not satisfy some p
+\in P.
 
 > Finally, the framework is instantiated only for one particular
 > problem in planning, oversubscription planning. It would be
@@ -217,9 +225,9 @@ differences between example plans that do vs. do not satisfy p \in P.
 > concepts work in a different context. I realize this might be
 > difficult given the space limitations.
 
-Indeed this is not possible given space.Note that the paper is already
-full to the brim and we had to defer part of our empirical results to
-the supplementary material.
+Indeed this is not possible given space. Note that the paper is
+already full to the brim and we had to defer part of our empirical
+results to the supplementary material.
 
 > Overall, this paper is very interesting, but I believe it is somewhat
 > in a preliminary stage, in particular, the experimental part, which
@@ -228,7 +236,7 @@ the supplementary material.
 
 In our view, given the complex decision problems involved in our
 analysis, a computational evaluation is absolutely
-necessary. Furthermore it seems fair to assume that, if we had not
+necessary. Furthermore it seems fair to say that, if we had not
 performed and included such an evaluation, its absence would have been
 reason to reject for most review panels.
 
@@ -246,17 +254,29 @@ Thanks. We will try to improve for a final version of accepted.
 
 ======================================================================================================
 ======================================================================================================
-Review #261149 New
+Review #261149
 
-> I think the formalisation (i.e. defining PDOs and cPDOs) is an
-> overkill since the authors do not develop methods that address
-> questions other than those representable as MUGS.
+Thanks for your thoughtful comments. 
+
+Regarding our formal framework and MUGS:
 
 In our humble opinion, the generic framework is useful to outline the
 approach and problem beyond the special case of goal
 dependencies. This also gives much more room for other researchers to
 build upon our work/to explore new aspects of the problem addressed,
 than a much more narrow paper focussing entirely on goal dependencies.
+
+MUGS lend themselves to addressing powerful plan-property languages
+via compilation. We exemplify this with the action-set properties
+addressed in Section 4, and briefly discussed in the experiments
+section with detailed empirical data given in the supplementary
+material. 
+
+Furthermore, LTL can be dealt with by plugging in known compilation
+techniques. Indeed we have already implemented this prototypically. We
+briefly mention this at the end of Section 4, but it may be too
+under-emphasized in the current write-up. We will expand this
+discussion if accepted.
 
 > In particular, in the context of the example in Sec.5, it is not
 > clear to me why do you not just add the user's requested property to
@@ -274,25 +294,8 @@ enforce property 5 together with the properties the plan already
 has. A goal subset minimization step is necessary to arrive at the
 more specific answer. One could, of course, do that goal subset
 minimization step on the fly instead, as part of the interaction with
-the user. This just means to compute a subset of the PDO on the
+a user. This comes down to computing a subset of the PDO on the
 fly. This certainly is one development line for future work.
-
-> The work would be much more interesting if the authors answer more
-> general questions using that framework, or even if the authors
-> discuss the possibility of answering more general forms of
-> questions.
-
-First, we respectfully point out the action-set properties discussed
-in Section 4, and for which detailed empirical data is given in the
-supplementary material.
-
-Second, note that MUGS enable dealing with quite powerful plan
-property languages already. In particular, LTL can be dealt with by
-plugging in known compilation techniques. Indeed we have already
-implemented this prototypically. We briefly mention this at the end of
-Section 4, but it may be too under-emphasized in the current
-write-up. We will expand this discussion if accepted.
-
 
 > "a plan property is a partial function p : T × P → {true, false}":
 >     would it be simpler to represent it as a relation?
@@ -314,10 +317,10 @@ Yes indeed, thanks.
 p is a function on plans, that returns a Boolean. That function can in
 particular evaluate a formula, so in this sense, as we point out in
 the paper below Definition 2, the answer to your question is yes. It
-is not clear to us though what you find confusing about this. Like we
-say, Pi-entailment is essentially like entailment within a knowledge
-base (given in the form of Pi). If you can elaborate your concern a
-bit more, we will try to address it in our revision.
+is not clear to us though what you find confusing here. Like we say,
+Pi-entailment is essentially like entailment within a knowledge base
+(given in the form of Pi). If you can elaborate your concern a bit
+more, we will try to address it in our revision.
 
 > What does "\bigwedge_{a\in A} a" mean if "A = \emptyset"
 
@@ -332,16 +335,17 @@ for pointing it out.
 >     plans achieving all properties in A.
 
 In the situation you describe, we have "A ==> not B", but that
-implication is not part of the dominant cPDO as per Definition 4,
-because each a in A on its own already is unsolvable. In detail: We
+implication is not part of the dominant cPDO as per Definition 4. This
+is because each a in A on its own already is unsolvable. In detail: We
 use the sufficient criterion ==>_suff for entailment as described at
 the end of Section 3.2, saying that larger conjunctions entail smaller
 ones and smaller negated conjunctions entail larger ones. Given this,
 the entailment "{a} ==> not B" for each a in A subsumes (see Def 4)
-the entailment "A ==> not B". Similarly, the entailment "{a} ==> not {}"
-subsumes the entailment "{a} ==> not B" for each a in A. So the
-dominant PDO-GE contains exactly the entailments "{a} ==> not {}" for a
-in A, in 1-to-1 correspondence with the MUGS {a} for a in A.
+the entailment "A ==> not B". Similarly, the entailment "{a} ==> not
+{}" subsumes the entailment "{a} ==> not B" for each a in A. So the
+dominant PDO-GE contains exactly the entailments "{a} ==> not {}" for
+a in A. These are in 1-to-1 correspondence with the MUGS {a} for a in
+A.
 
 
 
