@@ -22,14 +22,14 @@ methods in the literature, solving problems requiring to find the
 borderline between solvable vs. unsolvable nodes in a preference
 lattice. This pertains to ATMS, and in particular to works on
 diagnosis where the lattice of goal conjunctions can be viewed as a
-lattice of hypotheses. We agree that it was an ommission to not
+lattice of hypotheses. We agree that it was an omission to not
 mention these connections. We will fix this in the final version if
 accepted. As you point out yourself though, our main contribution is
 not in these algorithms per se (and we did not mean to claim they
 were), but in the overall framework.
 
 Regarding the planning approach we use to do the checks in SysW and
-SysS, and ŕegarding compilations, we have included the relevant
+SysS, and regarding compilations, we have included the relevant
 citations -- the planning algorithms we use, and a representative
 selection of papers on compilation methods.
 
@@ -41,7 +41,7 @@ criterion for such entailment.
 
 ===Under Def 7: 
 
-In a retricted PDO, we disconsider all entailments outside the given
+In a restricted PDO, we disconsider all entailments outside the given
 set D. For D^{GE} we thus consider only entailments of the form "A ==>
 not B". So no two formulas in P^{GE} can entail each other.
 
