@@ -1,0 +1,95 @@
+\def\year{2019}\relax
+%File: formatting-instruction.tex
+\documentclass[letterpaper]{article} %DO NOT CHANGE THIS
+\usepackage{aaai19}  %Required
+\usepackage{times}  %Required
+\usepackage{helvet}  %Required
+\usepackage{courier}  %Required
+\usepackage{url}  %Required
+\usepackage{graphicx}  %Required
+\frenchspacing  %Required
+\setlength{\pdfpagewidth}{8.5in}  %Required
+\setlength{\pdfpageheight}{11in}  %Required
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%%%% Packages
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{matrix}
+\usepackage{pgf-umlsd}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepgfplotslibrary{fillbetween}
+\usepackage{ragged2e}
+\usetikzlibrary{arrows,automata,fit,calc,positioning,shapes,shapes.multipart} %
+%\usepackage[inline]{enumitem}
+\usepackage{enumerate,url,soul}
+\usepackage{paralist}
+%\usepackage[usenames]{color} % Only used in comment commands
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{thmtools,thm-restate}
+\usepackage{listings}
+\usepackage{subcaption}
+\usepackage{arydshln}
+
+\usepackage{wrapfig}
+
+
+\input{commands.tex}
+
+
+%PDF Info Is Required:
+  \pdfinfo{
+/Title (2019 Formatting Instructions for Authors Using LaTeX)
+/Author (AAAI Press Staff)}
+\setcounter{secnumdepth}{0}  
+ \begin{document}
+% The file aaai.sty is the style file for AAAI Press 
+% proceedings, working notes, and technical reports.
+%
+\title{TODO}
+\author{
+	Rebecca Eifler$^1$\and
+	Michael Cashmore$^2$\and
+	J\"org Hoffmann$^1$\and
+	Daniele Magazzeni$^2$\and
+	Marcel Steinmetr:$^1$
+	%\affiliations
+	$^1$Saarland University, Saarland Informatics Campus, Saarbr\"ucken, Germany\\
+	$^2$King's College London, Department of Informatics, London, UK\\
+	%\emails
+	\{lastname\}@cs.uni-saarland.de,
+	\{firstname.lastname\}@kcl.ac.uk 
+	%% \{eifler,hoffmann,steinmetz\}@cs.uni-saarland.de,
+	%% \{michael.cashmore,daniele.magazzeni\}@kcl.ac.uk 
+}
+
+\maketitle
+\begin{abstract}
+	TODO
+\end{abstract}
+
+\section{XAIP Comments}
+
+\paragraph{verbalizing plans}
+
+	Comment: I was thinking about the plan verbalization work from Manuela Veloso's group 
+	-- e.g. \url{https://www.ijcai.org/Proceedings/16/Papers/127.pdf} 
+	-- and realized there may be some interesting connections here. 
+	Granted these are different kinds of plans, motion plans versus plans in general, 
+	but...  I wonder if an approach like in this paper can be a better alternative 
+	to the template approach in the verbalization work. For example, a PDO versus 
+	a concrete PDO could help with "specificity" while planning models do have 
+	a rich literature of abstractions that can be readily leveraged in this framework. 
+	I guess the point is if it is useful automating the templatization using plan properties. 
+	Maybe something to think about... 
+
+	More (recent) details here if you are interested:
+	\begin{enumerate}
+		\item \url{http://www.cs.cmu.edu/~mmv/papers/18gcai-PereraVeloso.pdf}
+		\item (data you can use) \url{http://www.cs.cmu.edu/~vdperera/paper/vdperera_thesis.pdf#page=129}
+	\end{enumerate}
+
+
+\end{document}
