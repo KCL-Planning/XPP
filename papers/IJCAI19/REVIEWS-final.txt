@@ -1,0 +1,64 @@
+
+meta-review:
+
+We commend the authors for tackling an important and very timely
+problem about which there has been little work in the planning
+community: that of plan explanation.
+
+The main idea is interesting and promising. It consists in generating
+contrastive explanations based on plan property dependencies. These
+explanations are of the form "I generated a plan satisfying property p
+rather than q, because the latter would have implied undesirable
+property q'. ". The idea is formalized in a general framework which is
+then instantiated to the case of over-subscription planning, with
+explanation generation algorithms being presented and evaluated for
+that case. There is also a brief discussion of extensions, e.g. to LTL
+properties. The paper is honest about the computational difficulties
+and from a computational point of view, the results are encouraging.
+
+The main issue with the paper is that it appears as preliminary and
+quite up to IJCAI standards in its present form: from the write up
+which is sometimes superficial (this may be due to lack of space), to
+the lack of user evaluation, to the rather narrow scope of related
+work discussed, to the sole consideration of over-subscription
+planning.
+
+Following the rebuttal, the paper remained borderline. The score given
+by the reviewers basically depended on how they valued the pros vs the
+cons above and no clear consensus emerged.
+
+Reviewers disagreed on whether user evaluation was necessary for a
+publication about explanations, or on whether the general framework
+was useful. Some reviewers liked it, and others argued it was rather
+useless given the focus on one instantiation of the framework, and
+that the space could have been used to remedy some of the issues.
+
+If the paper is accepted, it would be essential that you take into
+account as many comments of the reviewers as you possibly can. It's
+unlikely that you'd be able to provide a user evaluation, but other
+comments such as related work, the loose write up, etc should be
+handled.
+
+If the paper is rejected, we strongly encourage you to pursue this
+idea and build on the reviewers comments to produce a mature paper at
+the next conference.
+
+
+
+
+
+Review 4 addition:
+
+Post-rebuttal:
+
+> In our view, the generic framework is useful to outline the approach and problem beyond the special case of goal dependencies. This also gives much more room for other researchers to build upon our work/to explore new aspects of the problem, than a much more narrow paper focussing entirely on goal dependencies.
+
+I understand your view, but I do not share it. I think a generic framework is worth presenting if i) there are interesting theorems proven about it (e.g. how hard is it to solve problems in that framework, etc.), or ii) if there are experimental results solving problems that use a substantial portion of the presented framework. Just laying out definitions is not very interesting to me. You must show their relevance somehow. This is especially the case when the space is limited, and where a simpler framework could free up some space for elaborating more on other fundamental elements of your approach.
+
+> The answer given by the MUGS is much more specific. The test you suggest would only say that we cannot enforce property 5; yet the MUGS specify the conflicting property (here: transporting all packages with a single truck). A goal subset minimization step is necessary to do so. One could, of course, do that minimization step on the fly instead, as part of the interaction with a user. This comes down to computing a subset of the PDO on the fly.
+
+I still think it is better to do this goal subset minimisation for the specific user question than computing all possible MUGS. I do not see the reason you resort to computing all possible MUGS instead of this on-the-fly approach.
+
+
+
+
