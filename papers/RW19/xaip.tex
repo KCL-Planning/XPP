@@ -1,0 +1,84 @@
+\section{Explainable AI Planning: Overview}
+
+\joerg{todo Dan then Joerg: spell out, cite literature.}
+
+The first half provides an overview, categorizing and illustrating the
+different kinds of explanation relevant in AI Planning, and placing
+previous work in this context.
+
+\joerg{relevant snippets from IJCAI intro:}
+
+Explainable AI (XAI) is concerned with making AI systems' decisions
+more lucid and thus trustworthy. AI planning is relevant to XAI as a
+decision-making methodology, model-based and thus suited to provide
+explanations in principle. Consequently, research on explainable AI
+planning (XAIP) has received increasing interest in recent years
+(\eg\ \cite{seegebarth:etal:icaps-12,smith:aaai-12,langley:etal:aaai-17,fox:etal:ijcai-ws-17,chakraborti:etal:ijcai-17,chakraborti:icaps-19}).
+
+
+\joerg{relevant snippets from AFOSR proposal:}
+
+The need for explainable AI (XAI) first became prominent in Machine
+Learning, where the lack of understandable decision rationales is
+particularly daunting. Model-based techniques are fundamentally better
+suited to providing explanations, yet also there explainability has
+traditionally not been considered, and such consideration is currently
+attracting increased interest. One culminating point has been the
+IJCAI-17 XAI workshop, whose focus was mainly ML but that also started
+to reach out to other areas of AI
+already.\footnote{http://home.earthlink.net/$\sim$dwaha/research/meetings/ijcai17-xai/}
+Daniele Magazzeni is very active in this nascent community; he has
+given invited talks on the subject at the IJCAI'17 XAI workshop, at
+the ICAPS'17 Scheduling and Planning Applications workshop, at the
+ICAPS'17 Planning and Robotics workshop, as well as at the ICAPS'17
+User Interfaces and Scheduling and Planning workshop.
+
+Most previous works on XAIP aim at helping humans to understand the
+inner workings of a plan suggested by the system (\eg,
+\cite{mcguiness:etal:flairs-07,khan:etal:icaps-09,bidot:etal:mkwi-10,sohrabi:etal:aaai-11,seegebarth:etal:icaps-12,bercher:etal:icaps-14,nothdurft:etal:sigdal-15}). This
+involves, in particular, the transformation of planner output (\eg,
+PDDL plans) into forms that humans can easily understand; the
+description of causal and temporal relations between individual plan
+steps; and the design of interfaces, in particular suitable dialogue
+systems, supporting human interaction and understanding.
+
+Explaining the inner workings of one particular plan is quite
+different from our aim of explaining the space of all possible
+plans. The only previous work in the latter direction, by
+\cite{goebelbecker:etal:icaps-10}, addresses the special case where
+there is no plan at all: a so-called \emph{excuse} is a minimal
+modification that would render the task solvable (as in ``I would have
+been punctual had the bus arrived as scheduled''). Clearly, this does
+not address the fine-grained comparison of different plans, and the
+associated trade-offs, in solvable tasks.
+
+Manuela Veloso and her team investigate verbalizations describing the
+robot experience and intentions to human users
+\cite{rosenthal:etal:ijcai-16}. Some recent work
+\cite{zhang:etal:icra-17} focuses on a human's interpretation of
+plans. Learning is used to create a model of the interpretation, which
+is then used to measure the explicability and predictability of
+plans. In \emph{model
+  reconciliation}~\cite{chakraborti:etal:ijcai-17}, the focus is on
+the agent and the human having two different world models. The
+explanation must then identify and reconcile the relevant differences
+between these models. \cite{langley:etal:aaai-17} coined the term
+\emph{explainable agency} to refer to the ability of autonomous agents
+to explain their decisions. They discuss some functions that agents
+should exhibit.
+
+Our approach here is most closely related to, and inspired by, the
+challenges set by David Smith in what he called \emph{Planning as an
+  Iterative Process} \cite{smith:aaai-12}. This introduces a broad
+vision of users interacting with the planning process, to elaborate
+their preferences, to understand the planner's decision rationales, to
+interactively produce the final plan. A similar vision of plan
+explanation was also proposed in recent work by Daniele Magazzeni and
+co-authors \cite{fox:etal:ijcai-ws-17}, as one of out of several
+relevant challenge scenarios. Our proposal can be viewed as a
+technical approach promising to realize these visions.
+
+
+
+
+

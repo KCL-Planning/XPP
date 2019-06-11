@@ -1,0 +1,43 @@
+\section{Contrastive Explanation}
+
+\joerg{todo Dan then Joerg: spell out, cite literature.}
+
+The second half of the lecture goes more deeply into one particular
+kind of XAIP, contrastive explanation, aimed at answering user
+questions of the kind "Why do you suggest to do A here, rather than B
+(which seems more appropriate to me)?". Answers to such questions take
+the form of reasons why A is preferrabe over B.
+
+\joerg{relevant snippets from IJCAI intro:}
+
+A recent analysis \cite{miller:ai-19} of lessons to be learned for XAI
+from social sciences highlights that user questions are often
+\emph{contrastive}. A question ``Why this?'' actually means ``Why this
+\emph{rather than something else} that I would expect?''. To address
+such queries, explanatory systems should analyse alternative
+solutions, and support the user in understanding the consequences of
+the ``something else'' in question.
+%
+AI planning fits well for this kind of analysis. Two prior works
+designed variants thereof
+\cite{fox:etal:ijcai-ws-17,miller:corr-18}. The work by Fox et al.\ is
+the starting point of our work here.
+
+Fox et al.\ suggest, given a plan $\plan$ and a user question ``Why
+does $\plan$ start with action $A$ rather than $B$?'', to generate a
+new plan $\plan'$ starting with $B$, and answer the question based on
+comparing the two plans: undesirable properties of $\plan'$ serve to
+explain the previous decision. While this idea is natural, a key
+weakness is
+%
+%%the potentially arbitrary nature of $\plan'$.
+%
+%% One difficulty is that the planner might choose to
+%% simply undo $B$ and re-insert $A$. More generally, t
+%
+that there may be differences between \plan\ and $\plan'$ unrelated to
+the use of $A$ vs.\ $B$. Many comparison aspects (\eg\ which other
+actions are used, or which ``soft'' objectives are satisfied) may be
+affected by arbitrary decisions in the planner's search.
+
+

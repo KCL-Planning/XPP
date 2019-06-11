@@ -1,0 +1,130 @@
+\section{Contrastive Explanation of Plan Space through Plan-Space Dependencies}
+
+\joerg{todo Joerg then Dan: spell out, cite literature.}
+
+Covering recent work by the lecturers towards this end, we set up a
+formal framework allowing to provide such answers in a systematic way;
+we instantiate that framework with the special case of questions about
+goal-conjunction achievability in oversubscription planning (where not
+all goals can be achieved and thus a trade-off needs to be found); and
+we discuss the compilation of more powerful question languages into
+that special case. Linking to the state of the art in research on
+effective planning methods, we briefly cover recent techniques for
+nogood learning in state space search, as a key enabler to efficiency
+in the suggested analyses.
+
+\joerg{relevant snippets from IJCAI intro:}
+
+Here we address the same kind of explanation problem, but we replace
+the \emph{existential} answer generating a single alternative plan
+$\plan'$ with a \emph{universal} answer determining shared properties
+of \emph{all} possible such alternatives. In this way, the analysis we
+propose aims at explaining the space of possible plans, rather than
+pointing out examples.
+
+Our proposed analysis works at the level of \defined{plan properties}:
+Boolean functions on plans that capture aspects of plans the user
+cares about (whether or not the plan starts with a particular action,
+whether or not a particular soft objective is satisfied, etc). We
+assume that the set \props\ of plan properties of interest is given as
+part of the input.\footnote{An interesting yet challenging question
+  for future work is how one can automatically identify relevant plan
+  properties.} Our analysis then determines the \defined{dependencies}
+across plan properties, \ie, \defined{plan-space entailments} which we
+define as follows. The ``plan space'' is the set \plans\ of candidate
+plans to be considered (canonically, the set of plans for an input
+planning task). A plan property $p$ \defined{entails} another property
+$p'$ in \plans\ if every $\plan \in \plans$ that satisfies $p$ also
+satisfies $p'$. A user question ``Why does the current plan
+\plan\ satisfy $p$ rather than $q$?'' can then be answered in terms of
+the properties $q'$ not true in \plan\ but entailed by $q$: things
+that will \emph{necessarily} change when satisfying $q$.
+
+Our approach also supports iterative planning, along the lines
+suggested by Smith \cite{smith:aaai-12}. Given a current plan
+$\plan \in \plans$ and a user question ``Why achieve $p$ rather than
+$q$?'', if the consequences of $q$ are tolerable to the user, she may
+choose to enforce $q$, gradually narrowing the plan-candidate space
+\plans.
+%
+% Joerg: Text highlighting enforced vs analyzed; simplified to save space
+%
+%% Observe that \plans\ itself may be viewed as being defined through a
+%% set of \emph{enforced} plan properties (like achieving a set of goal
+%% facts). Such enforced properties are then distinguished from the
+%% \emph{analyzed} properties whose dependencies we wish to identify.
+%% %
+%% These two classes of properties can play different roles depending on
+%% the application scenario. In contrastive explanations as outlined
+%% above, the enforced properties are fixed. However, our approach also
+%% supports an iterative planning process for oversubscription planning
+%% (\eg\ \cite{smith:icaps-04,domshlak:mirkis:jair-15}), along the lines
+%% suggested by Smith \cite{smith:aaai-12}. The analyzed properties
+%% then capture ``soft goals'', while the enforced properties capture
+%% ``hard goals''. Given a currently suggested plan $\plan \in \plans$
+%% and a user question ``Why $p$ rather than $q$?'', if the consequences
+%% of analyzed property $q$ are tolerable to the user, she may choose to
+%% enforce $q$, gradually narrowing the plan-candidate space \plans.
+%% %
+%% % Joerg: shortetened to save space
+%% %
+%% %% Observe that \plans\ itself may be naturally defined as the set of
+%% %% plans satisfying a given set of plan properties. For example, these
+%% %% properties may ask to achieve a set of goal facts. In such a setting,
+%% %% it makes sense to distinguish between \defined{enforced} plan
+%% %% properties, that induce \plans; vs.\ \defined{analyzed} plan
+%% %% properties, whose entailment relations within \plans\ we wish to
+%% %% identify. 
+%% %
+%% %% Enforced vs.\ analyzed properties can play different roles depending
+%% %% on the application scenario. In classical planning, the analyzed
+%% %% properties may capture relevant plan phenomena in a user quest to
+%% %% understand causal relationships between these phenomena
+%% %% (\eg\ dependencies between action subsets used). Another use case is a
+%% %% user quest to identify a preferred plan in oversubscription planning
+%% %% (\eg\ \cite{smith:icaps-04,domshlak:mirkis:jair-15}), where the
+%% %% analyzed properties capture ``soft goals'', and the enforced
+%% %% properties are ``hard goals''. The analysis then identifies the
+%% %% precise trade-offs between the soft goals.
+%% %% %
+%% %% % Joerg: too complicated/more distracting than helpful
+%% %% %
+%% %% %% ; one may include additional analyzed properties aimed at identifying
+%% %% %% the causes behind these trade-offs.
+%% %% %
+%% %% In that setting, our approach also supports an iterative planning
+%% %% process along the lines suggested by Smith \cite{smith:aaai-12}:
+%% %% given a currently suggested plan $\plan \in \plans$ and a user
+%% %% question ``Why $p$ rather than $q$?'', if the consequences of analyzed
+%% %% property $q$ are tolerable to the user, she may choose to enforce $q$,
+%% %% gradually narrowing the candidate space \plans.
+
+We remark that our approach can be viewed as an intermediate between
+domain/task analysis (\eg\ \cite{fox:long:jair-98}), which our
+approach generalizes; and model checking applied to planning models,
+which our approach is an instance of (related to
+\cite{vaquero:etal:keq-13}). 
+%
+% Joerg: Detailed discussion of domain analysis and model checking;
+% simplified to save space/not be distracting here.
+%
+%% Another alternate view of our approach is as a form of domain analysis
+%% (actually: task analysis), identifying particular properties of plan
+%% space ahead of time. Indeed, various popular task analyses can be cast
+%% as instances of our framework. A fact pair $(p,q)$ is mutually
+%% exclusive \cite{blum:furst:ai-97} iff $p$-true-at-end entails $\neg
+%% q$-true-at-end in the space of all applicable action sequences; a fact
+%% $p$ is a landmark \cite{hoffmann:etal:jair-04} iff $\true$ entails
+%% $p$-true-at-some-point; other examples presumably exist. From this
+%% point of view, we generalize previous concepts to a broader
+%% perspective aimed at addressing arbitrary user questions. At the same
+%% time, our approach itself can be viewed as an instance of model
+%% checking of planning models \cite{clarke:etal:01},\footnote{There has
+%%   been little work on this subject; Vaquero et
+%%   al.\ \cite{vaquero:etal:keq-13} use Petri nets to capture and
+%%   check dynamic aspects of planning models in itSIMPLE.}
+%% systematically checking all entailments between plan properties. Again
+%% the value of our framework lies in its suitability for XAIP (plus
+%% computational gains from considering all \props\ dependencies in
+%% unison rather than running individual entailment checks).
+
