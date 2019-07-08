@@ -1,4 +1,5 @@
 \section{Contrastive Explanation}
+\label{contrastive}
 
 \joerg{todo Dan then Joerg: spell out, cite literature.}
 
@@ -10,18 +11,19 @@ the form of reasons why A is preferrabe over B.
 
 \joerg{relevant snippets from IJCAI intro:}
 
-A recent analysis \cite{miller:ai-19} of lessons to be learned for XAI
-from social sciences highlights that user questions are often
-\emph{contrastive}. A question ``Why this?'' actually means ``Why this
-\emph{rather than something else} that I would expect?''. To address
-such queries, explanatory systems should analyse alternative
-solutions, and support the user in understanding the consequences of
-the ``something else'' in question.
-%
-AI planning fits well for this kind of analysis. Two prior works
-designed variants thereof
-\cite{fox:etal:ijcai-ws-17,miller:corr-18}. The work by Fox et al.\ is
-the starting point of our work here.
+
+of this  \cite{fox:etal:ijcai-ws-17,miller:corr-18}. The work by Fox et
+al.\ is the starting point of our work here.
+
+Explaining the inner workings of one particular plan is quite
+different from explaining the space of all possible plans. Previous
+work in the latter direction \cite{goebelbecker:etal:icaps-10}
+addresses the special case where there is no plan at all: a so-called
+\emph{excuse} is a minimal modification that would render the task
+solvable (as in ``I would have been punctual had the bus arrived as
+scheduled''). 
+
+
 
 Fox et al.\ suggest, given a plan $\plan$ and a user question ``Why
 does $\plan$ start with action $A$ rather than $B$?'', to generate a
