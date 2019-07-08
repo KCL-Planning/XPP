@@ -1,45 +1,9 @@
 \section{Contrastive Explanation}
 \label{contrastive}
 
-\joerg{todo Dan then Joerg: spell out, cite literature.}
+\joerg{@Dan: give a summary of works in this area. please pay
+  attention to the start of the next section, where I set up upon the
+  Fox et al idea/the basic idea behind your own work line}
 
-The second half of the lecture goes more deeply into one particular
-kind of XAIP, contrastive explanation, aimed at answering user
-questions of the kind "Why do you suggest to do A here, rather than B
-(which seems more appropriate to me)?". Answers to such questions take
-the form of reasons why A is preferrabe over B.
-
-\joerg{relevant snippets from IJCAI intro:}
-
-
-of this  \cite{fox:etal:ijcai-ws-17,miller:corr-18}. The work by Fox et
-al.\ is the starting point of our work here.
-
-Explaining the inner workings of one particular plan is quite
-different from explaining the space of all possible plans. Previous
-work in the latter direction \cite{goebelbecker:etal:icaps-10}
-addresses the special case where there is no plan at all: a so-called
-\emph{excuse} is a minimal modification that would render the task
-solvable (as in ``I would have been punctual had the bus arrived as
-scheduled''). 
-
-
-
-Fox et al.\ suggest, given a plan $\plan$ and a user question ``Why
-does $\plan$ start with action $A$ rather than $B$?'', to generate a
-new plan $\plan'$ starting with $B$, and answer the question based on
-comparing the two plans: undesirable properties of $\plan'$ serve to
-explain the previous decision. While this idea is natural, a key
-weakness is
-%
-%%the potentially arbitrary nature of $\plan'$.
-%
-%% One difficulty is that the planner might choose to
-%% simply undo $B$ and re-insert $A$. More generally, t
-%
-that there may be differences between \plan\ and $\plan'$ unrelated to
-the use of $A$ vs.\ $B$. Many comparison aspects (\eg\ which other
-actions are used, or which ``soft'' objectives are satisfied) may be
-affected by arbitrary decisions in the planner's search.
 
 
