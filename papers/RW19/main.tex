@@ -1,0 +1,156 @@
+\documentclass{llncs}
+%\documentclass[letterpaper]{article}
+%\usepackage{aaai}
+\usepackage{times}
+\usepackage{helvet}
+\usepackage{courier}
+%% \setlength{\pdfpagewidth}{8.5in}
+%% \setlength{\pdfpageheight}{11in}
+\usepackage[usenames]{color} % Only used in comment commands
+
+\usepackage{epsfig,graphics,latexsym}
+\usepackage{amsmath,amssymb,enumerate}
+\usepackage{array}
+\usepackage{wasysym}
+\usepackage{multirow}
+\usepackage{stmaryrd}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{rotating,makecell}
+\usepackage{times}
+\usepackage{enumerate}
+\usepackage{url}
+\usepackage{pseudocode}
+%\usepackage[usenames]{color} % Only used in comment commands
+%\usepackage{caption}
+%\usepackage[]{subcaption}
+\usepackage{listings}
+
+%\usepackage{amsthm}
+
+\usepackage{epsf}
+\usepackage{xy}
+\xyoption{all}
+\graphicspath{{IMAGES/}}
+
+% \usepackage{pgf}
+% \usepackage{tikz}
+% \usetikzlibrary{snakes,arrows,shapes,patterns}
+% % \usetikzlibrary{arrows,petri,positioning,automata,fit,shapes}
+% \tikzstyle{fluent}=[draw,minimum size=.75cm,thick,shape=circle]
+% %\tikzstyle{initfluent}=[fluent,double]
+% %\tikzstyle{goalfluent}=[fluent,fill=black!10]
+% \tikzstyle{goalfluent}=[fluent,double]
+% \tikzstyle{initfluent}=[fluent]
+% \tikzstyle{graphnode}=[draw,minimum size=0cm,thick,shape=circle,fill=black]
+% \tikzstyle{edgelabel}=[minimum size=.35cm,inner sep=0mm,auto]
+% \tikzstyle{statenode}=[shape = circle, draw, minimum size = .75cm]
+% \tikzstyle{every edge}+=[thick]
+
+
+\input{commands}
+
+
+
+%\setcounter{secnumdepth}{0}
+
+%%%%%%%%%%
+% PDFINFO for PDFTEX
+% Uncomment and complete the following for metadata
+% (your paper must compile with PDFTEX)
+\pdfinfo{
+/Title (Explainable AI Planning (XAIP): Overview and the Case of Contrastive Explanation (Extended Abstract))
+/Author (Joerg Hoffmann and Daniele Magazzeni)
+/Keywords (AI Planning, Explainable AI)
+}
+%%%%%%%%%%
+
+\begin{document}
+
+%\nocopyright
+
+\title{Explainable AI Planning (XAIP): Overview and the Case of
+  Contrastive Explanation (Extended Abstract)}
+
+\author{J\"org Hoffmann\inst{1} \and Daniele Magazzeni\inst{2}}
+
+\institute{Saarland Informatics Campus, Saarland University\\
+Saarbr\"ucken, Germany\\
+hoffmann@cs.uni-saarland.de\and
+King's College London\\
+London, UK\\
+daniele.magazzeni@kcl.ac.uk
+}
+
+\maketitle
+
+% abstract as sent to RW:
+
+%% Explainable AI Planning (XAIP): Overview and the Case of
+%% Contrastive Explanation
+
+%% Model-based approaches to AI are well suited to explainability in
+%% principle, given the explicit nature of their world knowledge and
+%% of the reasoning performed to take decisions. AI Planning in
+%% particular is relevant in this context as a generic approach to
+%% action-decision problems. Indeed, explainable AI Planning (XAIP)
+%% has received interest since more than a decade, and has been taking
+%% up speed recently along with the general trend to explainable AI.
+
+%% The lecture offers an introduction to the nascent XAIP area. The
+%% first half provides an overview, categorizing and illustrating the
+%% different kinds of explanation relevant in AI Planning, and placing
+%% previous work in this context. The second half of the lecture goes
+%% more deeply into one particular kind of XAIP, contrastive
+%% explanation, aimed at answering user questions of the kind "Why do
+%% you suggest to do A here, rather than B (which seems more
+%% appropriate to me)?". Answers to such questions take the form of
+%% reasons why A is preferrabe over B. Covering recent work by the
+%% lecturers towards this end, we set up a formal framework allowing
+%% to provide such answers in a systematic way; we instantiate that
+%% framework with the special case of questions about goal-conjunction
+%% achievability in oversubscription planning (where not all goals can
+%% be achieved and thus a trade-off needs to be found); and we discuss
+%% the compilation of more powerful question languages into that
+%% special case. Linking to the state of the art in research on
+%% effective planning methods, we briefly cover recent techniques for
+%% nogood learning in state space search, as a key enabler to
+%% efficiency in the suggested analyses.
+
+\begin{abstract}
+Model-based approaches to AI are well suited to explainability in
+principle, given the explicit nature of their world knowledge and of
+the reasoning performed to take decisions. AI Planning in particular
+is relevant in this context as a generic approach to action-decision
+problems. Indeed, explainable AI Planning (XAIP) has received interest
+since more than a decade, and has been taking up speed recently along
+with the general trend to explainable AI. In the lecture, we provide
+an overview, categorizing and illustrating the different kinds of
+explanation relevant in AI Planning; and we outline recent works on
+one particular kind of XAIP, contrastive explanation. This extended
+abstract gives a brief summary of the lecture, with some literature
+pointers. We emphasize that completeness is neither claimed nor
+intended; the abstract may serve as a brief primer with literature
+entry points.
+\end{abstract}
+
+
+
+\input{xaip}
+
+\input{contrastive}
+
+\input{xpp}
+
+
+\subsubsection*{Acknowledgments}
+
+This material is based upon work supported by the Air Force Office of
+Scientific Research under award number FA9550-18-1-0245. J\"org
+Hoffmann's research group has received support by DFG grant 389792660
+as part of TRR~248 (see \url{https://perspicuous-computing.science}).
+
+\bibliographystyle{plain}
+\bibliography{../BIBLIO/abbreviations,../BIBLIO/biblio,../BIBLIO/crossref}
+
+\end{document}

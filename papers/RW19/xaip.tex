@@ -1,0 +1,93 @@
+\section{Explainable AI Planning: Overview}
+\label{xaip}
+
+\joerg{Dan, I made a first go at this, basically starting from the
+  related work section rom our AFOSR proposal, and extending that to
+  reflect the current status a bit better. Please check, and revise as
+  you see fit.}
+
+The need for explainable AI (XAI) first became prominent in Machine
+Learning, where the lack of understandable decision rationales is
+particularly daunting. Model-based techniques are fundamentally better
+suited to providing explanations, yet also there explainability has
+traditionally not received much interest. This has changed with the
+XAI trend. In particular, research on explainable AI planning (XAIP)
+has received increasing interest in recent years. One culminating
+point of this trend is the nascent series of XAIP
+workshops\footnote{See the 2019 edition at
+  \url{https://kcl-planning.github.io/XAIP-Workshops/ICAPS_2019}} at
+the International Conference on Automated Planning and Scheduling
+(ICAPS).
+
+As is natural for a nascent area, at this time the XAIP landscape is
+still in the making. XAIP has attracted interest from researchers with
+widely different backgrounds and points of view, and it is too early
+to give a conclusive systematization into sub-topics and issues of
+interest (though categorizations have been attempted
+\cite{langley:etal:aaai-17}, and a systematization of possible
+objectives has just been published \cite{chakraborti:icaps-19}). XAIP
+includes topics ranging from epistemic logic to machine learning, and
+techniques ranging from domain analysis to plan generation and goal
+recognition. Nevertheless, some major themes have emerged, that we
+refer to here as \emph{plan explanation}, \emph{contrastive
+  explanation}, \emph{human factors}, and \emph{model reconciliation}.
+
+Plan explanation is the oldest branch of XAIP. It aims at helping
+humans to understand the inner workings of a plan suggested by the
+system (\eg,
+\cite{mcguiness:etal:flairs-07,khan:etal:icaps-09,bidot:etal:mkwi-10,sohrabi:etal:aaai-11,seegebarth:etal:icaps-12,bercher:etal:icaps-14,nothdurft:etal:sigdal-15}). This
+involves, in particular, the transformation of planner output (\eg,
+PDDL plans) into forms that humans can easily understand; the
+description of causal and temporal relations between individual plan
+steps; and the design of interfaces, in particular suitable dialogue
+systems, supporting human interaction and understanding.
+
+In contrastive explanation, the aim is to answer user questions of the
+kind ``Why do you suggest to do A here? (rather than B which seems
+more appropriate to me)''. This is a frequent form of question as
+highlighted by a recent analysis \cite{miller:ai-19} of lessons to be
+learned for XAI from social sciences. Answers to such questions take
+the form of reasons why A is preferrabe over B. Contrastive
+explanation is the major focus of this lecture, so we discuss it in
+more detail in Sections~\ref{contrastive} and~\ref{xpp}.
+
+Human factors research naturally has to be a major component of XAIP,
+whose ultimate aim is to communicate with human users. Manuela Veloso
+and her team investigate verbalizations describing the robot
+experience and intentions to human users
+\cite{rosenthal:etal:ijcai-16}. Other work \cite{zhang:etal:icra-17}
+focuses on a human's interpretation of plans. Learning is used to
+create a model of the interpretation, which is then used to measure
+the explicability and predictability of plans. A recent proposal is to
+combine cognitive measures with epistemic planning
+\cite{petrick:etal:xaip-19}. Many works, also ones cited here as
+belonging to other themes, include human factors research to varying
+degrees.
+
+In \emph{model reconciliation}, the focus is on the agent vs.\ human
+having different world models. The explanation must then identify and
+reconcile the relevant model differences. This has been intensively
+investigated in the last years
+\cite{chakraborti:etal:ijcai-17,sreedharan:etal:icaps-18,kulkarni:etal:aamas-19,sreedharan:etal:xaip-19},
+with mature results and outreach to the robotics
+\cite{chakraborti:etal:hri-19} and multi-agent communities
+\cite{kambhampati:aamas-19}.
+
+There are of course various works on XAIP, or relating to XAIP, that
+do not fit into this categorization. To name but a few examples:
+G{\"{o}}belbecker et al.\ \cite{goebelbecker:etal:icaps-10} proposed a
+framework for ``excuses'', which can be viewed as explanations why a
+planning task is unsolvable; Smith \cite{smith:aaai-12} put forward
+the challenge of \emph{planning as an iterative process}, which
+amongst others requires explanation facilities; and some work has
+considered particular forms of communication like lying
+\cite{chakraborti:kambhampati:xaip-19}.
+
+
+
+
+
+
+
+
+

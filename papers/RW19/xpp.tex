@@ -1,0 +1,36 @@
+\section{Contrastive Explanation of Plan Space through Plan-Space Dependencies}
+\label{xpp}
+
+We finally consider a line of work, conducted by the authors, starting
+from the idea to answer questions ``Why does $\plan$ start with action
+$A$ rather than $B$?'' by generating a new plan $\plan'$ starting with
+$B$ and highlighting undesirable properties of $\plan'$. A key
+weakness of this approach is that there may be differences between
+\plan\ and $\plan'$ unrelated to the use of $A$ vs.\ $B$. Many
+comparison aspects (\eg\ which other actions are used, or which
+``soft'' objectives are satisfied) may be affected by arbitrary
+decisions in the planner's search. Therefore, the idea is to replace
+the \emph{existential} answer generating a single alternative plan
+$\plan'$ with a \emph{universal} answer pertaining to \emph{all}
+possible such alternatives.
+
+This can be done at the level of \emph{plan properties}: Boolean
+functions on plans that capture aspects of plans the user cares about
+(whether or not the plan starts with a particular action, whether or
+not a particular soft objective is satisfied, etc). Given a set of
+plan properties, one can determine dependencies across these
+properties, \ie, plan-space entailments: a plan property $p$ entails
+another property $p'$ if every plan that satisfies $p$ also satisfies
+$p'$. A user question ``Why does the current plan \plan\ satisfy $p$
+rather than $q$?'' can then be answered in terms of the properties
+$q'$ not true in \plan\ but entailed by $q$: things that will
+necessarily change when satisfying $q$.
+
+We put forward, and explain in the lecture, a generic framework for
+this kind of analysis, as well as an instantiation and experiments in
+the context of oversubscription planning
+\cite{smith:icaps-04,domshlak:mirkis:jair-15} where resources are
+insufficient to achieve all goals, and plan properties of obvious
+interest are those goals achieved by a plan. A first paper on this
+approach is published at XAIP'19 and serves as reference for the
+reader interested in details \cite{eifler:etal:xaip-19}.
