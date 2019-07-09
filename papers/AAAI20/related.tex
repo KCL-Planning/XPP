@@ -1,0 +1,88 @@
+\section{Related Work}
+\label{related}
+
+\joerg{I normally don't include sections like this, as I find them
+  boring; I usually just cover the brod literature context in the
+  intro, and specific relations at those technical places where they
+  are pertinent. Here though, matters may be different in that, in the
+  intro, we can and should only spin the stroy for XAIP and perhaps
+  domain analysis; while at the technical level people may wonder if
+  what we do here concretely is not just a work on oversubscription
+  planning. So we may want to add a section here discussing technical
+  and conceptual relations to works -- in oversubscription planning,
+  and also in conflict analysis see pointers below -- which are not
+  naturally part of the XAIP story in the intro. ... TBD when writing
+  the introduction}
+
+
+%% \joerg{discuss relation to domain analysis / model checking?
+%%   basically, our approach can be viewed as a form of domain analysis
+%%   checking the truth of formulas over plan space. it seems to me that
+%%   ``domain analysis'' should definitely be mentioned in our
+%%   introduction, as another frame of reference besides
+%%   XAIP. ... regarding model checking, our analysis can be viewed as a
+%%   systematic form of checking a set of properties of interest; we
+%%   structure this form of analysis as makes sense in explainable
+%%   planning; computationally we exploit synergies in addressing the
+%%   entire set of properties rather than checking each possible
+%%   dependency in isolation; in the long-term, a highly relevant
+%%   research line is how to discover relevant properties in the first
+%%   place. ... as a concrete literature link, I know that some people
+%%   from Brasil worked on using model checkers as a domaiun analysis
+%%   tool, in the ICKEPS context; but I don't have the concrete
+%%   references in mind/ don't know whether and where this has been
+%%   published. ... we could perhaps mention in this context (currently
+%%   mentioned in my text snippet below, but this could be moved
+%%   elsewhere) that ultimately one may want to identify interesting plan
+%%   properties automatically, which is then clearly beyond anything
+%%   addressed in model checking.}
+%
+An alternate view of our approach is as a form of domain analysis
+(actually: task analysis), identifying particular properties of plan
+space ahead of time. Indeed, various popular task analyses can be cast
+as instances of our framework. A fact pair $(p,q)$ is mutually
+exclusive \cite{blum:furst:ai-97} iff $p$-true-at-end entails $\neg
+q$-true-at-end in the space of all applicable action sequences; a fact
+$p$ is a landmark \cite{hoffmann:etal:jair-04} iff $\true$ entails
+$p$-true-at-some-point; other examples presumably exist. From this
+point of view, we generalize previous concepts to a broader
+perspective aimed at addressing arbitrary user questions. 
+
+At the same time, our approach itself can be viewed as an instance of
+model checking of planning models
+\cite{clarke:etal:01},\footnote{There has been little work on this
+  subject; Vaquero et al.\ \shortcite{vaquero:etal:keq-13} use Petri
+  nets to capture and check dynamic aspects of planning models in
+  itSIMPLE.}  systematically checking all entailments between plan
+properties. Again the value of our framework lies in its suitability
+for XAIP (plus computational gains from considering all
+\props\ dependencies in unison rather than running individual
+entailment checks).
+
+
+%% Related work by Brian Williams (need to find citations): reasoning
+%% about user goals; oversubscription planning in constraint-based
+%% planning formulation; suggest goals to drop based on conflict
+%% analysis; constructive procedure to find these goals, given commitment
+%% (subset of goals) and most important implications (subsets of other
+%% goals dropping which makes the whole thing consistent ie goal
+%% achievable). In short, the service provided is related to that
+%% provided by our goalfact dependency analysis; but in a
+%% direct/constructive manner, as opposed to our meta search tree, as
+%% enabled by working in a constraint formulation and building on
+%% conflict analysis in that setting.
+%
+Identifying the trade-off between soft goals in an iterative
+oversubscription planning process relates, in terms of purpose, to the
+work by Yu et al.\ \cite{yu:etal:jair-17}. A major difference is that
+Yu et al.\ address conditional temporal problems, a form of
+conditional temporal plans, instead of PDDL-style compactly specified
+general planning problems. This more restricted focus allows to
+leverage previous conflict analysis methods in that area. It remains a
+question for future work whether such conflict analysis could inspire
+more effective analysis methods in our framework.
+
+
+Related work by Philippe Laborie? resource constrained planning ixtet
+have some form of conflict analysis with critical set for resources
+consumption, relates to our analysis in goal facts RCP?
