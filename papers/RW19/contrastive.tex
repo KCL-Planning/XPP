@@ -1,9 +1,14 @@
-\section{Contrastive Explanation}
+\section{Contrastive Explanations}
 \label{contrastive}
 
-\joerg{@Dan: give a summary of works in this area. please pay
-  attention to the start of the next section, where I set up upon the
-  Fox et al idea/the basic idea behind your own work line}
 
 
 
+As mentioned, an important type of questions in Explainable Planning are \textit{contrastive} questions, of the form “Why action A
+instead of action B?”.  These questions arise when the planner is suggesting something different from what the user would expect. In such a scenario, one way to address this type of question is to allow the user to compare the plan suggested by the planner with what she/he was expecting.  These are contrastive explanations that can highlight the differences between the decisions that have been made by the planner and what the user would expect, as well as to provide further insight into the model and the planning process. A detailed analysis of contrastive explanations in AI has been proposed by Tim Miller in \cite{miller:corr-18}.
+
+Some recent work introduced contrastive explanations for Explainable Planning. In particular, in \cite{ben} contrastive questions are compiled into constraints that form a hypothetical model. Such hypothetical model can be used generate the hypothetical plan that the user would expect and from here the contrastive explanation can be presented to the user. \cite{ben} focuses on temporal planning and presents domain-independent compilations for PDDL2.1 model. 
+
+Another related line of work focuses on providing contrastive explanations \textit{as a service} \cite{xaipservice}. Here the idea is to create a wrapper around an existing planner and use automatic compilations of user questions into models. In this way, the explanations are generated using the same planner already used by the user, and this increases the user confidence  in the explanations provided.
+
+In the lecture we give an overview of recent progress on using contrastive explanations for Explainable Planning. 
