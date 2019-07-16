@@ -1,0 +1,163 @@
+\section{Action-Set Properties}
+\label{actionsetprops}
+
+\joerg{0.5--1 page: similar to ijcai version; focus on action-set
+  props, but do briefly mention more general compolations like LTL;
+  nomytsrey example in full here, with props and MUGS as in ijcai,
+  elaborate/revise text for local vs global explanations}
+
+\joerg{ijcai text snippets:}
+
+\joerg{note/discuss in action-set props section: + plan props beyond
+  goals: more general than OSP, can be oversubscribed even if all
+  goals achievable in conjunction.}
+
+
+
+The analysis of goal properties just described can be used to analyze
+more complex properties that can be compiled into goal facts. Given
+the well-known power of compilation in planning languages
+(\eg\ \cite{gazen:knoblock:ecp-97,nebel:jair-00,edelkamp:icaps-06,palacios:geffner:jair-09,baier:etal:ai-09}),
+there is large potential in this idea. As an example, here we consider
+what we refer to as action-set properties:
+
+% Joerg: not using atomic/composed here as that would link back in to
+% the discussionbefore where we specify onl the atomic props and
+% analyze the compiosed ones; but this is niot the case here/in our
+% experiments: instead we explicitly list a small set of composed
+% properties to be analyzed.
+%
+\begin{definition}[Action-Set Properties]\label{def:action-set-properties}
+Let $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
+be an OSP task, \plans\ its set of plans, and $\acts_1, \dots, \acts_n
+\subseteq \acts$.
+
+An \defined{action-set property} for \task\ and $\acts_1, \dots,
+\acts_n$ is a function $\prop_\phi : \plans \mapsto \{\true, \false\}$
+where $\phi$ is a propositional formula over the atoms $\acts_1,
+\dots, \acts_n$, and $\prop_\phi(\plan) = \true$ iff $\phi$ evaluates
+to \true\ under the truth value assignment where $\acts_i$ is
+\true\ iff $\plan$ contains at least one action from $\acts_i$.
+\end{definition}
+
+As before, we identify action-set properties $\prop_\phi$ with the
+characterizing formulas $\phi$. Arguably, action-set properties are
+practically relevant. They allow to express things like ``objective x
+is covered by satellite y'', %
+% (if this is desirable but could be traded
+%against other soft preferences) 
+%
+``route x is not used'',
+% (if that route is problematic, \eg\ due to frequent traffic issues),
+%
+``passengers x and y ride in the same vehicle'',
+% (if that is desirable), 
+%
+etc. At the same time, the simple syntax of action-set
+properties lends itself to effective compilation, as follows.
+
+Given \task, \plans, and $\acts_1, \dots, \acts_n$ as in
+Definition~\ref{def:action-set-properties}, to obtain a compiled task
+$\task'$
+\begin{itemize}
+\item[1)] introduce Boolean flags $\mathit{isUsed}_i$ that are
+  initially false and set to \true\ by any action from $\acts_i$;
+\item[2)] introduce formula-evaluation state variables and actions
+  evaluating each $\prop_\phi$ based on these (following
+  \cite{gazen:knoblock:ecp-97,nebel:jair-00}), setting Boolean flags
+  $\mathit{isTrue}_\phi$ storing the outcome values;
+\item[3)] introduce a separate 1) \emph{planning phase} vs.\ 2)
+  \emph{formula-evaluation phase}, and a switch action allowing to go
+  from 1) to 2).
+\end{itemize}
+Then the planning-phase prefixes in $\task'$ are in one-to-one
+correspondence with \plans, and given such a prefix \plan\ the
+evaluation phase in $\task'$ can achieve $\mathit{isTrue}_\phi$ iff
+$\prop_\phi(\plan) = \true$.
+
+Now say that we want to analyze the dependencies across a given set
+$\props$ of action-set properties (\eg\ possible undesirable
+consequences of not using route X). We are given \task, \plans, and
+$\props$; we want to compute the PDO for property exclusion over
+$\props$, \ie, the dependencies of the form
+$\entails{\plans}{\bigwedge_{\phi \in A} \phi}{\neg \bigwedge_{\psi
+    \in B} \psi}$. With the above, this can be done by instead
+computing the PDO-GE for $\task'$ with goal set
+$\{\mathit{isTrue}_\phi \mid \phi \in \props\}$, and identifying each
+$\mathit{isTrue}_\phi$ with $\phi$ in the outcome.
+
+Clearly, similar compilation techniques can be used for much more
+powerful property languages. In a preliminary exploration, we
+implemented a compilation for LTL properties based on previous work
+\cite{edelkamp:icaps-06,baier:etal:ai-09}. Our results indicate that
+this renders the PDO analysis infeasible computationally. It remains
+an open question how LTL properties can be addressed more effectively.
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% REBECCA'S FIRST VERSION
+
+%% The plan properties \textit{"Only one truck is used."} or \textit{"Package A and 
+%% B are delivered by the same truck"} restrict the actions which can be used to 
+%% achieve a goal. To include properties in our framework which are described by a
+%% propositional logic with the atoms \emph{plan uses at least one action from $A_i$} 
+%% where $A_i \subset A$, we introduce a compilation from such expressions.
+
+%% \begin{definition}
+%% 	Let $\Pi = (V, A, c, I)$ be the original planning task and $A_P=\{A_0, \cdots, A_n\}$ 
+%% 	with $A_i \subseteq A$ 
+%% 	%\joerg{does it really have to be a partition? and does that restriction make sense? I think neither is the case: in the compilation, a single action could set several flags, one for each action set it belongs to; and certainly one can think of constraints where the relevant action sets overlap} and a propositional formal $\mathcal{P}$ over the atoms $\mathcal{F} = \{f_i | A_i \in A_p\}$. 
+%% 	Then the action set compilation $\Pi' = (V', A', c, I')$ is defined as: 
+%% 	$V' = V \cup \{\text{used}_i | A_i \in A_P\} \cup \{\text{sat}_{\mathcal{P}}, \text{eval-phase}\}$ 
+%% 	with $\mathcal{D}_{\text{used}_i} = \mathcal{D}_{\text{sat}_{\mathcal{P}}} = \mathcal{D}_{\text{eval-phase}} = \{0,1\}$, 
+%% 	$I' = I \cup \{\text{used}_i = 0 | A_i \in A_P\} \cup \{\text{sat}_{P} = 0, \text{eval-phase} = 0\}$ 
+%% 	and $A' = \{ a' | a \in A, 
+%% 	\text{pre}_{a'} = \text{pre}_{a} \cup \{\text{eval-phase} = 0\} , \text{eff}_{a'} = \text{eff}_a \cup \{\text{used}_i = 1 | a \in A_i\}\} \cup 
+%% 	\{\text{cp} | \text{pre}_{cp} = \{\text{eval-phase} = 0\}, \text{eff} = \{\text{eval-phase} = 1 \}\} \cup 
+%% 	\{\text{actions to eval } \mathcal{P}\}$. 
+%% \end{definition}
+
+%% For every action set $A_i$ in $A_P$ we introduce a new fact $\text{used}_i$ which is initially 
+%% \emph{false} and changed to \emph{true} by any action in $A_i$. The new variable $sat_{\mathcal{P}}$ indicates 
+%% if the property $\mathcal{P}$ is satisfied at the end of the plan. To prevent an 
+%% evaluation of the property before the end of the plan we introduce an additional binary variable
+%% which indicates if we are in the execution or evaluation phase of the action sequence. Once the \textit{change-phase} (cp) action
+%% is applied no original actions can be executed anymore and the actions sequence is evaluated.
+
+
+
+
+Initial fuel is $16$ for
+$T_0$ and $7$ for $T_1$.
+
+We define three kinds of action-set properties for this domain:
+\emph{uses $T_i$ $(L_x,L_y)$} (truck $T_i$ drives at least once from
+$L_x$ to $L_y$ or vice versa); \emph{doesn't use $T_i$ $(L_x,L_y)$}
+(the opposite); \emph{same truck $P_x$ $P_y$} (both packages are
+delivered by the same truck). In our example task, we consider six
+instances of these properties: 1.\ uses $T_0$ $(L_2,L_3)$; 2.\ same
+truck $P_1$ $P_2$; 3.\ uses $T_0$ $(L_4,L_3)$; 4.\ same truck $P_2$
+$P_0$; 5.\ doesn't use $T_0$ $(L_0,L_5)$; 6.\ uses $T_1$ $(L_5,L_4)$.
+
+We fix the package destinations as hard goals, defining the set of
+plans \plans\ considered. Computing the MUGS over the six action-set
+properties using the algorithms previously described, it turns out
+there are seven minimal unsolvable subsets of these properties, each
+of size three.
+
+Say now that the current plan uses $T_0$ only, and includes the action
+(drive T0 L5 L0). The user might ask \emph{''Why don't you avoid the
+  road $L_0-L_5$, which has a lot of traffic at the
+  moment?''}. Answering this question in terms of contrastive
+explanation, as previously discussed, corresponds to forcing property
+5 to be satisfied. At the same time, the plan already satisfies
+properties 2 and 4. However, one of the MUGS is $\{2,4,5\}$, and hence
+the answer to the user question would be: \textit{Because if you don't
+  use that road, then you would not be able to deliver all packages
+  using a single truck}.
