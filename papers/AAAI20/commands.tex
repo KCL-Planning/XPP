@@ -70,9 +70,10 @@ Proof.}\hspace*{0.5em}}{\qed}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Generic Framework
 \newcommand{\task}{\ensuremath{\tau}}
+%\newcommand{\task}{\ensuremath{\cal T}}
 \newcommand{\plan}{\ensuremath{\pi}}
 \newcommand{\plans}{\ensuremath{\Pi}}
-\newcommand{\alltasks}{\ensuremath{\cal T}}
+%\newcommand{\alltasks}{\ensuremath{\cal T}}
 \newcommand{\allplans}{\ensuremath{\cal P}}
 \newcommand{\true}{\ensuremath{\mathit{true}}}
 \newcommand{\false}{\ensuremath{\mathit{false}}}
@@ -85,6 +86,7 @@ Proof.}\hspace*{0.5em}}{\qed}
 
 \newcommand{\modelsof}[2]{\ensuremath{{\cal M}_#1(#2)}}
 \newcommand{\entails}[3]{\ensuremath{#1 \models #2 \Rightarrow #3}}
+\newcommand{\notentails}[3]{\ensuremath{#1 \not\models #2 \Rightarrow #3}}
 \renewcommand{\iff}[3]{\ensuremath{#1 \models #2 \Leftrightarrow #3}}
 \renewcommand{\equiv}[2]{\ensuremath{[#2]_{#1}}}
 %
@@ -107,6 +109,8 @@ Proof.}\hspace*{0.5em}}{\qed}
 \newcommand{\acts}{\ensuremath{A}}
 \newcommand{\init}{\ensuremath{I}}
 \newcommand{\goal}{\ensuremath{G}}
+\newcommand{\goalhard}{\ensuremath{G^{\text{\textup{hard}}}}}
+\newcommand{\goalsoft}{\ensuremath{G^{\text{\textup{soft}}}}}
 \newcommand{\cost}{{\ensuremath{c}}}
 \newcommand{\pre}{\ensuremath{\mathit{pre}}}
 \newcommand{\eff}{\ensuremath{\mathit{eff}}}

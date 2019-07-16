@@ -39,66 +39,66 @@
 
 \input{commands.tex}
 
+\nocopyright
+
 
 \begin{document}
 
-\title{Explaining the Space of Plans through Plan-Property Dependencies}
+\title{A New Approach to Plan-Space Explanation:\\ Analyzing Plan-Property Dependencies in Oversubscription Planning}
 
-%\author{Submission \#????}
+\author{Submission \#????}
 
-\author{
-	Rebecca Eifler$^1$\and
-	Michael Cashmore$^2$\and
-	J\"org Hoffmann$^1$\and
-	Daniele Magazzeni$^2$\and
-	Marcel Steinmetz$^1$\\
-	%\affiliations
-	$^1$Saarland University, Saarland Informatics Campus, Saarbr\"ucken, Germany\\
-	$^2$King's College London, Department of Informatics, London, UK\\
-	%\emails
-	\{lastname\}@cs.uni-saarland.de,
-	\{firstname.lastname\}@kcl.ac.uk 
-}
+% Joerg: this needs to be adappted to AAAI author guidelines
+%
+%% \author{Rebecca Eifler$^1$\and
+%% 	Michael Cashmore$^2$\and
+%% 	J\"org Hoffmann$^1$\and
+%% 	Daniele Magazzeni$^2$\and
+%% 	Marcel Steinmetz$^1$\\
+%% 	%\affiliations
+%% 	$^1$Saarland University, Saarland Informatics Campus, Saarbr\"ucken, Germany\\
+%% 	$^2$King's College London, Department of Informatics, London, UK\\
+%% 	%\emails
+%% 	\{lastname\}@cs.uni-saarland.de,
+%% 	\{firstname.lastname\}@kcl.ac.uk 
+%% }
 
 \maketitle
 
 \begin{abstract}
-A key problem in explainable AI planning is to elucidate decision
-rationales. User questions in this context are often contrastive,
-taking the form ``Why do A rather than B?'' \joerg{bit of a mismatch
-  between this and the ``properties'' B and C below}. Answering such a
-question requires a statement about the space of possible plans. We
-propose to do so through plan-property dependencies, where plan
-properties are Boolean properties of plans the user is interested in,
-and dependencies are entailment relations in plan space. The answer to
-the above question then consists of those properties C entailed by
-B. We introduce a formal framework for such dependency analysis. We
-instantiate and operationalize that framework for the case of
-dependencies between goals in oversubscription planning.
+In many usage scenarios of AI Planning technology, users will want not
+just a plan $\pi$ but an explanation of the space of possible plans,
+justifying $\pi$. In particular, in oversubscription planning where
+not all goals can be achieved, users may ask why a conjunction $A$ of
+goals is not achieved by $\pi$. We propose to answer this kind of
+question with the goal conjunctions $B$ excluded by $A$, \ie, that
+could not be achieved were $A$ enforced. We formalize this approach in
+terms of plan-property dependencies, where plan properties are
+propositional formulas over the goals achieved by a plan, and
+dependencies are entailment relations in plan space. We introduce
+algorithms for identifying dependencies of the form $\bigwedge_{a \in
+  A} a \Rightarrow \neg \bigwedge_{b \in B} b$, \emph{globally} across
+a given set of plan properties, or \emph{locally} computing the
+implications of a single given plan property (user question)
+$\bigwedge_{a \in A} a$. We show how, via compilation, one can analyze
+dependencies between a richer form of plan properties, referring to
+the action subsets touched by the plan. We run comprehensive
+experiments on adapted IPC benchmarks, and find that the suggested
+analyses can be feasible even at the global level, and become
+significantly more effective at the local level.
 %
-% Joerg: the nogood learning is after all not super important for
-% performance; whereas the compilations really are central to this
-% paper.
-%
-%% , leveraging and extending recent nogood learning methods for
-%% computational efficiency. We show that more general plan properties
-%% can be compiled into this special case.
-%
-More powerful plan properties can be compiled into that special case.
-%
-We show experimentally that, in a variety of benchmarks, the suggested
-analyses can be feasible and produce compact answers for human
-inspection.
-%
-%% A key problem in explainable AI planning is to answer user questions
-%% asking to elucidate decision rationales, \eg, ``Why do A rather than
-%% B?'' This requires an explanation of the space of possible plans. We
-%% propose to address this through the analysis of a set of plan
-%% properties, identifying their dependencies in terms of entailment
-%% relations in plan space. We introduce a generic formal framework for
-%% such dependency analysis. We instantiate and operationalize that
-%% framework for the case of dependencies between goals in
-%% oversubscription planning.
+%% A key problem in explainable AI planning is to elucidate decision
+%% rationales. User questions in this context are often contrastive,
+%% taking the form ``Why do A rather than B?'' \joerg{bit of a mismatch
+%%   between this and the ``properties'' B and C below}. Answering such a
+%% question requires a statement about the space of possible plans. We
+%% propose to do so through plan-property dependencies, where plan
+%% properties are Boolean properties of plans the user is interested in,
+%% and dependencies are entailment relations in plan space. The answer to
+%% the above question then consists of those properties C entailed by
+%% B. We introduce a formal framework for such dependency analysis. We
+%% instantiate and operationalize that framework for the case of
+%% dependencies between goals in oversubscription planning.
 %% %
 %% % Joerg: the nogood learning is after all not super important for
 %% % performance; whereas the compilations really are central to this
@@ -118,21 +118,20 @@ inspection.
 
 \input{introduction}
 
+\input{background}
+
 \input{framework}
 
-\input{goaldep}
+\input{algorithms}
 
-\input{compilation}
-
-\input{illustrative-example}
+\input{actionsetprops}
 
 \input{experiments}
 
-%\input{related}
+\input{related}
 
 \input{conclusion}
 
-%\input{examples}
 
 %% \section*{Acknowledgments}
 %
@@ -145,30 +144,18 @@ inspection.
 %% thank J.\ Benton, Minh Do, Jeremy Frank, and David Smith for
 %% insightful discussions.
 
-\ifdefined\longflagdefined
 
 \bibliographystyle{named}
 \bibliography{abbreviations,biblio,crossref}
 
-\else 
-
-\bibliographystyle{named}
-\bibliography{abbreviations,biblio,crossref-short}
-
-\fi
 
 
 
-
-
-\ifdefined\suppflagdefined
 
 \appendix
 
 \input{comments_appendix.tex}
-\input{data-action-set-properties}
 
-\fi
 
 
 

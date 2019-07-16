@@ -1,73 +1,48 @@
-\section{Computing Goal-Property Dependencies}
+\section{Computing Goal-Exclusion Explanations}
 \label{algorithms}
 
-\joerg{0.5--1 page: spell out ijcai version; emphasize novel aspects,
-  discuss/mention related work in conflict analysis; explicitly
-  distinguish global vs local analysis, probably subsections; start
-  with global, motivated by pointing out that local will be tackled by
-  simple variant of this same algorithm; illustrative example with
-  goal fact dependencies from previous section, use for brief
-  illustration of bottom-up/top-down, but not complete ie no actual
-  MUGS}
+%% \joerg{0.5--1 page: spell out ijcai version; emphasize novel aspects,
+%%   discuss/mention related work in conflict analysis; explicitly
+%%   distinguish global vs local analysis, probably subsections; start
+%%   with global, motivated by pointing out that local will be tackled by
+%%   simple variant of this same algorithm; illustrative example with
+%%   goal fact dependencies from previous section, use for brief
+%%   illustration of bottom-up/top-down}
 
-local alg: bottom-up start from A; top-down dont allow temove facts from Aq
-
-mention specificity to particular plan here? ie only B true on plan?
-how would algorithms change given this?
-
-\joerg{ijcai text snippets:}
-
-%% \joerg{0.75 -- 1 page(s) joerg}
-
-We now instantiate our framework with a concrete use case:
-dependencies between goals in oversubscription planning, where the
-question addressed is which combinations of (soft) goals exclude which
-other combinations. In Section~\ref{compilation}, we will show how to
-compile a more powerful plan property language into this special case.
+We now explain our algorithms for computing local and global
+goal-exclusion explanations. We start with the algorithms for global
+ones, as local explanations can be computed with a simple modification
+of these.
 
 
 
 
+\subsection{Global Explanations}
+\label{algorithms:ge}
 
+The goal-exclusion GE can be read off the \defined{minimal unsolvable
+  goal subsets (MUGS)}, where $\goal' \subseteq \goalsoft$ is a MUGS
+if $\goal'$ cannot be achieved but every $\goal'' \subsetneq \goal'$
+can:
 
-
-
-\subsection{Computing the Dominant PDO-GE}
-\label{goaldep:computing}
-
-The dominant PDO-GE can be read off the \defined{minimal unsolvable
-  goal subsets (MUGS)}, where $\goal' \subseteq \goal$ is a MUGS if
-$\goal'$ cannot be achieved but every $\goal'' \subsetneq \goal'$ can:
-
-\begin{proposition}[PDO-GE from MUGS]
+\begin{proposition}[GE from MUGS]
+\label{pro:ge-from-mugs}
 Let $\task =
-(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
-be an OSP task, and \plans\ its set of plans.  
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$
+be an OSP task, and \plans\ its set of plans.
 
 Then $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigwedge_{b \in B}
-  b}$ is in the dominant PDO-GE if and only if $A \cup B$ is a MUGS.
+  b}$ is non-dominated if and only if $A \cup B$ is a MUGS.
 \end{proposition}
 
 \begin{proof}
 A \plans-entailment $\entails{\plans}{\bigwedge_{a \in A} a}{\neg
   \bigwedge_{b \in B} b}$ clearly holds iff $A \cup B$ is
-unsolvable. Dominant entailments in the PDO-GE result from
-set-inclusion minimal $A$ and $B$, corresponding to the set-inclusion
-minimality of MUGS.
+unsolvable. Non-dominated entailments result from set-inclusion
+minimal $A$ and $B$, corresponding to the set-inclusion minimality of
+MUGS.
 \end{proof}
 
-
-%% \joerg{mention relation of minimum unsolvable goal subsets/of PDE-GE
-%%   to pareto frontier somewhere?}
-
-%% \joerg{mention alternate bottom-up computation, starting at empty goal
-%%   set and adding goals til unsat. bottom-up alg generates set of
-%%   across-line unsolvabl sets; set-inclusion minimal amongst those are
-%%   the minimal unsolvable sets (they are unsolvable; any subset must be
-%%   solvable by construction; vice versa, anz minimal unsolv set results
-%%   from adding a goal to a maximal unsolvable one, so all the
-%%   maxunssets are there)}
-%
 % Joerg email top-down vs bottom-up
 %
 %% Both "top down" as we do now and "bottom up" as you suggest can be
@@ -110,6 +85,14 @@ $\emptyset$, with search steps expanding solvable nodes, and children
 adding one more goal fact. Upon termination, the MUGS can be easily
 obtained from the unsolvable search nodes.
 
+In both algorithms, the worst-case number of planner calls is
+exponential in $|\goalsoft|$. Intuitively, SysW is better suited if
+solvable goal subsets are large (and are thus encountered early on),
+while SysS is better suited if solvable goal subsets are small
+(unsolvable subsets encountered early on). Search enhancements are
+important for scalability in the number of soft goals whose
+dependencies are being analyzed.
+
 % Rebecca's notes on the implementation:
 %
 %% We fix the order of the goal facts: [g0, g1, …, gn]
@@ -132,14 +115,20 @@ obtained from the unsolvable search nodes.
 %%         reason: a superset of the goal facts has been proved solvable and therefore is not expanded further
 %%         → you know that this node is solvable without running the planner
 
-In both SysW and SysS, every goal set can be reached from the start
-node by permutations of the same goal-fact removal/addition steps. We
-avoid duplicate planner calls by caching. We give goal sets unique
-integer IDs, for fast cache lookup, and to fix the expansion order so
-that we always know whether or not we have generated a node before.
+In both SysW and SysS, goal sets can be reached from the start node by
+permutations of goal-fact removal/addition steps. We avoid duplicate
+planner calls by caching. We give goal sets unique integer IDs, for
+fast cache lookup and to fix an expansion order. That order serves for
+effective results re-use, as follows. Consider any parent node $G'$
+and child node $G''$ in the search. There are three possibilities: 1)
+$id(G'') > id(G')$: $G''$ not seen yet, insert into the open list; 2)
+$id(G'') < id(G')$ and result for $G''$ cached: use that result; 3)
+$id(G'') < id(G')$ and result for $G''$ not cached: then the search
+was previously cut off above $G''$, so we know that $G''$ is solvable
+(SysW) respectively unsolvable (SysS).
 
-As a non-trivial search enhancement, we created synergy with recent
-nogood learning techniques, \defined{conjunction learning}
+As another search enhancement, we created synergy with recent nogood
+learning techniques, \defined{conjunction learning}
 \cite{steinmetz:hoffmann:ai-17} and \defined{trap learning}
 \cite{steinmetz:hoffmann:ijcai-17}. These techniques refine dead-end
 detection methods (nogoods) based on the unsolvable states encountered
@@ -147,13 +136,16 @@ in state space search on a planning task. As the children tasks in our
 searches are closely related to their parents, the refined nogoods are
 likely to be useful still. So we \defined{transfer} the nogoods along
 search paths, resulting in iteratively stronger and stronger
-nogoods. For both conjunction learning and trap learning, the nogoods
-learned depend on the goal, so that only some of the nogoods remain
-valid for transfer in SysW where children remove goals. We designed
-simple methods to identify this nogood subset, keeping track of goal
-dependencies in conjunction learning, and re-asserting trap validity
-in trap learning.
-%
+nogoods. For both forms of learning, the nogoods learned depend on the
+goal, so that only some of the nogoods remain valid for transfer in
+SysW where children remove goals. We designed the following methods to
+identify that nogood subset. In conjunction learning, we remember the
+subset $G'$ of goals which became unreachable in a learning step, so
+that validity is preserved so long as at least one member of $G'$ is
+still present. In trap learning, the validity test checks, for every
+end node of the trap, whether that node is still either mutex with the
+goal, or is still proved unsolvable by the heuristic function.
+
 % Joerg: hC remains valid anyhow; when learning a clause from hC,
 % Marcel remembers the set of goals that became unreachable; validity
 % checking is then simply whether one of these goals is still
@@ -181,13 +173,91 @@ in trap learning.
 %% %% learned in this approach, transferring thjose that depend only on the
 %% %% goals still present in children nodes.
 
-Yu et al.\ \shortcite{yu:etal:jair-17} perform an analysis related to
-MUGS, to suggest goals to drop in oversubscribed situations. They
-address conditional temporal problems (a form of conditional temporal
-plans\joerg{planning not plans?}), and leverage previous conflict analysis methods in that
-area. It remains a question for future work whether such conflict
-analysis could inspire different analysis methods in our planning
-framework.
+We acknowledge that the basic structure of SysW and SysS is simple,
+and relates to various prior works addressing conflict analysis in one
+or the other form. Our contribution here consists in assembling the
+algorithms in a form suited to our purposes, plus small enhancements
+as described. We briefly discuss related work later on, in a separate
+section.
+
+
+
+
+
+
+\subsection{Local Explanations}
+\label{algorithms:le}
+
+For local explanation, we are given a soft-goal subset $A$ whose
+non-dominated entailments we wish to identify. This corresponds to
+fixing $A$ and minimizing only $B$ -- which in turn corresponds to
+moving $A$ into the hard goals and computing MUGS on the modified
+task.
+
+Precisely, assume an OSP task $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$,
+with set of plans \plans. Consider the modified task $\task' :=
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard
+\cup A,\allowbreak\goalsoft \setminus
+A,\allowbreak\costbound)$. Clearly, we have the goal exclusion
+$\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigwedge_{b \in B} b}$
+iff $B$ is unsolvable in $\task'$; and $B$ is minimal in $\task'$ iff
+the goal exclusion is minimal given $A$. So the MUGS in $\task'$ yield
+exactly the goal-exclusion LE for $A$ as per
+Definition~\ref{def:local-explanation}. 
+
+% Joerg: version using stronger incorrect result that B is MUGS
+% in task'
+%
+%% For local explanation, we are given a soft-goal subset $A$ whose
+%% non-dominated entailments we wish to identify. This can be done by
+%% computing the goal-exclusion GE and collecting all
+%% $\entails{\plans}{\bigwedge_{a \in A'} a}{\neg \bigwedge_{b \in B}
+%% b}$ where $A \supseteq A'$ ==> NOT TRUE, B CN BE SMALLER AS A GETS
+%% BIGGER. But it can be done more effectively by restricting the
+%% computation to the relevant part of the GE.  Namely, we can compute
+%% MUGS in a modified task where $A$ is moved to \goalhard:
+%
+%% \begin{proposition}[LE from MUGS]
+%% \label{pro:le-from-mugs}
+%% Let $\task =
+%% (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$
+%% be an OSP task, \plans\ its set of plans, and $A \subseteq \goalsoft$. 
+%
+%% Then there exists a non-dominated goal exclusion
+%% $\entails{\plans}{\bigwedge_{a \in A'} a}{\neg \bigwedge_{b \in B} b}$
+%% where $A \supseteq A'$ if and only if $B$ is unsolvable in $\task' :=
+%% (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard
+%% \cup A,\allowbreak\goalsoft \setminus A,\allowbreak\costbound)$.
+%% \end{proposition}
+%
+%% \begin{proof}
+%% From left to right: $A' \cup B$ is a MUGS in $\task$ by
+%% Proposition~\ref{pro:ge-from-mugs}. Therefore, as $A \supseteq A'$,
+%% $B$ is unsolvable in $\task'$. As $A' \cup B$ is minimal in $\task$,
+%% $B$ is minimal in $\task'$ \joerg{hm. is this true? If we add more
+%%   stuff to $A'$, we might be able to drop some stuff from $B$,
+%%   right? which means that $B$ is not necessarily minimal in $\task'$}.
+%
+%% From right to left: As $B$ is unsolvable in $\task'$, $A \cup B$ is
+%% unsolvable in $\task$, \ie, $\entails{\plans}{\bigwedge_{a \in A'}
+%%   a}{\neg \bigwedge_{b \in B} b}$. As $B$ is minimal in $\task'$, the
+%% right-hand side of this goal exclusion is minimal in
+%% $\task$. Minimizing its left-hand side results in the desired
+%% non-dominated goal exclusion.
+%% \end{proof}
+
+Observe that $\task'$ has less soft goals, so (worst-case) MUGS
+computation becomes easier, reflecting the advantage of local analysis
+over global analysis. That advantage grows with $|A|$, \ie,
+intuitively, with how specific the user question is. At the extreme
+end, $A = \goalsoft$ and both SysW and SysS on $\task'$ contain a
+single search node testing solvability of $\goalhard \cup \goalsoft$.
+%
+If we restricted the answer to entailments $\neg \bigwedge_{b \in B}
+b$ where a current plan \plan\ satisfies $\plan \models \bigwedge_{b
+  \in B} b$, then we could remove all other $B$ from \goalsoft\ in
+$\task'$, further simplifying the computation.
 
 
 
@@ -196,6 +266,17 @@ framework.
 
 
 
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% \subsection{Disjunctive Goal Exclusion}
 %% \label{goaldep:disjunctive}
@@ -209,7 +290,7 @@ framework.
 
 %% \begin{definition}[Disjunctive Goal Exclusion]
 %% Let $\task =
-%% (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
+%% (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$
 %% be an OSP task, and \plans\ its set of plans.  
 
 %% The \defined{PDO for disjunctive goal exclusion (PDO-DGE)} is the PDO for
@@ -235,7 +316,7 @@ framework.
 
 %% \begin{proposition}[PDO-DGE from PDO-GE]\label{pro:pdodge-from-pdoge}
 %% Let $\task =
-%% (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goal,\allowbreak\costbound)$
+%% (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$
 %% be an OSP task, and \plans\ its set of plans.  
 
 %% Then $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in B}
