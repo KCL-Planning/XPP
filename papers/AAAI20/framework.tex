@@ -11,9 +11,8 @@ We next spell out our framework for plan properties, entailment
 relations between them, and the forms of explanations we aim at. We do
 so in FDR-based OSP as defined above, but in principle our definitions
 are generic and can be instantiated for arbitrary plan properties and
-planning frameworks. 
-%
-%We will briefly discuss the generic view in the text.
+planning frameworks. We will discuss the definitions from that
+perspective.
 
 
 
@@ -82,7 +81,7 @@ entailment: $\phi \Rightarrow \psi$ implies that
 $\entails{\plans}{\phi}{\psi}$, but not vice versa. \plans-entailment
 captures entailments specific to the ``knowledge base'' \plans. For
 example, in our illustrative NoMystery task, say that all goals are
-soft, $T_0$ has initial fuel supply $12$, and $T_1$ has no fuel. Then
+soft, $T_0$ has initial fuel supply $13$, and $T_1$ has no fuel. Then
 $\entails{\plans}{at(P_0,L_4)}{\neg (at(P_1,L_3) \wedge at(P_2,L_5))}$
 because, if we achieve the goal for $P_0$, there is insufficient fuel
 to transport both other packages. If we set the initial fuel supply of
@@ -107,13 +106,16 @@ be an OSP task, and \plans\ its set of plans.
 
 A \defined{goal exclusion} is an entailment of the form
 $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigwedge_{b \in B}
-  b}$. The entailment is \defined{non-dominated} if there is no pair
+  b}$. 
+%
+The entailment is \defined{non-dominated} if there is no pair
 $(A',B')$ where $A' \subseteq A$, $B' \subseteq B$, $(A',B') \neq
 (A,B)$, and $\entails{\plans}{\bigwedge_{a \in A'} a}{\neg
-  \bigwedge_{b \in B'} b}$. The entailment is \defined{non-dominated
-  given $A$} if there is no $B'$ where $B' \subsetneq B$ and
-$\entails{\plans}{\bigwedge_{a \in A'} a}{\neg \bigwedge_{b \in B'}
-  b}$.
+  \bigwedge_{b \in B'} b}$.
+%
+The entailment is \defined{non-rhs-dominated} if there is no $B'$
+where $B' \subsetneq B$ and $\entails{\plans}{\bigwedge_{a \in A}
+  a}{\neg \bigwedge_{b \in B'} b}$.
 \end{definition}
 
 Goal exclusions are of interest in OSP as they reflect the detailed
@@ -122,8 +124,9 @@ non-dominated goal exclusion has subset-minimal $A$ and $B$. This
 dominates entailments with larger $A$ and/or $B$ as it has a weaker
 left-hand side $A$ (smaller conjunction) entailing a stronger
 right-hand side $\neg B$ (smaller disjunction, after moving the
-negation inside). If $A$ is fixed, then only $B$ needs be minimal. We
-will use non-dominated entailments to give more compact explanations.
+negation inside). If $A$ is fixed, then only the right-hand side $B$
+needs be minimal. We will use non-dominated entailments to give more
+compact explanations.
 
 % Note: non-dominated goal exclusions have disjoint A,B: if g in A cap
 % B, then A ==> B \ {g} is still valid as g is true whenever A is.
@@ -151,15 +154,15 @@ properties \plans-entailed by $\phi$.
 %
 For $\phi = \bigwedge_{a \in A} a$, the \defined{goal-exclusion LE}
 for $\phi$ is $\{\psi \mid \psi = \neg \bigwedge_{b \in B} b,
-\entails{\plans}{\phi}{\psi} \text{ is non-dominated given } A\}$.
+\entails{\plans}{\phi}{\psi} \text{ is non-rhs-dominated}\}$.
 \end{definition}
 
 Such an answer makes sense if the entailed properties $\psi$ are
-undesirable. This is the case, in particular, for goal-exclusion local
-explanations. In our example, the answer to $\phi = at(P_0,L_4)$ ``Why
-do you not achieve the goal for $P_0$?'' would be $\psi = \neg
-(at(P_1,L_3) \wedge at(P_2,L_5))$ ``Because that would necessitate to
-forego the goal for either $P_1$ or $P_2$''.
+undesirable. This is the case, in particular, for goal-exclusion
+LEs. In our example with $T_0$ fuel $13$, the answer to $\phi =
+at(P_0,L_4)$ ``Why do you not achieve the goal for $P_0$?'' would be
+$\psi = \neg (at(P_1,L_3) \wedge at(P_2,L_5))$ ``Because that would
+necessitate to forego the goal for either $P_1$ or $P_2$''.
 
 From a general perspective, plan properties here serve as an
 abstraction level at which to explain \plans\ to a user. The
@@ -183,9 +186,9 @@ particular method for generating candidate plans \plan. \joerg{or
   should we actually run experiments with local questions from
   concrete plans?}
 
-Our notion of global explanation arises directly from the above.
-Instead of showing the implications of one specific plan property, one
-can show all plan-property implications:
+A canonical notion of global explanation arises directly from the
+above.  Instead of showing the implications of one specific plan
+property, one can show all such implications:
 
 \begin{definition}[Global Explanation (GE)]
 Let $\task =
@@ -207,16 +210,24 @@ $\entails{\plans}{\phi}{\psi}$.
 \end{definition}
 
 The only somewhat non-obvious design decision here is to group plan
-properties into equivalence classes, to reduce the size and redundancy
-of the GE. That said, while this definition makes sense at the formal
-level, it has several practicality issues. Computationally, with many
-plan properties (here: all propositional formulas over \goalsoft),
-many equivalence classes (here: subsets of satisfying $\plan \in
-\plans$), and with the complexity of deciding even a single entailment
-relation (here: \pspace-complete as it subsumes plan existence
-\cite{bylander:ai-94}), producing a GE is likely to be
-infeasible. Conceptually, the size of a GE makes it more than
-questionable whether the GE can be processed by a human user.
+properties into equivalence classes. That said, while this definition
+makes sense at the formal level, it is of doubtful practical
+value. There can be many plan properties (here: all propositional
+formulas over \goalsoft) and many equivalence classes (here: in the
+worst case, one class for every set of truth-value assignments to
+$\goalsoft$). This makes it questionable whether the GE can be
+processed by a user.
+%
+% Joerg: de-emphasizing computational aspectb her as not much better
+% in restricted def
+%
+%% has several practicality issues. From a computational perspective,
+%% there can be many plan properties (here: all propositional formulas
+%% over \goalsoft) and many equivalence classes (here: subsets of
+%% satisfying $\plan \in \plans$). Deciding even a single entailment
+%% relation can be hard (here: \pspace-complete as it subsumes plan
+%% existence \cite{bylander:ai-94}).  the size of a GE makes it more than
+%% questionable whether the GE can be processed by a human user.
 
 It therefore makes sense to focus on more limited forms of GEs, and to
 find ways to represent these more compactly. Here, we focus on
@@ -240,9 +251,10 @@ non-dominated goal exclusion.
 %% b}$.
 \end{definition}
 
-Here we focus exclusively on goal exclusions, ignoring all other
-\plans-entailments. Plan properties can then no longer entail each
-other, so that the equivalence classes trivialize.
+Given the form $\entails{\plans}{\bigwedge_{a \in A} a}{\neg
+  \bigwedge_{b \in B} b}$ of goal exclusions, when ignoring all other
+\plans-entailments, plan properties can no longer entail each other
+and the equivalence classes trivialize.
 %
 % Joerg: now introduced above
 %
@@ -274,8 +286,23 @@ Our results on benchmarks suggest that the goal-exclusion GE can be
 feasible to compute, and often produces answers sufficiently compact
 for human inspection.
 
-\joerg{can we give an example goal-exclusion GE from nomystery here?
-  with goals only ie no action-set properties? we're free to set fuel
-  levens small, to keep this feasible. e.g. with T0 12 and T1 0 as
-  above?}
-
+Consider again our example, with $T_0$ fuel $13$. It is not difficult
+to determine that this example has exactly three non-dominated goal
+exclusions, namely $\entails{\plans}{P_0}{\neg (P_1 \wedge P_2)}$,
+$\entails{\plans}{P_1}{\neg (P_0 \wedge P_2)}$, and
+$\entails{\plans}{P_2}{\neg (P_0 \wedge P_1)}$ when taking the freedom
+to notate goal facts by the respective packages.
+%
+%% $\entails{\plans}{at(P_0,L_4)}{\neg (at(P_1,L_3) \wedge
+%%   at(P_2,L_5))}$; $\entails{\plans}{at(P_1,L_3)}{\neg (at(P_0,L_4)
+%%   \wedge at(P_2,L_5))}$; and $\entails{\plans}{at(P_2,L_5))}{\neg
+%%   (at(P_0,L_4 \wedge at(P_1,L_3))}$.
+%
+So the size of the goal-exclusion GE, in terms of the ordering
+relations it contains, is three. The reader will have noticed here
+that this GE is equivalent to the statement ``\goalsoft\ is not
+solvable as a whole, but each of its subsets is''. Indeed, as we see
+next, the special case of plan-property dependencies addressed here is
+equivalent to the analysis of minimal unsolvable goal subsets.  This
+further facilitates compact representation, and we exploit it in our
+algorithms.

@@ -9,10 +9,9 @@
 %%   goal fact dependencies from previous section, use for brief
 %%   illustration of bottom-up/top-down}
 
-We now explain our algorithms for computing local and global
-goal-exclusion explanations. We start with the algorithms for global
-ones, as local explanations can be computed with a simple modification
-of these.
+We now explain our algorithms for computing goal-exclusion
+explanations. We start with the algorithms for GEs, from which those
+for LEs follow easily.
 
 
 
@@ -21,8 +20,8 @@ of these.
 \label{algorithms:ge}
 
 The goal-exclusion GE can be read off the \defined{minimal unsolvable
-  goal subsets (MUGS)}, where $\goal' \subseteq \goalsoft$ is a MUGS
-if $\goal'$ cannot be achieved but every $\goal'' \subsetneq \goal'$
+  goal subsets (MUGS)}, where $\goal \subseteq \goalsoft$ is a MUGS
+if $\goal$ cannot be achieved but every $\goal' \subsetneq \goal$
 can:
 
 \begin{proposition}[GE from MUGS]
@@ -66,18 +65,24 @@ MUGS.
 %% (One can even think about interleaving bottom-up with top-down in
 %% an intelligent way, but that's for future work)
 
-Our computational problem thus boils down to computing all MUGS. This
-can be done through a search over goal sets, that we refer to as
-\defined{systematic weakening (SysW)}:
+Observe that, from a representational point of view, this means that
+we can represent our explanations even more compactly, by showing MUGS
+$\goal$ instead of the corresponding exclusion entailments with $A
+\cup B = \goal$. In our example, the only MUGS is $\{at(P_0,L_4),
+at(P_1,L_3), at(P_2,L_5)\}$.
+
+From a computational point of view, our problem now boils down to
+computing all MUGS. This can be done through a search over goal sets,
+that we refer to as \defined{systematic weakening (SysW)}:
 \begin{enumerate}[(1)]
 \item the start node of the search is \goal; 
-\item each search step selects an open node $\goal'$, calls a planner
-  to test whether $\goal'$ is solvable in \task, caches the result,
-  and expands $\goal'$ if it is unsolvable;
-\item the children of a node $\goal'$ are those $\goal'' \subset
-  \goal'$ where $|\goal''| = |\goal'|-1$.
+\item each search step selects an open node $\goal$, calls a planner
+  to test whether $\goal$ is solvable in \task, caches the result,
+  and expands $\goal$ if it is unsolvable;
+\item the children of a node $\goal$ are those $\goal' \subset
+  \goal$ where $|\goal'| = |\goal|-1$.
 \end{enumerate}
-Upon termination, the MUGS are those nodes $\goal'$ all of whose
+Upon termination, the MUGS are those nodes $\goal$ all of whose
 children are solvable. 
 
 Dually, \defined{systematic strenghtening (SysS)} starts from
@@ -86,12 +91,13 @@ adding one more goal fact. Upon termination, the MUGS can be easily
 obtained from the unsolvable search nodes.
 
 In both algorithms, the worst-case number of planner calls is
-exponential in $|\goalsoft|$. Intuitively, SysW is better suited if
-solvable goal subsets are large (and are thus encountered early on),
-while SysS is better suited if solvable goal subsets are small
-(unsolvable subsets encountered early on). Search enhancements are
-important for scalability in the number of soft goals whose
-dependencies are being analyzed.
+exponential in $|\goalsoft|$, \ie, the number of goals whose
+dependencies are being analyzed. Intuitively, SysW is better suited if
+solvable goal subsets are large (and thus encountered early), while
+SysS is better suited if they are small (unsolvable subsets
+encountered early). For illustration, in the example SysW expands the
+single search node \goalsoft, while SysS expands all solvable subsets
+before reaching \goalsoft.
 
 % Rebecca's notes on the implementation:
 %
@@ -115,17 +121,18 @@ dependencies are being analyzed.
 %%         reason: a superset of the goal facts has been proved solvable and therefore is not expanded further
 %%         → you know that this node is solvable without running the planner
 
-In both SysW and SysS, goal sets can be reached from the start node by
-permutations of goal-fact removal/addition steps. We avoid duplicate
-planner calls by caching. We give goal sets unique integer IDs, for
-fast cache lookup and to fix an expansion order. That order serves for
-effective results re-use, as follows. Consider any parent node $G'$
-and child node $G''$ in the search. There are three possibilities: 1)
-$id(G'') > id(G')$: $G''$ not seen yet, insert into the open list; 2)
-$id(G'') < id(G')$ and result for $G''$ cached: use that result; 3)
-$id(G'') < id(G')$ and result for $G''$ not cached: then the search
-was previously cut off above $G''$, so we know that $G''$ is solvable
-(SysW) respectively unsolvable (SysS).
+
+Search enhancements are important for scalability. In particular, goal
+sets can be reached from the start node by permutations of goal-fact
+removal/addition steps. For effective results re-use, we assign goal
+sets unique integer IDs and fix an ascending expansion order. Namely,
+when expanding a node $\goal$ and considering a possible child
+$\goal'$, there are three possibilities: 1.\ $id(\goal') > id(\goal)$:
+$\goal'$ not seen yet, insert into open list; 2.\ $id(\goal') <
+id(\goal)$ and result for $\goal'$ cached: use that result;
+3.\ $id(\goal') < id(\goal)$ and result for $\goal'$ not cached: then
+the search was previously cut off above $\goal'$, so we know that
+$\goal'$ is solvable (SysW) respectively unsolvable (SysS).
 
 As another search enhancement, we created synergy with recent nogood
 learning techniques, \defined{conjunction learning}
@@ -140,11 +147,12 @@ nogoods. For both forms of learning, the nogoods learned depend on the
 goal, so that only some of the nogoods remain valid for transfer in
 SysW where children remove goals. We designed the following methods to
 identify that nogood subset. In conjunction learning, we remember the
-subset $G'$ of goals which became unreachable in a learning step, so
-that validity is preserved so long as at least one member of $G'$ is
-still present. In trap learning, the validity test checks, for every
-end node of the trap, whether that node is still either mutex with the
-goal, or is still proved unsolvable by the heuristic function.
+subset $\goal$ of goals which became unreachable in a learning step,
+so that validity is preserved so long as at least one member of
+$\goal$ is still present. In trap learning, the validity test checks,
+for every end node of the trap, whether that node is still either
+mutex with the goal, or is still proved unsolvable by the heuristic
+function.
 
 % Joerg: hC remains valid anyhow; when learning a clause from hC,
 % Marcel remembers the set of goals that became unreachable; validity
@@ -160,10 +168,10 @@ goal, or is still proved unsolvable by the heuristic function.
 %% \hc\ reasons about an enlarged set of conjunctions, in a manner geared
 %% at quickly identifying unsolvable states in \task. Observe that this
 %% naturally lends itself to \defined{\hc-transfer} in systematic
-%% weakening: the refined \hc\ from an unsolvable node $\goal'$ is likely
+%% weakening: the refined \hc\ from an unsolvable node $\goal$ is likely
 %% to be a good unsolvability detector for the closely related children
-%% tasks with goals $\goal'' \subset \goal'$ where $|\goal''| =
-%% |\goal'|-1$. We thus transfer the learned \hc\ functions downwards
+%% tasks with goals $\goal' \subset \goal$ where $|\goal'| =
+%% |\goal|-1$. We thus transfer the learned \hc\ functions downwards
 %% along the search paths in systematic weakening, iteratively yielding
 %% stronger and stronger unsolvability detectors.
 %% %
@@ -189,7 +197,7 @@ section.
 \label{algorithms:le}
 
 For local explanation, we are given a soft-goal subset $A$ whose
-non-dominated entailments we wish to identify. This corresponds to
+non-rhs-dominated entailments we wish to identify. This corresponds to
 fixing $A$ and minimizing only $B$ -- which in turn corresponds to
 moving $A$ into the hard goals and computing MUGS on the modified
 task.
@@ -202,9 +210,9 @@ with set of plans \plans. Consider the modified task $\task' :=
 A,\allowbreak\costbound)$. Clearly, we have the goal exclusion
 $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigwedge_{b \in B} b}$
 iff $B$ is unsolvable in $\task'$; and $B$ is minimal in $\task'$ iff
-the goal exclusion is minimal given $A$. So the MUGS in $\task'$ yield
+the goal exclusion is non-rhs-dominated. So the MUGS in $\task'$ yield
 exactly the goal-exclusion LE for $A$ as per
-Definition~\ref{def:local-explanation}. 
+Definition~\ref{def:local-explanation}.
 
 % Joerg: version using stronger incorrect result that B is MUGS
 % in task'
@@ -247,17 +255,17 @@ Definition~\ref{def:local-explanation}.
 %% non-dominated goal exclusion.
 %% \end{proof}
 
-Observe that $\task'$ has less soft goals, so (worst-case) MUGS
-computation becomes easier, reflecting the advantage of local analysis
-over global analysis. That advantage grows with $|A|$, \ie,
-intuitively, with how specific the user question is. At the extreme
-end, $A = \goalsoft$ and both SysW and SysS on $\task'$ contain a
-single search node testing solvability of $\goalhard \cup \goalsoft$.
-%
-If we restricted the answer to entailments $\neg \bigwedge_{b \in B}
-b$ where a current plan \plan\ satisfies $\plan \models \bigwedge_{b
-  \in B} b$, then we could remove all other $B$ from \goalsoft\ in
-$\task'$, further simplifying the computation.
+Observe that $\task'$ has less soft goals, so MUGS computation becomes
+easier, reflecting the advantage of local analysis over global
+analysis. That advantage grows with $|A|$, \ie, intuitively, with how
+specific the user question is. At the extreme end, $A = \goalsoft$ and
+both SysW and SysS on $\task'$ contain a single search node testing
+solvability of $\goalhard \cup \goalsoft$.\footnote{As previously
+  mentioned, given a current plan \plan\ one could restrict the answer
+  to entailments $\neg \bigwedge_{b \in B} b$ where $\plan \models
+  \bigwedge_{b \in B} b$. This corresponds to removing all $g$ with
+  $\plan \not\models g$ from \goalsoft\ in $\task'$, further
+  simplifying the computation.}
 
 
 
