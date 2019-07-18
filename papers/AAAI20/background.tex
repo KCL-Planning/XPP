@@ -8,8 +8,7 @@
 %% \joerg{ijcai text snippets:}
 
 We consider the \emph{finite-domain representation (FDR)} framework
-\cite{backstrom:nebel:ci-95,helmert:ai-09}, with finite-domain state
-variables.
+\cite{backstrom:nebel:ci-95,helmert:ai-09}.
 %
 An FDR task \defined{\task} is a tuple $\task =
 (\vars,\acts,\cost,\init,\goal)$ where \vars\ is the set of
@@ -29,34 +28,45 @@ $s\apply{a}(v) = \eff_a(v)$ for those $v$ on which $\eff_a$ is
 defined. The outcome state of an iteratively applicable action
 sequence $\plan$ is denoted $s\apply{\plan}$.
 
-We address an oversubscription variant of FDR, where an
-\defined{oversubscription planning (OSP) task} is a tuple $\task =
+An \defined{oversubscription planning (OSP) task} is a tuple $\task =
 (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$
 like an FDR task but with two goals -- the \defined{hard} goal
 \goalhard\ and the \defined{soft} goal \goalsoft, assumed to be
 defined on disjoint sets of variables -- as well as an additional
 \defined{cost bound} $\costbound \in \reals^+_0$. A \defined{plan} is
-an action sequences \plan\ whose summed-up cost is $\leq \costbound$
+an action sequence \plan\ whose summed-up cost is $\leq \costbound$
 and where $\goalhard \subseteq \init\apply{\plan}$. Good plans achieve
-a ``maximally valuable'' subset of \goalsoft. OSP frameworks in the
-literature employ measurements (\eg\ goal-fact rewards) of what it
-means to be maximally valuable. Here we assume instead that the user's
-preferences over the soft goals are difficult to specify and/or
+a ``maximally valuable'' subset of \goalsoft. The latter is usually
+defined based on goal-fact rewards. Here we assume instead that the
+user's preferences over \goalsoft\ are difficult to specify and/or
 elicitate, and planning is an iterative process as described by Smith
 \shortcite{smith:aaai-12}. We are concerned with the analysis of
 plan-property dependencies to support that process.
 
-Note that this form of analysis makes sense for any planning task
-whose goal facts cannot be achieved in conjunction, for reasons other
-than a cost bound. In particular, planning with non-reproducible
-resources is of interest if the resources are insufficient to achieve
-all goals. With resources encoded as discrete FDR state variables,
-this can be viewed as a special case of our OSP formulation. In our
-experiments, we will consider the resource-constrained planning (RCP)
-benchmarks by Nakhost et al.\ \shortcite{nakhost:etal:icaps-12}, which
-allow to control resource constrainedness (basically the ratio between
-available vs.\ required resource amounts).
+% Joerg: sounds as if we're addressing unsolvable tasks like prior
+% works ...
+%
+%% Note that this form of analysis makes sense for any planning task
+%% whose goal facts cannot be achieved in conjunction, for reasons
+%% including but not limited to a cost bound. In particular, planning
+%% with non-reproducible resources is of interest if the resources are
+%% insufficient to achieve all goals. With resources encoded as discrete
+%% FDR state variables, this can be viewed as a special case of our OSP
+%% formulation. 
+%
+We will also consider planning with non-reproducible resources,
+encoded as discrete FDR state variables. This can be viewed as a
+special case of our OSP formulation. In our experiments, we will use
+the resource-constrained planning (RCP) benchmarks by Nakhost et
+al.\ \shortcite{nakhost:etal:icaps-12}, which allow to control
+resource constrainedness (basically the ratio between available
+vs.\ required resource amounts).
 
+For illustration, we will use an RCP running example from IPC
+NoMystery, a transportation domain with fuel consumption. The
+variables encode truck and package positions, actions drive trucks or
+load/unload packages.
+%
 %\begin{figure}[htb]
 \begin{wrapfigure}{r}{0.45\columnwidth}
 \vspace{-0.3cm} \hspace{-0.8cm} %
@@ -84,14 +94,10 @@ available vs.\ required resource amounts).
 \vspace{-0.3cm}
 \end{wrapfigure}
 %\end{figure}
-
-For illustration, we will use an RCP running example from IPC
-NoMystery, a transportation domain with fuel consumption. The
-variables encode truck and package positions, actions drive trucks or
-load/unload packages. Drive actions consume the fuel resource
-associated with the respective truck. The amount of fuel consumed
-depends on the road connection taken. As a concrete example task, we
-will use the task with two trucks and three packages illustrated
-above. Fuel costs are indicated at road segments. The packages are
-initially at $L_0$ (shown in blue); their goal locations are $L_4$,
-$L_3$,and $L_5$ (shown in red).
+%
+Drive actions consume the fuel resource associated with the respective
+truck. The amount of fuel consumed depends on the road connection
+taken. As a concrete example task, we will use the task with two
+trucks and three packages illustrated here. Fuel costs are indicated
+at road segments. The packages are initially at $L_0$ (shown in blue);
+their goal locations are $L_4$, $L_3$,and $L_5$ (shown in red).

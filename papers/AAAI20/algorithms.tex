@@ -9,7 +9,7 @@
 %%   goal fact dependencies from previous section, use for brief
 %%   illustration of bottom-up/top-down}
 
-We now explain our algorithms for computing goal-exclusion
+We now introduce our algorithms for computing goal-exclusion
 explanations. We start with the algorithms for GEs, from which those
 for LEs follow easily.
 
@@ -152,7 +152,11 @@ so that validity is preserved so long as at least one member of
 $\goal$ is still present. In trap learning, the validity test checks,
 for every end node of the trap, whether that node is still either
 mutex with the goal, or is still proved unsolvable by the heuristic
-function.
+function. 
+%
+Furthermore, we extended both conjunction and trap learning to deal
+with OSP plan-cost bounds. \joerg{how did we do that? something
+  interesting to say reg this?}
 
 % Joerg: hC remains valid anyhow; when learning a clause from hC,
 % Marcel remembers the set of goals that became unreachable; validity
@@ -261,7 +265,7 @@ analysis. That advantage grows with $|A|$, \ie, intuitively, with how
 specific the user question is. At the extreme end, $A = \goalsoft$ and
 both SysW and SysS on $\task'$ contain a single search node testing
 solvability of $\goalhard \cup \goalsoft$.\footnote{As previously
-  mentioned, given a current plan \plan\ one could restrict the answer
+  indicated, given a current plan \plan\ one could restrict the answer
   to entailments $\neg \bigwedge_{b \in B} b$ where $\plan \models
   \bigwedge_{b \in B} b$. This corresponds to removing all $g$ with
   $\plan \not\models g$ from \goalsoft\ in $\task'$, further

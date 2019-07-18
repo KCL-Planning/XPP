@@ -1,44 +1,42 @@
 \section{Introduction}
 \label{introduction}
 
-AI Planning technology, more specifically plan generation technology,
-serves to generate a plan $\pi$ based on a world model. If the model
-and optimization objective reflect the real world and user preference
-with absolute accuracy, or if bad plan decisions have no serious
-consequences, $\pi$ can be executed as-is. Yet in many usage
-scenarios, that is not so. As previously pointed out by Smith
-\shortcite{smith:aaai-12}, planning should, rather, be an iterative
-process in which the planning system suggests plan candidates, to be
-inspected and criticised by human users for iterative plan
-improvement. Smith's proposal was motivated primarily by space
-applications, were models are approximate, optimization objectives are
-highly complex and often implicit in the heads of the human users, and
-bad plan decisions can be highly detrimental
-\cite{citationsforthis?}. Arguably, similar characteristics apply to
-many applications, from Industry 4.0 to robot-aided disaster recovery
-\cite{citationsforthis?}.
+AI plan generation technology serves to generate a plan $\pi$ based on
+a world model. If the model and optimization objective reflect the
+real world and user preference with absolute accuracy, then $\pi$ can
+be executed as-is. Yet in many usage scenarios, that is not so. Often,
+models are approximate, optimization objectives are highly complex
+and/or implicit in the heads of the human users, and bad plan
+decisions can be highly detrimental. A prominent example are space
+applications as discussed \eg\ by Smith \shortcite{smith:aaai-12}, but
+arguably also many other applications ranging from Industry 4.0 to
+robot-aided disaster recovery. As Smith pointed out, planning should
+then be an iterative process in which the planning system suggests
+plan candidates, to be inspected and criticised by human users for
+iterative plan improvement.
 
-As Smith also pointed out, plan explanation is a crucial step of the
-iterative process, as a key means for user inspection. In particular,
-questions of the form ``Why does the plan not achieve goal $G$?'' or
-``Why don't you satisfy preference $P$?'' need to be answered. Such
-answers require insights about the space of possible plans. We propose
-to address this by \emph{plan-property entailments}, as in ``Because
-achieving $G$ would necessitate to either forego $G'$ or use $> 100$
-energy units''. More formally, a plan property $p$ is a Boolean
-function on plans (\eg\ $G$ true at end), and $p$ entails $q$ if all
-plans that satisfy $p$ also satisfy $q$.  A user question of the form
-``Why not $p$?'' can then be answered in terms of those $q$ entailed
-by $p$ (\eg\ $\neg G'$ true at end $\vee$ energy usage $>
-100$). Moreover, given a set $P$ of plan properties, the graph of all
-entailments within $P$ provides an overview explanation of plan
-space. We will refer to the latter as a \emph{global explanation}, and
-to the answer to a specific user question as a \emph{local}
-explanation. Note that, in some applications (\eg\ simulated
-penetration testing \cite{boddy:etal:icaps-05,hoffmann:icaps-15}), a
-global explanation (entailments between properties of simulated
-attacks) is actually more useful to the user (a system admin trying to
-secure the system) than a single plan or collection thereof.
+As Smith also pointed out, plan explanation is a crucial step of such
+an iterative process, as a key means for user inspection. In
+particular, questions of the form ``Why does the plan not achieve goal
+$G$?'' or ``Why don't you satisfy preference $P$?'' need to be
+answered. Such answers require insights about the space of possible
+plans. We propose to address this by \defined{plan-property
+  entailments}, as in ``Because achieving $G$ would necessitate to
+either forego $G'$ or use $> 100$ energy units''. More formally, a
+plan property $p$ is a Boolean function on plans (\eg\ $G$ true at
+end), and $p$ entails $q$ if all plans that satisfy $p$ also satisfy
+$q$.  A user question of the form ``Why not $p$?'' can then be
+answered in terms of those $q$ entailed by $p$ (\eg\ $G'$ false at end
+or energy usage $> 100$). Moreover, the graph of all plan-property
+entailments provides an overview explanation of plan space. We will
+refer to the latter as a \defined{global} explanation, and to the
+answer to a specific user question as a \defined{local}
+explanation.\footnote{Arguably, in some applications a global
+  explanation is actually more useful to the user than a plan. An
+  example is simulated penetration testing
+  \cite{boddy:etal:icaps-05,hoffmann:icaps-15}, where a system admin
+  trying to secure the system can use a global explanation to
+  understand the space of possible attacks.}
 
 Our form of plan explanation falls into the class of
 \emph{contrastive} explanations as discussed \eg\ by Miller
@@ -54,26 +52,28 @@ determining shared properties of \emph{all} possible such
 alternatives. From this perspective, our proposal is a new, universal,
 variant of contrastive plan explanation.
 
-Previous approaches to universal plan-space explanation focused on the
-case where the task is unsolvable, identifying minimal model changes
-that would result in solvability \cite{goebelbecker:etal:icaps-10}, or
-minimal differences between the (solvable) user model vs.\ the
-(unsolvable) system model \cite{sreedharan:etal:ijcai-19}. 
+Prior work related to universal plan-space explanation addressed
+unsolvable tasks, identifying minimal model changes resulting in
+solvability \cite{goebelbecker:etal:icaps-10}, or minimal differences
+between a solvable user model vs.\ unsolvable system model
+\cite{sreedharan:etal:ijcai-19}.
 %
 % joerg: not needed, may be controversial (compilations etc)
 %
 %In contrast to these, here we are concerned with the space of plans in
 %solvable tasks.
 
-%% \joerg{briefly mention domain analysis and model checking? or is this
-%%   too off-story here? if we don't mention it here, I think we should
-%%   definitely have a related work section}
+% joerg ==> related work
 %
-We remark that our approach can be viewed as a form of domain/task
-analysis, or as a form of model checking applied to planning
-models. Both have been explored before, but addressing very different
-problems
-(\eg\ \cite{fox:long:jair-98,rintanen:aaai-00,vaquero:etal:keq-13}).
+%% %% \joerg{briefly mention domain analysis and model checking? or is this
+%% %%   too off-story here? if we don't mention it here, I think we should
+%% %%   definitely have a related work section}
+%% %
+%% We remark that our approach can be viewed as a form of domain/task
+%% analysis, or as a form of model checking applied to planning
+%% models. Both have been explored before, but addressing very different
+%% problems
+%% (\eg\ \cite{fox:long:jair-98,rintanen:aaai-00,vaquero:etal:keq-13}).
 
 
 The idea of plan-property entailments as outlined is generic and can
@@ -83,9 +83,9 @@ instantiate it for goal dependencies in oversubscription planning
 are insufficient resources to achieve all goals. A plan property then
 is a goal-fact conjunction $\bigwedge_{a \in A} a$ or a negation $\neg
 \bigwedge_{b \in B} b$ thereof, and we are interested in
-\emph{exclusion} entailments $\bigwedge_{a \in A} a \Rightarrow \neg
-\bigwedge_{b \in B} b$ stating that, if a plan achieves all goals in
-$A$, then it must forego at least one goal from $B$. 
+\defined{exclusion} entailments $\bigwedge_{a \in A} a \Rightarrow
+\neg \bigwedge_{b \in B} b$ stating that, if a plan achieves all goals
+in $A$, then it must forego at least one goal in $B$.
 
 We spell out our framework for this form of plan properties and
 entailment relations, defining our local and global explanations. We
@@ -93,7 +93,7 @@ introduce algorithms for computing such explanations, leveraging and
 extending recent nogood learning methods
 \cite{steinmetz:hoffmann:ai-17,steinmetz:hoffmann:ijcai-17} for
 computational efficiency. We show that the same framework can address
-a richer form of plan properties, namely \emph{action-set properties}
+a richer form of plan properties, namely \defined{action-set properties}
 defined as propositional formulas over atoms $\{A_1, \dots, A_n\}$
 asking whether an action subset is touched by the plan. Action-set
 properties can be compiled into goal facts with relatively small model

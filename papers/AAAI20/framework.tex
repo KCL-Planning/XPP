@@ -79,7 +79,7 @@ entailment over plan properties is considered.
 Observe that, given this, \plans-entailment is more than standard
 entailment: $\phi \Rightarrow \psi$ implies that
 $\entails{\plans}{\phi}{\psi}$, but not vice versa. \plans-entailment
-captures entailments specific to the ``knowledge base'' \plans. For
+captures entailments specific to the space of plans \plans. For
 example, in our illustrative NoMystery task, say that all goals are
 soft, $T_0$ has initial fuel supply $13$, and $T_1$ has no fuel. Then
 $\entails{\plans}{at(P_0,L_4)}{\neg (at(P_1,L_3) \wedge at(P_2,L_5))}$
@@ -299,10 +299,11 @@ to notate goal facts by the respective packages.
 %%   (at(P_0,L_4 \wedge at(P_1,L_3))}$.
 %
 So the size of the goal-exclusion GE, in terms of the ordering
-relations it contains, is three. The reader will have noticed here
-that this GE is equivalent to the statement ``\goalsoft\ is not
+relations it contains, is three. 
+
+Note that this GE is equivalent to the statement ``\goalsoft\ is not
 solvable as a whole, but each of its subsets is''. Indeed, as we see
-next, the special case of plan-property dependencies addressed here is
-equivalent to the analysis of minimal unsolvable goal subsets.  This
+next, the special case of goal-exclusion dependencies is equivalent to
+the analysis of minimal unsolvable goal subsets.  This connection
 further facilitates compact representation, and we exploit it in our
 algorithms.
