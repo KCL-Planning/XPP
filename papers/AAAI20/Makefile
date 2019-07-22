@@ -1,6 +1,6 @@
 PAPER = main
 
-# export BIBINPUTS=.:../BIBLIO
+export BIBINPUTS=.:../BIBLIO
 
 default:
 #	./aaai_script.sh ${PAPER}.tex
