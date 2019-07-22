@@ -134,29 +134,36 @@ id(\goal)$ and result for $\goal'$ cached: use that result;
 the search was previously cut off above $\goal'$, so we know that
 $\goal'$ is solvable (SysW) respectively unsolvable (SysS).
 
-As another search enhancement, we created synergy with recent nogood
-learning techniques, \defined{conjunction learning}
-\cite{steinmetz:hoffmann:ai-17} and \defined{trap learning}
-\cite{steinmetz:hoffmann:ijcai-17}. These techniques refine dead-end
-detection methods (nogoods) based on the unsolvable states encountered
-in state space search on a planning task. As the children tasks in our
-searches are closely related to their parents, the refined nogoods are
-likely to be useful still. So we \defined{transfer} the nogoods along
-search paths, resulting in iteratively stronger and stronger
-nogoods. For both forms of learning, the nogoods learned depend on the
-goal, so that only some of the nogoods remain valid for transfer in
-SysW where children remove goals. We designed the following methods to
-identify that nogood subset. In conjunction learning, we remember the
-subset $\goal$ of goals which became unreachable in a learning step,
-so that validity is preserved so long as at least one member of
-$\goal$ is still present. In trap learning, the validity test checks,
-for every end node of the trap, whether that node is still either
-mutex with the goal, or is still proved unsolvable by the heuristic
-function. 
-%
-Furthermore, we extended both conjunction and trap learning to deal
-with OSP plan-cost bounds. \joerg{how did we do that? something
-  interesting to say reg this?}
+We created synergy with recent nogood learning techniques,
+\defined{conjunction learning} \cite{steinmetz:hoffmann:ai-17} and
+\defined{trap learning} \cite{steinmetz:hoffmann:ijcai-17}. These
+techniques refine dead-end detection methods (nogoods) based on the
+unsolvable states encountered in state space search on a planning
+task. Trap learning identifies unescapable non-goal regions of the
+state space. Conjunction learning enriches the critical-path heuristic
+\hc\ with more atomic conjunctions, and learns clauses by
+dead-end-state reduction. As the children tasks in our searches are
+closely related to their parents, the refined nogoods are likely to be
+useful still. So we \defined{transfer} the nogoods along search paths,
+resulting in iteratively stronger and stronger nogoods.
+
+For both forms of learning, the nogoods learned depend on the goal, so
+that only some of the nogoods remain valid for transfer in SysW where
+children remove goals. To identify that nogood subset, in conjunction
+learning we remember the subset $\goal$ of goals proved to be
+unreachable by \hc\ in a learning step, so that clause validity is
+preserved so long as at least one member of $\goal$ is still
+present. In trap learning, the validity test checks, for every node of
+the trap, whether the node is still either mutex with the goal, or is
+still proved unsolvable by the heuristic function.
+
+We extended conjunction learning to deal with OSP plan-cost bounds, by
+checking not whether $\hc(s)=\infty$ but whether $\hc(s)$ exceeds the
+remaining available cost. For trap learning, no straightforward
+extension exists, as trap nodes represent sets of states and thus
+would need to reason about bounds on remaining available cost. As trap
+learning is not the focus of our work, we leave this open for future
+research and use trap learning on RCP benchmarks only.
 
 % Joerg: hC remains valid anyhow; when learning a clause from hC,
 % Marcel remembers the set of goals that became unreachable; validity
