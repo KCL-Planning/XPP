@@ -27,17 +27,25 @@ plan property $p$ is a Boolean function on plans (\eg\ $G$ true at
 end), and $p$ entails $q$ if all plans that satisfy $p$ also satisfy
 $q$.  A user question of the form ``Why not $p$?'' can then be
 answered in terms of those $q$ entailed by $p$ (\eg\ $G'$ false at end
-or energy usage $> 100$). Moreover, the graph of all plan-property
-entailments provides an overview explanation of plan space. We will
-refer to the latter as a \defined{global} explanation, and to the
-answer to a specific user question as a \defined{local}
-explanation.\footnote{Arguably, in some applications a global
-  explanation is actually more useful to the user than a plan. An
-  example is simulated penetration testing
-  \cite{boddy:etal:icaps-05,hoffmann:icaps-15}, where a system admin
-  trying to secure the system can use a global explanation to
-  understand the space of possible attacks.}
-
+or energy usage $> 100$). We will refer to this as a \defined{local}
+explanation, in difference to the \defined{global} explanation showing
+the graph of all plan-property entailments. The former makes sense in
+iterative planning as outlined; the latter makes sense when an
+overview of plan space is desirable, for example in simulated
+penetration testing \cite{boddy:etal:icaps-05,hoffmann:icaps-15} where
+system security may be best facilitated by a global view on the space
+of possible attacks.
+%
+%% Moreover, the graph of all plan-property entailments provides an
+%% overview explanation of plan space. We will refer to the latter as a
+%% \defined{global} explanation, and to the answer to a specific user
+%% question as a \defined{local} explanation.
+%% %
+%% An example use case for global explanations is simulated penetration
+%% testing \cite{boddy:etal:icaps-05,hoffmann:icaps-15}, where system
+%% security is best facilitated by a global view on the space of possible
+%% attacks.
+  
 Our form of plan explanation falls into the class of
 \emph{contrastive} explanations as discussed \eg\ by Miller
 \shortcite{miller:ai-19}. Previous work on local explanation, \ie,
