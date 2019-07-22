@@ -21,32 +21,34 @@
 %%   pointers below -- which are not naturally part of the XAIP story
 %%   in the intro. ... TBD when writing the introduction}
 
-We briefly discuss related works not previously mentioned, for the
-sake of not interrupting the flow of our discussions.
+We so far omitted some related works, for the sake of not interrupting
+the flow of our discussions.
 
-Yu et al.\ \shortcite{yu:etal:jair-17} perform an analysis suggesting
-goals to drop in oversubscribed situations. This can be viewed as a
-use of MUGS complementary to ours. At the technical level, our work is
-quite different as Yu et al.\ address conditional temporal problems, a
-form of constraint-based planning, and leverage previous conflict
-analysis methods in that area. Similarly, Lauffer and Topcu
-\shortcite{lauffer:topcu:xaip-19} perform conflict analysis on
-oversubscribed scheduling problems.
+Various works relate to our computation of MUGS. In SAT/CP, minimal
+unsatisfiable cores (MUC) are related to MUGS
+(\eg\ \cite{chinneck:2007,laborie:ecai-14}), though at the technical
+level this is quite different as it relies on constraint-conflict
+analysis methods and is non-exhaustive, \ie, does not aim at finding
+\emph{all} MUCs. Similarly, in the temporal planner IxTeT, a
+sub-procedure analyzing resource conflicts finds minimal critical sets
+(effects over-consuming a resource)
+\cite{laborie:ghallab:ijcai-95}. On the exhaustive side, problems and
+algorithms involving some form of solvability borderline within a
+lattice of problem variants have been considered since a long time
+(\eg\ \cite{dekleer:ai-86:atms,reiter:ai-87}). The closest relation to
+our MUGS analysis is a diagnosis framework that can cast maximum
+solvable goal subsets as preferred diagnoses
+\cite{grastien:etal:kr-12}. While that work uses SAT technology where
+we use a base planner, in general ideas for search enhancements may be
+transferrable between the two algorithms (in both directions).
 
-Our MUGS computation algorithms consider a lattice of problem variants
-and identify a solvability borderline. This relates to various
-algorithms in the literature
-(\eg\ \cite{dekleer:ai-86:atms,reiter:ai-87}). In particular, MUGS
-closely relate to preferred diagnoses in a recent framework
-\cite{grastien:etal:kr-12}, so that ideas for search enhancements may
-be transferrable (in both directions).
-
-
-
-\joerg{Related work by Philippe Laborie? resource constrained planning
-  ixtet have some form of conflict analysis with critical set for
-  resources consumption, relates to our analysis in goal facts RCP?}
-
+There are two works that relate to our purpose in terms of using
+conflict analysis to identify information to be shown to a user. They
+aim at suggesting goals to drop in oversubscribed situations
+\cite{yu:etal:jair-17,lauffer:topcu:xaip-19}, a purpose complementary
+to our local and global explanations. At the technical level, both
+works are quite different to ours as they use constraint-based problem
+encodings.
 
 We remark that our approach can be viewed as a form of domain/task
 analysis, or as a form of model checking applied to planning
@@ -125,6 +127,15 @@ problems
 %% %% analysis could inspire more effective analysis methods in our
 %% %% framework.
 
+
+%% Yu et al.\ \shortcite{yu:etal:jair-17} perform an analysis suggesting
+%% goals to drop in oversubscribed situations. This can be viewed as a
+%% use of MUGS complementary to ours. At the technical level, our work is
+%% quite different as Yu et al.\ address conditional temporal problems, a
+%% form of constraint-based planning, and leverage previous conflict
+%% analysis methods in that area. Similarly, Lauffer and Topcu
+%% \shortcite{lauffer:topcu:xaip-19} perform conflict analysis on
+%% oversubscribed scheduling problems.
 
 
 %% %% \joerg{discuss relation to domain analysis / model checking?
