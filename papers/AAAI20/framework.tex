@@ -175,16 +175,16 @@ sense to instead fix a more specific set \props\ of plan properties
 the user has a vested interest in (raising the new sub-problem how to
 choose \props).
 
-If the user question ``Why do you not achieve property $\phi$?''
-refers to a given plan candidate \plan, then it makes sense to return
-only those entailed $\psi$ where $\plan \not\models \psi$, \ie,
-currently false plan properties that would become true when enforcing
-$\phi$. That answer is easy to obtain from the more exhaustive answer
-as per Definition~\ref{def:local-explanation}. We will consider only
-the latter in our experiments, avoiding the need for, and bias by, a
-particular method for generating candidate plans \plan. \joerg{or
-  should we actually run experiments with local questions from
-  concrete plans?}
+Note that, if the user question ``Why do you not achieve property
+$\phi$?''  refers to a given plan candidate \plan, then a simpler
+variant of local explanation is to return only those entailed $\psi$
+where $\plan \not\models \psi$, \ie, currently false plan properties
+that would become true when enforcing $\phi$. This is easier to
+compute and yields smaller explanations. In our experiments, we will
+only use explanations as per Definition~\ref{def:local-explanation},
+yielding an upper bound on computational hardness and explanation
+size, and avoiding the bias incurred by a particular method for
+generating candidate plans \plan.
 
 A canonical notion of global explanation arises directly from the
 above.  Instead of showing the implications of one specific plan

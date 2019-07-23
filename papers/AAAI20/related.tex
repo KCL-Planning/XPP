@@ -1,4 +1,4 @@
-\section{Related Work}
+\section{Other Related Works}
 \label{related}
 
 %% \joerg{0.5 pages. TBD if we need this. Given the ijcai feedback, I
@@ -21,20 +21,17 @@
 %%   pointers below -- which are not naturally part of the XAIP story
 %%   in the intro. ... TBD when writing the introduction}
 
-We so far omitted some related works, for the sake of not interrupting
-the flow of our discussions.
-
 Various works relate to our computation of MUGS. In SAT/CP, minimal
-unsatisfiable cores (MUC) are related to MUGS
-(\eg\ \cite{chinneck:2007,laborie:ecai-14}), though at the technical
-level this is quite different as it relies on constraint-conflict
-analysis methods and is non-exhaustive, \ie, does not aim at finding
-\emph{all} MUCs. Similarly, in the temporal planner IxTeT, a
-sub-procedure analyzing resource conflicts finds minimal critical sets
-(effects over-consuming a resource)
-\cite{laborie:ghallab:ijcai-95}. On the exhaustive side, problems and
-algorithms involving some form of solvability borderline within a
-lattice of problem variants have been considered since a long time
+unsatisfiable cores (MUC, \eg\ \cite{chinneck:2007,laborie:ecai-14})
+are related to MUGS, though at the technical level this is quite
+different as it relies on constraint-conflict analysis methods and is
+non-exhaustive, \ie, does not aim at finding \emph{all}
+MUCs. Similarly, in the temporal planner IxTeT, a sub-procedure
+analyzing resource conflicts finds minimal critical sets (effects
+over-consuming a resource) \cite{laborie:ghallab:ijcai-95}. On the
+exhaustive side, problems and algorithms involving some form of
+solvability borderline within a lattice of problem variants have been
+considered since a long time
 (\eg\ \cite{dekleer:ai-86:atms,reiter:ai-87}). The closest relation to
 our MUGS analysis is a diagnosis framework that can cast maximum
 solvable goal subsets as preferred diagnoses
@@ -42,13 +39,11 @@ solvable goal subsets as preferred diagnoses
 we use a base planner, in general ideas for search enhancements may be
 transferrable between the two algorithms (in both directions).
 
-There are two works that relate to our purpose in terms of using
-conflict analysis to identify information to be shown to a user. They
-aim at suggesting goals to drop in oversubscribed situations
-\cite{yu:etal:jair-17,lauffer:topcu:xaip-19}, a purpose complementary
-to our local and global explanations. At the technical level, both
-works are quite different to ours as they use constraint-based problem
-encodings.
+There are two works \cite{yu:etal:jair-17,lauffer:topcu:xaip-19} that
+aim at suggesting goals to drop in oversubscribed situations. This can
+be viewed as a kind of user information complementary to our local and
+global explanations. At the technical level, both works are quite
+different from ours as they use constraint-based problem encodings.
 
 We remark that our approach can be viewed as a form of domain/task
 analysis, or as a form of model checking applied to planning
@@ -160,3 +155,42 @@ problems
 %% %%   properties automatically, which is then clearly beyond anything
 %% %%   addressed in model checking.}
 %% %
+
+
+%% %% We remark that our approach can be viewed as a generalization of
+%% %% domain/task analysis (as done \eg\ by \cite{fox:long:jair-98}), and as
+%% %% an instance of model checking applied to planning models (related
+%% %% \eg\ to \cite{vaquero:etal:keq-13}). Our contribution lies in
+%% %% introducing this intermediate problem suited to XAIP as outlined, and
+%% %% instantiating that formulation with initial technology showing promise
+%% %% in practice.
+%
+%% Another alternate view of our approach is as a form of domain analysis
+%% (actually: task analysis), identifying particular properties of plan
+%% space ahead of time. Indeed, various popular task analyses can be cast
+%% as instances of our framework. A fact pair $(p,q)$ is mutually
+%% exclusive \cite{blum:furst:ai-97} iff $p$-true-at-end entails $\neg
+%% q$-true-at-end in the space of all applicable action sequences; a fact
+%% $p$ is a landmark \cite{hoffmann:etal:jair-04} iff $\true$ entails
+%% $p$-true-at-some-point; other examples presumably exist. From this
+%% point of view, we generalize previous concepts to a broader
+%% perspective aimed at addressing arbitrary user questions. At the same
+%% time, our approach itself can be viewed as an instance of model
+%% checking of planning models \cite{clarke:etal:01},\footnote{There has
+%%   been little work on this subject; Vaquero et
+%%   al.\ \shortcite{vaquero:etal:keq-13} use Petri nets to capture and
+%%   check dynamic aspects of planning models in itSIMPLE.}
+%% systematically checking all entailments between plan properties. Again
+%% the value of our framework lies in its suitability for XAIP (plus
+%% computational gains from considering all \props\ dependencies in
+%% unison rather than running individual entailment checks).
+%
+%% Identifying the trade-off between soft goals in an iterative
+%% oversubscription planning process relates, in terms of purpose, to the
+%% work by Yu et al.\ \cite{yu:etal:jair-17}. A major difference is that
+%% Yu et al.\ address conditional temporal problems, a form of
+%% conditional temporal plans, instead of PDDL-style compactly specified
+%% general planning problems. This more restricted focus allows to
+%% leverage previous conflict analysis methods in that area. It remains a
+%% question for future work whether such conflict analysis could inspire
+%% more effective analysis methods in our framework.

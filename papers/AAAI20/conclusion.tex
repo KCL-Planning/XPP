@@ -1,108 +1,76 @@
 \section{Conclusion}
 \label{conclusion}
 
-\joerg{0.1--25 page: adapt ijcai version.}
+%% \joerg{0.1--25 page: adapt ijcai version.}
 
-\joerg{ijcai text:}
+\joerg{omit the verbalization stuff? omit the text par on own future
+  work?}
 
-%% \joerg{use some of the following text pars as a brief post-hoc
-%%   discussion of related work? ... probably not no space. domaina
-%%   nalysis and model checking are briefly mentioned int he intro; Brian
-%%   is briefly mentioned in the goal dependencies section. I don't think
-%%   we can do better than this.}
-%
-%% % current intro text
-%% %
-%% %% We remark that our approach can be viewed as a generalization of
-%% %% domain/task analysis (as done \eg\ by \cite{fox:long:jair-98}), and as
-%% %% an instance of model checking applied to planning models (related
-%% %% \eg\ to \cite{vaquero:etal:keq-13}). Our contribution lies in
-%% %% introducing this intermediate problem suited to XAIP as outlined, and
-%% %% instantiating that formulation with initial technology showing promise
-%% %% in practice.
-%
-%% Another alternate view of our approach is as a form of domain analysis
-%% (actually: task analysis), identifying particular properties of plan
-%% space ahead of time. Indeed, various popular task analyses can be cast
-%% as instances of our framework. A fact pair $(p,q)$ is mutually
-%% exclusive \cite{blum:furst:ai-97} iff $p$-true-at-end entails $\neg
-%% q$-true-at-end in the space of all applicable action sequences; a fact
-%% $p$ is a landmark \cite{hoffmann:etal:jair-04} iff $\true$ entails
-%% $p$-true-at-some-point; other examples presumably exist. From this
-%% point of view, we generalize previous concepts to a broader
-%% perspective aimed at addressing arbitrary user questions. At the same
-%% time, our approach itself can be viewed as an instance of model
-%% checking of planning models \cite{clarke:etal:01},\footnote{There has
-%%   been little work on this subject; Vaquero et
-%%   al.\ \shortcite{vaquero:etal:keq-13} use Petri nets to capture and
-%%   check dynamic aspects of planning models in itSIMPLE.}
-%% systematically checking all entailments between plan properties. Again
-%% the value of our framework lies in its suitability for XAIP (plus
-%% computational gains from considering all \props\ dependencies in
-%% unison rather than running individual entailment checks).
-%
-%% Identifying the trade-off between soft goals in an iterative
-%% oversubscription planning process relates, in terms of purpose, to the
-%% work by Yu et al.\ \cite{yu:etal:jair-17}. A major difference is that
-%% Yu et al.\ address conditional temporal problems, a form of
-%% conditional temporal plans, instead of PDDL-style compactly specified
-%% general planning problems. This more restricted focus allows to
-%% leverage previous conflict analysis methods in that area. It remains a
-%% question for future work whether such conflict analysis could inspire
-%% more effective analysis methods in our framework.
+Our approach addresses plan-space explanation via plan properties and
+their dependencies. This naturally addresses challenges raised in
+previous work on iterative planning, and performance is reasonable in
+IPC benchmark studies. The approach can be easily generalized to
+almost arbitrary planning frameworks and plan-property languages, and
+we hope it will inspire other researchers too. To name just one
+example, plan properties and their dependencies might help in plan
+verbalization \cite{rosenthal:etal:ijcai-16}, as an abstraction level
+(plan properties: ``I did X'') as well as a means for justification
+(dependencies: ``I did not do Y because \dots'')..
 
-We introduced a framework for plan-space explanation via plan-property
-dependencies. We believe that the framework is useful conceptually as
-a problem formulation shaping a relevant part of XAIP. Our techniques
-for first instantiations of the framework exhibit reasonable
-performance in IPC benchmark studies. The computed explanations are
-often small and thus potentially feasible for human inspection.
-
-
-
-%% more concrete use cases (robotics, pentesting) user studies
-%
-%% more general properties than goal dependencies
-%
-%% beyond classical planning
-%
-%% deeper why questions: An interesting yet challenging question for
-%% future work is how one can automatically identify relevant plan
-%% properties \props\ to analyze.  ... mention WHY and HOW questions
-%% from NASA discussions? ie WHY finding additional properties zooming
-%% in on a given dependency, HOW finding a minimal relaxation of
-%% enforced props under which a given dependency disappears.
-
-In future work, the effectiveness of these explanations for human
-users remains to be evaluated in user studies. Another important
-question is how to address deeper ``why'' questions, asking for the
-reasons behind an entailment
+For our own future work, an interesting challenge is to answer deeper
+``why'' questions regarding an entailment
 $\entails{\plans}{\prop}{\propq}$. Possible ideas are to include
-additional properties into \props, elucidating the causal chain
-between \prop\ and \propq; or to find a minimal relaxation (superset)
-of the plan set \plans\ for which \prop\ no longer entails \propq,
-thus elucidating the circumstances under which that entailment
-holds. Last but not least, of course our framework and algorithms can
-and should be extended to richer planning frameworks and plan property
-languages.
+additional plan properties elucidating the causal chain between
+\prop\ and \propq; or to find a minimal relaxation (superset) of the
+plan set \plans\ for which \prop\ no longer entails \propq, thus
+elucidating the circumstances under which that entailment holds. On
+the computational side, an idea worth trying is to represent the plan
+set \plans\ symbolically and use that representation to identify
+entailment relations. On the application side, we aim to apply our
+technology in concrete use cases such as simulated penetration testing
+and AUV mission control \cite{cashmore:etal:icra-14}. Such
+applications will also enable meaningful user evaluations. 
+
+% Joerg: reshaped this
+%
+%% In future work, the effectiveness of these explanations for human
+%% users remains to be evaluated in user studies. Another important
+%% question is how to address deeper ``why'' questions, asking for the
+%% reasons behind an entailment
+%% $\entails{\plans}{\prop}{\propq}$. Possible ideas are to include
+%% additional properties into \props, elucidating the causal chain
+%% between \prop\ and \propq; or to find a minimal relaxation
+%% (superset) of the plan set \plans\ for which \prop\ no longer
+%% entails \propq, thus elucidating the circumstances under which that
+%% entailment holds. Last but not least, of course our framework and
+%% algorithms can and should be extended to richer planning frameworks
+%% and plan property languages.
 
 
+% Joerg: this is rather from our stuff but I think I get where he's
+% coming from. Basically, plan properties can be viewed as the
+% abstraction level for the explanation (``my plan has properties x y
+% z''. This does not really get rid of templates, it's more like
+% replacing the templates with plan properties. The plan-property
+% dependencies could serve as a new feature in the explanations,
+% elucidating why the robot chose to do X rather than Y (I havent seen
+% anything of the sort on their work, though I might ave overlooked
+% it, didnt study this closely).
+%
+%% Comment: I was thinking about the plan verbalization work from Manuela Veloso's group 
+%% -- e.g. \url{https://www.ijcai.org/Proceedings/16/Papers/127.pdf} 
+%% -- and realized there may be some interesting connections here. 
+%% Granted these are different kinds of plans, motion plans versus plans in general, 
+%% but...  I wonder if an approach like in this paper can be a better alternative 
+%% to the template approach in the verbalization work. For example, a PDO versus 
+%% a concrete PDO could help with "specificity" while planning models do have 
+%% a rich literature of abstractions that can be readily leveraged in this framework. 
+%% I guess the point is if it is useful automating the templatization using plan properties. 
+%% Maybe something to think about... 
 
-\joerg{maybe mention this?}
+%% More (recent) details here if you are interested:
+%% \begin{enumerate}
+%% 	\item \url{http://www.cs.cmu.edu/~mmv/papers/18gcai-PereraVeloso.pdf}
+%% 	\item (data you can use) \url{http://www.cs.cmu.edu/~vdperera/paper/vdperera_thesis.pdf#page=129}
+%% \end{enumerate}
 
-	Comment: I was thinking about the plan verbalization work from Manuela Veloso's group 
-	-- e.g. \url{https://www.ijcai.org/Proceedings/16/Papers/127.pdf} 
-	-- and realized there may be some interesting connections here. 
-	Granted these are different kinds of plans, motion plans versus plans in general, 
-	but...  I wonder if an approach like in this paper can be a better alternative 
-	to the template approach in the verbalization work. For example, a PDO versus 
-	a concrete PDO could help with "specificity" while planning models do have 
-	a rich literature of abstractions that can be readily leveraged in this framework. 
-	I guess the point is if it is useful automating the templatization using plan properties. 
-	Maybe something to think about... 
-
-	More (recent) details here if you are interested:
-	\begin{enumerate}
-		\item \url{http://www.cs.cmu.edu/~mmv/papers/18gcai-PereraVeloso.pdf}
-		\item (data you can use) \url{http://www.cs.cmu.edu/~vdperera/paper/vdperera_thesis.pdf#page=129}
-	\end{enumerate}
