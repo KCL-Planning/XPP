@@ -1,0 +1,51 @@
+
+\begin{tikzpicture}
+
+    \begin{axis}[
+    width = 7cm,
+    height= 5cm,
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.1,
+    legend columns=3,
+    legend style={at={(0.05,-0.2)},anchor=west},
+    xmin = 1,
+    xmax = 5,
+    xtick={1,2,3,4,5},
+	ymode = log,
+]
+	\addplot[thick, red, mark=*, mark options={scale=0.5}]
+		plot coordinates {
+			(1, 193.5)
+			(2, 175.67)
+			(3, 149.17)
+			(4, 140.49)
+			(5, 129.19)
+		};
+	\addlegendentry{search time}
+
+\end{axis}
+
+\begin{axis}[
+    width = 7cm,
+    height= 5cm,
+	axis y line*=right,
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.1,
+    legend columns=3,
+    legend style={at={(0.5,-0.2)},anchor=west},
+    xmax = 5,
+    xtick={1,2,3,4,5},
+    xmin = 1,
+]
+	\addplot[thick, blue, mark=*, mark options={scale=0.5}]
+		plot coordinates {
+			(1, 0.49)
+			(2, 0.48)
+			(3, 0.58)
+			(4, 0.61)
+			(5, 0.62)
+		};
+	\addlegendentry{coverage}
+\end{axis}
+
+\end{tikzpicture}
