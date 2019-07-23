@@ -1,14 +1,33 @@
-\documentclass{article}
-\pdfpagewidth=8.5in
-\pdfpageheight=11in
-% The file ijcai19.sty is NOT the same than previous years'
-\usepackage{aaai19}
+\def\year{2020}\relax
+\documentclass[letterpaper]{article} % DO NOT CHANGE THIS
+\usepackage{aaai20}  % DO NOT CHANGE THIS
+\usepackage{times}  % DO NOT CHANGE THIS
+\usepackage{helvet} % DO NOT CHANGE THIS
+\usepackage{courier}  % DO NOT CHANGE THIS
+\usepackage[hyphens]{url}  % DO NOT CHANGE THIS
+\usepackage{graphicx} % DO NOT CHANGE THIS
+\urlstyle{rm} % DO NOT CHANGE THIS
+\def\UrlFont{\rm}  % DO NOT CHANGE THIS
+\usepackage{graphicx}  % DO NOT CHANGE THIS
+\frenchspacing  % DO NOT CHANGE THIS
+\setlength{\pdfpagewidth}{8.5in}  % DO NOT CHANGE THIS
+\setlength{\pdfpageheight}{11in}  % DO NOT CHANGE THIS
+%\nocopyright
+%PDF Info Is REQUIRED.
+% For /Author, add all authors within the parentheses, separated by commas. No accents or commands.
+% For /Title, add Title in Mixed Case. No accents or commands. Retain the parentheses.
+ \pdfinfo{
+/Title (A New Approach to Plan-Space Explanation: Analyzing Plan-Property Dependencies in Oversubscription Planning)
+/Author (Rebecca Eifler, Michael Cashmore, J\"org Hoffmann, Daniele Magazzeni, Marcel Steinmetz)
+} %Leave this	
+% /Title ()
+% Put your actual complete title (no codes, scripts, shortcuts, or LaTeX commands) within the parentheses in mixed case
+% Leave the space between \Title and the beginning parenthesis alone
+% /Author ()
+% Put your actual complete list of authors (no codes, scripts, shortcuts, or LaTeX commands) within the parentheses in mixed case. 
+% Each author should be only by a comma. If the name contains accents, remove them. If there are any LaTeX commands, 
+% remove them. 
 
-\usepackage{times}
-\usepackage{helvet}
-\usepackage{courier}
-\usepackage{url}  %Required
-\usepackage{graphicx}  %Required
 
 %%%%%%%%%%%%%%%%%%%%%
 %%%% Packages
@@ -39,29 +58,24 @@
 
 \input{commands.tex}
 
-\nocopyright
-
-
 \begin{document}
 
 \title{A New Approach to Plan-Space Explanation:\\ Analyzing Plan-Property Dependencies in Oversubscription Planning}
 
-\author{Submission \#????}
+%\author{Submission \#????}
 
-% Joerg: this needs to be adappted to AAAI author guidelines
-%
-%% \author{Rebecca Eifler$^1$\and
-%% 	Michael Cashmore$^2$\and
-%% 	J\"org Hoffmann$^1$\and
-%% 	Daniele Magazzeni$^2$\and
-%% 	Marcel Steinmetz$^1$\\
-%% 	%\affiliations
-%% 	$^1$Saarland University, Saarland Informatics Campus, Saarbr\"ucken, Germany\\
-%% 	$^2$King's College London, Department of Informatics, London, UK\\
-%% 	%\emails
-%% 	\{lastname\}@cs.uni-saarland.de,
-%% 	\{firstname.lastname\}@kcl.ac.uk 
-%% }
+%AAAI20 format
+\author{
+Rebecca Eifler,\textsuperscript{\rm 1} 
+Michael Cashmore,\textsuperscript{\rm 2}
+J\"org Hoffmann,\textsuperscript{\rm 1}\\
+\Large \textbf{Daniele Magazzeni,\textsuperscript{\rm 2} 
+Marcel Steinmetz, \textsuperscript{\rm 1}} \\
+\textsuperscript{\rm 1}Saarland University, Saarland Informatics Campus, Saarbr\"ucken, Germany,\\ 
+\textsuperscript{\rm 2}King's College London, Department of Informatics, London, UK,\\ 
+\{lastname\}@cs.uni-saarland.de,
+\{firstname.lastname\}@kcl.ac.uk 
+}
 
 \maketitle
 
