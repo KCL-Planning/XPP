@@ -171,28 +171,43 @@ beneficial.
 
 \subsubsection{IPC Local Explanations}
 
+To evaluate the computation of local explanations -- the entailments
+of a soft-goal conjunction $\bigwedge_{a \in A} a$ -- we set up an
+experiment where we scaled question size $|A|$ from $1$ to $5$, and
+randomly selected $10$ questions of each
+size. Figure~\ref{fig:ipc-local} shows the data. As expected, both
+computational effort and explanation size decrease with $|A|$, \ie,
+with how specific the user question is.
 
-\joerg{presumably: 1 plot of coverage (in percent of total), including all 
-instances (and thus domains) with at least 5 goals; 1 plot of
-average \#MUGS, including all instances (and thus domains) where for
-every question size at least one question was answered}
+\joerg{add a per-domain plot in the fig?}
 
 
 \begin{figure}[ht]
-%\input{tables/all_points.tex}
 \small
 \centering
-\begin{minipage}{0.22\textwidth}
-\input{data/IPC_cost_bound/search_time_coverage_mix_td.tex}
-\end{minipage}
-\hfill
-\begin{minipage}{0.22\textwidth}
+
+\begin{tabular}{cc}
+\begin{minipage}{0.25\textwidth}
+\resizebox{!}{3.0cm}{
 \input{data/IPC_cost_bound/search_time_coverage_mix_bu.tex}
-\end{minipage}
+}
+\end{minipage} &
+\begin{minipage}{0.25\textwidth}
+\resizebox{!}{3.0cm}{
 \input{data/IPC_cost_bound/mugs_bu_all.tex}
-	\caption{meta search with 0.75 cost bound, left top down, right bottom up; red lefti y-axis search time, blue right y-axis coverage }
+}
+\end{minipage}
+\end{tabular}
+\vspace{-0.3cm}
+\caption{\label{fig:ipc-local} Left: coverage (blue, right y-axis),
+average runtime (red, left y-axis). Right: average \#MUGS. Both x-axis
+$|A|$.\joerg{optimize format: y-axis labels, b/w compatible instead of
+red and blue, curve identifiers in left plot}}
+\vspace{-0.4cm}
 \end{figure}
 
+%\input{tables/all_points.tex}
+%\input{data/IPC_cost_bound/search_time_coverage_mix_td.tex}
 
 
 
