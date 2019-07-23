@@ -1,0 +1,29 @@
+\begin{tikzpicture}
+
+    \begin{axis}[
+    width = 5cm,
+    height= 5cm,
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.1,
+    legend columns=3,
+    legend style={at={(0.05,-0.3)},anchor=west},
+    xmax = 5,
+    xtick={1,2,3,4,5},
+    xmin = 1,
+	title = \#MUGS,
+]
+\addplot[thick, red, mark=*,
+mark options={scale=0.5},
+]
+	plot coordinates {
+		(1, 4.29)
+		(2, 2.82)
+		(3, 1.85)
+		(4, 1.19)
+		(5, 0.87)
+	};
+    \end{axis}
+
+\end{tikzpicture}
+\vspace{0.7cm}
+\\
