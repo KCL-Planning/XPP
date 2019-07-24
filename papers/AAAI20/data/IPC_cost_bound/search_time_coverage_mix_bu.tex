@@ -11,8 +11,8 @@
     xmax = 5,
     xtick={1,2,3,4,5},
     xmin = 1,
-	ymin= 120,
-	ymax=220,
+	ymin= 0,
+	ymax=160,
 	ytick={150,200},
 	%ymode = log,
 ]
@@ -20,11 +20,11 @@
 mark options={scale=0.5},
 ]
 	plot coordinates {
-		(1, 199.5)
-		(2, 202.48)
-		(3, 155.73)
-		(4, 132.92)
-		(5, 113.06)
+		(1, 150.75)
+		(2, 110.03)
+		(3, 88.19)
+		(4, 24.2)
+		(5, 9.4)
 	};
 %\addlegendentry{search time}
 \end{axis}
@@ -40,19 +40,18 @@ mark options={scale=0.5},
     xmax = 5,
     xtick={1,2,3,4,5},
     xmin = 1,
-	ymin=0.45,
-	ymax=0.65,
-	ytick={0.45,0.5,0.55,0.6,0.65}
+	ymin=0.65,
+	ymax=0.85,
 ]
 \addplot[thick, blue, mark=*,
 mark options={scale=0.5},
 ]
 	plot coordinates {
-		(1, 0.46)
-		(2, 0.5)
-		(3, 0.56)
-		(4, 0.6)
-		(5, 0.61)
+		(1, 0.71)
+		(2, 0.73)
+		(3, 0.78)
+		(4, 0.8)
+		(5, 0.8)
 	};
 %\addlegendentry{coverage}
 \end{axis}
