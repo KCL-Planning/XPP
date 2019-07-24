@@ -171,31 +171,62 @@ beneficial.
 
 \subsubsection{IPC Local Explanations}
 
-
-\joerg{presumably: 1 plot of coverage (in percent of total), including all 
-instances (and thus domains) with at least 5 goals; 1 plot of
-average \#MUGS, including all instances (and thus domains) where for
-every question size at least one question was answered}
-
+To evaluate the computation of local explanations -- the entailments
+of a soft-goal conjunction $\bigwedge_{a \in A} a$ -- we set up an
+experiment where we used only benchmark instances with $\geq 6$ goals,
+scaled question size $|A|$ from $1$ to $5$, and randomly selected $10$
+questions of each size. Figure~\ref{fig:ipc-local} shows the data. As
+expected, both computational effort and explanation size decrease with
+$|A|$, \ie, with how specific the user question is. 
 
 \begin{figure}[ht]
-%\input{tables/all_points.tex}
 \small
 \centering
-\begin{minipage}{0.22\textwidth}
-\input{data/IPC_cost_bound/search_time_coverage_mix_td.tex}
-\end{minipage}
-\hfill
-\begin{minipage}{0.22\textwidth}
+
+\begin{tabular}{cc}
+\begin{minipage}{0.25\textwidth}
+\resizebox{!}{3.0cm}{
 \input{data/IPC_cost_bound/search_time_coverage_mix_bu.tex}
-\end{minipage}
+}
+\end{minipage} &
+\begin{minipage}{0.25\textwidth}
+\resizebox{!}{3.0cm}{
 \input{data/IPC_cost_bound/mugs_bu_all.tex}
-	\caption{meta search with 0.75 cost bound, left top down, right bottom up; red lefti y-axis search time, blue right y-axis coverage }
+}
+\end{minipage}
+\end{tabular}
+\vspace{-0.3cm}
+\caption{\label{fig:ipc-local} Left: coverage (blue, right y-axis) and
+average runtime (red, left y-axis) for SysS, as a function of
+$|A|$. Right: average \#MUGS as a function of $|A|$. Averages taken
+over instances where all questions were solved.\joerg{optimize format:
+y-axis labels, b/w compatible instead of red and blue, curve
+identifiers in left plot}}
+\vspace{-0.6cm}
 \end{figure}
 
+%\input{tables/all_points.tex}
+%\input{data/IPC_cost_bound/search_time_coverage_mix_td.tex}
 
-
-
+This behaviour is very consistent across domains, and is much stronger
+still in some cases. Of the 42 domains that have at least one instance
+with $\geq 6$ goals, 7 domains have much stronger ($> 40\%$) increases
+in coverage from $|A|=1$ to $|A|=5$,
+%
+%% For coverage, Depots, Gripper, NoMystery, Parking, Pathways,
+%% Scanalyzer, Trucks
+%
+and in 24 domains average runtime decreases by at least one order of
+magnitude. 
+%
+%% runtime: 1 order blocks, drive, floortile, elevators, grip, ged,
+%% mic, log, mov, pipest, pipesnt, sat, psr, soko, stor, tetr, tpp,
+%% transp, wood; 2 orders depots, nomystery, parcprinter, scan, trucks
+%
+The average number of MUGS for $|A|=5$ is less than $5$ in all
+domains, including ones like Floortile, Gripper, Miconic, Woodworking
+where global explanations can be large as shown above in
+Figure~\ref{table:coverage_ipc}.
 
 
 
