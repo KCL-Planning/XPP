@@ -13,10 +13,12 @@
     xmin = 1,
 	ymin= 0,
 	ymax=160,
-	ytick={150,200},
+	ytick={0,50,100,150},
 	%ymode = log,
+	ylabel ={search time},
+	y label style={at={(0.18,0.5)}},
 ]
-\addplot[thick, red, mark=*,
+\addplot[thick, black, mark=*,
 mark options={scale=0.5},
 ]
 	plot coordinates {
@@ -33,6 +35,8 @@ mark options={scale=0.5},
     width = 4.5cm,
     height= 4.5cm,
 	axis y line*=right,
+	ylabel= coverage,
+	y label style={at={(1.7,0.5)}},
     enlarge x limits = 0.1,
     enlarge y limits = 0.1,
     legend columns=3,
@@ -40,12 +44,10 @@ mark options={scale=0.5},
     xmax = 5,
     xtick={1,2,3,4,5},
     xmin = 1,
-	ymin=0.65,
-	ymax=0.85,
+	ymin=0.7,
+	ymax=0.81,
 ]
-\addplot[thick, blue, mark=*,
-mark options={scale=0.5},
-]
+\addplot[thick, black, mark=*, mark options={scale=0.5}, dashed]
 	plot coordinates {
 		(1, 0.71)
 		(2, 0.73)
