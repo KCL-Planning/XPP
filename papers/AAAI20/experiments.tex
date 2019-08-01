@@ -50,13 +50,13 @@ GB).
 We modified all optimal-planning STRIPS IPC domains up to
 IPC'18. Following Domshlak and
 Mirkis \shortcite{domshlak:mirkis:jair-15}, for each benchmark task
-$(\vars,\acts,\cost,\init,\goal)$ we ran an optimal planner (\astar
-with \hlmcut\ \cite{helmert:domshlak:icaps-09}) to determine the
-optimal plan cost $C$, then obtained three OSP tasks by setting the
-cost bound to $b = x * C$ where $x \in \{0.25, 0.5, 0.75\}$, with soft
-goals only \ie\ $\goalsoft = \goal$ and $\goalhard=\emptyset$. Our
-benchmark set consists of 46 domains, and contains those tasks solved
-by the optimal planner and where the number of goal facts is $< 32$.
+$(\vars,\acts,\cost,\init,\goal)$ with optimal plan cost $C$ we
+obtained three OSP tasks by setting the cost bound to $b = x * C$
+where $x \in \{0.25, 0.5, 0.75\}$, with soft goals only \ie\
+$\goalsoft = \goal$ and $\goalhard=\emptyset$. Our benchmark set
+consists of 46 domains, and contains those tasks whose optimal plan
+cost is known \joerg{add cite/reference}, and where the number of goal
+facts is $< 32$.
 %
 %% ; the latter is an artifact of our current implementation that
 %% could be overcome in principle, though computing all MUGS for that
@@ -68,8 +68,9 @@ by the optimal planner and where the number of goal facts is $< 32$.
 %% deal with cost bounds, thus enabling nogood learning and transfer in
 %% SysS and SysW.
 %
-We consider conjunction learning as an algorithmic enhancement, but
-not trap learning as that cannot deal with OSP cost bounds.
+We consider conjunction learning as an algorithmic
+enhancement, \joerg{update} but not trap learning as that cannot deal
+with OSP cost bounds.
 %
 %% In what follows, we consider first global explanations, then discuss
 %% how the picture changes for local explanations.
@@ -84,7 +85,7 @@ not trap learning as that cannot deal with OSP cost bounds.
 	%\centering \input{tables/coverage_IPC.tex} 
 	\centering \input{tables/coverage_IPC_max_mugs.tex} 
         \vspace{-0.2cm}
-	\caption{Results on IPC benchmarks modified for oversubscription planning. Reference Points: related classical planning tasks (see text). Coverage: of our MUGS algorithms SysS and SysW, with vs.\ without conjunction learning \hc. \#MUGS: average/maximum number of MUGS, indicating explanation size (see text). Search Tree Fraction: fraction of worst-case search tree explored. Best performance in each part shown in \textbf{boldface}. Cost bounds set to $x$ times optimal cost. \joerg{move \#MUGS to left?} \joerg{add comparison to OSP planner? is more direct, and could be quite a bit more favorable for us ...}}
+	\caption{Results on IPC benchmarks modified for oversubscription planning. Reference Points: related classical planning tasks (see text). Coverage: of our MUGS algorithms SysS and SysW, with vs.\ without conjunction learning \hc. \#MUGS: average/maximum number of MUGS, indicating explanation size (see text). Search Tree Fraction: fraction of worst-case search tree explored. Best performance in each part shown in \textbf{boldface}. Cost bounds set to $x$ times optimal cost. \joerg{do our results get better with trap learning?}}
 	\label{table:coverage_ipc}
         \vspace{-0.5cm}
 \end{figure*}
@@ -94,7 +95,7 @@ explanations, \ie, computing all MUGS.
 %
 Note first that the figure includes \#MUGS data, corresponding to
 global explanation size. As the data shows, that size is often small,
-of a scale that seems feasible for human inspection.
+of a scale that can be feasible for human inspection.
 %
 % joerg: previous text, when we didnt yet have separate analysis/data
 % for local.
@@ -113,25 +114,20 @@ of a scale that seems feasible for human inspection.
 %% is often the case that for these problems, you cannot reach any of
 %% the goal facts. In that case, the MUGS will be the goals.
 
-The rest of the the figure focuses on computational performance. To
-have some measure to compare against, we use reference points from
-classical planning. The \hlmcut\ column gives coverage for \astar\
-with \hlmcut\ run on the original IPC instance without a cost bound,
-as a comparison to solvable optimal planning. The \hc\ columns give
-coverage for search, with conjunction learning, on the respective
-cost-bounded instances, when all goals must be achieved and thus the
-task is unsolvable. This provides a comparison to proving
-unsolvability, in the same situation where our approach computes all
-MUGS.
+The rest of the the figure focuses on computational performance. As a
+measure to compare against, we use classical planning and OSP as
+reference points. The \hlmcut\ column gives coverage for \astar\
+with \hlmcut\ \cite{helmert:domshlak:icaps-09} run on the original IPC
+instance without a cost bound, as a comparison to solvable optimal
+planning. The OSP column gives coverage for the most recent OSP
+planner \cite{katz:etal:icaps-19}.
 %
 It is expected that our algorithms, solving a more complex problem,
-will perform worse than the reference points.\footnote{Indeed, the
-first reference point is an upper bound to our coverage, as only
-solved instances are included in our benchmark set; and the second
-reference point is an upper bound for SysW as it constitutes the first
-search node in that algorithm.} The question is, \emph{how much
-worse?}
+will perform worse than the reference points. The question
+is, \emph{how much worse?}
 
+\joerg{update to OSP comparison}
+%
 As a short summary of the answer provided by
 Figure~\ref{table:coverage_ipc} to that question, compared to
 the \hlmcut\ reference point, taking the per-domain best of our four
@@ -145,7 +141,7 @@ qualitatively similar, with equal coverage in 38, 25, and 20 domains
 for $x=0.25, 0.5, 0.75$ respectively. Overall, it seems fair to say
 that our analyses can be feasible in many cases, in the sense of not
 being more infeasible than the most closely related classical planning
-problems. \joerg{add comparison to OSP planner?}
+problems. 
 
 Both SysS and SysW suffer from larger cost bounds, but that is less so
 for SysW, due to its smaller search tree when solvable goal sets are
@@ -171,13 +167,14 @@ beneficial.
 
 \subsubsection{IPC Local Explanations}
 
-To evaluate the computation of local explanations -- the entailments
-of a soft-goal conjunction $\bigwedge_{a \in A} a$ -- we set up an
-experiment where we used only benchmark instances with $\geq 6$ goals,
-scaled question size $|A|$ from $1$ to $5$, and randomly selected $10$
-questions of each size. Figure~\ref{fig:ipc-local} shows the data. As
-expected, both computational effort and explanation size decrease with
-$|A|$, \ie, with how specific the user question is. 
+For local explanations -- the entailments of a soft-goal conjunction
+$\bigwedge_{g \in A} g$ -- we set up an experiment where we used only
+benchmark instances with $\geq 6$ goals, scaled question size $|A|$
+from $1$ to $5$, and randomly selected $10$ questions of each
+size. Figure~\ref{fig:ipc-local} shows the data for the most
+challenging cost bound $0.75$. As expected, both computational effort
+and explanation size decrease with $|A|$, \ie, with how specific the
+user question is.
 
 \begin{figure}[ht]
 \small
@@ -199,9 +196,7 @@ $|A|$, \ie, with how specific the user question is.
 \caption{\label{fig:ipc-local} Left: coverage (dashed, right y-axis) and
 average runtime (solid, left y-axis) for SysS, as a function of
 $|A|$. Right: average \#MUGS as a function of $|A|$. Averages taken
-over instances where all questions were solved.\joerg{optimize format:
-y-axis labels, b/w compatible instead of red and blue, curve
-identifiers in left plot}}
+over instances where all questions were solved.}
 \vspace{-0.6cm}
 \end{figure}
 

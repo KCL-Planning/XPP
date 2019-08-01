@@ -72,7 +72,7 @@ Rebecca Eifler,\textsuperscript{\rm 1}
 Michael Cashmore,\textsuperscript{\rm 2}
 J\"org Hoffmann,\textsuperscript{\rm 1}\\
 \Large \textbf{Daniele Magazzeni,\textsuperscript{\rm 2} 
-Marcel Steinmetz, \textsuperscript{\rm 1}} \\
+Marcel Steinmetz\textsuperscript{\rm 1}} \\
 \textsuperscript{\rm 1}Saarland University, Saarland Informatics Campus, Saarbr\"ucken, Germany,\\ 
 \textsuperscript{\rm 2}King's College London, Department of Informatics, London, UK,\\ 
 \{lastname\}@cs.uni-saarland.de,
@@ -92,15 +92,15 @@ could not be achieved were $A$ enforced. We formalize this approach in
 terms of plan-property dependencies, where plan properties are
 propositional formulas over the goals achieved by a plan, and
 dependencies are entailment relations in plan space. We introduce
-algorithms for identifying dependencies of the form $\bigwedge_{a \in
-  A} a \Rightarrow \neg \bigwedge_{b \in B} b$, \emph{globally} across
-a given set of plan properties, or \emph{locally} computing the
+algorithms for identifying dependencies of the form $\bigwedge_{g \in
+A} g \Rightarrow \neg \bigwedge_{g \in B} g$, \emph{globally} across a
+given set of plan properties, or \emph{locally} computing the
 implications of a single given plan property (user question)
-$\bigwedge_{a \in A} a$. We show how, via compilation, one can analyze
+$\bigwedge_{g \in A} g$. We show how, via compilation, one can analyze
 dependencies between a richer form of plan properties, referring to
 the action subsets touched by the plan. We run comprehensive
 experiments on adapted IPC benchmarks, and find that the suggested
-analyses can be feasible even at the global level, and become
+analyses are reasonably feasible at the global level, and become
 significantly more effective at the local level.
 %
 %% A key problem in explainable AI planning is to elucidate decision

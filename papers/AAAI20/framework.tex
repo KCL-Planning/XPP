@@ -33,17 +33,17 @@ to \true\ under the truth value assignment where $g \in \goalsoft$ is
 \true\ iff $g \in \init\apply{\plan}$.
 %
 $\prop_\phi$ is \defined{conjunctive} if $\phi$ has the form
-$\bigwedge_{a \in A} a\allowbreak$ or $\neg \bigwedge_{b \in B} b$.
+$\bigwedge_{g \in A} g\allowbreak$ or $\neg \bigwedge_{g \in B} g$.
 \end{definition}
 
-Our current analyses consider conjunctive plan properties only. We
-will identify $\prop_\phi$ with the characterizing formula $\phi$.
+We identify $\prop_\phi$ with the characterizing formula $\phi$. Our
+analyses are formulated for conjunctive plan properties (which through
+compilation can address arbitrary $\prop_\phi$).
 
 In general, a plan property can be any function mapping a task and an
 action sequence to a Boolean value. Examples are temporal plan
-trajectory constraints, action-set properties (formulas over subsets
-of actions touched/not touched by the plan), deadlines, bounds on
-resource consumption, etc. To the extent that such more general
+trajectory constraints, deadlines, bounds on resource consumption, and
+the aforementioned action-set properties. To the extent that such
 properties can be compiled into goal facts, conjunctive plan
 properties can be used to analyze their dependencies. We will explore
 this possibility here with a compilation for action-set properties.
@@ -105,17 +105,17 @@ Let $\task =
 be an OSP task, and \plans\ its set of plans.
 
 A \defined{goal exclusion} is an entailment of the form
-$\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigwedge_{b \in B}
-  b}$. 
+$\entails{\plans}{\bigwedge_{g \in A} g}{\neg \bigwedge_{g \in B}
+  g}$. 
 %
 The entailment is \defined{non-dominated} if there is no pair
 $(A',B')$ where $A' \subseteq A$, $B' \subseteq B$, $(A',B') \neq
 (A,B)$, and $\entails{\plans}{\bigwedge_{a \in A'} a}{\neg
-  \bigwedge_{b \in B'} b}$.
+  \bigwedge_{g \in B'} g}$.
 %
 The entailment is \defined{non-rhs-dominated} if there is no $B'$
 where $B' \subsetneq B$ and $\entails{\plans}{\bigwedge_{a \in A}
-  a}{\neg \bigwedge_{b \in B'} b}$.
+  a}{\neg \bigwedge_{g \in B'} g}$.
 \end{definition}
 
 Goal exclusions are of interest in OSP as they reflect the detailed
@@ -152,8 +152,8 @@ For a plan property $\phi$, the \defined{local explanation (LE)} for
 $\phi$ is the set $\{\psi \mid \entails{\plans}{\phi}{\psi}\}$ of plan
 properties \plans-entailed by $\phi$.
 %
-For $\phi = \bigwedge_{a \in A} a$, the \defined{goal-exclusion LE}
-for $\phi$ is $\{\psi \mid \psi = \neg \bigwedge_{b \in B} b,
+For $\phi = \bigwedge_{g \in A} g$, the \defined{goal-exclusion LE}
+for $\phi$ is $\{\psi \mid \psi = \neg \bigwedge_{g \in B} g,
 \entails{\plans}{\phi}{\psi} \text{ is non-rhs-dominated}\}$.
 \end{definition}
 
@@ -176,15 +176,15 @@ the user has a vested interest in (raising the new sub-problem how to
 choose \props).
 
 Note that, if the user question ``Why do you not achieve property
-$\phi$?''  refers to a given plan candidate \plan, then a simpler
-variant of local explanation is to return only those entailed $\psi$
-where $\plan \not\models \psi$, \ie, currently false plan properties
-that would become true when enforcing $\phi$. This is easier to
-compute and yields smaller explanations. In our experiments, we will
-only use explanations as per Definition~\ref{def:local-explanation},
-yielding an upper bound on computational hardness and explanation
-size, and avoiding the bias incurred by a particular method for
-generating candidate plans \plan.
+$\phi$?''  refers to a concrete given plan candidate \plan, then a
+simpler variant of local explanation is to return only those entailed
+$\psi$ where $\plan \not\models \psi$, \ie, currently false plan
+properties that would become true when enforcing $\phi$. This is
+easier to compute and yields smaller explanations. In our experiments,
+we will only use explanations as per
+Definition~\ref{def:local-explanation}, yielding an upper bound on
+computational hardness and explanation size, and avoiding the bias
+incurred by a particular method for generating candidate plans \plan.
 
 A canonical notion of global explanation arises directly from the
 above.  Instead of showing the implications of one specific plan
@@ -243,18 +243,17 @@ $\pdo{\plans}$ over conjunctive plan properties where $\phi
 \pdo{\plans} \psi$ iff $\entails{\plans}{\phi}{\psi}$ is a
 non-dominated goal exclusion.
 %
-%% $\phi = \bigwedge_{a \in A} a$, $\psi = \neg \bigwedge_{b \in B}
-%% b$, $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigwedge_{b \in
+%% $\phi = \bigwedge_{g \in A} g$, $\psi = \neg \bigwedge_{b \in B}
+%% b$, $\entails{\plans}{\bigwedge_{g \in A} g}{\neg \bigwedge_{b \in
 %% B} b}$, and there does not exist $(A',B')$ such that $A' \subseteq
 %% A$, $B' \subseteq B$, $(A',B') \neq (A,B)$, and
 %% $\entails{\plans}{\bigwedge_{a \in A'} a}{\neg \bigwedge_{b \in B'}
 %% b}$.
 \end{definition}
 
-Given the form $\entails{\plans}{\bigwedge_{a \in A} a}{\neg
-  \bigwedge_{b \in B} b}$ of goal exclusions, when ignoring all other
-\plans-entailments, plan properties can no longer entail each other
-and the equivalence classes trivialize.
+Equivalence classes are not needed here because we consider only goal
+exclusions $\entails{\plans}{\bigwedge_{g \in A} g}{\neg \bigwedge_{g
+    \in B} g}$, so plan properties cannot entail each other.
 %
 % Joerg: now introduced above
 %
@@ -267,7 +266,7 @@ and the equivalence classes trivialize.
 %% good plan. Thanks to the exclusive focus on (1), plan properties can
 %% no longer entail each other, so that the equivalence classes
 %% trivialize. For (2), entailments $\entails{\plans}{\bigwedge_{a \in A}
-%%   a}{\neg \bigwedge_{b \in B} b}$ with minimal $A$ and $B$ dominate
+%%   a}{\neg \bigwedge_{g \in B} g}$ with minimal $A$ and $B$ dominate
 %% non-minimal ones, with a weaker left-hand side $A$ (smaller
 %% conjunction) entailing a stronger right-hand side $\neg B$ (smaller
 %% disjunction, after moving the negation inside). 
@@ -282,9 +281,9 @@ and the equivalence classes trivialize.
 %
 % Joerg: now introduced above
 %
-Our results on benchmarks suggest that the goal-exclusion GE can be
-feasible to compute, and often produces answers sufficiently compact
-for human inspection.
+Our results on benchmarks suggest that the goal-exclusion GE is
+reasonably feasible to compute, and often produces answers
+sufficiently compact for human inspection.
 
 Consider again our example, with $T_0$ fuel $13$. It is not difficult
 to determine that this example has exactly three non-dominated goal
@@ -302,8 +301,7 @@ So the size of the goal-exclusion GE, in terms of the ordering
 relations it contains, is three. 
 
 Note that this GE is equivalent to the statement ``\goalsoft\ is not
-solvable as a whole, but each of its subsets is''. Indeed, as we see
-next, the special case of goal-exclusion dependencies is equivalent to
-the analysis of minimal unsolvable goal subsets.  This connection
-further facilitates compact representation, and we exploit it in our
-algorithms.
+solvable as a whole, but each of its subsets is''. Indeed, as we shall
+spell out next, analyzing goal-exclusion dependencies is equivalent to
+analyzing minimal unsolvable goal subsets. We exploit this connection
+in our algorithms.
