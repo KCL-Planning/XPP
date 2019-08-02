@@ -282,8 +282,18 @@ costlier plans satisfying some of the properties.
 We created benchmark tasks with size parameters around the borderline
 of feasibility. As reference points, we ran \astar\ with \hlmcut\
 respectively trap learning on tasks where all (original goal facts
-plus) action-set properties are hard goals.
+plus) action-set properties are hard goals. \joerg{reference point OSP
+possible here, ie does michael's osp solver handle hard goals? if not,
+keep current reference points}
 
+\joerg{presumably, include a figure with one plot per domain, fixing 
+number of goals as in IJCAI long versions (main paper plot), and with
+fixed constrainedness factor x. use same x for both global and local
+explanations. x=2.0 is too high, Blocks and TPP apparently typically
+all goals achievable easil for base planner. x=1.0 shows off advantage
+of trap learning, but does not challenge the reference points
+enough. for x=1.5 on the other hand trap learning is way less
+important than for 1.0. Try x=1.25 and see what it looks like.}
 
 
 
