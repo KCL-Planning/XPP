@@ -19,7 +19,7 @@
 We implemented our approach in Fast Downward
 (FD) \cite{helmert:jair-06}. We evaluate it, in turn, on IPC
 benchmarks modified for OSP planning, and on a selection of IPC
-benchmarks extended with action-set properties.
+benchmarks we extended with action-set properties.
 
 The base planner called by our SysS and SysW algorithms on each search
 node runs forward search using
@@ -68,9 +68,8 @@ facts is $< 32$.
 %% deal with cost bounds, thus enabling nogood learning and transfer in
 %% SysS and SysW.
 %
-We consider conjunction learning as an algorithmic
-enhancement, \joerg{update} but not trap learning as that cannot deal
-with OSP cost bounds.
+We consider conjunction learning as an algorithmic enhancement, but
+not trap learning as that cannot deal with OSP cost bounds.
 %
 %% In what follows, we consider first global explanations, then discuss
 %% how the picture changes for local explanations.
@@ -85,7 +84,7 @@ with OSP cost bounds.
 	%\centering \input{tables/coverage_IPC.tex} 
 	\centering \input{tables/coverage_IPC_max_mugs.tex} 
         \vspace{-0.2cm}
-	\caption{Results on IPC benchmarks modified for oversubscription planning. Reference Points: related classical planning tasks (see text). Coverage: of our MUGS algorithms SysS and SysW, with vs.\ without conjunction learning \hc. \#MUGS: average/maximum number of MUGS, indicating explanation size (see text). Search Tree Fraction: fraction of worst-case search tree explored. Best performance in each part shown in \textbf{boldface}. Cost bounds set to $x$ times optimal cost. \joerg{do our results get better with trap learning?}}
+	\caption{Results on IPC benchmarks modified for oversubscription planning. Reference Points: related classical planning tasks (see text). Coverage: of our MUGS algorithms SysS and SysW, with vs.\ without conjunction learning \hc. \#MUGS: average/maximum number of MUGS, indicating explanation size (see text). Search Tree Fraction: fraction of worst-case search tree explored. Best performance in each part shown in \textbf{boldface}. Cost bounds set to $x$ times optimal cost.}
 	\label{table:coverage_ipc}
         \vspace{-0.5cm}
 \end{figure*}
@@ -248,7 +247,7 @@ Figure~\ref{table:coverage_ipc}.
 
 To evaluate the use of our framework with more complex plan
 properties, beyond goal facts, we experimented with the compilation of
-action-set properties as per Section~\ref{compilation}. We selected
+action-set properties as per Section~\ref{actionsetprops}. We selected
 four IPC domains for extension with action-set properties, namely
 NoMystery, Rovers, and TPP as considered in resource-constrained
 planning \cite{nakhost:etal:icaps-12}, where minimum resource

@@ -3,33 +3,33 @@
 
 %% \joerg{0.1--25 page: adapt ijcai version.}
 
-\joerg{omit the verbalization stuff? omit the text par on own future
-  work?}
 
-Our approach addresses plan-space explanation via plan properties and
-their dependencies. This naturally addresses challenges raised in
-previous work on iterative planning, and performance is reasonable in
-IPC benchmark studies. The approach can be easily generalized to
-almost arbitrary planning frameworks and plan-property languages, and
-we hope it will inspire other researchers too. To name just one
-example, plan properties and their dependencies might help in plan
-verbalization \cite{rosenthal:etal:ijcai-16}, as an abstraction level
-(plan properties: ``I did X'') as well as a means for justification
-(dependencies: ``I did not do Y because \dots'')..
+Our approach analyses plan space in terms of plan properties and their
+dependencies. This naturally addresses challenges raised in previous
+work on iterative planning, and performance is reasonable in IPC
+benchmark studies. The approach can be easily generalized to almost
+arbitrary planning frameworks and plan-property languages, and we hope
+it will inspire other researchers too. To name just one example, plan
+properties and their dependencies might help in plan verbalization
+\cite{rosenthal:etal:ijcai-16}, as an abstraction level (plan
+properties: ``I did X'') as well as a means for justification
+(dependencies: ``I did not do Y because \dots'').
 
-For our own future work, an interesting challenge is to answer deeper
-``why'' questions regarding an entailment
-$\entails{\plans}{\prop}{\propq}$. Possible ideas are to include
-additional plan properties elucidating the causal chain between
-\prop\ and \propq; or to find a minimal relaxation (superset) of the
-plan set \plans\ for which \prop\ no longer entails \propq, thus
-elucidating the circumstances under which that entailment holds. On
-the computational side, an idea worth trying is to represent the plan
-set \plans\ symbolically and use that representation to identify
-entailment relations. On the application side, we aim to apply our
-technology in concrete use cases such as simulated penetration testing
-and AUV mission control \cite{cashmore:etal:icra-14}. Such
-applications will also enable meaningful user evaluations. 
+An interesting challenge is to answer deeper ``why'' questions
+regarding an entailment $\entails{\plans}{\prop}{\propq}$. Possible
+ideas are to include additional plan properties elucidating the causal
+chain between \prop\ and \propq; or to find a minimal relaxation
+(superset) of the plan set \plans\ for which \prop\ no longer entails
+\propq, thus elucidating the circumstances under which that entailment
+holds. A computational idea worth trying is to represent the plan set
+\plans\ symbolically and use that representation to identify
+entailment relations. We aim to apply and evaluate our approach in
+concrete use cases such as simulated penetration testing and AUV
+mission control \cite{cashmore:etal:icra-14}.
+%
+% Joerg: better just not go there ...
+%
+%Such applications will also enable meaningful user evaluations.
 
 % Joerg: reshaped this
 %

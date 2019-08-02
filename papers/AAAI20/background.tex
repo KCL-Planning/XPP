@@ -62,10 +62,7 @@ al.\ \shortcite{nakhost:etal:icaps-12}, which allow to control
 resource constrainedness (basically the ratio between available
 vs.\ required resource amounts).
 
-For illustration, we will use an RCP running example from IPC
-NoMystery, a transportation domain with fuel consumption. The
-variables encode truck and package positions, actions drive trucks or
-load/unload packages.
+For illustration, we will use an RCP running example 
 %
 %\begin{figure}[htb]
 \begin{wrapfigure}{r}{0.45\columnwidth}
@@ -91,13 +88,15 @@ load/unload packages.
 \end{tikzpicture}
 %\vspace{-0.25cm} \hspace{-0.6cm} \caption{Illustrative IPC NoMystery example.}
 %\label{fig:nomystery-example}
-\vspace{-0.3cm}
+\vspace{-0.5cm}
 \end{wrapfigure}
 %\end{figure}
 %
-Drive actions consume the fuel resource associated with the respective
-truck. The amount of fuel consumed depends on the road connection
-taken. As a concrete example task, we will use the task with two
-trucks and three packages illustrated here. Fuel costs are indicated
-at road segments. The packages are initially at $L_0$ (shown in blue);
-their goal locations are $L_4$, $L_3$,and $L_5$ (shown in red).
+from IPC NoMystery, a transportation domain with fuel consumption.
+The variables encode truck and package positions, actions drive trucks
+or load/unload packages. Drive actions consume an amount of fuel (of
+the respective truck) depending on the road connection taken. As a
+concrete example, we will use the task with two trucks and three
+packages illustrated above. Fuel consumptions are indicated at road
+segments. The packages are initially at $L_0$ (shown in blue); their
+goal locations are $L_4$, $L_3$,and $L_5$ (shown in red).
