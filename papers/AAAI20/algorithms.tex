@@ -30,13 +30,13 @@ Let $\task =
 (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$
 be an OSP task, and \plans\ its set of plans.
 
-Then $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigwedge_{b \in B}
-  b}$ is non-dominated if and only if $A \cup B$ is a MUGS.
+Then $\entails{\plans}{\bigwedge_{g \in A} g}{\neg \bigwedge_{g \in B}
+  g}$ is non-dominated if and only if $A \cup B$ is a MUGS.
 \end{proposition}
 
 \begin{proof}
-A \plans-entailment $\entails{\plans}{\bigwedge_{a \in A} a}{\neg
-  \bigwedge_{b \in B} b}$ clearly holds iff $A \cup B$ is
+A \plans-entailment $\entails{\plans}{\bigwedge_{g \in A} g}{\neg
+  \bigwedge_{g \in B} g}$ clearly holds iff $A \cup B$ is
 unsolvable. Non-dominated entailments result from set-inclusion
 minimal $A$ and $B$, corresponding to the set-inclusion minimality of
 MUGS.
@@ -125,14 +125,14 @@ before reaching \goalsoft.
 Search enhancements are important for scalability. In particular, goal
 sets can be reached from the start node by permutations of goal-fact
 removal/addition steps. For effective results re-use, we assign goal
-sets unique integer IDs and fix an ascending expansion order. Namely,
-when expanding a node $\goal$ and considering a possible child
-$\goal'$, there are three possibilities: 1.\ $id(\goal') > id(\goal)$:
-$\goal'$ not seen yet, insert into open list; 2.\ $id(\goal') <
-id(\goal)$ and result for $\goal'$ cached: use that result;
-3.\ $id(\goal') < id(\goal)$ and result for $\goal'$ not cached: then
-the search was previously cut off above $\goal'$, so we know that
-$\goal'$ is solvable (SysW) respectively unsolvable (SysS).
+sets unique integer IDs and fix an ascending expansion order. When
+expanding a node $\goal$ and considering a possible child $\goal'$,
+there are three possibilities: 1.\ $id(\goal') > id(\goal)$: $\goal'$
+not seen yet, insert into open list; 2.\ $id(\goal') < id(\goal)$ and
+result for $\goal'$ cached: use that result; 3.\ $id(\goal') <
+id(\goal)$ and result for $\goal'$ not cached: then the search was
+previously cut off above $\goal'$, so we know that $\goal'$ is
+solvable (SysW) respectively unsolvable (SysS).
 
 We created synergy with recent nogood learning techniques,
 \defined{conjunction learning} \cite{steinmetz:hoffmann:ai-17} and
@@ -151,19 +151,21 @@ For both forms of learning, the nogoods learned depend on the goal, so
 that only some of the nogoods remain valid for transfer in SysW where
 children remove goals. To identify that nogood subset, in conjunction
 learning we remember the subset $\goal$ of goals proved to be
-unreachable by \hc\ in a learning step, so that clause validity is
-preserved so long as at least one member of $\goal$ is still
-present. In trap learning, the validity test checks, for every node of
-the trap, whether the node is still either mutex with the goal, or is
-still proved unsolvable by the heuristic function.
+unreachable by \hc\ in a learning step. Clause validity is preserved
+so long as at least one member of $\goal$ is still present. In trap
+learning, the validity test checks, for every node of the trap,
+whether the node is still either mutex with the goal, or is still
+proved unsolvable by the heuristic function.
 
 We extended conjunction learning to deal with OSP plan-cost bounds, by
 checking not whether $\hc(s)=\infty$ but whether $\hc(s)$ exceeds the
-remaining available cost. For trap learning, no straightforward
-extension exists, as trap nodes represent sets of states and thus
-would need to reason about bounds on remaining available cost. As trap
-learning is not the focus of our work, we leave this open for future
-research and use trap learning on RCP benchmarks only.
+remaining available cost. 
+%
+For trap learning, no straightforward extension exists, as trap nodes
+represent sets of states and thus would need to reason about bounds on
+remaining available cost. As trap learning is not the focus of our
+work, we leave this open for future research and use trap learning on
+RCP benchmarks only.
 
 % Joerg: hC remains valid anyhow; when learning a clause from hC,
 % Marcel remembers the set of goals that became unreachable; validity
@@ -219,7 +221,7 @@ with set of plans \plans. Consider the modified task $\task' :=
 (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard
 \cup A,\allowbreak\goalsoft \setminus
 A,\allowbreak\costbound)$. Clearly, we have the goal exclusion
-$\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigwedge_{b \in B} b}$
+$\entails{\plans}{\bigwedge_{g \in A} g}{\neg \bigwedge_{g \in B} g}$
 iff $B$ is unsolvable in $\task'$; and $B$ is minimal in $\task'$ iff
 the goal exclusion is non-rhs-dominated. So the MUGS in $\task'$ yield
 exactly the goal-exclusion LE for $A$ as per
@@ -244,7 +246,7 @@ Definition~\ref{def:local-explanation}.
 %% be an OSP task, \plans\ its set of plans, and $A \subseteq \goalsoft$. 
 %
 %% Then there exists a non-dominated goal exclusion
-%% $\entails{\plans}{\bigwedge_{a \in A'} a}{\neg \bigwedge_{b \in B} b}$
+%% $\entails{\plans}{\bigwedge_{a \in A'} a}{\neg \bigwedge_{g \in B} g}$
 %% where $A \supseteq A'$ if and only if $B$ is unsolvable in $\task' :=
 %% (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard
 %% \cup A,\allowbreak\goalsoft \setminus A,\allowbreak\costbound)$.
@@ -260,23 +262,23 @@ Definition~\ref{def:local-explanation}.
 %
 %% From right to left: As $B$ is unsolvable in $\task'$, $A \cup B$ is
 %% unsolvable in $\task$, \ie, $\entails{\plans}{\bigwedge_{a \in A'}
-%%   a}{\neg \bigwedge_{b \in B} b}$. As $B$ is minimal in $\task'$, the
+%%   a}{\neg \bigwedge_{g \in B} g}$. As $B$ is minimal in $\task'$, the
 %% right-hand side of this goal exclusion is minimal in
 %% $\task$. Minimizing its left-hand side results in the desired
 %% non-dominated goal exclusion.
 %% \end{proof}
 
 Observe that $\task'$ has less soft goals, so MUGS computation becomes
-easier, reflecting the advantage of local analysis over global
+easier, resulting in an advantage of local analysis over global
 analysis. That advantage grows with $|A|$, \ie, intuitively, with how
 specific the user question is. At the extreme end, $A = \goalsoft$ and
 both SysW and SysS on $\task'$ contain a single search node testing
 solvability of $\goalhard \cup \goalsoft$.\footnote{As previously
-  indicated, given a current plan \plan\ one could choose to restrict
-  the answer to entailments $\neg \bigwedge_{b \in B} b$ where $\plan
-  \models \bigwedge_{b \in B} b$. This corresponds to removing all $g$
-  with $\plan \not\models g$ from \goalsoft\ in $\task'$, further
-  simplifying the computation.}
+  indicated, given a concrete candidate plan \plan\ one could choose
+  to restrict the answer to entailments $\neg \bigwedge_{g \in B} g$
+  where $\plan \models \bigwedge_{g \in B} g$. This corresponds to
+  removing all $g$ with $\plan \not\models g$ from \goalsoft\ in
+  $\task'$, further simplifying the computation.}
 
 
 
@@ -316,18 +318,18 @@ solvability of $\goalhard \cup \goalsoft$.\footnote{As previously
 %% \plans, the property set $\dgeprops := \{\bigwedge_{a \in A}
 %% g\allowbreak\mid\allowbreak A \subseteq G\} \cup \{\neg \bigvee_{g
 %%   \in B} b \allowbreak\mid\allowbreak B \subseteq G\}$, and the
-%% dependency set $\dgedeps := \{(\bigwedge_{a \in A} a,\allowbreak\neg
-%% \bigwedge_{b \in B} b) \allowbreak\mid\allowbreak A \cap B =
+%% dependency set $\dgedeps := \{(\bigwedge_{g \in A} g,\allowbreak\neg
+%% \bigwedge_{g \in B} g) \allowbreak\mid\allowbreak A \cap B =
 %% \emptyset\}$.
 %% \end{definition}
 
-%% Observe that $\neg \bigvee_{b \in B} b$ is equivalent to $\bigwedge_{b
+%% Observe that $\neg \bigvee_{g \in B} g$ is equivalent to $\bigwedge_{b
 %%   \in B} \neg b$, so that $\entails{\plans}{\bigwedge_{a \in A}
-%%   a}{\neg \bigvee_{b \in B} b}$ holds iff
-%% $\entails{\plans}{\bigwedge_{a \in A} a}{\neg b}$ holds for every $b
+%%   a}{\neg \bigvee_{g \in B} g}$ holds iff
+%% $\entails{\plans}{\bigwedge_{g \in A} g}{\neg b}$ holds for every $b
 %% \in B$. Indeed, the dominant PDO-DGE can be derived from the dominant
 %% PDO-GE. Precisely, say that an entailment
-%% $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in B} b}$ is
+%% $\entails{\plans}{\bigwedge_{g \in A} g}{\neg \bigvee_{g \in B} g}$ is
 %% \defined{constructible} from the dominant PDO-GE if there exist $A[b]
 %% \subseteq A$, for $b \in B$, such that $\entails{\plans}{\bigwedge_{a
 %%     \in A[b]} a}{\neg b}$ is in the dominant PDO-GE and $\bigcup_{b
@@ -338,18 +340,18 @@ solvability of $\goalhard \cup \goalsoft$.\footnote{As previously
 %% (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$
 %% be an OSP task, and \plans\ its set of plans.  
 
-%% Then $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in B}
+%% Then $\entails{\plans}{\bigwedge_{g \in A} g}{\neg \bigvee_{b \in B}
 %%   b}$ is in the dominant PDO-DGE if and only if it is constructible
 %% from the dominant PDO-GE, and there is no $A' \subsetneq A$ such that
-%% $\entails{\plans}{\bigwedge_{a \in A'} a}{\neg \bigvee_{b \in B} b}$
+%% $\entails{\plans}{\bigwedge_{a \in A'} a}{\neg \bigvee_{g \in B} g}$
 %% is constructible from the dominant PDO-GE.
 %% \end{proposition}
 
 %% \begin{proof}
 %% %
 %% Observe first that, for any entailment $\entails{\plans}{\bigwedge_{a
-%%     \in A} a}{\neg \bigvee_{b \in B} b}$ that holds, an entailment
-%% $\entails{\plans}{\bigwedge_{a \in A'} a}{\neg \bigvee_{b \in B} b}$
+%%     \in A} a}{\neg \bigvee_{g \in B} g}$ that holds, an entailment
+%% $\entails{\plans}{\bigwedge_{a \in A'} a}{\neg \bigvee_{g \in B} g}$
 %% with $A' \subseteq A$ is constructible from the dominant PDO-GE. This
 %% is because, for every entailment $\entails{\plans}{\bigwedge_{a \in A}
 %%   a}{\neg b}$ that holds, the dominant PDO-GE contains an entailment
@@ -366,24 +368,24 @@ solvability of $\goalhard \cup \goalsoft$.\footnote{As previously
 %% %%   a}{\neg b_0}$ is in the dominant PDO-GE, and that
 %% %% $\entails{\plans}{\bigwedge_{a \in A[b]} a}{\neg b}$ is in the
 %% %% dominant PDO-GE for all $b_0 \neq b \in B$ with $A[b] \subseteq
-%% %% A$. Then, trivially, $\entails{\plans}{\bigwedge_{a \in A} a}{\neg
-%% %%   \bigvee_{b \in B} b}$. This entailment is dominant because 1)
-%% %% $\entails{\plans}{\bigwedge_{a \in A} a}{\neg b_0}$ is dominant so $A$
+%% %% A$. Then, trivially, $\entails{\plans}{\bigwedge_{g \in A} g}{\neg
+%% %%   \bigvee_{g \in B} g}$. This entailment is dominant because 1)
+%% %% $\entails{\plans}{\bigwedge_{g \in A} g}{\neg b_0}$ is dominant so $A$
 %% %% cannot be smaller, and 2) any valid implication of a literal $\neg b$
 %% %% is represented in the dominant PDE-GE so $B$ cannot be larger.
 %% %
 %% %% 'only if': Assume for contradiction that
-%% %% $\entails{\plans}{\bigwedge_{a \in A} a}{\neg \bigvee_{b \in B} b}$ is
+%% %% $\entails{\plans}{\bigwedge_{g \in A} g}{\neg \bigvee_{g \in B} g}$ is
 %% %% in the dominant PDO-DGE but this claim does not hold. If there exists
 %% %% $b \in B$ for which no entailment $\entails{\plans}{\bigwedge_{a \in
 %% %%     A[b]} a}{\neg b}$ is in the dominant PDO-GE, then $\bigwedge_{a
-%% %%   \in A} a$ does not entail $\neg \bigvee_{b \in B} b$, in
+%% %%   \in A} a$ does not entail $\neg \bigvee_{g \in B} g$, in
 %% %% contradiction. If $A[b] \subsetneq A$ for every $b$.
 %% \end{proof}
 
 %% Observe that the dominant PDO-DGE may be exponentially larger than the
 %% dominant PDO-GE: in the worst case, every combination of
-%% $\entails{\plans}{\bigwedge_{a \in A} a}{\neg b}$ entailments in the
+%% $\entails{\plans}{\bigwedge_{g \in A} g}{\neg b}$ entailments in the
 %% dominant PDO-GE yields a different set-inclusion minimal left-hand
 %% side. However, using Proposition~\ref{pro:pdodge-from-pdoge}, the
 %% dominant PDO-DGE can be constructed from the dominant PDO-GE in time
@@ -488,9 +490,9 @@ solvability of $\goalhard \cup \goalsoft$.\footnote{As previously
 
 
 
-%% conjunctive exclusion properties $\props^{CE}$, $\bigwedge_{a \in A} a
-%% \wedge \bigwedge_{b \in B} b$; 3. disjunctive exclusion properties
-%% $\props^{DE}$, $\bigwedge_{a \in A} a \wedge \bigvee_{b \in B}
+%% conjunctive exclusion properties $\props^{CE}$, $\bigwedge_{g \in A} g
+%% \wedge \bigwedge_{g \in B} g$; 3. disjunctive exclusion properties
+%% $\props^{DE}$, $\bigwedge_{g \in A} g \wedge \bigvee_{b \in B}
 %% g$. (alternative: take elements of intended exclusion implications as
 %% properties instead. don't do here as we don't actually compute a PDA
 %% for these, there may be other implications we don't see. general: if

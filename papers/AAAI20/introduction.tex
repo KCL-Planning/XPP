@@ -27,14 +27,13 @@ plan property $p$ is a Boolean function on plans (\eg\ $G$ true at
 end), and $p$ entails $q$ if all plans that satisfy $p$ also satisfy
 $q$.  A user question of the form ``Why not $p$?'' can then be
 answered in terms of those $q$ entailed by $p$ (\eg\ $G'$ false at end
-or energy usage $> 100$). We will refer to this as a \defined{local}
-explanation, in difference to the \defined{global} explanation showing
-the graph of all plan-property entailments. The former makes sense in
-iterative planning as outlined; the latter makes sense when an
-overview of plan space is desirable, for example in simulated
-penetration testing \cite{boddy:etal:icaps-05,hoffmann:icaps-15} where
-system security may be best facilitated by a global view on the space
-of possible attacks.
+or energy usage $> 100$). We will refer to this as a \defined{local
+  explanation}, whereas a \defined{global explanation} shows the graph
+of all plan-property entailments. The former makes sense in iterative
+planning as outlined, the latter makes sense when an overview of plan
+space is desirable. (For example, in simulated penetration testing
+\cite{boddy:etal:icaps-05,hoffmann:icaps-15}, an overview of the space
+of possible attacks may be useful.)
 %
 %% Moreover, the graph of all plan-property entailments provides an
 %% overview explanation of plan space. We will refer to the latter as a
@@ -46,8 +45,8 @@ of possible attacks.
 %% security is best facilitated by a global view on the space of possible
 %% attacks.
   
-Our form of plan explanation falls into the class of
-\emph{contrastive} explanations as discussed \eg\ by Miller
+Our form of explanation falls into the class of \emph{contrastive}
+explanations as discussed \eg\ by Miller
 \shortcite{miller:ai-19}. Previous work on local explanation, \ie,
 answering questions of the form ``Why not $p$?'', has suggested to
 generate a new plan $\pi'$ that satisfies $p$, and answer the question
@@ -60,16 +59,18 @@ determining shared properties of \emph{all} possible such
 alternatives. From this perspective, our proposal is a new, universal,
 variant of contrastive plan explanation.
 
-Prior work related to universal plan-space explanation addressed
-unsolvable tasks, identifying minimal model changes resulting in
-solvability \cite{goebelbecker:etal:icaps-10}, or minimal differences
-between a solvable user model vs.\ unsolvable system model
-\cite{sreedharan:etal:ijcai-19}.
+% joerg ==> related work
 %
-% joerg: not needed, may be controversial (compilations etc)
-%
-%In contrast to these, here we are concerned with the space of plans in
-%solvable tasks.
+%% Prior work related to universal plan-space explanation addressed
+%% unsolvable tasks, identifying minimal model changes resulting in
+%% solvability \cite{goebelbecker:etal:icaps-10}, or minimal differences
+%% between a solvable user model vs.\ unsolvable system model
+%% \cite{sreedharan:etal:ijcai-19}.
+%% %
+%% % joerg: not needed, may be controversial (compilations etc)
+%% %
+%% %In contrast to these, here we are concerned with the space of plans in
+%% %solvable tasks.
 
 % joerg ==> related work
 %
@@ -84,42 +85,44 @@ between a solvable user model vs.\ unsolvable system model
 %% (\eg\ \cite{fox:long:jair-98,rintanen:aaai-00,vaquero:etal:keq-13}).
 
 
-The idea of plan-property entailments as outlined is generic and can
-in principle be applied in arbitrary AI Planning contexts. Here, we
-instantiate it for goal dependencies in oversubscription planning
-(OSP, \eg\ \cite{smith:icaps-04,domshlak:mirkis:jair-15}), where there
-are insufficient resources to achieve all goals. A plan property then
-is a goal-fact conjunction $\bigwedge_{a \in A} a$ or a negation $\neg
-\bigwedge_{b \in B} b$ thereof, and we are interested in
-\defined{exclusion} entailments $\bigwedge_{a \in A} a \Rightarrow
-\neg \bigwedge_{b \in B} b$ stating that, if a plan achieves all goals
-in $A$, then it must forego at least one goal in $B$.
+The concept of plan-property entailments is generic and in principle
+applicable to many AI Planning contexts. Here, we instantiate it for
+goal dependencies in oversubscription planning (OSP,
+\eg\ \cite{smith:icaps-04,domshlak:mirkis:jair-15}), where not all
+goals can be achieved. The plan properties we consider are goal-fact
+conjunctions $\bigwedge_{g \in A} g$ or negations $\neg \bigwedge_{g
+  \in B} g$ thereof, and we identify \defined{goal exclusion}
+entailments $\bigwedge_{g \in A} g \Rightarrow \neg \bigwedge_{g \in
+  B} g$ stating that, if a plan achieves all goals in $A$, then it
+must forego at least one goal in $B$.
 
 We spell out our framework for this form of plan properties and
-entailment relations, defining our local and global explanations. We
-introduce algorithms for computing such explanations, leveraging and
-extending recent nogood learning methods
-\cite{steinmetz:hoffmann:ai-17,steinmetz:hoffmann:ijcai-17} for
-computational efficiency. We show that the same framework can address
-a richer form of plan properties, namely \defined{action-set properties}
-defined as propositional formulas over atoms $\{A_1, \dots, A_n\}$
-asking whether an action subset is touched by the plan. Action-set
-properties can be compiled into goal facts with relatively small model
-extensions, leading to an effective entailment analysis. We run
-comprehensive experiments on IPC benchmarks adapted to OSP as in
-previous experiments \cite{domshlak:mirkis:jair-15}, as well as on a
-collection of benchmarks extended with action-set properties. We find
-that, in a variety of benchmarks, even global explanations are
-feasible to compute, compared to the most closely related classical
-planning problems. In most cases, computing local explanations is
+entailment relations. We introduce algorithms for computing local and
+global explanations, leveraging and extending recent nogood learning
+methods
+\cite{steinmetz:hoffmann:ai-17,steinmetz:hoffmann:ijcai-17}. We show
+that the same framework can address a richer form of plan properties,
+namely \defined{action-set properties} defined as propositional
+formulas over atoms $\{A_1, \dots, A_n\}$ asking whether an action
+subset $A_i$ is touched by the plan. Action-set properties can be
+compiled into goal facts relatively easily, leading to an effective
+entailment analysis. We run comprehensive experiments on IPC
+benchmarks adapted to OSP as in previous work
+\cite{domshlak:mirkis:jair-15,katz:etal:icaps-19}, and on a collection
+of benchmarks we extended with action-set properties. We find that
+global explanations are reasonably feasible to compute, compared to
+OSP and to optimal classical planning. Computing local explanations is
 significantly easier.
+%
+% Joerg: ah well ... would tae some effort to make this precise here,
+% and this vague formulation is probably more distracting than useful
+% ... also, dont anna emphasize the ``user'' thingy too much.
+%
+%% , with performance steeply improving as a function of ``how specific''
+%% the user question is.
 
-\joerg{``classical'' in the above: reformulate if also OSP comparison
-  used}
-
-
-Some related works will be discussed in Section~\ref{related}, to not
-interrupt the flow of our discussions.
+Some related work will be discussed near the end of the paper
+(Section~\ref{related}), to not interrupt the text flow.
 
 
 
