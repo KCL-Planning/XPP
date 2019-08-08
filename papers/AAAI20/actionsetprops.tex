@@ -104,16 +104,27 @@ are seven minimal unsolvable subsets of these properties, each of size
 three. A user could, for example, ask ``Why do you not avoid the road
 $L_0-L_5$ (which has a lot of traffic at the moment)?'', translating
 into the question ``Why do you not achieve property 5?''. 
-%
-\joerg{could save some space here}
+%% %
+%% \ifdefined\suppflagdefined
+%% %
+%% One of the non-rhs-dominated entailments of property 5\ is
+%% $\neg($property 2 $\wedge$ property 4$)$, so that the generated local
+%% explanation would include the statement ``Because that would
+%% necessitate to either not use the same truck for $P_1$ and $P_2$, or
+%% not use the same truck for $P_2$ and $P_0$''. In other words:
+%% ``Because if you don't use that road, then you cannot deliver all
+%% packages with a single truck.''
+%% %
+%% \else
+%% %
+% Joerg: decided that the shorter version is actually nicer anyhow
 %
 One of the non-rhs-dominated entailments of property 5\ is
-$\neg($property 2 $\wedge$ property 4$)$, so that the generated local
-explanation would include the statement ``Because that would
-necessitate to either not use the same truck for $P_1$ and $P_2$, or
-not use the same truck for $P_2$ and $P_0$''. In other words:
+$\neg($property 2 $\wedge$ property 4$)$, corresponding to the answer
 ``Because if you don't use that road, then you cannot deliver all
 packages with a single truck.''
+%% %
+%% \fi
 
 %% \joerg{note/discuss in action-set props section: + plan props beyond
 %%   goals: more general than OSP, can be oversubscribed even if all

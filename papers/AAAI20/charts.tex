@@ -11,7 +11,7 @@
     ymin = 0,
     ymax = 10,
 	compat=1.6,
-	title={nomystery x=1.25},
+	title={},
 	%ylabel=goals 6,
 ]
 \addplot+[ybar, bar shift =-4.0pt, red,
@@ -104,111 +104,6 @@ plot coordinates {
 \end{minipage}
 \begin{minipage}{0.22\textwidth}
 \begin{tikzpicture}
-
-    \begin{axis}[
-    width = 5cm,
-    height=4cm,
-    enlarge x limits = 0.1,
-    enlarge y limits = 0.1,
-    legend columns=1,
-    ybar,
-    bar width=1pt,
-    ymin = 0,
-    ymax = 10,
-compat=1.6,
-title={TPP x=1.25},
-%ylabel=goals 7,
-]
-\addplot+[ybar, bar shift =-4.0pt, red,
-]
-plot coordinates {
-(09, 2) %c_125
-(05, 4) %c_125
-(04, 5) %c_125
-(07, 2) %c_125
-(06, 4) %c_125
-(10, 2) %c_125
-(08, 2) %c_125
-(03, 10) %c_125
-(02, 10) %c_125
-(01, 10) %c_125
-};
-\label{plot:props_hff_bu_68}
-\addplot+[ybar, bar shift =-2.0pt, blue,
-]
-plot coordinates {
-(09, 2) %c_125
-(05, 5) %c_125
-(04, 5) %c_125
-(07, 2) %c_125
-(06, 3) %c_125
-(10, 2) %c_125
-(08, 2) %c_125
-(03, 8) %c_125
-(02, 9) %c_125
-(01, 10) %c_125
-};
-\label{plot:props_hff_td_68}
-\addplot+[ybar, bar shift =0.0pt, green,
-]
-plot coordinates {
-(09, 4) %c_125
-(05, 9) %c_125
-(04, 10) %c_125
-(07, 4) %c_125
-(06, 9) %c_125
-(03, 10) %c_125
-(08, 4) %c_125
-(10, 4) %c_125
-(02, 10) %c_125
-(01, 10) %c_125
-};
-\label{plot:props_trap_bu_68}
-\addplot+[ybar, bar shift =2.0pt, orange,
-]
-plot coordinates {
-(09, 4) %c_125
-(05, 10) %c_125
-(04, 10) %c_125
-(07, 6) %c_125
-(06, 8) %c_125
-(10, 4) %c_125
-(08, 6) %c_125
-(03, 10) %c_125
-(02, 10) %c_125
-(01, 10) %c_125
-};
-\label{plot:props_trap_td_68}
-
-%lmcut
-\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
-]
-plot coordinates {
-(02, 10)
-(01, 10)
-(04, 10)
-(03, 10)
-(07, 10)
-(08, 10)
-(06, 10)
-(10, 10)
-(05, 10)
-(09, 10)
-};
-    \end{axis}
-    \hfill
-    
-%\node[draw, align=center] (test) at (2,-2) {
-%\ref{plot:props_hff_bu_68} props-hff-bu\\
-%\ref{plot:props_hff_td_68} props-hff-td\\
-%\ref{plot:props_trap_bu_68} props-trap-bu\\
-%\ref{plot:props_trap_td_68} props-trap-td\\
-%};
-
-\end{tikzpicture}
-\end{minipage}
-\begin{minipage}{0.22\textwidth}
-\begin{tikzpicture}
     \begin{axis}[
     width = 5cm,
     height=4cm,
@@ -220,7 +115,7 @@ plot coordinates {
     ymin = 0,
     ymax = 10,
 	compat=1.6,
-	title={blocksworld x=1.25},
+	title={},
 	%ylabel=goals 06,
 ]
 \addplot+[ybar, bar shift =-4.0pt, red,
@@ -310,5 +205,110 @@ plot coordinates {
 %};
 
     \end{tikzpicture}
+\end{minipage}
+\begin{minipage}{0.22\textwidth}
+\begin{tikzpicture}
+
+    \begin{axis}[
+    width = 5cm,
+    height=4cm,
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.1,
+    legend columns=1,
+    ybar,
+    bar width=1pt,
+    ymin = 0,
+    ymax = 10,
+compat=1.6,
+title={},
+%ylabel=goals 7,
+]
+\addplot+[ybar, bar shift =-4.0pt, red,
+]
+plot coordinates {
+(09, 2) %c_125
+(05, 4) %c_125
+(04, 5) %c_125
+(07, 2) %c_125
+(06, 4) %c_125
+(10, 2) %c_125
+(08, 2) %c_125
+(03, 10) %c_125
+(02, 10) %c_125
+(01, 10) %c_125
+};
+\label{plot:props_hff_bu_68}
+\addplot+[ybar, bar shift =-2.0pt, blue,
+]
+plot coordinates {
+(09, 2) %c_125
+(05, 5) %c_125
+(04, 5) %c_125
+(07, 2) %c_125
+(06, 3) %c_125
+(10, 2) %c_125
+(08, 2) %c_125
+(03, 8) %c_125
+(02, 9) %c_125
+(01, 10) %c_125
+};
+\label{plot:props_hff_td_68}
+\addplot+[ybar, bar shift =0.0pt, green,
+]
+plot coordinates {
+(09, 4) %c_125
+(05, 9) %c_125
+(04, 10) %c_125
+(07, 4) %c_125
+(06, 9) %c_125
+(03, 10) %c_125
+(08, 4) %c_125
+(10, 4) %c_125
+(02, 10) %c_125
+(01, 10) %c_125
+};
+\label{plot:props_trap_bu_68}
+\addplot+[ybar, bar shift =2.0pt, orange,
+]
+plot coordinates {
+(09, 4) %c_125
+(05, 10) %c_125
+(04, 10) %c_125
+(07, 6) %c_125
+(06, 8) %c_125
+(10, 4) %c_125
+(08, 6) %c_125
+(03, 10) %c_125
+(02, 10) %c_125
+(01, 10) %c_125
+};
+\label{plot:props_trap_td_68}
+
+%lmcut
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(02, 10)
+(01, 10)
+(04, 10)
+(03, 10)
+(07, 10)
+(08, 10)
+(06, 10)
+(10, 10)
+(05, 10)
+(09, 10)
+};
+    \end{axis}
+    \hfill
+    
+%\node[draw, align=center] (test) at (2,-2) {
+%\ref{plot:props_hff_bu_68} props-hff-bu\\
+%\ref{plot:props_hff_td_68} props-hff-td\\
+%\ref{plot:props_trap_bu_68} props-trap-bu\\
+%\ref{plot:props_trap_td_68} props-trap-td\\
+%};
+
+\end{tikzpicture}
 \end{minipage}
 

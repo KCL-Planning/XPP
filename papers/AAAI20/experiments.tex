@@ -23,8 +23,7 @@ benchmarks we extended with action-set properties.
 
 The base planner called by our SysS and SysW algorithms on each search
 node runs forward search using
-\hff\ \cite{hoffmann:nebel:jair-01}, optionally 
-with nogood learning.
+\hff\ \cite{hoffmann:nebel:jair-01}, optionally with conjunction or trap learning.
 %
 %% The base planner configurations, used to solve/prove unsolvability
 %% of a meta search node, are greedy best first search with $\hff$ and
@@ -34,12 +33,19 @@ with nogood learning.
 %% bound}
 %
 The experiments were run on a cluster of Intel E5-2660 machines
-running at 2.20 GHz, with time (memory) cut-offs of 30 minutes (4
-GB).
+running at 2.20 GHz, with time (memory) cut-offs of 30 minutes (4 GB).
 
 
 
  
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% IPC OSP
+
 \subsection{IPC-Based OSP Benchmarks}
 
 % The net-benefit benchmarks don't give us anything new (the ones we
@@ -47,16 +53,14 @@ GB).
 %
 %% \joerg{Rebecca/Michael: check out the IPC net-benefit benchmarks. Reviewers may naturally expect us to experiment with those, given our strong focus on oversubscription planning (actually this question came up in the discussion with the NASA guys yesterday). In the net-bnefit benchmarks, goal facts have rewards which we don't need. The question is whether, stripping away these rewards and imposing a plan-cost bound, we would get benchmarks not already covered by bour IPC experiments anyway. If the answer is "no", we can just say so in the paper. If the answer is "yes", it would be good (though probably not absolitely necessary) to experiment with these domains as well. In any case, we should know what the answer is.}
 
-We modified all optimal-planning STRIPS IPC domains up to
-IPC'18. Following Domshlak and
-Mirkis \shortcite{domshlak:mirkis:jair-15}, for each benchmark task
-$(\vars,\acts,\cost,\init,\goal)$ with optimal plan cost $C$ we
+Following Katz et al.\ \shortcite{katz:etal:icaps-19}, for every IPC
+benchmark task $(\vars,\acts,\cost,\init,\goal)$ with smallest known
+plan cost $C$ as per planning.domains \cite{muise:icaps-demos-16}, we
 obtained three OSP tasks by setting the cost bound to $b = x * C$
-where $x \in \{0.25, 0.5, 0.75\}$, with soft goals only \ie\
-$\goalsoft = \goal$ and $\goalhard=\emptyset$. Our benchmark set
-consists of 45 domains, and contains those tasks whose optimal plan
-cost is known \joerg{add cite/reference}, and where the number of goal
-facts is $< 32$.
+where $x \in \{0.25, 0.5, 0.75\}$. We used soft goals only, \ie,
+$\goalsoft = \goal$ and $\goalhard=\emptyset$. For implementation
+reasons, we omitted tasks with $\geq 32$ goals (which would be
+infeasible for MUGS analysis anyhow).
 %
 %% ; the latter is an artifact of our current implementation that
 %% could be overcome in principle, though computing all MUGS for that
@@ -68,8 +72,8 @@ facts is $< 32$.
 %% deal with cost bounds, thus enabling nogood learning and transfer in
 %% SysS and SysW.
 %
-We consider conjunction learning as an algorithmic enhancement, but
-not trap learning as that cannot deal with OSP cost bounds.
+We consider conjunction learning, but not trap learning as that cannot
+deal with OSP cost bounds.
 %
 %% In what follows, we consider first global explanations, then discuss
 %% how the picture changes for local explanations.
@@ -100,9 +104,8 @@ shown in \textbf{boldface}.}
 Figure~\ref{table:coverage_ipc} shows our data for global
 explanations, \ie, computing all MUGS.
 %
-Note first that the figure includes \#MUGS data, corresponding to
-global explanation size. As the data shows, that size is often small,
-of a scale that can be feasible for human inspection.
+Note first the \#MUGS data in the rightmost part of the table. As the
+data shows, the size of this global explanation is often small.
 %
 % joerg: previous text, when we didnt yet have separate analysis/data
 % for local.
@@ -136,21 +139,21 @@ is, \emph{how much worse?}
 As a short summary of the answer provided by
 Figure~\ref{table:coverage_ipc} to that question, compared to optimal
 planning, with the smallest cost bound $x=0.25$ our analysis is
-actually more effective, but that changes for larger cost bounds where
+actually more effective. But that changes for larger cost bounds where
 the base planner's search space is larger and accordingly our analysis
 becomes harder. Taking the per-domain best of our four algorithm
 configurations, for $x=0.25$ we get equal or better coverage in 37 of
 the 45 domains, for $x=0.5$ that number is 25, for $x=0.75$ it is
 16. Compared to OSP planning, these numbers are 29, 18, and
 22. Overall, it seems fair to say that our analysis is reasonably
-feasible, in the sense of being on par with the most closely related
-problems in many domains.
+feasible: in many domains, it is on par with the most closely related
+simpler problems.
 
-Both SysS and SysW suffer from larger cost bounds, but that is less so
-for SysW, due to its smaller search tree when solvable goal sets are
-large, as shown in the Search Tree Fraction part of
-Figure~\ref{table:coverage_ipc}. Conjunction learning helps mostly for
-small cost bounds and/or when using SysW.
+The search tree fraction explored by SysS and SysW increases
+respectively decreases with larger cost bounds, which is expected as
+solvable goal subsets become larger. Yet for SysW this does not
+outweigh the increased base planner effort. Conjunction learning helps
+mostly for small cost bounds and/or when using SysW.
 %
 %% Comparing SysS and SysW, with cost bound 0.25 both show better
 %% coverage in 4 domains. Among those domains, in \woodworking\
@@ -170,19 +173,19 @@ small cost bounds and/or when using SysW.
 
 \subsubsection{IPC Local Explanations}
 
-For local explanations -- the entailments of a soft-goal conjunction
+For local explanations -- entailments of soft-goal conjunctions
 $\bigwedge_{g \in A} g$ -- we set up an experiment where we used only
-benchmark instances with $\geq 6$ goals, scaled question size $|A|$
-from $1$ to $5$, and randomly selected $10$ questions of each
-size. Figure~\ref{fig:ipc-local} shows the data for the most
-challenging cost bound $0.75$. 
+benchmark tasks with $\geq 6$ goals, scaled question size $|A|$ from
+$1$ to $5$, and randomly selected $10$ questions of each
+size. Figure~\ref{fig:ipc-local} shows the data for SysS and the most
+challenging cost bound $0.75$.
 %
 As expected, both computational effort and explanation size decrease
 with $|A|$.
 %
-Averages are taken over those instances where all questions were
-solved, as otherwise the results are distorted by large instances
-solved only for high values of $|A|$.
+Averages are taken over instances where all questions were solved, as
+otherwise the results are distorted by large instances solved only for
+high values of $|A|$.
 
 \begin{figure}[ht]
 \small
@@ -202,9 +205,12 @@ solved only for high values of $|A|$.
 \end{tabular}
 \vspace{-0.3cm}
 \caption{\label{fig:ipc-local} Local explanation results on IPC 
-benchmarks for SysS as a function of $|A|$. Left: fraction of solved
-questions (dashed, right y-axis) and average runtime (solid, left
-y-axis). Right: average \#MUGS.}
+benchmarks for SysS as a function of $|A|$. Left: coverage, \ie,
+fraction of solved questions (dashed, right y-axis); and average
+runtime (solid, left y-axis). Right: average \#MUGS.  \joerg{complete
+this plot; ideally it should be BW-print readable, not sure if this is
+possible. can we integrate the reference points as horizontal lines
+into the left plot?}}
 \vspace{-0.6cm}
 \end{figure}
 
@@ -235,97 +241,120 @@ Figure~\ref{table:coverage_ipc}.
 
 
 
-
-
-
-
-
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% SUBMISSION VERSION
-
-\ifdefined\suppflagdefined
-
-\else
+%%%% Action-Set Properties, SUBMISSION VERSION
 
 \subsection{Action-Set Properties}
 
 To evaluate the use of our framework with more complex plan
-properties, beyond goal facts, we experimented with the compilation of
-action-set properties as per Section~\ref{actionsetprops}. We selected
-four IPC domains for extension with action-set properties, namely
-NoMystery, Rovers, and TPP as considered in resource-constrained
-planning \cite{nakhost:etal:icaps-12}, where minimum resource
-requirements are known as per available problem generators; plus the
-Blocksworld as an intuitively rather differently structured domain. In
-all four domains, we use discrete resource consumption encoded into
-the STRIPS model, enabling the use of trap
-learning \cite{steinmetz:hoffmann:ijcai-17} which turns out to be
-highly beneficial here.
+properties, we experimented with the compilation of action-set
+properties as per Section~\ref{actionsetprops}. 
+%
+We extended four domains with action-set properties: NoMystery,
+Rovers, and TPP as per \cite{nakhost:etal:icaps-12}, with controlled
+resource constrainedness (\cf\ Section~\ref{background}); plus the
+Blocksworld as an intuitively differently structured domain.
+%
+In NoMystery, the action-set properties are as in our illustrative
+example. In Rovers, the properties ask which rover or camera is used
+for which observation. In TPP, they ask which road segments are used,
+and which goods are bought at which markets. In Blocksworld, we
+include two hands and the properties ask which hand is used for which
+blocks.
+%
+We set the original goal facts as hard goals, so that the analysis
+determines exclusion relations over conjunctions of action-set
+properties.
 
-In Blocksworld, we include two gripper hands and the action-set
-properties ask whether a given gripper is used to pick up a given
-block, or to stack a given pair of blocks. In NoMystery, the
-properties are as in our illustrative example. In Rovers, the
-properties ask whether a given rover or camera is used for a given
-observation. In TPP, they ask whether given road segments are used,
-and whether given goods are bought at given markets. In all cases, we
-vary the number of action-set properties between 1 and 10. We fix the
-original goal facts as hard goals, and we set the available resources
-to $x \in \{1.0,1.5, 2.0\}$ times the minimum needed to allow for
-costlier plans satisfying some of the properties.
+We encoded resource consumption into the FDR state variables, enabling
+the use of trap learning which turns out to be highly beneficial
+here. We generated benchmarks of sizes around the feasibility
+borderline, and we experimented with resource constrainedness
+$x \in \{1.0, 1.25, 1.5, 2.0\}$. For reference, we ran \astar\
+with \hlmcut\ as before, on all goal facts (original plus compiled
+action-set properties). Current OSP planners cannot handle hard goals,
+so we used our base planner with trap learning instead as a second
+reference point.
 
-We created benchmark tasks with size parameters around the borderline
-of feasibility. As reference points, we ran \astar\ with \hlmcut\
-respectively trap learning on tasks where all (original goal facts
-plus) action-set properties are hard goals. \joerg{reference point OSP
-possible here, ie does michael's osp solver handle hard goals? if not,
-keep current reference points}
-
-\joerg{presumably, include a figure with one plot per domain, fixing 
-number of goals as in IJCAI long versions (main paper plot), and with
-fixed constrainedness factor x. use same x for both global and local
-explanations. x=2.0 is too high, Blocks and TPP apparently typically
-all goals achievable easil for base planner. x=1.0 shows off advantage
-of trap learning, but does not challenge the reference points
-enough. for x=1.5 on the other hand trap learning is way less
-important than for 1.0. Try x=1.25 and see what it looks like.}
+%% \joerg{presumably, include a figure with one plot per domain,
+%% fixing number of goals as in IJCAI long versions (main paper plot),
+%% and with fixed constrainedness factor x. use same x for both global
+%% and local explanations. x=2.0 is too high, Blocks and TPP
+%% apparently typically all goals achievable easil for base
+%% planner. x=1.0 shows off advantage of trap learning, but does not
+%% challenge the reference points enough. for x=1.5 on the other hand
+%% trap learning is way less important than for 1.0. Try x=1.25 and
+%% see what it looks like.}
+%
+\begin{figure}[h!]
+\vspace{-0.2cm}
+\small
+\centering
 
 \input{charts.tex}
+\vspace{-0.3cm}
+\caption{\label{fig:asp-global} Coverage for global explanation on 
+NoMystery (top left), Rovers (top right), TPP (bottom left),
+Blocksworld (bottom right). Number of action-set properties on
+x-axis.\joerg{complete this plot; ideally it should be BW-print
+readable, not sure if this is possible. die stricher oben an den plots
+(x-achse oben) sehen komisch aus, bitte weg. x-achsen bitte 1 5 10
+beschriften. Bitte die legend unter diese plots, wie im IJCAI'19 long
+paper unter Figure 2.}}
+\vspace{-0.2cm}
+\end{figure}
 
-\begin{figure}{ht}
+For lack of space, we give only snapshots of our data.\footnote{We
+intend to buy additional pages to include more complete data. For
+AAAI'20 review, the data is in supplementary material at
+{\scriptsize \url{https://www.dropbox.com/sh/boq29booqajj7ab/AACbKpiR6jdbeEzCldrvLfk4a?dl=0}}}
+%
+Figure~\ref{fig:asp-global} shows that computing global action-set
+property explanations is moderately feasible compared to the reference
+points. The data shown is for $x = 1.25$; for other values, what
+varies is mainly the usefuless of trap learning, which peaks at $x =
+1.0$ when resources are extremely scarce.
+%
+%% \joerg{this summary is extremely underwhelming, focusing exclusively 
+%% on computational aspects, and saying ``not totally infeasible''. we
+%% need something that highlights to the reviewer that/how this new form
+%% of analysis is exciting and useful. examples of concrete analysis
+%% results?}
+%% %
+%% In Blocksworld and TPP, our techniques are moderately competitive with
+%% the reference points. In NoMystery, they are vastly inferior. In
+%% Rovers, they vastly surpass \hlmcut, matching the coverage of the
+%% trap-learning reference point. Overall, it seems fair to say that our
+%% analysis here is not exceedingly infeasible compared to related
+%% classical planning problems.
+%
+Figure~\ref{fig:asp-local} shows that, as before, the analysis becomes
+much easier for local explanation as a function of question size.
+
+\begin{figure}[h!]
+\vspace{-0.2cm}
+\small
+\centering
+
 \input{charts_local_exp.tex}
-\caption{$c = 1.25$ red: nomyters (5 goals, 5 props), green: TPP (7 goals, 9 props), left plot: search time and coverage, right plot: \#MUGS}
+\vspace{-0.3cm}
+\caption{\label{fig:asp-local} Local action-set property explanation 
+results for SysS as a function of $|A|$. Coverage and average runtime
+(left), average \#MUGS (right). NoMystery red, Rovers ???, TPP green,
+Blocksworld ???. \joerg{complete this plot; ideally it should be
+BW-print readable, not sure if this is possible. can we integrate the
+reference points as horizontal lines into the left plot?}}
+%
+%\caption{$c = 1.25$ red: nomyters (5 goals, 5 props), green: TPP (7 goals, 9 props), left plot: search time and coverage, right plot: \#MUGS}
+%
+\vspace{-0.2cm}
 \end{figure}
 
 
-For lack of space, we only summarize our data.\footnote{For AAAI'20
-review, the complete data is available in supplementary material at
-{\scriptsize \url{https://www.dropbox.com/sh/boq29booqajj7ab/AACbKpiR6jdbeEzCldrvLfk4a?dl=0}}}
-%
-\joerg{this summary is extremely underwhelming, focusing exclusively 
-on computational aspects, and saying ``not totally infeasible''. we
-need something that highlights to the reviewer that/how this new form
-of analysis is exciting and useful. examples of concrete analysis
-results?}
-%
-In Blocksworld and TPP, our techniques are moderately competitive with
-the reference points. In NoMystery, they are vastly inferior. In
-Rovers, they vastly surpass \hlmcut, matching the coverage of the
-trap-learning reference point. Overall, it seems fair to say that our
-analysis here is not exceedingly infeasible compared to related
-classical planning problems.
 
-
-
-
-\fi
-
-%%%% END SUBMISSION VERSION
+%%%% Action-Set Properties, END SUBMISSION VERSION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -442,32 +471,4 @@ problems.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

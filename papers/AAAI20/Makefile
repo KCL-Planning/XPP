@@ -9,6 +9,12 @@ default:
 	pdflatex $(PAPER).tex
 	pdflatex $(PAPER).tex
 
+noc: 
+	pdflatex "\def\nocflagdefined{}\input{$(PAPER).tex}" $(PAPER).tex	
+	bibtex --min-crossrefs=99 $(PAPER)
+	pdflatex "\def\nocflagdefined{}\input{$(PAPER).tex}" $(PAPER).tex	
+	pdflatex "\def\nocflagdefined{}\input{$(PAPER).tex}" $(PAPER).tex
+
 supp: 
 	pdflatex "\def\suppflagdefined{}\input{$(PAPER).tex}" $(PAPER).tex	
 	bibtex --min-crossrefs=99 $(PAPER)
