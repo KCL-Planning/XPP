@@ -1,8 +1,91 @@
+%Search time
+\begin{tikzpicture}
+\small
+    \begin{axis}[
+    width = 4cm,
+    height= 4cm,
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.1,
+    legend columns=3,
+    legend style={at={(0.05,-0.3)},anchor=west},
+    xmax = 5,
+    xtick={1,2,3,4,5},
+    xmin = 1,
+	ylabel= search time,
+	y label style={at={(0.2,0.5)}},
+]
+\addplot[thick, red, mark=*,
+mark options={scale=0.5},
+]
+        plot coordinates {
+                (1, 316.09)
+                (2, 280.27)
+                (3, 189.62)
+                (4, 233.29)
+                (5, 194.99)
+        };
+%\addlegendentry{nomystery}
+
+\addplot[thick, green, mark=*,
+mark options={scale=0.5},
+]
+        plot coordinates {
+                (1, 517.95)
+                (2, 455.73)
+                (3, 315.93)
+                (4, 218.85)
+                (5, 173.27)
+        };
+%\addlegendentry{TPP}
+\end{axis}
+
+\begin{axis}[
+    width = 4cm,
+    height= 4cm,
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.1,
+    legend columns=3,
+    legend style={at={(0.05,-0.3)},anchor=west},
+    xmax = 5,
+    xtick={1,2,3,4,5},
+    xmin = 1,
+	axis y line*=right,
+	ylabel= coverage,
+	y label style={at={(1.8,0.5)}},
+]
+\addplot[thick, red, dashed, mark=*,
+mark options={scale=0.5},
+]
+        plot coordinates {
+                (1, 0.9)
+                (2, 0.91)
+                (3, 0.91)
+                (4, 0.98)
+                (5, 1.0)
+        };
+%\addlegendentry{nomystery}
+
+\addplot[thick, green, dashed, mark=*,
+mark options={scale=0.5},
+]
+        plot coordinates {
+                (1, 0.69)
+                (2, 0.84)
+                (3, 0.9)
+                (4, 0.9)
+                (5, 0.9)
+        };
+%\addlegendentry{TPP}
+
+    \end{axis}
+
+
+\end{tikzpicture}
 %MUGS
 \begin{tikzpicture}
 
     \begin{axis}[
-	title = \#MUGS,
+	%title = \#MUGS,
     width = 4cm,
     height= 4cm,
     enlarge x limits = 0.1,
@@ -23,7 +106,7 @@ mark options={scale=0.5},
                 (4, 3.42)
                 (5, 3.12)
         };
-\addlegendentry{nomstery}
+%\addlegendentry{nomstery}
 \addplot[thick, green, mark=*,
 mark options={scale=0.5},
 ]
@@ -34,92 +117,8 @@ mark options={scale=0.5},
                 (4, 4.64)
                 (5, 2.7)
         };
-\addlegendentry{TPP}
+%\addlegendentry{TPP}
 \end{axis}
 \end{tikzpicture}
 
-%Search time
-\begin{tikzpicture}
-
-    \begin{axis}[
-	title = {search time},
-    width = 4cm,
-    height= 4cm,
-    enlarge x limits = 0.1,
-    enlarge y limits = 0.1,
-    legend columns=3,
-    legend style={at={(0.05,-0.3)},anchor=west},
-    xmax = 5,
-    xtick={1,2,3,4,5},
-    xmin = 1,
-]
-\addplot[thick, red, mark=*,
-mark options={scale=0.5},
-]
-        plot coordinates {
-                (1, 316.09)
-                (2, 280.27)
-                (3, 189.62)
-                (4, 233.29)
-                (5, 194.99)
-        };
-\addlegendentry{nomystery}
-
-\addplot[thick, green, mark=*,
-mark options={scale=0.5},
-]
-        plot coordinates {
-                (1, 517.95)
-                (2, 455.73)
-                (3, 315.93)
-                (4, 218.85)
-                (5, 173.27)
-        };
-\addlegendentry{TPP}
-\end{axis}
-
-\end{tikzpicture}
-%coverage
-\begin{tikzpicture}
-
-    \begin{axis}[
-    width = 4cm,
-    height= 4cm,
-    enlarge x limits = 0.1,
-    enlarge y limits = 0.1,
-    legend columns=3,
-    legend style={at={(0.05,-0.3)},anchor=west},
-    xmax = 5,
-    xtick={1,2,3,4,5},
-    xmin = 1,
-]
-\addplot[thick, red, mark=*,
-mark options={scale=0.5},
-]
-        plot coordinates {
-                (1, 0.9)
-                (2, 0.91)
-                (3, 0.91)
-                (4, 0.98)
-                (5, 1.0)
-        };
-\addlegendentry{nomystery}
-
-
-
-\addplot[thick, green, mark=*,
-mark options={scale=0.5},
-]
-        plot coordinates {
-                (1, 0.69)
-                (2, 0.84)
-                (3, 0.9)
-                (4, 0.9)
-                (5, 0.9)
-        };
-\addlegendentry{TPP}
-
-    \end{axis}
-
-\end{tikzpicture}
 

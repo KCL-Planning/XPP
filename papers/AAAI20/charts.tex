@@ -209,111 +209,6 @@ plot coordinates {
 \end{minipage}
 \begin{minipage}{0.22\textwidth}
 \begin{tikzpicture}
-
-    \begin{axis}[
-    width = 5cm,
-    height=4cm,
-    enlarge x limits = 0.1,
-    enlarge y limits = 0.1,
-    legend columns=1,
-    ybar,
-    bar width=1pt,
-    ymin = 0,
-    ymax = 10,
-compat=1.6,
-title={rovers x=1.25},
-%ylabel=goals 07,
-]
-\addplot+[ybar, bar shift =-4.0pt, red,
-]
-plot coordinates {
-(07, 3) %c_125
-(06, 3) %c_125
-(10, 1) %c_125
-(08, 3) %c_125
-(09, 2) %c_125
-(02, 10) %c_125
-(01, 10) %c_125
-(04, 8) %c_125
-(05, 8) %c_125
-(03, 7) %c_125
-};
-\label{plot:props_hff_bu_79}
-\addplot+[ybar, bar shift =-2.0pt, blue,
-]
-plot coordinates {
-(07, 3) %c_125
-(06, 2) %c_125
-(10, 1) %c_125
-(08, 3) %c_125
-(09, 2) %c_125
-(02, 10) %c_125
-(01, 10) %c_125
-(04, 8) %c_125
-(05, 8) %c_125
-(03, 7) %c_125
-};
-\label{plot:props_hff_td_79}
-\addplot+[ybar, bar shift =0.0pt, green,
-]
-plot coordinates {
-(07, 8) %c_125
-(06, 8) %c_125
-(10, 8) %c_125
-(08, 9) %c_125
-(09, 8) %c_125
-(02, 10) %c_125
-(01, 10) %c_125
-(04, 8) %c_125
-(05, 9) %c_125
-(03, 9) %c_125
-};
-\label{plot:props_trap_bu_79}
-\addplot+[ybar, bar shift =2.0pt, orange,
-]
-plot coordinates {
-(07, 8) %c_125
-(06, 8) %c_125
-(03, 9) %c_125
-(08, 9) %c_125
-(09, 8) %c_125
-(02, 10) %c_125
-(01, 10) %c_125
-(04, 8) %c_125
-(05, 9) %c_125
-(10, 8) %c_125
-};
-\label{plot:props_trap_td_79}
-
-%lmcut
-\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
-]
-plot coordinates {
-(03, 7)
-(05, 6)
-(07, 0)
-(09, 3)
-(01, 9)
-(02, 8)
-(04, 7)
-(06, 2)
-(08, 3)
-(10, 2)
-};
-    \end{axis}
-    \hfill
-    
-%\node[draw, align=center] (test) at (2,-2) {
-%\ref{plot:props_hff_bu_79} props-hff-bu\\
-%\ref{plot:props_hff_td_79} props-hff-td\\
-%\ref{plot:props_trap_bu_79} props-trap-bu\\
-%\ref{plot:props_trap_td_79} props-trap-td\\
-%};
-
-\end{tikzpicture}
-\end{minipage}
-\begin{minipage}{0.22\textwidth}
-\begin{tikzpicture}
     \begin{axis}[
     width = 5cm,
     height=4cm,
@@ -389,6 +284,21 @@ plot coordinates {
 };
 \label{plot:props_trap_td_53}
 
+%lmcut
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(02, 10)
+(01, 10)
+(04, 10)
+(03, 10)
+(07, 10)
+(08, 10)
+(06, 10)
+(10, 10)
+(05, 10)
+(09, 10)
+};
     \end{axis}
     \hfill
     
