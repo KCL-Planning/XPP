@@ -121,4 +121,143 @@ mark options={scale=0.5},
 \end{axis}
 \end{tikzpicture}
 
+%c100
+%Search time
+\begin{tikzpicture}
+\small
+%search_time
+    \begin{axis}[
+    width = 4cm,
+    height= 4cm,
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.1,
+    legend columns=3,
+    legend style={at={(0.05,-0.3)},anchor=west},
+    xmax = 5,
+    xtick={1,2,3,4,5},
+    xmin = 1,
+	ylabel= search time,
+	y label style={at={(0.2,0.5)}},
+]
+\addplot[thick, red, mark=*,
+mark options={scale=0.5},
+]
+        plot coordinates {
+			(1, 428.32)
+			(2, 336.82)
+			(3, 304.46)
+			(4, 281.85)
+			(5, 232.35)
+        };
+%\addlegendentry{nomystery}
+
+\addplot[thick, green, mark=*,
+mark options={scale=0.5},
+]
+        plot coordinates {
+			(1, 33.69)
+			(2, 29.19)
+			(3, 17.86)
+			(4, 11.28)
+			(5, 7.05)
+        };
+%\addlegendentry{TPP}
+\end{axis}
+
+%coverage
+\begin{axis}[
+    width = 4cm,
+    height= 4cm,
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.1,
+    legend columns=3,
+    legend style={at={(0.05,-0.3)},anchor=west},
+    xmax = 5,
+    xtick={1,2,3,4,5},
+    xmin = 1,
+	axis y line*=right,
+	ylabel= coverage,
+	y label style={at={(1.8,0.5)}},
+]
+\addplot[thick, red, dashed, mark=*,
+mark options={scale=0.5},
+]
+        plot coordinates {
+			(1, 0.69)
+			(2, 0.66)
+			(3, 0.7)
+			(4, 0.76)
+			(5, 0.8)
+
+        };
+\addplot+[only marks, mark = -, mark options = {thick, green}, mark size = 0.15cm, black,]
+plot coordinates {
+			(1, 1.0)
+			(2, 1.0)
+			(3, 1.0)
+			(4, 1.0)
+			(5, 1.0)
+
+		};
+%\addlegendentry{nomystery}
+
+\addplot[thick, green, dashed, mark=*,
+mark options={scale=0.5},
+]
+        plot coordinates {
+			(1, 0.55)
+			(2, 0.85)
+			(3, 0.88)
+			(4, 0.93)
+			(5, 0.98)
+
+        };
+%\addlegendentry{TPP}
+
+    \end{axis}
+
+
+\end{tikzpicture}
+%MUGS
+\begin{tikzpicture}
+
+    \begin{axis}[
+	%title = \#MUGS,
+    width = 4cm,
+    height= 4cm,
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.1,
+    legend columns=3,
+    legend style={at={(0.05,-0.3)},anchor=west},
+    xmax = 5,
+    xtick={1,2,3,4,5},
+    xmin = 1,
+]
+\addplot[thick, red, mark=*,
+mark options={scale=0.5},
+]
+        plot coordinates {
+			(1, 6.43)
+			(2, 6.09)
+			(3, 5.57)
+			(4, 4.87)
+			(5, 4.53)
+
+        };
+%\addlegendentry{nomstery}
+\addplot[thick, green, mark=*,
+mark options={scale=0.5},
+]
+        plot coordinates {
+			(1, 33.69)
+			(2, 29.19)
+			(3, 17.86)
+			(4, 11.28)
+			(5, 7.05)
+
+        };
+%\addlegendentry{TPP}
+\end{axis}
+\end{tikzpicture}
+
 

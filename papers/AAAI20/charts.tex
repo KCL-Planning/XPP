@@ -1,10 +1,11 @@
 \begin{minipage}{0.22\textwidth}
+%nomystery
 \begin{tikzpicture}
     \begin{axis}[
     width = 5cm,
     height=4cm,
     enlarge x limits = 0.1,
-    enlarge y limits = 0.1,
+    enlarge y limits = 0.07,
     legend columns=1,
     ybar,
     bar width=1pt,
@@ -12,6 +13,8 @@
     ymax = 10,
 	compat=1.6,
 	title={},
+	xticklabels={,,},
+	xtick style={draw=none},
 	%ylabel=goals 6,
 ]
 \addplot+[ybar, bar shift =-4.0pt, red,
@@ -76,7 +79,7 @@ plot coordinates {
 \label{plot:props_trap_td_24}
 
 %lmct
-\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.15cm, black,
 ]
 plot coordinates {
 (02, 10)
@@ -90,7 +93,23 @@ plot coordinates {
 (05, 10)
 (09, 10)
 };
-    \end{axis}
+
+%trap first meta node top down
+\addplot+[only marks, mark = -, mark options = {thick, black}, mark size = 0.15cm, black,
+]
+plot coordinates {
+(01, 10)
+(02, 10)
+(03, 10)
+(04, 9)
+(05, 9)
+(06, 9)
+(07, 9)
+(08, 9)
+(09, 8)
+(10, 8)
+};
+\end{axis}
     \hfill
     
 %\node[draw, align=center] (test) at (2,-2) {
@@ -100,15 +119,16 @@ plot coordinates {
 %\ref{plot:props_trap_td_24} trap-td\\
 %};
 
-    \end{tikzpicture}
+\end{tikzpicture}
 \end{minipage}
 \begin{minipage}{0.22\textwidth}
+%blocksworld
 \begin{tikzpicture}
     \begin{axis}[
     width = 5cm,
     height=4cm,
     enlarge x limits = 0.1,
-    enlarge y limits = 0.1,
+    enlarge y limits = 0.07,
     legend columns=1,
     ybar,
     bar width=1pt,
@@ -116,6 +136,8 @@ plot coordinates {
     ymax = 10,
 	compat=1.6,
 	title={},
+	xticklabels={,,},
+	xtick style={draw=none},
 	%ylabel=goals 06,
 ]
 \addplot+[ybar, bar shift =-4.0pt, red,
@@ -180,7 +202,7 @@ plot coordinates {
 \label{plot:props_trap_td_53}
 
 %lmcut
-\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.15cm, black,
 ]
 plot coordinates {
 (02, 10)
@@ -193,6 +215,22 @@ plot coordinates {
 (10, 10)
 (05, 10)
 (09, 10)
+};
+
+%trap first meta node top down
+\addplot+[only marks, mark = -, mark options = {thick, black}, mark size = 0.15cm, black,
+]
+plot coordinates {
+(01, 9)
+(02, 9)
+(03, 6)
+(04, 4)
+(05, 4)
+(06, 2)
+(07, 0)
+(08, 0)
+(09, 0)
+(10, 2)
 };
     \end{axis}
     \hfill
@@ -207,13 +245,15 @@ plot coordinates {
     \end{tikzpicture}
 \end{minipage}
 \begin{minipage}{0.22\textwidth}
+\vspace{-0.3cm}
+%tpp
 \begin{tikzpicture}
 
     \begin{axis}[
     width = 5cm,
     height=4cm,
     enlarge x limits = 0.1,
-    enlarge y limits = 0.1,
+    enlarge y limits = 0.07,
     legend columns=1,
     ybar,
     bar width=1pt,
@@ -221,6 +261,8 @@ plot coordinates {
     ymax = 10,
 compat=1.6,
 title={},
+	xticklabels={,,},
+	xtick style={draw=none},
 %ylabel=goals 7,
 ]
 \addplot+[ybar, bar shift =-4.0pt, red,
@@ -285,7 +327,7 @@ plot coordinates {
 \label{plot:props_trap_td_68}
 
 %lmcut
-\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.15cm, black,
 ]
 plot coordinates {
 (02, 10)
@@ -298,6 +340,22 @@ plot coordinates {
 (10, 10)
 (05, 10)
 (09, 10)
+};
+
+%trap first meta node top down
+\addplot+[only marks, mark = -, mark options = {thick, black}, mark size = 0.15cm, black,
+]
+plot coordinates {
+(01, 10)
+(02, 10)
+(03, 10)
+(04, 10)
+(05, 10)
+(06, 9)
+(07, 10)
+(08, 10)
+(09, 10)
+(10, 9)
 };
     \end{axis}
     \hfill
