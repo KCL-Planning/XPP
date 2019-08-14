@@ -1,0 +1,431 @@
+\newcommand{\talkpause}{\ifthenelse{\value{VERSION}=0}{\pause}{}}
+\newcommand{\talk}[1]{\ifthenelse{\value{VERSION}=0}{#1}{}}
+
+
+
+\newcommand{\blocknode}[5]{\node (#1) at #2 {%
+    \begin{minipage}{3.5cm}\begin{block}{#4}
+        \begin{overlayarea}{3.5cm}{#3}
+        #5\end{overlayarea}\end{block}\end{minipage}};}
+\newcommand{\smallblocknode}[5]{\node (#1) at #2 {%
+    \begin{minipage}{3.0cm}\begin{block}{#4} \begin{overlayarea}{3.0cm}{#3}
+    #5\end{overlayarea}\end{block}\end{minipage}};}
+\newcommand{\redsmallblocknode}[5]{\node (#1) at #2 {%
+    \begin{minipage}{3.0cm}\begin{alertblock}{#4} \begin{overlayarea}{3.0cm}{#3}
+    #5\end{overlayarea}\end{alertblock}\end{minipage}};}
+
+
+
+\renewcommand{\newblock}{}
+\definecolor{ToDoColor}{rgb}{0,0.16,0.90} %blue
+\definecolor{OutlineColor}{rgb}{0.2,0.8,0.2} %green
+\definecolor{CommentColor}{rgb}{0.90,0.16,0} %red
+\definecolor{dkgreen}{rgb}{0,0.5,0}
+\definecolor{verylightgray}{rgb}{0.88,0.88,0.88}
+\newcommand<>{\textblue}[1]{{\color#2{blue}#1}}
+\newcommand<>{\textred}[1]{{\color#2{red}#1}}
+\newcommand<>{\textgreen}[1]{{\color#2{green}#1}}
+\newcommand<>{\textdkgreen}[1]{{\color#2{dkgreen}#1}}
+\newcommand<>{\textorange}[1]{{\color#2{orange}#1}}
+\newcommand<>{\textyellow}[1]{{\color#2{yellow}#1}}
+
+\newcommand{\joerg}[1]{\textbf{\color{CommentColor} /* (Joerg) #1 (Joerg) */}}
+
+
+\newcommand{\commentout}[1]{}
+
+
+
+\newcommand{\ie}{i.\,e.}
+\newcommand{\eg}{e.\,g.}
+\newcommand{\cf}{cf.}
+
+\newcommand{\notesym}{\ensuremath{\to}} 
+\newcommand{\noteblk}[1]{
+\begin{block}{}
+#1
+\end{block}} 
+
+
+
+\newcommand{\lectureslides}[1]{\ifthenelse{\value{VERSION}=0}{#1}{}}
+\newcommand{\nolectureslides}[1]{\ifthenelse{\not\value{VERSION}=0}{#1}{}}
+\newcommand{\posthandout}[1]{\ifthenelse{\value{VERSION}=1}{#1}{}}
+\newcommand{\noposthandout}[1]{\ifthenelse{\not\value{VERSION}=1}{#1}{}}
+\newcommand{\prehandout}[1]{\ifthenelse{\value{VERSION}=2}{#1}{}}
+\newcommand{\noprehandout}[1]{\ifthenelse{\not\value{VERSION}=2}{#1}{}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% questionnaire: highlight ``correct'' (green, 2), ``discuss''
+%%% (orange, 1), ``false'' (red, 0) in post-handouts only!
+
+\newcommand{\questionnaire}[9]{
+
+\prehandout{
+\begin{block}{Question!}
+\textbf{#1}
+\vspace{-0.15cm}
+\begin{columns}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+\item[\textblue{(A):}] #2\vspace{-0.05cm}
+\item[\textblue{(C):}] #4
+\end{itemize}
+\end{column}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+\item[\textblue{(B):}] #3\vspace{-0.05cm}
+\item[\textblue{(D):}] #5
+\end{itemize}
+\end{column}
+\end{columns}
+\end{block}
+}
+
+\lectureslides{
+\begin{block}{Question!}
+\textbf{#1}
+\vspace{-0.15cm}
+\begin{columns}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+\item[\textblue{(A):}] #2\vspace{-0.05cm}
+\item[\textblue{(C):}] #4
+\end{itemize}
+\end{column}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+\item[\textblue{(B):}] #3\vspace{-0.05cm}
+\item[\textblue{(D):}] #5
+\end{itemize}
+\end{column}
+\end{columns}
+\end{block}
+}
+
+\posthandout{
+\begin{block}{Question!}
+\textbf{#1}
+\vspace{-0.15cm}
+\begin{columns}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+\item[\textblue{(A):}] \ifthenelse{#6=0}{\textred{#2}}{\ifthenelse{#6=1}{\textorange{#2}}{\ifthenelse{#6=2}{\textdkgreen{#2}}{}}}\vspace{-0.05cm}
+\item[\textblue{(C):}] \ifthenelse{#8=0}{\textred{#4}}{\ifthenelse{#8=1}{\textorange{#4}}{\ifthenelse{#8=2}{\textdkgreen{#4}}{}}}
+\end{itemize}
+\end{column}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+\item[\textblue{(B):}] \ifthenelse{#7=0}{\textred{#3}}{\ifthenelse{#7=1}{\textorange{#3}}{\ifthenelse{#7=2}{\textdkgreen{#3}}{}}}\vspace{-0.05cm}
+\item[\textblue{(D):}] \ifthenelse{#9=0}{\textred{#5}}{\ifthenelse{#9=1}{\textorange{#5}}{\ifthenelse{#9=2}{\textdkgreen{#5}}{}}}
+\end{itemize}
+\end{column}
+\end{columns}
+\end{block}
+}
+
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% questionnairetwo: highlight ``correct'' (green, 2), ``discuss''
+%%% (orange, 1), ``false'' (red, 0) in post-handouts only!
+
+\newcommand{\questionnairetwo}[5]{
+
+\prehandout{
+\begin{block}{Question!}
+\textbf{#1}
+\vspace{-0.15cm}
+\begin{columns}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+\item[\textblue{(A):}] #2
+\end{itemize}
+\end{column}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+\item[\textblue{(B):}] #3
+\end{itemize}
+\end{column}
+\end{columns}
+\end{block}
+}
+
+\lectureslides{
+\begin{block}{Question!}
+\textbf{#1}
+\vspace{-0.15cm}
+\begin{columns}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+\item[\textblue{(A):}] #2
+\end{itemize}
+\end{column}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+\item[\textblue{(B):}] #3
+\end{itemize}
+\end{column}
+\end{columns}
+\end{block}
+}
+
+\posthandout{
+\begin{block}{Question!}
+\textbf{#1}
+\vspace{-0.15cm}
+\begin{columns}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+\item[\textblue{(A):}] \ifthenelse{#4=0}{\textred{#2}}{\ifthenelse{#4=1}{\textorange{#2}}{\ifthenelse{#4=2}{\textdkgreen{#2}}{}}}
+\end{itemize}
+\end{column}
+\begin{column}{.45\textwidth}
+\begin{itemize}
+\item[\textblue{(B):}] \ifthenelse{#5=0}{\textred{#3}}{\ifthenelse{#5=1}{\textorange{#3}}{\ifthenelse{#5=2}{\textdkgreen{#3}}{}}}
+\end{itemize}
+\end{column}
+\end{columns}
+\end{block}
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newcommand{\airport}{Airport}
+\newcommand{\barman}{Barman}
+\newcommand{\blocksworld}{Blocksworld}
+\newcommand{\depots}{Depots}
+\newcommand{\driverlog}{Driverlog}
+\newcommand{\elevators}{Elevators}
+\newcommand{\floortile}{Floortile}
+\newcommand{\freecell}{Freecell}
+\newcommand{\gripper}{Gripper}
+\newcommand{\grid}{Grid}
+\newcommand{\logistics}{Logistics}
+\newcommand{\miconic}{Miconic}
+\newcommand{\mprime}{Mprime}
+\newcommand{\mystery}{Mystery}
+\newcommand{\nomystery}{NoMystery}
+\newcommand{\satellite}{Satellite}
+\newcommand{\openstacks}{Openstacks}
+\newcommand{\parking}{Parking}
+\newcommand{\parcprinter}{ParcPrinter}
+\newcommand{\pathways}{Pathways}
+\newcommand{\pegsol}{PegSol}
+\newcommand{\pipesnot}{Pipesworld-NoTankage}
+\newcommand{\pipesnotshort}{Pipes-NoTankage}
+\newcommand{\pipest}{Pipesworld-Tankage}
+\newcommand{\pipestshort}{Pipes-Tankage}
+\newcommand{\psr}{PSR}
+\newcommand{\rovers}{Rovers}
+\newcommand{\scanalyzer}{Scanalyzer}
+\newcommand{\sokoban}{Sokoban}
+\newcommand{\tidybot}{Tidybot}
+\newcommand{\tpp}{TPP}
+\newcommand{\transport}{Transport}
+\newcommand{\trucks}{Trucks}
+\newcommand{\visitall}{VisitAll}
+\newcommand{\woodworking}{Woodworking}
+\newcommand{\zenotravel}{Zenotravel}
+
+\newcommand{\driverlogshort}{Driverlog}
+\newcommand{\logisticsshort}{Logistics}
+\newcommand{\miconicshort}{Miconic}
+\newcommand{\nomysteryshort}{NoMystery}
+\newcommand{\pathwaysshort}{Pathways}
+\newcommand{\roversshort}{Rovers}
+\newcommand{\satelliteshort}{Satellite}
+\newcommand{\tppshort}{TPP}
+\newcommand{\woodworkingshort}{Woodwork}
+\newcommand{\zenotravelshort}{Zenotravel}
+
+\newcommand{\driverlogveryshort}{Driver}
+\newcommand{\logisticsveryshort}{Log}
+\newcommand{\miconicveryshort}{Mico}
+\newcommand{\nomysteryveryshort}{NoMy}
+\newcommand{\pathwaysveryshort}{Pathw}
+\newcommand{\roversveryshort}{Rovers}
+\newcommand{\satelliteveryshort}{Satell}
+\newcommand{\tppveryshort}{TPP}
+\newcommand{\woodworkingveryshort}{Woo}
+\newcommand{\zenotravelveryshort}{Zeno}
+
+\newcommand{\poly}{{\bf P}}
+\newcommand{\np}{{\bf NP}}
+\newcommand{\conp}{{\bf co-NP}}
+\newcommand{\pspace}{{\bf PSPACE}}
+\newcommand{\npspace}{{\bf NPSPACE}}
+
+\newcommand{\astar}{\ensuremath{\textrm{A}^*}}
+\newcommand{\idastar}{\ensuremath{\textrm{IDA}^*}}
+
+\newcommand{\hplus}{\ensuremath{h^+}}
+\newcommand{\hmax}{\ensuremath{h^{\text{\textup{max}}}}}
+\newcommand{\hadd}{\ensuremath{h^{\text{\textup{add}}}}}
+\newcommand{\hff}{\ensuremath{h^{\text{\textup{FF}}}}}
+\newcommand{\hpmax}{\ensuremath{h^{\text{\textup{pmax}}}}}
+\newcommand{\hsa}{\ensuremath{h^{\text{\textup{sa}}}}}
+\newcommand{\hone}{\ensuremath{h^1}}
+\newcommand{\honepg}{\ensuremath{h^1_{\text{\textup{PG}}}}}
+\newcommand{\htwo}{\ensuremath{h^2}}
+\newcommand{\htwopg}{\ensuremath{h^2_{\text{\textup{PG}}}}}
+\newcommand{\hthree}{\ensuremath{h^3}}
+\newcommand{\hthreepg}{\ensuremath{h^3_{\text{\textup{PG}}}}}
+\newcommand{\hm}{\ensuremath{h^m}}
+\newcommand{\hmpg}{\ensuremath{h^m_{\text{PG}}}}
+\newcommand{\hlm}{\ensuremath{h^{\text{\textup{LM}}}}}
+\newcommand{\hl}{\ensuremath{h^{\text{\textup{L}}}}}
+\newcommand{\hla}{\ensuremath{h^{\text{\textup{LA}}}}}
+\newcommand{\hlmcut}{\ensuremath{h^{\text{\textup{LM-cut}}}}}
+\newcommand{\hblind}{\ensuremath{h^0}}
+\newcommand{\hms}{\ensuremath{h^{\text{\textup{M\&S}}}}}
+\newcommand{\hfoobar}{\ensuremath{h^{\text{\textup{foo-bar}}}}}
+\newcommand{\hstar}{\ensuremath{h^*}}
+\newcommand{\rstar}{\ensuremath{r^*}}
+\newcommand{\hstarprime}{\ensuremath{h'^*}}
+\newcommand{\hhhh}{\ensuremath{h^{\text{HHH}}}}
+
+\newcommand{\true}{1}
+\newcommand{\false}{0}
+\newcommand{\realnumbers}{\ensuremath{\mathbb R}}
+\newcommand{\naturalnumbers}{\ensuremath{\mathbb N}}
+
+\newcommand{\task}{\ensuremath{\Pi}}
+\newcommand{\plan}{\ensuremath{\vec{a}}}
+\newcommand{\vars}{V}
+\newcommand{\domain}{D}
+\newcommand{\ini}{I}
+\newcommand{\goal}{G}
+\newcommand{\ops}{A}
+\newcommand{\pre}{\ensuremath{\mathit{pre}}}
+\newcommand{\prevail}{\ensuremath{\mathit{prev}}}
+\newcommand{\eff}{\ensuremath{\mathit{eff}}}
+\newcommand{\add}{\ensuremath{\mathit{add}}}
+\newcommand{\del}{\ensuremath{\mathit{del}}}
+\newcommand{\ce}{\mathit{ce}}
+\newcommand{\cost}{c}
+\newcommand{\apply}{\ensuremath{\mathit{appl}}}
+\newcommand{\regress}{\ensuremath{\mathit{regr}}}
+\newcommand{\duration}{\ensuremath{\mathit{duration}}}
+\newcommand{\bestsupport}{\ensuremath{\mathit{bs}}}
+\newcommand{\bestsupporthmax}{\ensuremath{\bestsupport^{\text{\textup{max}}}}}
+\newcommand{\bestsupporthone}{\ensuremath{\bestsupport^{1}}}
+\newcommand{\bestsupporthadd}{\ensuremath{\bestsupport^{\text{\textup{add}}}}}
+
+\newcommand{\eqrelation}{\sim}
+
+\newcommand{\ed}{\ensuremath{\mathit{exd}}}
+
+\newcommand{\cg}{\ensuremath{CG}}
+
+\newcommand{\redvars}{\ensuremath{\vars^{\text{\textup{R}}}}}
+\newcommand{\blackvars}{\ensuremath{\vars^{\text{\textup{B}}}}}
+\newcommand{\rbtask}{\ensuremath{\Pi^{\text{\textup{RB}}}}}
+\newcommand{\hrbplus}{\ensuremath{h^{*\text{\textup{RB}}}}}
+
+\newcommand{\pim}{\ensuremath{\Pi^m}}
+\newcommand{\pc}{\ensuremath{\Pi^C}}
+\newcommand{\pcce}{\ensuremath{\Pi^C_{\ce}}}
+\newcommand{\hc}{\ensuremath{h^C}}
+\newcommand{\hmplus}{h^{m+}}
+\newcommand{\honeplus}{h^{1+}}
+\newcommand{\hcplus}{\ensuremath{h^{C+}}}
+\newcommand{\hcff}{\ensuremath{h^{C\text{\textup{FF}}}}}
+\newcommand{\picff}{\ensuremath{\pi^{C\text{\textup{FF}}}}}
+\newcommand{\pimff}{\ensuremath{\pi^{m\text{\textup{FF}}}}}
+\newcommand{\pctwo}{\ensuremath{\Pi^{C2}}}
+
+
+
+%\newtheorem{theorem}{Theorem}
+\newtheorem{conjecture}{Conjecture}
+%\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+%\newtheorem{lemma}{Lemma}
+%\newtheorem{definition}{Definition}
+%\newtheorem{example}{Example}
+%\newenvironment{proof}{\noindent {\bf Proof:}}%
+%{\hfill \rule[0.3ex]{1ex}{1ex} \par \addvspace{\bigskipamount}}
+\newenvironment{proofsketch}{\noindent {\bf Proof sketch:}}%
+{\hfill \rule[0.3ex]{1ex}{1ex} \par \addvspace{\bigskipamount}}
+
+
+
+\newenvironment{algorithm}
+  {\begin{upshape}\setlength{\parindent}{0cm}}
+  {\end{upshape}}
+
+
+
+\newcommand{\BeamerFigure}[2]{
+\begin{figure}[t]
+\centering
+\includegraphics[width=#2]{#1}
+\end{figure}
+}
+
+\newcommand{\bigarrow}[2]{%
+\begin{pgfscope}
+\pgfsetlinewidth{2pt}
+\pgfsetendarrow{\pgfarrowsingle{1pt}}
+\pgfline{\pgfxy(#1)}{\pgfrelative{\pgfxy(#1)}{\pgfxy(#2,0)}}
+\end{pgfscope}
+}
+
+\newcommand{\borderrect}[3]{%
+{\color{#1}\pgfrect[fill]{\pgfxy(#2)}{\pgfxy(#3)}}%
+{\color{black}\pgfrect[stroke]{\pgfxy(#2)}{\pgfxy(#3)}}%
+}
+
+\newcommand{\tile}[3][orange!30]{
+\pgfputat{\pgfxy(#2)}{
+\borderrect{#1}{-0.5,-0.5}{1,1}
+\pgfbox[center,center]{#3}
+}
+}
+
+\newcommand{\abstractedtile}[1]{
+\tile[orange!20]{#1}{}
+}
+
+\newcommand{\abstractedtileanimated}[3][orange!30]{
+\only<all:1>{\tile[#1]{#2}{#3}}
+\only<all:2->{\abstractedtile{#2}}
+}
+
+\newcommand{\price}{\ensuremath{\mathsf{price}}}
+\newcommand{\hcenterstar}{\ensuremath{h^{C*}}}
+\newcommand{\hstartopstar}{\ensuremath{h^{S*}}}
+\newcommand{\hcenter}{\ensuremath{h^{C}}}
+\newcommand{\hstartop}{\ensuremath{h^{S}}}
+\newcommand{\sdX}[1]{\ensuremath{\textrm{SD}}#1}
+\newcommand{\anytimestartopastar}{Anytime Star-Center \astar}
+\newcommand{\ascastar}{\ensuremath{\textrm{ASC}}\astar}
+\newcommand{\globalplan}{\ensuremath{\mathsf{GlobalPlan}}}
+\newcommand{\goalprice}{\ensuremath{\mathsf{goalprice}}}
+\newcommand{\minperipheryprice}{\ensuremath{\mathsf{MINperipheryprice}}}
