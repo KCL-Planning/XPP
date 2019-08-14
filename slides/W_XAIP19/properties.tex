@@ -1,0 +1,77 @@
+\newcommand{\image}[1]{
+	\includegraphics[scale=0.06]{images/image#1.png}
+}
+
+
+\newcommand{\samerover}[2]{
+	\begin{tikzpicture}
+		\node[] (r1) at (-0.7,0) {\includegraphics[scale=0.04]{images/rover1.png}};
+		\node[] (xor) at (0.05,0) {$\otimes$};
+		\node[] (r2) at (0.7,0) {\includegraphics[scale=0.04]{images/rover2.png}};
+		\node[] (i1) at (-0.5,1) {\includegraphics[scale=0.06]{images/image#1.png}};
+		\node[] (i2) at (0.5,1) {\includegraphics[scale=0.06]{images/image#2.png}};
+		\node[] (n) at (0,-0.7) {same rover};
+	\end{tikzpicture}
+}
+
+
+\newcommand{\energylimit}[1]{
+	\begin{tikzpicture}
+		\node[] (i1) at (0,1) {\includegraphics[scale=0.06]{images/image#1.png}};
+		\node[] (i2) at (-0.5,0) {\includegraphics[scale=0.06]{images/battarie_low.png}};
+		\node[] (p) at (0.8,0) {\large $> 50\%$};
+		\node[] (n) at (0,-0.7) {energy limit};
+	\end{tikzpicture}
+}
+
+\newcommand{\orderprop}[2]{
+	\begin{tikzpicture}
+		\node[] (i11) at (-0.5,1.2) {$1.$};
+		\node[] (i1) at (-0.5,0.5) {\includegraphics[scale=0.06]{images/image#1.png}};
+		\node[] (i11) at (0.5,1.2) {$2.$};
+		\node[] (i2) at (0.5,0.5) {\includegraphics[scale=0.06]{images/image#2.png}};
+		\node[] (n) at (0,-0.7) {order};
+	\end{tikzpicture}
+}
+
+
+\newcommand{\specificrover}[2]{
+	\begin{tikzpicture}
+		\node[] (r1) at (0,0) {\includegraphics[scale=0.05]{images/rover#1.png}};
+		\node[] (i2) at (0,1) {\includegraphics[scale=0.06]{images/image#2.png}};
+		\node[] (n) at (0,-0.7) {specific rover};
+	\end{tikzpicture}
+}
+
+
+\newcommand{\useconnection}[3]{
+	\begin{tikzpicture}
+		\node[] (r1) at (0,0.3) {\includegraphics[scale=0.05]{images/rover#1.png}};
+		\node[draw, circle, inner sep=1pt] (Lx) at (-1,-0.5) {\small $L_#2$};
+		\node[draw, circle, inner sep=1pt] (Ly) at (1,-0.5) {\small $L_#3$};
+		\draw[thick, <->] (Lx) to (Ly);
+		\node[] (n) at (0,-1) {use connection};
+	\end{tikzpicture}
+}
+
+
+\newcommand{\dontuseconnection}[3]{
+	\begin{tikzpicture}
+		\node[] (r1) at (0,0.3) {\includegraphics[scale=0.05]{images/rover#1.png}};
+		\node[] (r1) at (0,-0.45) {\includegraphics[scale=0.08]{images/no.png}};
+		\node[draw, circle, inner sep=1pt] (Lx) at (-1,-0.5) {\small $L_#2$};
+		\node[draw, circle, inner sep=1pt] (Ly) at (1,-0.5) {\small $L_#3$};
+		\draw[thick, <->] (Lx) to (Ly);
+		\node[align=center] (n) at (0,-1.1) {don't use\\[-0.3cm]connection};
+	\end{tikzpicture}
+}
+
+
+\newcommand{\energylimitloc}[1]{
+	\begin{tikzpicture}
+		\node[] (r1) at (0,0) {\includegraphics[scale=0.05]{images/rover#1.png}};
+		\node[] (b1) at (-0.5,1) {\includegraphics[scale=0.06]{images/battarie_low.png}};
+		\node[draw, circle, inner sep=1pt] (l) at (0.5,1) {$L_y$};
+		\node[] (n) at (0,-0.7) {energy limit};
+	\end{tikzpicture}
+}

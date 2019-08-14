@@ -1,0 +1,94 @@
+\documentclass{beamer}
+\usetheme{metropolis}  
+%\setbeamertemplate{frame footer}{Rebecca Eifler}
+%\setbeamertemplate{footline}[frame number]
+\usepackage{appendixnumberbeamer}
+\usepackage[english]{babel} 
+\usepackage{listings}
+\usepackage{xcolor, colortbl}
+\usepackage[inference]{semantic}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,shadows, shapes, positioning}
+\usepackage{pgf-umlsd}
+\usepackage{pgfplots}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{stmaryrd}
+\usepackage{ upgreek }
+\usepackage{ marvosym }
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{algpseudocode}
+\usepackage{subcaption}
+\usepackage{marvosym}
+\usepackage{varwidth}
+
+\input{properties.tex}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+\definecolor{darkgreen}{HTML}{009900}
+\definecolor{mBlue}{HTML}{005CE6}
+
+
+\newcommand\Wider[2][3em]{%
+	\makebox[\linewidth][c]{%
+	  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+		\raggedright#2
+	  \end{minipage}%
+	}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Generic Framework
+\newcommand{\task}{\ensuremath{\tau}}
+\newcommand{\plan}{\ensuremath{\pi}}
+\newcommand{\plans}{\ensuremath{\Pi}}
+\newcommand{\alltasks}{\ensuremath{\cal T}}
+\newcommand{\allplans}{\ensuremath{\cal P}}
+\newcommand{\true}{\ensuremath{\mathit{true}}}
+\newcommand{\false}{\ensuremath{\mathit{false}}}
+
+\newcommand{\prop}{\ensuremath{p}}
+\newcommand{\propq}{\ensuremath{q}}
+\newcommand{\props}{\ensuremath{P}}
+\newcommand{\propsatom}{\ensuremath{{P^{\text{\textup{A}}}}}}
+\newcommand{\propscomp}{\ensuremath{{P^{\text{\textup{C}}}}}}
+
+\newcommand{\modelsof}[2]{\ensuremath{{\cal M}_#1(#2)}}
+\newcommand{\entails}[3]{\ensuremath{#1 \models #2 \Rightarrow #3}}
+\renewcommand{\iff}[3]{\ensuremath{#1 \models #2 \Leftrightarrow #3}}
+\renewcommand{\equiv}[2]{\ensuremath{[#2]_{#1}}}
+
+
+%\setbeamertemplate{section in toc}{\textbf{\inserttocsection}}
+%\setbeamertemplate{frame footer}{Rebecca Eifler}
+
+\title{Explaining the Space of Plans through Plan-Property Dependencies\vspace*{-0.6cm}}
+\author{Rebecca Eifler, Michael Cashmore, J\"org Hoffmann, Daniele Magazzeni and Marcel Steinmetz}
+\date{12.07.19}
+%\institute{Foundations of Artificial Intelligence}
+\institute{\vspace*{3cm}\hspace*{2cm}} %\includegraphics[scale=0.25]{images/warum_darum.png}}
+\titlegraphic{\vspace*{5.5cm}\hspace*{-0.5cm}\includegraphics[scale=0.2]{logo_grad_school}\includegraphics[scale=0.3]{kings_college_logo.jpg}}
+
+
+\begin{document}
+\metroset{block=fill, progressbar=frametitle}
+%\setbeamertemplate{frame footer}{Rebecca Eifler}
+
+\maketitle
+
+\input{introduction.tex}
+
+\input{framework.tex}
+
+\input{goal-properties.tex}
+
+\input{outlook.tex}
+
+
+\end{document}
+
+

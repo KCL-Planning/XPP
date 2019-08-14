@@ -1,0 +1,339 @@
+%\begin{frame}[standout]
+%	\Huge \textsc{Goal Dependencies}
+%\end{frame}
+
+\begin{frame}{Goal Dependencies}
+	\centering
+	\visible<2->{
+		\begin{tikzpicture}
+			\node[] (el) at (0,0) {\Large energy limit};
+			\node[] (el) at (3,0) {\includegraphics[scale=0.2]{images/battarie_low.png}};
+		\end{tikzpicture}
+	}
+	\vspace*{1cm}
+	\visible<3>{
+	\begin{tabular}{c|c|c}
+		\includegraphics[scale=0.15]{images/image1.png} &
+		\includegraphics[scale=0.15]{images/image2.png} &
+		\includegraphics[scale=0.15]{images/image3.png} \\\hline
+
+		\includegraphics[scale=0.1]{images/yes.png} &
+		\includegraphics[scale=0.1]{images/no.png} &
+		\includegraphics[scale=0.1]{images/yes.png} \\
+
+	\end{tabular}
+	}
+\end{frame}
+
+
+
+\begin{frame}{Meta Search}
+% meta search tree picture top down vs bottom up
+
+\centering
+\begin{tikzpicture}
+	\visible<1>{
+		\node[draw] (all) at (0,5) {\image{1} \image{2} \image{3}};
+	}
+	\visible<2->{
+		\node[draw, fill=mLightBrown!40] (all) at (0,5) {\image{1} \image{2} \image{3}};
+	}
+	
+	\visible<3>{
+		\node[draw] (01) at (-3,3) {\image{1} \image{2}};
+		\node[draw] (02) at (0,3) {\image{1} \image{3}};
+		\node[draw] (12) at (3,3) {\image{2} \image{3}};
+	}
+	\visible<4-6>{
+		\node[draw, fill=mLightBrown!40] (01) at (-3,3) {\image{1} \image{2}};
+		\node[draw, fill=mLightGreen!40] (02) at (0,3) {\image{1} \image{3}};
+		\node[draw, fill=mLightBrown!40] (12) at (3,3) {\image{2} \image{3}};
+	}
+	\visible<7->{
+		\node[draw, fill=mLightBrown!40, line width=2pt] (01) at (-3,3) {\image{1} \image{2}};
+		\node[draw, fill=mLightGreen!40] (02) at (0,3) {\image{1} \image{3}};
+		\node[draw, fill=mLightBrown!40, line width=2pt] (12) at (3,3) {\image{2} \image{3}};
+	}
+
+
+	\visible<5>{
+		\node[draw] (0) at (-2,1) {\image{1}};
+		\node[draw] (1) at (0,1) {\image{2}};
+		\node[draw] (2) at (2,1) {\image{3}};
+	}	
+	\visible<6->{
+		\node[draw, fill=mLightGreen!40] (0) at (-2,1) {\image{1}};
+		\node[draw, fill=mLightGreen!40] (1) at (0,1) {\image{2}};
+		\node[draw, fill=mLightGreen!40] (2) at (2,1) {\image{3}};
+	}
+
+	\visible<3->{
+		\draw[thick, ->] (all) to (01);
+		\draw[thick, ->] (all) to (02);
+		\draw[thick, ->] (all) to (12);
+	}
+	\visible<5->{
+		\draw[thick, ->] (01) to (0);
+		\draw[thick, ->] (01) to (1);
+		\draw[thick, ->] (12) to (2);
+	}
+	\visible<7->{
+		\node[] (mugs) at (0,-0.6) {\Large \textcolor{mLightBrown}{M}inimal \textcolor{mLightBrown}{U}nsolvable \textcolor{mLightBrown}{G}oal \textcolor{mLightBrown}{S}ubset};
+	}
+	
+
+\end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}{Minimal Unsolvable Goal Subsets}
+	\begin{center}
+	\begin{tikzpicture}
+		\node[draw, fill=mLightBrown!30] (mugs1) at (0,0) {
+			\includegraphics[scale=0.09]{images/image1.png} 
+			\includegraphics[scale=0.09]{images/image2.png}
+		};
+		\node[draw, fill=mLightBrown!30] (mugs2) at (4,0) {
+			\includegraphics[scale=0.09]{images/image2.png}
+			\includegraphics[scale=0.09]{images/image3.png} 
+		};
+	\end{tikzpicture}
+	\end{center}
+	\hrule
+	\vspace*{0.5cm}
+	\large\textbf{Entailment}:\\
+	\begin{center}
+	\visible<2->{
+	\begin{tikzpicture}
+		\node[] (i1) at (0,0) {
+			\includegraphics[scale=0.1]{images/image1.png} 
+		};
+		\node[] (n1) at (3,0) {
+			\includegraphics[scale=0.1]{images/no.png} 
+		};
+		\node[] (i2) at (3,0) {
+			\includegraphics[scale=0.1]{images/image2.png}
+		};
+		\node[] (i22) at (0,-2) {
+			\includegraphics[scale=0.1]{images/image2.png}
+		};
+		\node[] (i12) at (3,-2) {
+			\includegraphics[scale=0.1]{images/image1.png}
+		};
+		\node[] (n2) at (3,-2) {
+			\includegraphics[scale=0.1]{images/no.png}
+		};
+
+		\draw[thick, ->] (i1) to (i2);
+		\draw[thick, ->] (i22) to (i12);
+
+		\visible<3->{
+		\node[] (i23) at (5,0) {
+			\includegraphics[scale=0.1]{images/image2.png} 
+		};
+		\node[] (n3) at (8,0) {
+			\includegraphics[scale=0.1]{images/no.png} 
+		};
+		\node[] (i3) at (8,0) {
+			\includegraphics[scale=0.1]{images/image3.png}
+		};
+		\node[] (i32) at (5,-2) {
+			\includegraphics[scale=0.1]{images/image3.png}
+		};
+		\node[] (i24) at (8,-2) {
+			\includegraphics[scale=0.1]{images/image2.png}
+		};
+		\node[] (n4) at (8,-2) {
+			\includegraphics[scale=0.1]{images/no.png}
+		};
+
+		\draw[thick, ->] (i23) to (i3);
+		\draw[thick, ->] (i32) to (i24);
+		}
+	\end{tikzpicture}
+	}
+	\end{center}
+
+	
+\end{frame}
+
+
+\begin{frame}{Action-Set Property}
+\centering
+\begin{tikzpicture}
+	\node[draw,inner sep=2pt] (p1) at (-0.5,-3.5) {\samerover{1}{2}};
+	\node[] (p2) at (3,-3.5) {\orderprop{1}{2}};
+	\node[] (p3) at (6.5,-3.5) {\energylimit{1}};
+	\node[draw,inner sep=2pt] (p4) at (-0.5,0) {\specificrover{1}{2}};
+	\node[draw,inner sep=2pt] (p5) at (3,0) {\useconnection{1}{x}{y}};
+	\node[draw,inner sep=2pt] (p6) at (6.5,0) {\dontuseconnection{1}{x}{y}};
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Action-Set Property}
+\centering
+\begin{tikzpicture}
+	\node[draw] (p1) at (-1,-0.5) {
+		\resizebox{!}{2cm}{%
+			\samerover{1}{2}
+		}
+	};
+
+	\visible<2->{
+		\node[] (s1) at (1.5,1.5) {\Large Part 1};
+		\node[] (s2) at (1.5,-1.9) {\Large Part 2};
+	}
+
+	\visible<3->{
+		\node[] (r1) at (3.5,1.5) {\includegraphics[scale=0.05]{images/rover1.png}};
+		\node[align=left] (actionsr0) at (6,1.5) {
+			$A_1 = \{takeImage_1(R_1),$\\
+			$takeImage_2(R_1)\}$
+		};
+
+		\node[] (r2) at (3.5,-0.5) {\includegraphics[scale=0.05]{images/rover2.png}};
+		\node[align=left] (actionsr1) at (6,-0.5) {
+			$A_2 = \{takeImage_1(R_2),$\\
+			$takeImage_2(R_2)\}$
+		};
+	}
+
+	\visible<4->{
+		\node[] (s2) at (5,-3.4) {\huge $A_1 \otimes A_2$};
+	}
+\end{tikzpicture}\\
+\end{frame}
+
+\begin{frame}{Compilation}
+
+\begin{center}
+\begin{tikzpicture}
+	\only<1-3>{
+		\node[align=left] (actionsr0) at (-1,1.5) {
+			$A_1 = \{takeImage_1(R_1),$\\
+			$takeImage_2(R_1)\}$
+		};
+	}
+	\only<4-5>{
+		\node[align=left, mLightGreen] (actionsr0) at (-1,1.5) {
+			$A_1 = \{takeImage_1(R_1),$\\
+			$takeImage_2(R_1)\}$
+		};
+	}
+	\only<6->{
+		\node[align=left] (actionsr0) at (-1,1.5) {
+			$A_1 = \{takeImage_1(R_1),$\\
+			$takeImage_2(R_1)\}$
+		};
+	}
+
+	\only<1-6>{
+		\node[align=left] (actionsr1) at (-1,-0.5) {
+			$A_2 = \{takeImage_1(R_2),$\\
+			$takeImage_2(R_2)\}$
+		};
+	}
+	\only<7-8>{
+		\node[align=left, mLightGreen] (actionsr1) at (-1,-0.5) {
+			$A_2 = \{takeImage_1(R_2),$\\
+			$takeImage_2(R_2)\}$
+		};
+	}
+	\only<9->{
+		\node[align=left] (actionsr1) at (-1,-0.5) {
+			$A_2 = \{takeImage_1(R_2),$\\
+			$takeImage_2(R_2)\}$
+		};
+	}
+
+	\node[] (formula) at (-1,-3.1) {\huge $A_1 \otimes A_2$};
+
+
+	\visible<2->{
+		\node[draw, minimum height=3.5cm, minimum width=3cm, fill=white] (p3) at (5.4,0.4) {};
+		\node[draw, minimum height=3.5cm, minimum width=3cm, fill=white] (p2) at (5.2,0.2) {};
+		\node[draw, align=left, fill=white] (p1) at (5,0) {
+				$drive(R_1,L_1,L2)$\\
+				\only<-3>{$takeImage_1(R_1)$}\only<4-5>{\textcolor{mLightGreen}{$takeImage_1(R_1)$}}\only<6->{$takeImage_1(R_1)$}\\
+				$drive(R_2,L_4,L_6)$\\
+				\only<-6>{$takeImage_2(R_2)$}\only<7-8>{\textcolor{mLightGreen}{$takeImage_2(R_2)$}}\only<9->{$takeImage_2(R_2)$}\\
+				$drive(R_2,L_6,L_5)$\\
+				$\cdots$
+		};
+	}
+	\draw (1.5,3) to (1.5,-4);
+	\visible<3->{
+	\node[] (table) at (4,-3){
+		\begin{tabular}{l|c}
+			& used\\\hline
+			$A_1$ & \visible<5->{$\checkmark$}\\\hline
+			$A_2$ & \visible<8->{$\checkmark$}\\
+		\end{tabular}
+	};
+	}
+	\visible<10->{
+		\node[] (no) at (5.5,-3) {\includegraphics[scale=0.1]{images/no.png}};
+	}
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+
+\begin{frame}{Action-Set Properties Entailment}
+\centering
+\resizebox{!}{6cm}{%
+\begin{tikzpicture}
+	\node[] (gdt) at (-2,5.5) {\textbf{Goal Dependencies}};
+	\node[] (gd) at (-2,4){
+		\resizebox{!}{2cm}{%
+		\begin{tikzpicture}
+			\node[draw, fill=mLightBrown!40] (all) at (0,5) {\image{1} \image{2} \image{3}};
+			\node[draw, fill=mLightBrown!40] (01) at (-3,3) {\image{1} \image{2}};
+			\node[draw, fill=mLightGreen!40] (02) at (0,3) {\image{1} \image{3}};
+			\node[draw, fill=mLightBrown!40] (12) at (3,3) {\image{2} \image{3}};
+			\node[draw, fill=mLightGreen!40] (0) at (-2,1) {\image{1}};
+			\node[draw, fill=mLightGreen!40] (1) at (0,1) {\image{2}};
+			\node[draw, fill=mLightGreen!40] (2) at (2,1) {\image{3}};
+
+			\draw[thick, ->] (all) to (01);
+			\draw[thick, ->] (all) to (02);
+			\draw[thick, ->] (all) to (12);
+			\draw[thick, ->] (01) to (0);
+			\draw[thick, ->] (01) to (1);
+			\draw[thick, ->] (12) to (2);
+		\end{tikzpicture}
+		}
+	};
+	\node[fill=mLightBrown!30] (mugs) at (5,4){
+		\resizebox{!}{2cm}{%
+		\begin{tikzpicture}
+			\node[draw, inner sep=1pt] (p) at (-3,0) {
+				\specificrover{1}{2}
+			};
+			\node[draw, inner sep=1pt] (p1) at (-0.3,0) {
+				\samerover{1}{2}
+			};
+
+			\node[draw, inner sep=1pt] (p1) at (3,0) {
+				\dontuseconnection{1}{1}{2}
+			};
+		\end{tikzpicture}
+		}
+	};
+	\draw[thick] (-4,2) to (9,2);
+	\visible<2->{
+	\node[draw, inner sep=1pt] (p4) at (0,0) {
+		\dontuseconnection{1}{1}{2}
+		\specificrover{1}{2}
+	};
+	\node[draw, inner sep=1pt] (p1) at (7,0) {
+		\samerover{1}{2}
+	};
+	\node[] (not) at (7,0) {\includegraphics[scale=0.3]{images/no.png}};
+
+	\draw[thick, ->] (p4) to (p1);
+}
+\end{tikzpicture}
+}
+
+\end{frame}
