@@ -4,7 +4,7 @@ PREHANDOUTFOUR="pre-handout-4up"
 POSTHANDOUT="post-handout"
 POSTHANDOUTFOUR="post-handout-4up"
 
-export BIBINPUTS=.:../../papers/BIBLIO
+export BIBINPUTS=../../../papers/BIBLIO
 
 slides: 
 	pdflatex $(SLIDES)
