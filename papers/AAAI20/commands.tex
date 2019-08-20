@@ -11,8 +11,13 @@
 \newcommand{\rebecca}[1]{\textbf{\color{CommentColor} /* (Rebecca) #1  (Rebecca) */}}
 \newcommand{\dan}[1]{\textbf{\color{CommentColor} /* (Dan) #1  (Dan) */}}
 \newcommand{\michael}[1]{\textbf{\color{CommentColor} /* (Michael) #1  (Michael) */}}
+\newcommand{\onlyincommandmode}[1]{#1}
 
 \fi
+
+\usepackage{environ}
+\NewEnviron{command}
+	{\ifdefined\nocflagdefined {} else {\BODY} \fi}
 
 \newtheorem{corollary}{Corollary}
 \newtheorem{lemma}{Lemma}
@@ -36,7 +41,7 @@ Proof.}\hspace*{0.5em}}{\qed}
 \newcommand{\citep}[1]{\citeauthor{#1}~\shortcite{#1}}
 
 \newcommand{\textred}[1]{{\color{red}#1}}
-\definecolor{darkgreen}{HTML}{009900}
+\definecolor{green}{HTML}{009900}
 \definecolor{lightblue}{HTML}{007acc}
 
 \newcommand{\commentout}[1]{}

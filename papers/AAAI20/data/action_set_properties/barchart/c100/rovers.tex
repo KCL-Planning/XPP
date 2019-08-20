@@ -1,0 +1,88 @@
+    \begin{axis}[
+    width = 5cm,
+    height=4cm,
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.1,
+    legend columns=1,
+    ybar,
+    bar width=1pt,
+    ymin = 0,
+    ymax = 10,
+compat=1.6,
+%title=c 100,
+%ylabel=goals 09,
+	xticklabels={,,},
+	xtick style={draw=none},
+at={(0cm,-2.5cm)},
+]
+\addplot+[ybar, bar shift =-4.0pt, red,
+]
+plot coordinates {
+(01, 10) %c_100
+(05, 5) %c_100
+(07, 1) %c_100
+(06, 4) %c_100
+(10, 1) %c_100
+(08, 1) %c_100
+(03, 8) %c_100
+(02, 8) %c_100
+(04, 6) %c_100
+(09, 1) %c_100
+};
+\label{plot:props_bu_hff_79}
+\addplot+[ybar, bar shift =-2.0pt, blue,
+]
+plot coordinates {
+(01, 10) %c_100
+(05, 5) %c_100
+(07, 2) %c_100
+(06, 2) %c_100
+(03, 8) %c_100
+(08, 2) %c_100
+(10, 0) %c_100
+(02, 8) %c_100
+(04, 6) %c_100
+(09, 1) %c_100
+};
+\label{plot:props_td_hff_79}
+\addplot+[ybar, bar shift =0.0pt, green,
+]
+plot coordinates {
+(01, 10) %c_100
+(05, 10) %c_100
+(07, 10) %c_100
+(06, 10) %c_100
+(10, 10) %c_100
+(08, 10) %c_100
+(03, 10) %c_100
+(02, 10) %c_100
+(04, 10) %c_100
+(09, 10) %c_100
+};
+\label{plot:props_bu_trap_79}
+\addplot+[ybar, bar shift =2.0pt, orange,
+]
+plot coordinates {
+(01, 10) %c_100
+(05, 10) %c_100
+(07, 10) %c_100
+(06, 10) %c_100
+(03, 10) %c_100
+(08, 10) %c_100
+(10, 10) %c_100
+(02, 10) %c_100
+(04, 10) %c_100
+(09, 10) %c_100
+};
+\label{plot:props_td_trap_79}
+
+    \end{axis}
+    \hfill
+    
+%\node[draw, align=center] (test) at (8,-18) {
+%\ref{plot:props_bu_hff_79} props-bu-hff\\
+%\ref{plot:props_td_hff_79} props-td-hff\\
+%\ref{plot:props_bu_trap_79} props-bu-trap\\
+%\ref{plot:props_td_trap_79} props-td-trap\\
+%};
+

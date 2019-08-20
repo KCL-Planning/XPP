@@ -206,9 +206,12 @@ high values of $|A|$.
 \vspace{-0.3cm}
 \caption{\label{fig:ipc-local} Local explanation results on IPC 
 benchmarks for SysS as a function of $|A|$. Left: coverage, \ie,
-fraction of solved questions (dashed, right y-axis); and average
-runtime (solid, left y-axis). Right: average \#MUGS.\joerg{integrate
-reference point coverage as horizontal lines into the left plot}\rebecca{update plot with new benchmark results}}
+fraction of solved questions (dashed), 
+OSP (dotted), \hlmcut (dashed dotted) (right y-axis); and average
+runtime (solid, left y-axis). Right: average \#MUGS.
+%\joerg{integrate reference point coverage as horizontal lines into the left plot}
+%\rebecca{update plot with new benchmark results with all ICP instances}
+}
 \vspace{-0.6cm}
 \end{figure}
 
@@ -291,14 +294,18 @@ reference point.
 \small
 \centering
 
-\input{charts.tex}
+%\input{charts_c125.tex}
+\input{charts_c100.tex}
+%\rebecca{\normalsize top c=1.25, bottom c = 1.0}
 \vspace{-0.3cm}
 \caption{\label{fig:asp-global} Coverage for global explanation on 
-NoMystery (top left), Rovers (top right), TPP (bottom left),
-Blocksworld (bottom right). Number of action-set properties on x-axis,
-scaling from $1$ to $10$.\joerg{complete this plot. x-achsen
-beschriftung oben und unten bitte komplett raus. Bitte die legend
-unter diese plots, wie im IJCAI'19 long paper unter Figure 2.}}
+Blocksworld (top left), NoMystery (top right), Rovers (bottom left),
+TPP (bottom right). Number of action-set properties on x-axis,
+scaling from $1$ to $10$.
+%\joerg{complete this plot. x-achsen
+%beschriftung oben und unten bitte komplett raus. Bitte die legend
+%unter diese plots, wie im IJCAI'19 long paper unter Figure 2.}
+}
 \vspace{-0.2cm}
 \end{figure}
 
@@ -334,13 +341,16 @@ much easier for local explanation as a function of question size.
 \small
 \centering
 
-\input{charts_local_exp.tex}
+%\input{charts_local_exp_props_questions_c125.tex}
+\input{charts_local_exp_props_questions_c100.tex}
+%\rebecca{top c=1.25, bottom c = 1.0}
 \vspace{-0.3cm}
 \caption{\label{fig:asp-local} Local action-set property explanation 
 results for SysS as a function of $|A|$. Coverage and average runtime
-(left), average \#MUGS (right). NoMystery red, Rovers ???, TPP green,
-Blocksworld ???. \joerg{integrate reference point coverage as
-horizontal lines into the left plot}}
+(left), average \#MUGS (right). Blocksworld blue, NoMystery red, Rovers orange, TPP green. 
+\joerg{integrate reference point coverage as horizontal lines into the left plot} 
+\rebecca{lmcut and tarp ref always 1.0 coverage}
+}
 %
 %\caption{$c = 1.25$ red: nomyters (5 goals, 5 props), green: TPP (7 goals, 9 props), left plot: search time and coverage, right plot: \#MUGS}
 %
