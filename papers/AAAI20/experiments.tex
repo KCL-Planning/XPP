@@ -8,7 +8,6 @@
 
 
 
-
 \section{Experiments}
 \label{experiments}
 
@@ -260,9 +259,25 @@ Figure~\ref{table:coverage_ipc}.
 
 \subsection{Action-Set Properties}
 
+
+
+\joerg{notes reg data: SysS better for 1.0, SysW better elsewhere. 
+fig 3 show 1.5 (compared to 1.25 blocks looks way better, nomyst looks
+way better, rovers presumably similar, tpp only marginally worse; in
+1.0, there's not much to see and it's not good to show a case at the
+extreme end of the sopectrum). in fig 4, show 1.25 or 1.5 (in 1.0,
+would have to use SysS not SysW, and then performance would probably
+be boring); probably add sentence in text reg flat MUGS curves for TPP
+(and nomystery 1.5) due to large solvable property sets, and for
+Rovers due to small unsolvable property sets. TODO: fig 4 for 1.0 use
+SysW data instead; check fig 4 coverage of SysW blocksworld at 1.5,
+curve is flat does not seem to match the data in fig 3; add Rovers
+data everywhere}
+
+
 To evaluate the use of our framework with more complex plan
 properties, we experimented with the compilation of action-set
-properties as per Section~\ref{actionsetprops}. 
+properties as per Section~\ref{actionsetprops}.
 %
 We extended four domains with action-set properties: NoMystery,
 Rovers, and TPP as per \cite{nakhost:etal:icaps-12}, with controlled
