@@ -1,0 +1,108 @@
+\begin{axis}[
+width = 5cm,
+height=4cm,
+enlarge x limits = 0.1,
+enlarge y limits = 0.1,
+legend columns=1,
+ybar,
+bar width=1pt,
+ymin = 0,
+ymax = 10,
+compat=1.6,
+at={(0,-2.5cm)},
+xticklabels={,,}
+]
+\addplot+[ybar, bar shift =-2.5pt, red,
+]
+plot coordinates {
+(08, 4)
+(09, 3)
+(01, 10)
+(03, 8)
+(02, 10)
+(04, 9)
+(05, 10)
+(06, 6)
+(10, 2)
+(07, 6)
+};
+\label{plot:properties_hff_bu_52}
+\addplot+[ybar, bar shift =-1.0pt, blue,
+]
+plot coordinates {
+(01, 10)
+(08, 5)
+(02, 10)
+(04, 9)
+(03, 8)
+(05, 10)
+(06, 5)
+(10, 5)
+(07, 7)
+(09, 6)
+};
+\label{plot:properties_hff_td_52}
+\addplot+[ybar, bar shift =1.0pt, green,
+]
+plot coordinates {
+(09, 10)
+(01, 10)
+(02, 10)
+(04, 10)
+(03, 10)
+(05, 10)
+(06, 10)
+(10, 10)
+(07, 10)
+(08, 10)
+};
+\label{plot:properties_trap_prefop_bu_52}
+\addplot+[ybar, bar shift =2.5pt, orange,
+]
+plot coordinates {
+(01, 10)
+(08, 10)
+(02, 10)
+(03, 10)
+(04, 10)
+(05, 10)
+(06, 10)
+(10, 10)
+(07, 10)
+(09, 10)
+};
+\label{plot:properties_trap_prefop_td_52}
+
+%start node sysW
+\addplot+[only marks, mark = -, mark options = {thick}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(02, 10)
+(01, 10)
+(04, 10)
+(03, 10)
+(07, 10)
+(08, 10)
+(06, 10)
+(10, 10)
+(05, 10)
+(09, 10)
+};
+%optimal
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
+]
+plot coordinates {
+(03, 7)
+(05, 6)
+(07, 0)
+(09, 3)
+(01, 9)
+(02, 8)
+(04, 7)
+(06, 2)
+(08, 3)
+(10, 2)
+};
+
+\end{axis}
+

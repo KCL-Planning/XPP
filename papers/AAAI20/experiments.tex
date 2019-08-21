@@ -206,9 +206,9 @@ high values of $|A|$.
 \vspace{-0.3cm}
 \caption{\label{fig:ipc-local} Local explanation results on IPC 
 benchmarks for SysS as a function of $|A|$. Left: coverage, \ie,
-fraction of solved questions (dashed), 
-OSP (dotted), \hlmcut (dashed dotted) (right y-axis); and average
-runtime (solid, left y-axis). Right: average \#MUGS.
+fraction of solved questions (dashed, right y-axis), 
+%OSP (dotted), \hlmcut (dashed dotted) (right y-axis)
+; and average runtime (solid, left y-axis). Right: average \#MUGS.
 %\joerg{integrate reference point coverage as horizontal lines into the left plot}
 %\rebecca{update plot with new benchmark results with all ICP instances}
 }
@@ -221,18 +221,20 @@ runtime (solid, left y-axis). Right: average \#MUGS.
 
 The results are very consistent across domains, and are much stronger
 still in some cases. Of the 42 domains that have at least one instance
-with $\geq 6$ goals, 7 domains have much stronger ($> 40\%$) increases
+with $\geq 6$ goals, 6 domains have much stronger ($> 20\%$) increases
 in coverage from $|A|=1$ to $|A|=5$,
+%There are 37 domains wich have at least one problems with more than 5 goals.
 %
-%% For coverage, Depots, Gripper, NoMystery, Parking, Pathways,
-%% Scanalyzer, Trucks
+%% For coverage, Blocksworld, Depots, Elevators, NoMystery, Openstacks, Visiteal
 %
-and in 24 domains average runtime decreases by at least one order of
+and in 15 domains average runtime decreases by at least one order of
 magnitude. 
 %
-%% runtime: 1 order blocks, drive, floortile, elevators, grip, ged,
-%% mic, log, mov, pipest, pipesnt, sat, psr, soko, stor, tetr, tpp,
-%% transp, wood; 2 orders depots, nomystery, parcprinter, scan, trucks
+%% runtime: 
+%%1 order blocks, drive, floortile, elevators, grip,
+%% mic, log, nomystrey, pathway, sat, soko, stor, tetr, tpp,
+%% transp, wood; 
+%% 2 orders depots, scan, trucks
 %
 The average number of MUGS for $|A|=5$ is less than $5$ in all
 domains, including ones like Floortile, Gripper, Miconic, Woodworking
@@ -295,7 +297,8 @@ reference point.
 \small
 \centering
 
-%\input{charts_c125.tex}
+\input{charts_c150.tex}
+\input{charts_c125.tex}
 \input{charts_c100.tex}
 %\rebecca{\normalsize top c=1.25, bottom c = 1.0}
 \vspace{-0.3cm}
@@ -342,7 +345,8 @@ much easier for local explanation as a function of question size.
 \small
 \centering
 
-%\input{charts_local_exp_props_questions_c125.tex}
+\input{charts_local_exp_props_questions_c150.tex}
+\input{charts_local_exp_props_questions_c125.tex}
 \input{charts_local_exp_props_questions_c100.tex}
 %\rebecca{top c=1.25, bottom c = 1.0}
 \vspace{-0.3cm}

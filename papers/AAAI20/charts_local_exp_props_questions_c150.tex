@@ -1,0 +1,176 @@
+%Search time
+\begin{tikzpicture}
+\small
+    \begin{axis}[
+    width = 4cm,
+    height= 4cm,
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.1,
+    legend columns=3,
+    legend style={at={(0.05,-0.3)},anchor=west},
+    xmax = 5,
+    xtick={1,2,3,4,5},
+    xmin = 1,
+	ylabel= search time,
+	y label style={at={(0.2,0.5)}},
+]
+
+%blocksworld search time
+\addplot[thick, blue, mark=*,
+mark options={scale=0.5},
+]
+        plot coordinates {
+			(1, 988.97)
+			(2, 401.91)
+			(3, 155.03)
+			(4, 51.77)
+			(5, 26.16)
+        };
+
+%nomystery search time
+\addplot[thick, red, mark=*,
+mark options={scale=0.5},
+]
+        plot coordinates {
+			(1, 529.89)
+			(2, 430.76)
+			(3, 263.71)
+			(4, 156.58)
+			(5, 84.6)
+        };
+
+%tpp search time
+\addplot[thick, green, mark=*, mark options={scale=0.5},
+]
+        plot coordinates {
+			(1, 50.28)
+			(2, 84.69)
+			(3, 69.21)
+			(4, 49.51)
+			(5, 46.38)
+        };
+
+
+%rovers search time
+\addplot[thick, green, mark=*, mark options={scale=0.5},
+]
+        plot coordinates {
+        };
+\end{axis}
+
+\begin{axis}[
+    width = 4cm,
+    height= 4cm,
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.1,
+    legend columns=3,
+    legend style={at={(0.05,-0.3)},anchor=west},
+    xmax = 5,
+    xtick={1,2,3,4,5},
+    xmin = 1,
+	axis y line*=right,
+	ylabel= coverage,
+	y label style={at={(1.8,0.5)}},
+]
+
+%coverage blocksworld
+\addplot[thick, blue, dashed, mark=*,
+mark options={scale=0.5},
+]
+        plot coordinates {
+			(1, 0.1)
+			(2, 0.1)
+			(3, 0.1)
+			(4, 0.1)
+			(5, 0.1)
+        };
+
+%coverage nomystery
+\addplot[thick, red, dashed, mark=*,
+mark options={scale=0.5},
+]
+        plot coordinates {
+			(1, 0.29)
+			(2, 0.31)
+			(3, 0.33)
+			(4, 0.34)
+			(5, 0.37)
+        };
+
+%tpp coverage
+\addplot[thick, green, dashed, mark=*, mark options={scale=0.5},
+]
+        plot coordinates {
+			(1, 0.4)
+			(2, 0.51)
+			(3, 0.57)
+			(4, 0.59)
+			(5, 0.62)
+        };
+
+%rovers coverage
+\addplot[thick, orange, dashed, mark=*, mark options={scale=0.5},
+]
+        plot coordinates {
+        };
+
+    \end{axis}
+
+
+\end{tikzpicture}
+%MUGS
+\begin{tikzpicture}
+
+    \begin{axis}[
+	%title = \#MUGS,
+    width = 4cm,
+    height= 4cm,
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.1,
+    legend columns=3,
+    legend style={at={(0.05,-0.3)},anchor=west},
+    xmax = 5,
+    xtick={1,2,3,4,5},
+    xmin = 1,
+]
+
+%MUGS blocksworld
+\addplot[thick, blue, mark=*,
+mark options={scale=0.5},
+]
+        plot coordinates {
+			(1, 8.2)
+			(2, 7.5)
+			(3, 7.0)
+			(4, 6.0)
+			(5, 5.0)
+        };
+
+%MUGS nomystery
+\addplot[thick, red, mark=*,
+mark options={scale=0.5},
+]
+        plot coordinates {
+			(1, 4.34)
+			(2, 4.32)
+			(3, 5.24)
+			(4, 5.09)
+			(5, 4.76)
+        };
+
+
+%MUGS TPP
+\addplot[thick, green, mark=*, mark options={scale=0.5},
+]
+        plot coordinates {
+			(1, 0.97)
+			(2, 1.52)
+			(3, 1.8)
+			(4, 1.77)
+			(5, 1.5)
+        };
+
+\end{axis}
+\end{tikzpicture}
+
+
