@@ -92,17 +92,18 @@ question with the goal conjunctions $B$ excluded by $A$, \ie, that
 could not be achieved were $A$ enforced. We formalize this approach in
 terms of plan-property dependencies, where plan properties are
 propositional formulas over the goals achieved by a plan, and
-dependencies are entailment relations in plan space. We introduce
-algorithms for identifying dependencies of the form $\bigwedge_{g \in
-A} g \Rightarrow \neg \bigwedge_{g \in B} g$, \emph{globally} across a
-given set of plan properties, or \emph{locally} computing the
-implications of a single given plan property (user question)
-$\bigwedge_{g \in A} g$. We show how, via compilation, one can analyze
-dependencies between a richer form of plan properties, referring to
-the action subsets touched by the plan. We run comprehensive
-experiments on adapted IPC benchmarks, and find that the suggested
-analyses are reasonably feasible at the global level, and become
-significantly more effective at the local level.
+dependencies are entailment relations in plan space. We focus on
+entailment relations of the form $\bigwedge_{g \in A}
+g \Rightarrow \neg \bigwedge_{g \in B} g$, and devise analysis
+techniques \emph{globally} identifying all such relations,
+or \emph{locally} identifying the implications of a single given plan
+property (user question) $\bigwedge_{g \in A} g$. We show how, via
+compilation, one can analyze dependencies between a richer form of
+plan properties, specifying formulas over action subsets touched by
+the plan. We run comprehensive experiments on adapted IPC benchmarks,
+and find that the suggested analyses are reasonably feasible at the
+global level, and become significantly more effective at the local
+level.
 %
 %% A key problem in explainable AI planning is to elucidate decision
 %% rationales. User questions in this context are often contrastive,

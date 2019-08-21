@@ -149,11 +149,12 @@ the 45 domains, for $x=0.5$ that number is 25, for $x=0.75$ it is
 feasible: in many domains, it is on par with the most closely related
 simpler problems.
 
-The search tree fraction explored by SysS and SysW increases
-respectively decreases with larger cost bounds, which is expected as
-solvable goal subsets become larger. Yet for SysW this does not
-outweigh the increased base planner effort. Conjunction learning helps
-mostly for small cost bounds and/or when using SysW.
+The search tree fraction explored by SysS increases with larger cost
+bounds, which is expected as solvable goal subsets become larger. For
+the same reason, the search tree fraction explored by SysW decreases;
+but this does not outweigh the increased base planner
+effort. Conjunction learning helps mostly for small cost bounds and/or
+when using SysW.
 %
 %% Comparing SysS and SysW, with cost bound 0.25 both show better
 %% coverage in 4 domains. Among those domains, in \woodworking\
@@ -187,6 +188,11 @@ Averages are taken over instances where all questions were solved, as
 otherwise the results are distorted by large instances solved only for
 high values of $|A|$.
 
+\joerg{bit disappointing. remove reference lines? talk about domain 
+numbers where reference lines are exceeded in next text par?
+... coverage y-axis indexing looks a bit strange ... caption must be
+made clearer if ref lines stay in }
+
 \begin{figure}[ht]
 \small
 \centering
@@ -208,10 +214,11 @@ high values of $|A|$.
 benchmarks for SysS as a function of $|A|$. Left: coverage, \ie,
 fraction of solved questions (dashed), 
 OSP (dotted), \hlmcut (dashed dotted) (right y-axis); and average
-runtime (solid, left y-axis). Right: average \#MUGS.
+runtime (solid, left y-axis). Right: average \#MUGS.}
+%
 %\joerg{integrate reference point coverage as horizontal lines into the left plot}
 %\rebecca{update plot with new benchmark results with all ICP instances}
-}
+%
 \vspace{-0.6cm}
 \end{figure}
 
