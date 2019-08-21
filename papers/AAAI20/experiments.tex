@@ -266,13 +266,12 @@ fig 3 show 1.5 (compared to 1.25 blocks looks way better, nomyst looks
 way better, rovers presumably similar, tpp only marginally worse; in
 1.0, there's not much to see and it's not good to show a case at the
 extreme end of the sopectrum). in fig 4, show 1.25 or 1.5 (in 1.0,
-would have to use SysS not SysW, and then performance would probably
-be boring); probably add sentence in text reg flat MUGS curves for TPP
-(and nomystery 1.5) due to large solvable property sets, and for
-Rovers due to small unsolvable property sets. TODO: fig 4 for 1.0 use
-SysW data instead; check fig 4 coverage of SysW blocksworld at 1.5,
-curve is flat does not seem to match the data in fig 3; add Rovers
-data everywhere}
+would have to use SysS not SysW, coverage there is boring); probably
+add sentence in text reg flat MUGS curves for TPP (and nomystery 1.5)
+due to large solvable property sets, and for Rovers due to small
+unsolvable property sets. TODO: check fig 4 coverage of SysW
+blocksworld at 1.5, curve is flat does not seem to match the data in
+fig 3; add Rovers data everywhere}
 
 
 To evaluate the use of our framework with more complex plan
@@ -380,10 +379,13 @@ c = 1.0 bu\\
 \vspace{-0.3cm}
 \caption{\label{fig:asp-local} Local action-set property explanation 
 results for SysW as a function of $|A|$. Coverage and average runtime
-(left), average \#MUGS (right). Blocksworld blue, NoMystery red, Rovers orange, TPP green. 
-\joerg{integrate reference point coverage as horizontal lines into the left plot} 
-\rebecca{lmcut and tarp ref always 1.0 coverage}
-}
+(left), average \#MUGS (right). Blocksworld blue, NoMystery red,
+Rovers orange, TPP green.}
+%
+%\joerg{integrate reference point coverage as horizontal lines into
+%the left plot} ==> see fig 3: we never surpass that except lmcut in
+%rovers and trap in blocks for c>1 when we dont use trap; so not much
+%to show off
 %
 %\caption{$c = 1.25$ red: nomyters (5 goals, 5 props), green: TPP (7 goals, 9 props), left plot: search time and coverage, right plot: \#MUGS}
 %
