@@ -54,9 +54,14 @@ mark options={scale=0.5},
 
 
 %rovers search time
-\addplot[thick, green, mark=*, mark options={scale=0.5},
+\addplot[thick, orange, mark=*, mark options={scale=0.5},
 ]
         plot coordinates {
+			(1, 15.72)
+			(2, 15.7)
+			(3, 15.7)
+			(4, 15.72)
+			(5, 15.71)
         };
 \end{axis}
 
@@ -114,6 +119,11 @@ mark options={scale=0.5},
 \addplot[thick, orange, dashed, mark=*, mark options={scale=0.5},
 ]
         plot coordinates {
+			(1, 1.0)
+			(2, 1.0)
+			(3, 1.0)
+			(4, 1.0)
+			(5, 1.0)
         };
 
     \end{axis}
@@ -135,7 +145,7 @@ mark options={scale=0.5},
     xtick={1,2,3,4,5},
     xmin = 1,
 	ymin=1,
-	ymax=8,
+	ymax=9,
 ]
 
 %MUGS blocksworld
@@ -177,6 +187,16 @@ mark options={scale=0.5},
 
         };
 
+%MUGS rovers
+\addplot[thick, orange, mark=*, mark options={scale=0.5},
+]
+        plot coordinates {
+			(1, 7.8)
+			(2, 7.8)
+			(3, 7.8)
+			(4, 7.8)
+			(5, 7.8)
+        };
 \end{axis}
 \end{tikzpicture}
 
