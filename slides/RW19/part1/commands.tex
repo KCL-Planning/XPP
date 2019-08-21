@@ -1,7 +1,7 @@
-\newcommand{\talkpause}{\ifthenelse{\value{VERSION}=0}{\pause}{}}
-\newcommand{\talk}[1]{\ifthenelse{\value{VERSION}=0}{#1}{}}
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% slides stuff
 
 \newcommand{\blocknode}[5]{\node (#1) at #2 {%
     \begin{minipage}{3.5cm}\begin{block}{#4}
@@ -29,12 +29,8 @@
 \newcommand<>{\textorange}[1]{{\color#2{orange}#1}}
 \newcommand<>{\textyellow}[1]{{\color#2{yellow}#1}}
 
-\newcommand{\joerg}[1]{\textbf{\color{CommentColor} /* (Joerg) #1 (Joerg) */}}
-
-
-\newcommand{\commentout}[1]{}
-
-
+\definecolor{darkgreen}{HTML}{009900}
+\definecolor{mBlue}{HTML}{005CE6}
 
 \newcommand{\ie}{i.\,e.}
 \newcommand{\eg}{e.\,g.}
@@ -201,231 +197,282 @@
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% commands from paper
+
+\newcommand{\defined}[1]{\textbf{#1}}
 
 
+%%%%%%%%%%% heuristics %%%%%%%%%%%%
 
+\newcommand{\hrefine}{\ensuremath{h_{r}}}
+\newcommand{\hboth}{\ensuremath{h_{r+b}}}
+\newcommand{\hbellman}{\ensuremath{h_{b}}}
 
+\newcommand{\abs}{\mathcal{A}}
+\newcommand{\numtasks}[1]{\tiny{(#1)}}
 
+%\newcommand{\formalspacesave}{}
 
+\newcommand{\naturals}{\ensuremath{\mathbb N}}
+\newcommand{\reals}{{\mathbb{R}}}
+\newcommand{\powerset}{{\mathcal{P}}}
 
-
-
-
-
-
-
-
-
-\newcommand{\airport}{Airport}
-\newcommand{\barman}{Barman}
-\newcommand{\blocksworld}{Blocksworld}
-\newcommand{\depots}{Depots}
-\newcommand{\driverlog}{Driverlog}
-\newcommand{\elevators}{Elevators}
-\newcommand{\floortile}{Floortile}
-\newcommand{\freecell}{Freecell}
-\newcommand{\gripper}{Gripper}
-\newcommand{\grid}{Grid}
-\newcommand{\logistics}{Logistics}
-\newcommand{\miconic}{Miconic}
-\newcommand{\mprime}{Mprime}
-\newcommand{\mystery}{Mystery}
-\newcommand{\nomystery}{NoMystery}
-\newcommand{\satellite}{Satellite}
-\newcommand{\openstacks}{Openstacks}
-\newcommand{\parking}{Parking}
-\newcommand{\parcprinter}{ParcPrinter}
-\newcommand{\pathways}{Pathways}
-\newcommand{\pegsol}{PegSol}
-\newcommand{\pipesnot}{Pipesworld-NoTankage}
-\newcommand{\pipesnotshort}{Pipes-NoTankage}
-\newcommand{\pipest}{Pipesworld-Tankage}
-\newcommand{\pipestshort}{Pipes-Tankage}
-\newcommand{\psr}{PSR}
-\newcommand{\rovers}{Rovers}
-\newcommand{\scanalyzer}{Scanalyzer}
-\newcommand{\sokoban}{Sokoban}
-\newcommand{\tidybot}{Tidybot}
-\newcommand{\tpp}{TPP}
-\newcommand{\transport}{Transport}
-\newcommand{\trucks}{Trucks}
-\newcommand{\visitall}{VisitAll}
-\newcommand{\woodworking}{Woodworking}
-\newcommand{\zenotravel}{Zenotravel}
-
-\newcommand{\driverlogshort}{Driverlog}
-\newcommand{\logisticsshort}{Logistics}
-\newcommand{\miconicshort}{Miconic}
-\newcommand{\nomysteryshort}{NoMystery}
-\newcommand{\pathwaysshort}{Pathways}
-\newcommand{\roversshort}{Rovers}
-\newcommand{\satelliteshort}{Satellite}
-\newcommand{\tppshort}{TPP}
-\newcommand{\woodworkingshort}{Woodwork}
-\newcommand{\zenotravelshort}{Zenotravel}
-
-\newcommand{\driverlogveryshort}{Driver}
-\newcommand{\logisticsveryshort}{Log}
-\newcommand{\miconicveryshort}{Mico}
-\newcommand{\nomysteryveryshort}{NoMy}
-\newcommand{\pathwaysveryshort}{Pathw}
-\newcommand{\roversveryshort}{Rovers}
-\newcommand{\satelliteveryshort}{Satell}
-\newcommand{\tppveryshort}{TPP}
-\newcommand{\woodworkingveryshort}{Woo}
-\newcommand{\zenotravelveryshort}{Zeno}
-
-\newcommand{\poly}{{\bf P}}
-\newcommand{\np}{{\bf NP}}
-\newcommand{\conp}{{\bf co-NP}}
-\newcommand{\pspace}{{\bf PSPACE}}
-\newcommand{\npspace}{{\bf NPSPACE}}
+\newcommand{\tuple}[1]{\ensuremath{\langle #1 \rangle}}
 
 \newcommand{\astar}{\ensuremath{\textrm{A}^*}}
-\newcommand{\idastar}{\ensuremath{\textrm{IDA}^*}}
 
-\newcommand{\hplus}{\ensuremath{h^+}}
-\newcommand{\hmax}{\ensuremath{h^{\text{\textup{max}}}}}
-\newcommand{\hadd}{\ensuremath{h^{\text{\textup{add}}}}}
-\newcommand{\hff}{\ensuremath{h^{\text{\textup{FF}}}}}
-\newcommand{\hpmax}{\ensuremath{h^{\text{\textup{pmax}}}}}
-\newcommand{\hsa}{\ensuremath{h^{\text{\textup{sa}}}}}
-\newcommand{\hone}{\ensuremath{h^1}}
-\newcommand{\honepg}{\ensuremath{h^1_{\text{\textup{PG}}}}}
-\newcommand{\htwo}{\ensuremath{h^2}}
-\newcommand{\htwopg}{\ensuremath{h^2_{\text{\textup{PG}}}}}
-\newcommand{\hthree}{\ensuremath{h^3}}
-\newcommand{\hthreepg}{\ensuremath{h^3_{\text{\textup{PG}}}}}
-\newcommand{\hm}{\ensuremath{h^m}}
-\newcommand{\hmpg}{\ensuremath{h^m_{\text{PG}}}}
-\newcommand{\hlm}{\ensuremath{h^{\text{\textup{LM}}}}}
-\newcommand{\hl}{\ensuremath{h^{\text{\textup{L}}}}}
-\newcommand{\hla}{\ensuremath{h^{\text{\textup{LA}}}}}
-\newcommand{\hlmcut}{\ensuremath{h^{\text{\textup{LM-cut}}}}}
-\newcommand{\hblind}{\ensuremath{h^0}}
-\newcommand{\hms}{\ensuremath{h^{\text{\textup{M\&S}}}}}
-\newcommand{\hfoobar}{\ensuremath{h^{\text{\textup{foo-bar}}}}}
-\newcommand{\hstar}{\ensuremath{h^*}}
-\newcommand{\rstar}{\ensuremath{r^*}}
-\newcommand{\hstarprime}{\ensuremath{h'^*}}
-\newcommand{\hhhh}{\ensuremath{h^{\text{HHH}}}}
+\newcommand{\poly}{\textbf{P}}
+\newcommand{\np}{\textbf{NP}}
+\newcommand{\pspace}{\textbf{PSPACE}}
 
-\newcommand{\true}{1}
-\newcommand{\false}{0}
-\newcommand{\realnumbers}{\ensuremath{\mathbb R}}
-\newcommand{\naturalnumbers}{\ensuremath{\mathbb N}}
 
-\newcommand{\task}{\ensuremath{\Pi}}
-\newcommand{\plan}{\ensuremath{\vec{a}}}
-\newcommand{\vars}{V}
-\newcommand{\domain}{D}
-\newcommand{\ini}{I}
-\newcommand{\goal}{G}
-\newcommand{\ops}{A}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Generic Framework
+\newcommand{\task}{\ensuremath{\tau}}
+%\newcommand{\task}{\ensuremath{\cal T}}
+\newcommand{\plan}{\ensuremath{\pi}}
+\newcommand{\plans}{\ensuremath{\Pi}}
+%\newcommand{\alltasks}{\ensuremath{\cal T}}
+\newcommand{\allplans}{\ensuremath{\cal P}}
+\newcommand{\true}{\ensuremath{\mathit{true}}}
+\newcommand{\false}{\ensuremath{\mathit{false}}}
+
+\newcommand{\prop}{\ensuremath{p}}
+\newcommand{\propq}{\ensuremath{q}}
+\newcommand{\props}{\ensuremath{P}}
+\newcommand{\propsatom}{\ensuremath{{P^{\text{\textup{A}}}}}}
+\newcommand{\propscomp}{\ensuremath{{P^{\text{\textup{C}}}}}}
+
+\newcommand{\modelsof}[2]{\ensuremath{{\cal M}_#1(#2)}}
+\newcommand{\entails}[3]{\ensuremath{#1 \models #2 \Rightarrow #3}}
+\newcommand{\notentails}[3]{\ensuremath{#1 \not\models #2 \Rightarrow #3}}
+\renewcommand{\iff}[3]{\ensuremath{#1 \models #2 \Leftrightarrow #3}}
+\renewcommand{\equiv}[2]{\ensuremath{[#2]_{#1}}}
+%
+%% \renewcommand{\implies}[1]{\ensuremath{\Rightarrow_{#1}}}
+%% \renewcommand{\iff}[1]{\ensuremath{\Leftrightarrow_{#1}}}
+%% \renewcommand{\equiv}[2]{\ensuremath{[#1]_{#2}}}
+
+\newcommand{\pdo}[1]{\ensuremath{\Rightarrow_{#1}}}
+\newcommand{\pda}[1]{\ensuremath{\Phi_{#1}}}
+
+\newcommand{\entailsuff}{\ensuremath{\Rightarrow_{\mathit{suff}}}}
+
+\newcommand{\deps}{\ensuremath{D}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Planning Tasks
+
+\newcommand{\vars}{\ensuremath{V}}
+\newcommand{\acts}{\ensuremath{A}}
+\newcommand{\init}{\ensuremath{I}}
+\newcommand{\goal}{\ensuremath{G}}
+\newcommand{\goalhard}{\ensuremath{G^{\text{\textup{hard}}}}}
+\newcommand{\goalsoft}{\ensuremath{G^{\text{\textup{soft}}}}}
+\newcommand{\cost}{{\ensuremath{c}}}
 \newcommand{\pre}{\ensuremath{\mathit{pre}}}
-\newcommand{\prevail}{\ensuremath{\mathit{prev}}}
 \newcommand{\eff}{\ensuremath{\mathit{eff}}}
-\newcommand{\add}{\ensuremath{\mathit{add}}}
-\newcommand{\del}{\ensuremath{\mathit{del}}}
-\newcommand{\ce}{\mathit{ce}}
-\newcommand{\cost}{c}
-\newcommand{\apply}{\ensuremath{\mathit{appl}}}
-\newcommand{\regress}{\ensuremath{\mathit{regr}}}
-\newcommand{\duration}{\ensuremath{\mathit{duration}}}
-\newcommand{\bestsupport}{\ensuremath{\mathit{bs}}}
-\newcommand{\bestsupporthmax}{\ensuremath{\bestsupport^{\text{\textup{max}}}}}
-\newcommand{\bestsupporthone}{\ensuremath{\bestsupport^{1}}}
-\newcommand{\bestsupporthadd}{\ensuremath{\bestsupport^{\text{\textup{add}}}}}
 
-\newcommand{\eqrelation}{\sim}
+\newcommand{\variables}[1]{\ensuremath{{\cal V}(#1)}}
+\newcommand{\apply}[1]{\ensuremath{[[#1]]}}
 
-\newcommand{\ed}{\ensuremath{\mathit{exd}}}
+\newcommand{\costbound}{{\ensuremath{b}}}
 
-\newcommand{\cg}{\ensuremath{CG}}
 
-\newcommand{\redvars}{\ensuremath{\vars^{\text{\textup{R}}}}}
-\newcommand{\blackvars}{\ensuremath{\vars^{\text{\textup{B}}}}}
-\newcommand{\rbtask}{\ensuremath{\Pi^{\text{\textup{RB}}}}}
-\newcommand{\hrbplus}{\ensuremath{h^{*\text{\textup{RB}}}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Goal facts
 
-\newcommand{\pim}{\ensuremath{\Pi^m}}
-\newcommand{\pc}{\ensuremath{\Pi^C}}
-\newcommand{\pcce}{\ensuremath{\Pi^C_{\ce}}}
+\newcommand{\goalpropsatom}{\ensuremath{{P^{\text{\textup{GA}}}}}}
+\newcommand{\goalpropscomp}{\ensuremath{{P^{\text{\textup{GC}}}}}}
+
+\newcommand{\geprops}{\ensuremath{{P^{\text{\textup{GE}}}}}}
+\newcommand{\gedeps}{\ensuremath{{D^{\text{\textup{GE}}}}}}
+
+\newcommand{\dgeprops}{\ensuremath{{P^{\text{\textup{DGE}}}}}}
+\newcommand{\dgedeps}{\ensuremath{{D^{\text{\textup{DGE}}}}}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Heuristic Functions
+
+\newcommand{\hstar}{\ensuremath{h^*}}
+\newcommand{\hplus}{\ensuremath{h^+}}
+
+\newcommand{\hone}{\ensuremath{h^1}}
+\newcommand{\htwo}{\ensuremath{h^2}}
+\newcommand{\hm}{\ensuremath{h^m}}
 \newcommand{\hc}{\ensuremath{h^C}}
-\newcommand{\hmplus}{h^{m+}}
-\newcommand{\honeplus}{h^{1+}}
-\newcommand{\hcplus}{\ensuremath{h^{C+}}}
-\newcommand{\hcff}{\ensuremath{h^{C\text{\textup{FF}}}}}
-\newcommand{\picff}{\ensuremath{\pi^{C\text{\textup{FF}}}}}
-\newcommand{\pimff}{\ensuremath{\pi^{m\text{\textup{FF}}}}}
-\newcommand{\pctwo}{\ensuremath{\Pi^{C2}}}
+\newcommand{\hcx}{\ensuremath{h^{C \cup X}}}
+\newcommand{\uc}{\ensuremath{u^C}}
+\newcommand{\ucx}{\ensuremath{u^{C \cup X}}}
+\newcommand{\hmax}{\ensuremath{h^{\text{\textup{max}}}}}
+\newcommand{\hff}{\ensuremath{h^{\text{\textup{FF}}}}}
+\newcommand{\hlmcut}{\ensuremath{h^{\text{\textup{LM-cut}}}}}
+\newcommand{\hms}{\ensuremath{h^{\text{M\&S}}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Stackelberg notation
+
+\newcommand{\leader}{\ensuremath{L}}
+\newcommand{\follower}{\ensuremath{F}}
+
+\newcommand{\bestresponse}{\ensuremath{{BR}}}
+
+\newcommand{\actsL}{\ensuremath{\acts^{\leader}}}
+\newcommand{\actsF}{\ensuremath{\acts^{\follower}}}
+\newcommand{\goalF}{\goal^{\follower}}
+
+\newcommand{\statesL}{\ensuremath{\states^{\leader}}}
+
+\newcommand{\equilibrium}{\ensuremath{\states^*}}
+
+\newcommand{\strategyL}{\ensuremath{\strategy^{\leader}}}
+\newcommand{\strategyF}{\ensuremath{\strategy^{\follower}}}
+
+\newcommand{\strategystarL}{\ensuremath{\strategy^{\leader*}}}
+\newcommand{\strategystarF}{\ensuremath{\strategy^{\follower*}}}
+
+\newcommand{\costL}{\ensuremath{\leader}}
+\newcommand{\costF}{\ensuremath{\follower}}
+\newcommand{\coststarL}{\ensuremath{\leader^*}}
+\newcommand{\coststarF}{\ensuremath{\follower^*}}
+\newcommand{\costapproxL}{\ensuremath{\leader^+}}
+\newcommand{\costapproxF}{\ensuremath{\follower^+}}
+
+\newcommand{\hstackel}{\ensuremath{h^{\text{\textup{Stackel}}}}}
+\newcommand{\Hstackel}{\ensuremath{H}}
+\newcommand{\upperF}{\ensuremath{\mathsf{up}^{\follower}}}
+\newcommand{\lowerL}{\ensuremath{\mathsf{low}^{\leader}}}
+\newcommand{\upperL}{\ensuremath{\mathsf{up}^{\leader}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Search algorithms
+
+\newcommand{\result}{\ensuremath{\hat{S}}}
+
+\newcommand{\open}{\ensuremath{\mathsf{Open}}}
+\newcommand{\closed}{\ensuremath{\mathsf{Explored}}}
+\newcommand{\comment}[1]{{\color{red} /* #1 */}}
+
+\newcommand{\searchalg}{\ensuremath{\textup{leader-follower-search}}}
+
+\newcommand{\bounds}{\ensuremath{\mathbb{B}}}
+
+%%% Planning domains
+\newcommand{\airport}               {{Airport}}
+\newcommand{\barman }               {{Barman}}
+\newcommand{\blocksworld}           {{Blocksworld}}
+\newcommand{\childsnack}           {{Childsnack}}
+\newcommand{\depots}                {{Depots}}
+\newcommand{\driverlog}             {{Driverlog}}
+\newcommand{\elevators}             {{Elevators}}
+\newcommand{\floortile}             {{Floortile}}
+\newcommand{\freecell}              {{FreeCell}}
+\newcommand{\grid}                  {{Grid}}
+\newcommand{\gripper}               {{Gripper}}
+\newcommand{\hiking}               {{Hiking}}
+\newcommand{\logistics}             {{Logistics}}
+\newcommand{\simplelogistics}       {{Simple-Logistics}}
+\newcommand{\movie}                 {{Movie}}
+\newcommand{\extmovie}              {{Ext-Movie}}
+\newcommand{\promela}               {{Promela}}
+\newcommand{\diningphilosophers}    {{Dining-Philosophers}}
+\newcommand{\opticaltelegraph}      {{Optical-Telegraph}}
+\newcommand{\miconic}               {{Miconic}}
+\newcommand{\mystery}               {{Mystery}}
+\newcommand{\mprime}                {{Mprime}}
+\newcommand{\nomystery}             {{Nomystery}}
+\newcommand{\openstacks}            {{Openstacks}}
+\newcommand{\parcprinter}           {{Parcprinter}}
+\newcommand{\parking}               {{Parking}}
+\newcommand{\pathways}              {{Pathways}}
+\newcommand{\pegsol}                {{Pegsol}}
+\newcommand{\pipesworld}            {{Pipesworld}}
+\newcommand{\pipesworldnotankage}   {{Pipesworld-NoTankage}}
+\newcommand{\pipesworldtankage}     {{Pipesworld-Tankage}}
+\newcommand{\pipesworldnotankageshort}   {{Pipes-NoTank}}
+\newcommand{\pipesworldtankageshort}     {{Pipes-Tank}}
+\newcommand{\psr}                   {{PSR}}
+\newcommand{\rovers}                {{Rovers}}
+\newcommand{\satellite}             {{Satellite}}
+\newcommand{\scanalyzer}            {{Scanalyzer}}
+\newcommand{\schedule}              {{Schedule}}
+\newcommand{\schedulestrips}        {{Schedule-Strips}}
+\newcommand{\seqschedule}           {{SeqSchedule}}
+\newcommand{\sokoban}               {{Sokoban}}
+\newcommand{\storage}               {{Storage}}
+\newcommand{\tetris}               {{Tetris}}
+\newcommand{\thoughtful}               {{Thoughtful}}
+\newcommand{\tidybot}               {{Tidybot}}
+\newcommand{\tpp}                   {{TPP}}
+\newcommand{\trucks}                {{Trucks}}
+\newcommand{\transport}             {{Transport}}
+\newcommand{\woodworking}           {{Woodworking}}
+\newcommand{\woodworkingshort}      {{Woodwork}}
+\newcommand{\visitall}              {{Visitall}}
+\newcommand{\zenotravel}            {{Zenotravel}}
+
+\newcommand{\airportveryshort}{Airport}
+\newcommand{\barmanveryshort}{Barman}
+\newcommand{\blocksworldveryshort}{Blocksworld}
+\newcommand{\childsnackveryshort}           {{Childsnack}}
+\newcommand{\depotsveryshort}{Depots}
+\newcommand{\driverlogveryshort}{Driverlog}
+\newcommand{\elevatorsveryshort}{Elevators}
+\newcommand{\floortileveryshort}{Floortile}
+\newcommand{\freecellveryshort}{Freecell}
+\newcommand{\gripperveryshort}{Gripper}
+\newcommand{\gridveryshort}{Grid}
+\newcommand{\hikingveryshort}               {{Hiking}}
+\newcommand{\logisticsveryshort}{Logistics}
+\newcommand{\miconicveryshort}{Miconic}
+\newcommand{\mprimeveryshort}{Mprime}
+\newcommand{\mysteryveryshort}{Mystery}
+\newcommand{\nomysteryveryshort}{NoMystery}
+\newcommand{\openstacksveryshort}{Openstacks}
+\newcommand{\parkingveryshort}{Parking}
+\newcommand{\parcprinterveryshort}{Parcprinter}
+\newcommand{\pathwaysveryshort}{Pathways}
+\newcommand{\pegsolveryshort}{Pegsol}
+\newcommand{\pipesworldnotankageveryshort}   {{PipesNoTank}}
+\newcommand{\pipesworldtankageveryshort}     {{PipesTank}}
+\newcommand{\psrveryshort}{PSR}
+\newcommand{\roversveryshort}{Rovers}
+\newcommand{\satelliteveryshort}{Satellite}
+\newcommand{\scanalyzerveryshort}{Scanalyzer}
+\newcommand{\sokobanveryshort}{Sokoban}
+\newcommand{\storageveryshort}               {{Storage}}
+\newcommand{\tetrisveryshort}               {{Tetris}}
+\newcommand{\thoughtfulveryshort}       {{Thoughtful}}
+\newcommand{\tidybotveryshort}{Tidybot}
+\newcommand{\tppveryshort}{TPP}
+\newcommand{\transportveryshort}{Transport}
+\newcommand{\trucksveryshort}{Trucks}
+\newcommand{\visitallveryshort}{Visitall}
+\newcommand{\woodworkingveryshort}{Woodworking}
+\newcommand{\zenotravelveryshort}{Zenotravel}
+
+\newcommand{\pentesting}{{Pentest}}
+\newcommand{\pentestingshort}{{Pentest}}
 
 
 
-%\newtheorem{theorem}{Theorem}
-\newtheorem{conjecture}{Conjecture}
-%\newtheorem{corollary}{Corollary}
-\newtheorem{proposition}{Proposition}
-%\newtheorem{lemma}{Lemma}
-%\newtheorem{definition}{Definition}
-%\newtheorem{example}{Example}
-%\newenvironment{proof}{\noindent {\bf Proof:}}%
-%{\hfill \rule[0.3ex]{1ex}{1ex} \par \addvspace{\bigskipamount}}
-\newenvironment{proofsketch}{\noindent {\bf Proof sketch:}}%
-{\hfill \rule[0.3ex]{1ex}{1ex} \par \addvspace{\bigskipamount}}
 
 
 
-\newenvironment{algorithm}
-  {\begin{upshape}\setlength{\parindent}{0cm}}
-  {\end{upshape}}
 
 
 
-\newcommand{\BeamerFigure}[2]{
-\begin{figure}[t]
-\centering
-\includegraphics[width=#2]{#1}
-\end{figure}
-}
 
-\newcommand{\bigarrow}[2]{%
-\begin{pgfscope}
-\pgfsetlinewidth{2pt}
-\pgfsetendarrow{\pgfarrowsingle{1pt}}
-\pgfline{\pgfxy(#1)}{\pgfrelative{\pgfxy(#1)}{\pgfxy(#2,0)}}
-\end{pgfscope}
-}
 
-\newcommand{\borderrect}[3]{%
-{\color{#1}\pgfrect[fill]{\pgfxy(#2)}{\pgfxy(#3)}}%
-{\color{black}\pgfrect[stroke]{\pgfxy(#2)}{\pgfxy(#3)}}%
-}
 
-\newcommand{\tile}[3][orange!30]{
-\pgfputat{\pgfxy(#2)}{
-\borderrect{#1}{-0.5,-0.5}{1,1}
-\pgfbox[center,center]{#3}
-}
-}
 
-\newcommand{\abstractedtile}[1]{
-\tile[orange!20]{#1}{}
-}
 
-\newcommand{\abstractedtileanimated}[3][orange!30]{
-\only<all:1>{\tile[#1]{#2}{#3}}
-\only<all:2->{\abstractedtile{#2}}
-}
 
-\newcommand{\price}{\ensuremath{\mathsf{price}}}
-\newcommand{\hcenterstar}{\ensuremath{h^{C*}}}
-\newcommand{\hstartopstar}{\ensuremath{h^{S*}}}
-\newcommand{\hcenter}{\ensuremath{h^{C}}}
-\newcommand{\hstartop}{\ensuremath{h^{S}}}
-\newcommand{\sdX}[1]{\ensuremath{\textrm{SD}}#1}
-\newcommand{\anytimestartopastar}{Anytime Star-Center \astar}
-\newcommand{\ascastar}{\ensuremath{\textrm{ASC}}\astar}
-\newcommand{\globalplan}{\ensuremath{\mathsf{GlobalPlan}}}
-\newcommand{\goalprice}{\ensuremath{\mathsf{goalprice}}}
-\newcommand{\minperipheryprice}{\ensuremath{\mathsf{MINperipheryprice}}}
+
