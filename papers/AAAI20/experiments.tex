@@ -46,6 +46,7 @@ running at 2.20 GHz, with time (memory) cut-offs of 30 minutes (4 GB).
 %%%% IPC OSP
 
 \subsection{IPC-Based OSP Benchmarks}
+\label{experiments:ipc}
 
 % The net-benefit benchmarks don't give us anything new (the ones we
 % could use are adopted from IPC ben chmarks anyhow).
@@ -187,13 +188,6 @@ Averages are taken over instances where all questions were solved, as
 otherwise the results are distorted by large instances solved only for
 high values of $|A|$.
 
-\joerg{bit disappointing. remove reference lines? talk about domain 
-numbers where reference lines are exceeded in next text par?
-... coverage y-axis indexing looks a bit strange ... caption must be
-made clearer if ref lines stay in }
-\rebecca{if we increase $|A|$ we are equal or better in 6 domains than lmcut 
-and in 12 domains than osp}
-
 \begin{figure}[ht]
 \small
 \centering
@@ -229,27 +223,41 @@ and average runtime (solid, left y-axis). Right: average \#MUGS.}
 %\input{data/IPC_cost_bound/search_time_coverage_mix_td.tex}
 
 The results are very consistent across domains, and are much stronger
-still in some cases. Of the 42 domains that have at least one instance
-with $\geq 6$ goals, 6 domains have much stronger ($> 20\%$) increases
-in coverage from $|A|=1$ to $|A|=5$,
-%There are 37 domains wich have at least one problems with more than 5 goals.
+still in some cases.
 %
+%% Of the 42 domains that have at least one instance with $\geq 6$
+%% goals,
+%
+In particular, six domains have $> 20\%$ increases in coverage from
+$|A|=1$ to $|A|=5$.
+%
+% Joerg: no need for this, runtime even on average here decreases by
+% orders of magnitude.
+%
+%% and in 15 domains average runtime decreases by at least one order
+%% of magnitude.
+%
+For $|A|=5$, coverage is $\geq$ that of \hlmcut\ in 6 domains and
+$\geq$ that of OSP in 12 domains.\joerg{are these numbers correct?
+even in the table I count like 10 domains where we surpass lmcut for
+0.75. also, we should compare these numbers to those for global
+explanation ie the table}
+%
+The average number of MUGS for $|A|=5$ is less than $5$ in all
+domains, including ones like Floortile, Gripper, Miconic, 
+%
+%, Woodworking
+%
+where global explanations can be large as shown in
+Figure~\ref{table:coverage_ipc}.
+
 %% For coverage, Blocksworld, Depots, Elevators, NoMystery, Openstacks, Visiteal
-%
-and in 15 domains average runtime decreases by at least one order of
-magnitude. 
 %
 %% runtime: 
 %%1 order blocks, drive, floortile, elevators, grip,
 %% mic, log, nomystrey, pathway, sat, soko, stor, tetr, tpp,
 %% transp, wood; 
 %% 2 orders depots, scan, trucks
-%
-The average number of MUGS for $|A|=5$ is less than $5$ in all
-domains, including ones like Floortile, Gripper, Miconic%, Woodworking
-where global explanations can be large as shown in
-Figure~\ref{table:coverage_ipc}.
-
 
 
 
@@ -257,24 +265,28 @@ Figure~\ref{table:coverage_ipc}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% Action-Set Properties, SUBMISSION VERSION
+%%%% Action-Set Properties
 
 \subsection{Action-Set Properties}
+\label{experiments:asp}
 
-
-
-\joerg{notes reg data: SysS better for 1.0, SysW better elsewhere. 
-fig 3 show 1.5 (compared to 1.25 blocks looks way better, nomyst looks
-way better, rovers presumably similar, tpp only marginally worse; in
-1.0, there's not much to see and it's not good to show a case at the
-extreme end of the sopectrum). in fig 4, show 1.25 or 1.5 (in 1.0,
-would have to use SysS not SysW, coverage there is boring); probably
-add sentence in text reg flat MUGS curves for TPP (and nomystery 1.5)
-due to large solvable property sets, and for Rovers due to small
-unsolvable property sets. TODO: check fig 4 coverage of SysW
-blocksworld at 1.5, curve is flat does not seem to match the data in
-fig 3; add Rovers data everywhere}
-
+%% \joerg{notes reg data: SysS better for 1.0, SysW better elsewhere. 
+%% fig 3 show 1.5 (compared to 1.25 blocks looks way better, nomyst looks
+%% way better, rovers presumably similar, tpp only marginally worse; in
+%% 1.0, there's not much to see and it's not good to show a case at the
+%% extreme end of the sopectrum). in fig 4, show 1.25 or 1.5 (in 1.0,
+%% would have to use SysS not SysW, coverage there is boring); probably
+%% add sentence in text reg flat MUGS curves for TPP (and nomystery 1.5)
+%% due to large solvable property sets, and for Rovers due to small
+%% unsolvable property sets.}
+%% %
+%% \joerg{actually, decided to show 1.0 instead, based on the reason that, 
+%% there, the benchmarks are most interesting as far as MUGS analysis is
+%% concerned: for higher C values, in NoMystery and TPP very large
+%% property subsets are solvable.}
+%% %
+%% \joerg{in TR, we can incude the exact same figures, just all of them 
+%% not only 1}
 
 To evaluate the use of our framework with more complex plan
 properties, we experimented with the compilation of action-set
@@ -317,81 +329,77 @@ reference point.
 %% see what it looks like.}
 %
 \begin{figure}[h!]
-\vspace{-0.2cm}
+\vspace{-0.3cm}
 \small
 \centering
 
-\input{charts_c150.tex}
-\input{charts_c125.tex}
 \input{charts_c100.tex}
-%\rebecca{\normalsize top c=1.25, bottom c = 1.0}
+\vspace{-0.25cm}
+\caption{\label{fig:asp-global} Coverage for global action-set 
+property explanation at $x=1.0$.  Number of properties on x-axis,
+scaling from $1$ to $10$. SysS with trap learning. Blocksworld top
+left, NoMystery top right, Rovers bottom left, TPP bottom
+right.\joerg{include reference point data everywhere; include
+reference points in plot legend}}
+%
+% Joerg: easier to include ref points everywhere
+%
+%% Reference point coverage is 10 and hence not shown, except
+%% for \hlmcut\ in Rovers (red dashed line near bottom).
+%
 \vspace{-0.3cm}
-\caption{\label{fig:asp-global} Coverage for global explanation on 
-Blocksworld (top left), NoMystery (top right), Rovers (bottom left),
-TPP (bottom right). Number of action-set properties on x-axis,
-scaling from $1$ to $10$.
-%\joerg{complete this plot. x-achsen
-%beschriftung oben und unten bitte komplett raus. Bitte die legend
-%unter diese plots, wie im IJCAI'19 long paper unter Figure 2.}
-}
-\vspace{-0.2cm}
 \end{figure}
 
-For lack of space, we give only snapshots of our data.\footnote{We
-intend to buy additional pages to include more complete data. For
-AAAI'20 review, the data is in supplementary material at
-{\scriptsize \url{https://www.dropbox.com/sh/boq29booqajj7ab/AACbKpiR6jdbeEzCldrvLfk4a?dl=0}}}
+For lack of space, we show only the data for $x = 1.0$, where our
+benchmarks are most interesting in that, for higher amounts of
+available resources, in NoMystery and TPP almost all property subsets
+are solvable.
 %
 Figure~\ref{fig:asp-global} shows that computing global action-set
-property explanations is moderately feasible compared to the reference
-points. The data shown is for $x = 1.25$; for other values, what
-varies is mainly the usefuless of trap learning, which peaks at $x =
-1.0$ when resources are extremely scarce.
-%
-%% \joerg{this summary is extremely underwhelming, focusing exclusively 
-%% on computational aspects, and saying ``not totally infeasible''. we
-%% need something that highlights to the reviewer that/how this new form
-%% of analysis is exciting and useful. examples of concrete analysis
-%% results?}
-%% %
-%% In Blocksworld and TPP, our techniques are moderately competitive with
-%% the reference points. In NoMystery, they are vastly inferior. In
-%% Rovers, they vastly surpass \hlmcut, matching the coverage of the
-%% trap-learning reference point. Overall, it seems fair to say that our
-%% analysis here is not exceedingly infeasible compared to related
-%% classical planning problems.
+property explanations is feasible, at $x=1.0$, compared to the
+reference points. SysS with trap learning matches reference point
+coverage except for moderate losses in NoMystery.
 %
 Figure~\ref{fig:asp-local} shows that, as before, the analysis becomes
 much easier for local explanation as a function of question size.
+%
+Rovers is a special case as, there, all pairs of action-set properties
+are unsolvable.
+%
+Given more resources, $x \in \{1.25, 1.5, 2.0\}$, 
+%
+% Joerg: not as relevant, focus on trap learning
+%
+% SysW outperforms SysS, 
+%
+similarly to Figure~\ref{table:coverage_ipc} MUGS analysis becomes
+much harder, and the coverage gap to the reference points increases
+except in Rovers.\ifdefined\suppflagdefined\else\footnote{We intend to
+buy additional pages to include the data for $x > 1$. For AAAI'20
+review, the data is in supplementary material at
+{\scriptsize \url{https://www.dropbox.com/sh/boq29booqajj7ab/AACbKpiR6jdbeEzCldrvLfk4a?dl=0}}}\fi\
+%
+\ifdefined\suppflagdefined
+%
+The data is included in Appendix~\ref{apendix:data}.
+%
+\fi
 
-\begin{figure}[h!]
-\vspace{-0.2cm}
+
+\begin{figure}[t]
+\vspace{-0.0cm}
 \small
 \centering
 
-c = 1.5\\
-\input{charts_local_exp_props_questions_c150.tex}
-c = 1.25\\
-\input{charts_local_exp_props_questions_c125.tex}
-c = 1.0 td\\
-\input{charts_local_exp_props_questions_c100.tex}
-c = 1.0 bu\\
 \input{charts_local_exp_props_questions_c100_bu.tex}
-%\rebecca{top c=1.25, bottom c = 1.0}
 \vspace{-0.3cm}
 \caption{\label{fig:asp-local} Local action-set property explanation 
-results for SysW as a function of $|A|$. Coverage and average runtime
-(left), average \#MUGS (right). Blocksworld blue, NoMystery red,
-Rovers orange, TPP green.}
+at $x=1.0$. SysS with trap learning. Average runtime (left) and
+average \#MUGS (right) as a function of $|A|$. Blocksworld blue,
+NoMystery red, Rovers orange, TPP green.\joerg{remove
+coverage}\joerg{replace by b/w readable version?}}
 %
-%\joerg{integrate reference point coverage as horizontal lines into
-%the left plot} ==> see fig 3: we never surpass that except lmcut in
-%rovers and trap in blocks for c>1 when we dont use trap; so not much
-%to show off
-%
-%\caption{$c = 1.25$ red: nomyters (5 goals, 5 props), green: TPP (7 goals, 9 props), left plot: search time and coverage, right plot: \#MUGS}
-%
-\vspace{-0.2cm}
+\vspace{-0.6cm}
 \end{figure}
 
 
@@ -410,106 +418,106 @@ Rovers orange, TPP green.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% PRE-FINAL AND SUPPLEMENTARY MATERIAL VERSION
+%%%% IJCAI SUPPLEMENTARY MATERIAL VERSION
 
-\ifdefined\suppflagdefined
+%% \ifdefined\suppflagdefined
 
-\subsection{Action-Set Properties}
+%% \subsection{Action-Set Properties}
 
-\begin{figure*}[htb]
-\centering\centering
-%\input{data/action_set_properties/domain_selection.tex}
-\includegraphics{data/action_set_properties/barchart/barchart.pdf}
-\vspace{-0.6cm}
-\caption{Coverage results on IPC benchmarks extended with action-set properties.}
-\label{fig:barcharts}
-\vspace{-0.2cm}
-\end{figure*}
+%% \begin{figure*}[htb]
+%% \centering\centering
+%% %\input{data/action_set_properties/domain_selection.tex}
+%% \includegraphics{data/action_set_properties/barchart/barchart.pdf}
+%% \vspace{-0.6cm}
+%% \caption{Coverage results on IPC benchmarks extended with action-set properties.}
+%% \label{fig:barcharts}
+%% \vspace{-0.2cm}
+%% \end{figure*}
 
-To evaluate the use of our framework with more complex plan
-properties, beyond goal facts, we experimented with the compilation of
-action-set properties as per Section~\ref{compilation}. We selected
-four IPC domains for extension with action-set properties, namely
-NoMystery, Rovers, and TPP as considered in resource-constrained
-planning \cite{nakhost:etal:icaps-12}, where minimum resource
-requirements are known as per available problem generators; plus the
-Blocksworld as an intuitively rather differently structured domain. In
-all four domains, we use discrete resource consumption encoded into
-the STRIPS model, enabling the use of trap
-learning \cite{steinmetz:hoffmann:ijcai-17} which turns out to be
-highly beneficial here.
+%% To evaluate the use of our framework with more complex plan
+%% properties, beyond goal facts, we experimented with the compilation of
+%% action-set properties as per Section~\ref{compilation}. We selected
+%% four IPC domains for extension with action-set properties, namely
+%% NoMystery, Rovers, and TPP as considered in resource-constrained
+%% planning \cite{nakhost:etal:icaps-12}, where minimum resource
+%% requirements are known as per available problem generators; plus the
+%% Blocksworld as an intuitively rather differently structured domain. In
+%% all four domains, we use discrete resource consumption encoded into
+%% the STRIPS model, enabling the use of trap
+%% learning \cite{steinmetz:hoffmann:ijcai-17} which turns out to be
+%% highly beneficial here.
 
-In Blocksworld, we include two gripper hands and the action-set
-properties ask whether a given gripper is used to pick up a given
-block, or to stack a given pair of blocks. In NoMystery, the
-properties are as in our illustrative example
-(Section~\ref{illustrative-example}). In Rovers, the properties ask
-whether a given rover or camera is used for a given observation. In
-TPP, they ask whether given road segments are used, and whether given
-goods are bought at given markets. In all cases, we vary the number of
-action-set properties between 1 and 10. We fix the original goal facts
-as hard goals, and we set the available resources to $x \in \{1.0,1.5,
-2.0\}$ times the minimum needed to allow for costlier plans satisfying
-some of the properties.
+%% In Blocksworld, we include two gripper hands and the action-set
+%% properties ask whether a given gripper is used to pick up a given
+%% block, or to stack a given pair of blocks. In NoMystery, the
+%% properties are as in our illustrative example
+%% (Section~\ref{illustrative-example}). In Rovers, the properties ask
+%% whether a given rover or camera is used for a given observation. In
+%% TPP, they ask whether given road segments are used, and whether given
+%% goods are bought at given markets. In all cases, we vary the number of
+%% action-set properties between 1 and 10. We fix the original goal facts
+%% as hard goals, and we set the available resources to $x \in \{1.0,1.5,
+%% 2.0\}$ times the minimum needed to allow for costlier plans satisfying
+%% some of the properties.
 
-We created benchmark tasks with size parameters around the borderline
-of computational feasibility for our analyses, given our time/memory
-limits. In Blocksworld, we used 5 -- 8 blocks; in NoMystery, our tasks
-have 2 trucks, 6 locations, and 4 -- 7 packages; in Rovers, they have
-2 rovers, 5 waypoints, and 4 -- 7 science objectives; in TPP, we use 5
-markets, 1 depot, and 4 -- 7 goods. In all domains, we vary the number
-of goal facts (and associated objects) between 4 and 7. We create 10
-base instances for each size-parameter setting, which are then
-modified for our experiments with different initial resource levels,
-and action-set properties to be considered.
-%
-%% \begin{enumerate}
-%% \item The resource constrained \textit{rovers} domain. Problems were generated with 2 rovers, 5 waypoints. Action properties are to use a specific rover for a sample or an observation, or to use a specific camera for an observation. 
-%% \item The \textit{blocksworld} domain with 2 grippers, modified such that picking up or unstacking a block costs high or low energy depending upon which gripper is used. Problems were generated scaling from 3 to 10 blocks. Action properties are to use a specific gripper to pick up a specific block, or to use any gripper to stack a specific pair of blocks at any point in the plan.
-%% \item The resource constrained \textit{TPP} domain. Problems were generated with 5 markets and 1 depot. Properties are to use or not use particular road segments, and preferred markets for goods.
-%% \item The resource constrained \textit{nomystery} domain, described in the example. Problems were generated with 6 locations and 2 trucks.
-%% \end{enumerate}
+%% We created benchmark tasks with size parameters around the borderline
+%% of computational feasibility for our analyses, given our time/memory
+%% limits. In Blocksworld, we used 5 -- 8 blocks; in NoMystery, our tasks
+%% have 2 trucks, 6 locations, and 4 -- 7 packages; in Rovers, they have
+%% 2 rovers, 5 waypoints, and 4 -- 7 science objectives; in TPP, we use 5
+%% markets, 1 depot, and 4 -- 7 goods. In all domains, we vary the number
+%% of goal facts (and associated objects) between 4 and 7. We create 10
+%% base instances for each size-parameter setting, which are then
+%% modified for our experiments with different initial resource levels,
+%% and action-set properties to be considered.
+%% %
+%% %% \begin{enumerate}
+%% %% \item The resource constrained \textit{rovers} domain. Problems were generated with 2 rovers, 5 waypoints. Action properties are to use a specific rover for a sample or an observation, or to use a specific camera for an observation. 
+%% %% \item The \textit{blocksworld} domain with 2 grippers, modified such that picking up or unstacking a block costs high or low energy depending upon which gripper is used. Problems were generated scaling from 3 to 10 blocks. Action properties are to use a specific gripper to pick up a specific block, or to use any gripper to stack a specific pair of blocks at any point in the plan.
+%% %% \item The resource constrained \textit{TPP} domain. Problems were generated with 5 markets and 1 depot. Properties are to use or not use particular road segments, and preferred markets for goods.
+%% %% \item The resource constrained \textit{nomystery} domain, described in the example. Problems were generated with 6 locations and 2 trucks.
+%% %% \end{enumerate}
 
-To have some comparison measure for performance, again we use
-classical-planning reference points, based on \astar\ with \hlmcut,
-and on search with trap learning, respectively. We now run these
-reference points on tasks where all (original goal facts plus)
-action-set properties are hard goals. These tasks may be solvable (in
-which case \astar\ with \hlmcut\ tends to be better) or unsolvable (in
-which case trap learning tends to be better). The configurations of
-our own algorithm are SysS and SysW as before, now with vs.\ without
-trap learning (and transfer).
+%% To have some comparison measure for performance, again we use
+%% classical-planning reference points, based on \astar\ with \hlmcut,
+%% and on search with trap learning, respectively. We now run these
+%% reference points on tasks where all (original goal facts plus)
+%% action-set properties are hard goals. These tasks may be solvable (in
+%% which case \astar\ with \hlmcut\ tends to be better) or unsolvable (in
+%% which case trap learning tends to be better). The configurations of
+%% our own algorithm are SysS and SysW as before, now with vs.\ without
+%% trap learning (and transfer).
 
-Figure~\ref{fig:barcharts} shows the coverage data. To give an
-overview, we show one row per domain, fixing the number of hard goals
-at the feasibility borderline. Smaller numbers of goal facts tend to
-be quite easy, larger ones mostly infeasible, with variance depending
-on the domain and algorithm.
-Appendix~\ref{data-action-set-properties} gives complete data for each
-of the four domains.
+%% Figure~\ref{fig:barcharts} shows the coverage data. To give an
+%% overview, we show one row per domain, fixing the number of hard goals
+%% at the feasibility borderline. Smaller numbers of goal facts tend to
+%% be quite easy, larger ones mostly infeasible, with variance depending
+%% on the domain and algorithm.
+%% Appendix~\ref{data-action-set-properties} gives complete data for each
+%% of the four domains.
 
-In Blocksworld, the best of our techniques are moderately competitive
-with the \hlmcut\ reference point (which starts to lose coverage when
-one more block is added). They match the performance of the other
-reference point for $x=1.0$, and surpass it for larger $x$ where trap
-learning incurs a prohibitive overhead. NoMystery is the most
-problematic domain in terms of performance, with all our techniques
-lagging far behind the two reference points. In Rovers,
-though, \astar\ with \hlmcut\ is much less effective than our
-techniques, which match the full coverage of the trap-learning
-reference point. TPP is similar to Blocksworld in that our techniques
-are moderately competitive with the reference points. 
-%\joerg{statement where coverage for these starts to go down} 
-Trap learning is highly
-beneficial in all cases except Blocksworld with $x>1.0$. Overall, it
-seems fair to say that our action-set property dependency analysis is
-not exceedingly infeasible compared to related classical planning
-problems.
+%% In Blocksworld, the best of our techniques are moderately competitive
+%% with the \hlmcut\ reference point (which starts to lose coverage when
+%% one more block is added). They match the performance of the other
+%% reference point for $x=1.0$, and surpass it for larger $x$ where trap
+%% learning incurs a prohibitive overhead. NoMystery is the most
+%% problematic domain in terms of performance, with all our techniques
+%% lagging far behind the two reference points. In Rovers,
+%% though, \astar\ with \hlmcut\ is much less effective than our
+%% techniques, which match the full coverage of the trap-learning
+%% reference point. TPP is similar to Blocksworld in that our techniques
+%% are moderately competitive with the reference points. 
+%% %\joerg{statement where coverage for these starts to go down} 
+%% Trap learning is highly
+%% beneficial in all cases except Blocksworld with $x>1.0$. Overall, it
+%% seems fair to say that our action-set property dependency analysis is
+%% not exceedingly infeasible compared to related classical planning
+%% problems.
 
 
-\fi
+%% \fi
 
-%%%% END PRE-FINAL AND SUPPLEMENTARY MATERIAL VERSION
+%%%% END IJCAI SUPPLEMENTARY MATERIAL VERSION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

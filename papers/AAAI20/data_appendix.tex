@@ -1,0 +1,54 @@
+\section{Additional Data}
+\label{apendix:data}
+
+We include full data for action-set properties as discussed in
+Section~\ref{experiments:asp}.
+
+\begin{figure}[htb]
+\vspace{-0.0cm}
+\small
+\centering
+
+\input{charts_c150.tex}
+\input{charts_c125.tex}
+\input{charts_c100.tex}
+%\rebecca{\normalsize top c=1.25, bottom c = 1.0}
+\vspace{-0.0cm}
+\caption{\label{fig:appendix:asp-global} Coverage for global
+  action-set property explanation. Number of properties on x-axis,
+  scaling from $1$ to $10$. SysS with trap learning.\joerg{include
+    x=2.0; include reference point data everywhere; include reference
+    points in plot legend; format figure (presumably, square for 1.0,
+    1.25, 1.5, 2.0 from top left to bottm right); include labels for
+    $x$ and domain name in the plots}}
+\vspace{-0.0cm}
+\end{figure}
+
+
+\begin{figure}[htb]
+\vspace{-0.0cm}
+\small
+\centering
+
+c = 1.5\\
+\input{charts_local_exp_props_questions_c150.tex}
+c = 1.25\\
+\input{charts_local_exp_props_questions_c125.tex}
+c = 1.0 td\\
+\input{charts_local_exp_props_questions_c100.tex}
+c = 1.0 bu\\
+\input{charts_local_exp_props_questions_c100_bu.tex}
+%\rebecca{top c=1.25, bottom c = 1.0}
+\vspace{-0.0cm}
+\caption{\label{fig:appendix:asp-local} Local action-set property
+  explanation at $x=1.0$. SysS with trap learning. Average runtime
+  (left) and average \#MUGS (right) as a function of
+  $|A|$. Blocksworld blue, NoMystery red, Rovers orange, TPP
+  green.\joerg{include x=2.0 for SysW; remove SysW for x=1.0; remove
+    coverage; replace by b/w readable version?; format figure
+    (presumably, square for 1.0, 1.25, 1.5, 2.0 from top left to bottm
+    right); include labels for $x$ and algorithm (SysW vs SysS) in the
+    plots}}
+\vspace{-0.0cm}
+\end{figure}
+
