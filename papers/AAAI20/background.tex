@@ -13,14 +13,14 @@ We consider the \emph{finite-domain representation (FDR)} framework
 An FDR task \defined{\task} is a tuple $\task =
 (\vars,\acts,\cost,\init,\goal)$ where \vars\ is the set of
 \defined{variables}, \acts\ is the set of \defined{actions}, $\cost:
-\acts \mapsto \reals^+_0$ is the action \defined{cost} function,
-\init\ is the \defined{initial state}, and \goal\ is the
-\defined{goal}. A \defined{state}, in particular \init, is a complete
-assignment to $\vars$; \goal\ is a partial assignment to \vars; each
-action $a \in \acts$ has a \defined{precondition} $\pre_a$ and an
-effect $\eff_a$, both partial assignments to \vars. We will refer to
-variable-value pairs $v=d$ as \defined{facts}, and we will identify
-partial variable assignments with sets of facts.
+\acts \to \reals^+_0$ is the action \defined{cost} function, \init\ is
+the \defined{initial state}, and \goal\ is the \defined{goal}. A
+\defined{state}, in particular \init, is a complete assignment to
+$\vars$; \goal\ is a partial assignment to \vars; each action $a \in
+\acts$ has a \defined{precondition} $\pre_a$ and an effect $\eff_a$,
+both partial assignments to \vars. We will refer to variable-value
+pairs $v=d$ as \defined{facts}, and we will identify partial variable
+assignments with sets of facts.
 %
 An action $a$ is \defined{applicable} in a state $s$ if $\pre_a
 \subseteq s$. The outcome state $s\apply{a}$ is like $s$ except that

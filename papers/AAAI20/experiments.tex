@@ -176,19 +176,22 @@ when using SysW.
 
 For local explanations -- entailments of soft-goal conjunctions
 $\bigwedge_{g \in A} g$ -- we set up an experiment where we used only
-benchmark tasks with $\geq 6$ goals, scaled question size $|A|$ from
-$1$ to $5$, and randomly selected $10$ questions of each
-size. Figure~\ref{fig:ipc-local} shows the data for SysS and the most
+benchmark tasks with $\geq 6$ goals (resulting in 37 non-empty
+domains), scaled question size $|A|$ from $1$ to $5$, and randomly
+selected $10$ questions of each size. Figure~\ref{fig:ipc-local} shows
+the data for SysW with conjunction learning\joerg{for final
+version/author feedback, run SysS without learning} at the most
 challenging cost bound $0.75$.
-%
-As expected, both computational effort and explanation size decrease
-with $|A|$.
 %
 Averages are taken over instances where all questions were solved, as
 otherwise the results are distorted by large instances solved only for
 high values of $|A|$.
+%
+As expected, computational effort and explanation size decrease with
+$|A|$.
 
 \begin{figure}[ht]
+\vspace{-0.1cm}
 \small
 \centering
 
@@ -206,9 +209,8 @@ high values of $|A|$.
 \end{tabular}
 \vspace{-0.3cm}
 \caption{\label{fig:ipc-local} Local explanation results on IPC 
-benchmarks, cost bound $0.75$, for SysS\joerg{with or without nogood
-learning?}\rebecca{SysW with nogood, SysS without nogood is running} as a function of $|A|$. Left: coverage, \ie, fraction of
-solved questions (dashed, right y-axis);
+benchmarks, cost bound $0.75$, for SysW as a function of $|A|$. Left:
+coverage, \ie, fraction of solved questions (dashed, right y-axis);
 %
 %OSP (dotted), \hlmcut (dashed dotted) (right y-axis)
 %
@@ -216,36 +218,43 @@ and average runtime (solid, left y-axis). Right: average \#MUGS.}
 %\joerg{integrate reference point coverage as horizontal lines into the left plot}
 %\rebecca{update plot with new benchmark results with all ICP instances}
 %
-\vspace{-0.6cm}
+\vspace{-0.55cm}
 \end{figure}
 
 
 %\input{tables/all_points.tex}
 %\input{data/IPC_cost_bound/search_time_coverage_mix_td.tex}
 
-The results are very consistent across domains, and are much stronger
-still in some cases.
+These results are consistent across domains, and are much stronger in
+some cases.
 %
-%% Of the 42 domains that have at least one instance with $\geq 6$
-%% goals,
+For example, while for $|A|=1$ our coverage is higher than that
+of \hlmcut\ in only 2 domains here, for $|A|=5$ that is so in 6
+domains. Compared against OSP, the number of domains with higher
+coverage rises from 5 to 13.
 %
-In particular, six domains have $> 20\%$ increases in coverage from
-$|A|=1$ to $|A|=5$.
+% Joerg: previous snippets
 %
-% Joerg: no need for this, runtime even on average here decreases by
-% orders of magnitude.
+%% %% Of the 42 domains that have at least one instance with $\geq 6$
+%% %% goals,
+%% %
+%% In particular, six domains have $> 20\%$ increases in coverage from
+%% $|A|=1$ to $|A|=5$.
+%% %
+%% % Joerg: no need for this, runtime even on average here decreases by
+%% % orders of magnitude.
+%% %
+%% %% and in 15 domains average runtime decreases by at least one order
+%% %% of magnitude.
+%% %
+%% For $|A|=5$, coverage is $\geq$ that of \hlmcut\ in 6 domains and
+%% $\geq$ that of OSP in 12 domains.\joerg{are these numbers correct?
+%% even in the table I count like 10 domains where we surpass lmcut for
+%% 0.75. also, we should compare these numbers to those for global
+%% explanation ie the table}
 %
-%% and in 15 domains average runtime decreases by at least one order
-%% of magnitude.
-%
-For $|A|=5$, coverage is $\geq$ that of \hlmcut\ in 6 domains and
-$\geq$ that of OSP in 12 domains.\joerg{are these numbers correct?
-even in the table I count like 10 domains where we surpass lmcut for
-0.75. also, we should compare these numbers to those for global
-explanation ie the table}
-%
-The average number of MUGS for $|A|=5$ is less than $5$ in all
-domains, including ones like Floortile, Gripper, Miconic, 
+The average number of MUGS for $|A|=5$ is $<5$ in all domains,
+including ones like Floortile, Gripper, Miconic,
 %
 %, Woodworking
 %

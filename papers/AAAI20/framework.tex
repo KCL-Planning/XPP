@@ -26,7 +26,7 @@ Let $\task =
 (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$
 be an OSP task, and \plans\ its set of plans.
 
-A \defined{plan property} is a function $\prop_\phi : \plans \mapsto
+A \defined{plan property} is a function $\prop_\phi : \plans \to
 \{\true, \false\}$ where $\phi$ is a propositional formula over the
 atoms \goalsoft, and $\prop_\phi(\plan) = \true$ iff $\phi$ evaluates
 to \true\ under the truth value assignment where $g \in \goalsoft$ is
@@ -103,7 +103,7 @@ planning frameworks and plan sets \plans.
 
 Our primary focus here will be on goal exclusions:
 
-\begin{definition}[Goal Exclusion]
+\begin{definition}[Goal Exclusions]
 Let $\task =
 (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$
 be an OSP task, and \plans\ its set of plans.
@@ -114,12 +114,12 @@ $\entails{\plans}{\bigwedge_{g \in A} g}{\neg \bigwedge_{g \in B}
 %
 The entailment is \defined{non-dominated} if there is no pair
 $(A',B')$ where $A' \subseteq A$, $B' \subseteq B$, $(A',B') \neq
-(A,B)$, and $\entails{\plans}{\bigwedge_{a \in A'} a}{\neg
+(A,B)$, and $\entails{\plans}{\bigwedge_{g \in A'} g}{\neg
   \bigwedge_{g \in B'} g}$.
 %
 The entailment is \defined{non-rhs-dominated} if there is no $B'$
-where $B' \subsetneq B$ and $\entails{\plans}{\bigwedge_{a \in A}
-  a}{\neg \bigwedge_{g \in B'} g}$.
+where $B' \subsetneq B$ and $\entails{\plans}{\bigwedge_{g \in A}
+  g}{\neg \bigwedge_{g \in B'} g}$.
 \end{definition}
 
 Goal exclusions are of interest in OSP as they reflect the detailed
