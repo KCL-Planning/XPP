@@ -1,109 +1,119 @@
-\begin{axis}[
-width = 5cm,
-height=4cm,
-enlarge x limits = 0.1,
-enlarge y limits = 0.1,
-legend columns=1,
-ybar,
-bar width=1pt,
-ymin = 0,
-ymax = 10,
+    \begin{axis}[
+    width = 5cm,
+    height=4cm,
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.1,
+    legend columns=1,
+    ybar,
+    bar width=1pt,
+    ymin = 0,
+    ymax = 10,
 compat=1.6,
-at={(0,-2.5cm)},
+%title=c 150,
+%ylabel=goals 09,
+at={(0cm,-2.5cm)},
 	xticklabels={,,},
 	xtick style={draw=none},
 ]
-\addplot+[ybar, bar shift =-2.5pt, red,
+\addplot+[ybar, bar shift =-4.0pt, red,
 ]
 plot coordinates {
-(08, 4)
-(09, 3)
-(01, 10)
-(03, 8)
-(02, 10)
-(04, 9)
-(05, 10)
-(06, 6)
-(10, 2)
-(07, 6)
+(09, 0) %c_150
+(02, 8) %c_150
+(03, 8) %c_150
+(06, 4) %c_150
+(07, 4) %c_150
+(01, 10) %c_150
+(05, 5) %c_150
+(04, 8) %c_150
+(08, 4) %c_150
+(10, 0) %c_150
 };
-\label{plot:properties_hff_bu_52}
-\addplot+[ybar, bar shift =-1.0pt, blue,
+\label{plot:props_bu_hff_15}
+\addplot+[ybar, bar shift =-2.0pt, blue,
 ]
 plot coordinates {
-(01, 10)
-(08, 5)
-(02, 10)
-(04, 9)
-(03, 8)
-(05, 10)
-(06, 5)
-(10, 5)
-(07, 7)
-(09, 6)
+(09, 0) %c_150
+(02, 8) %c_150
+(03, 8) %c_150
+(06, 5) %c_150
+(10, 4) %c_150
+(01, 10) %c_150
+(05, 6) %c_150
+(04, 8) %c_150
+(08, 4) %c_150
+(07, 4) %c_150
 };
-\label{plot:properties_hff_td_52}
-\addplot+[ybar, bar shift =1.0pt, green,
+\label{plot:props_td_hff_15}
+\addplot+[ybar, bar shift =0.0pt, green,
 ]
 plot coordinates {
-(09, 10)
-(01, 10)
-(02, 10)
-(04, 10)
-(03, 10)
-(05, 10)
-(06, 10)
-(10, 10)
-(07, 10)
-(08, 10)
+(09, 10) %c_150
+(02, 10) %c_150
+(03, 10) %c_150
+(06, 10) %c_150
+(07, 10) %c_150
+(01, 10) %c_150
+(05, 10) %c_150
+(04, 10) %c_150
+(08, 10) %c_150
+(10, 10) %c_150
 };
-\label{plot:properties_trap_prefop_bu_52}
-\addplot+[ybar, bar shift =2.5pt, orange,
+\label{plot:props_bu_trap_15}
+\addplot+[ybar, bar shift =2.0pt, orange,
 ]
 plot coordinates {
-(01, 10)
-(08, 10)
-(02, 10)
-(03, 10)
-(04, 10)
-(05, 10)
-(06, 10)
-(10, 10)
-(07, 10)
-(09, 10)
+(09, 10) %c_150
+(02, 10) %c_150
+(03, 10) %c_150
+(06, 10) %c_150
+(10, 10) %c_150
+(01, 10) %c_150
+(05, 10) %c_150
+(04, 10) %c_150
+(08, 10) %c_150
+(07, 10) %c_150
 };
-\label{plot:properties_trap_prefop_td_52}
+\label{plot:props_td_trap_15}
 
-%start node sysW
-\addplot+[only marks, mark = -, mark options = {thick}, mark size = 0.2cm, black,
+%lmcut
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.15cm, black,
 ]
 plot coordinates {
-(02, 10)
-(01, 10)
-(04, 10)
-(03, 10)
-(07, 10)
-(08, 10)
-(06, 10)
-(10, 10)
-(05, 10)
-(09, 10)
-};
-%optimal
-\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.2cm, black,
-]
-plot coordinates {
-(03, 7)
-(05, 6)
+(01, 1)
+(02, 1)
+(03, 0)
+(04, 1)
+(05, 1)
+(06, 0)
 (07, 0)
-(09, 3)
-(01, 9)
-(02, 8)
-(04, 7)
-(06, 2)
-(08, 3)
-(10, 2)
+(08, 0)
+(09, 0)
+(10, 0)
 };
 
-\end{axis}
+%trap first meta node top down
+\addplot+[only marks, mark = -, mark options = {thick, black}, mark size = 0.15cm, black,
+]
+plot coordinates {
+(01, 10)
+(02, 10)
+(03, 10)
+(04, 10)
+(05, 10)
+(06, 10)
+(07, 10)
+(08, 10)
+(09, 10)
+(10, 10)
+};
+    \end{axis}
+    \hfill
+    
+%\node[draw, align=center] (test) at (8,-18) {
+%\ref{plot:props_bu_hff_15} props-bu-hff\\
+%\ref{plot:props_td_hff_15} props-td-hff\\
+%\ref{plot:props_bu_trap_15} props-bu-trap\\
+%\ref{plot:props_td_trap_15} props-td-trap\\
+%};
 
