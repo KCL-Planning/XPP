@@ -21,23 +21,24 @@
 %%   pointers below -- which are not naturally part of the XAIP story
 %%   in the intro. ... TBD when writing the introduction}
 
-Various works relate to our computation of MUGS. In SAT/CP, minimal
-unsatisfiable cores (MUC, \eg\ \cite{chinneck:2007,laborie:ecai-14})
-are related to MUGS, though at the technical level this is quite
-different as it relies on constraint-conflict analysis methods and is
-non-exhaustive, \ie, does not aim at finding \emph{all}
-MUCs. Similarly, in the temporal planner IxTeT, a sub-procedure
-analyzing resource conflicts finds minimal critical sets (effects
-over-consuming a resource) \cite{laborie:ghallab:ijcai-95}. On the
-exhaustive side, problems and algorithms involving some form of
-solvability borderline within a lattice of problem variants have been
-considered since a long time
-(\eg\ \cite{dekleer:ai-86:atms,reiter:ai-87}). The closest relation to
-our MUGS analysis is a diagnosis framework that can cast maximum
-solvable goal subsets as preferred diagnoses
-\cite{grastien:etal:kr-12}. While that work uses SAT technology where
-we use a base planner, in general ideas for search enhancements may be
-transferrable between the two algorithms (in both directions).
+Various works relate to our computation of MUGS. In SAT and CP,
+minimal unsatisfiable cores (MUC,
+\eg\ \cite{chinneck:2007,laborie:ecai-14}) are related to MUGS, yet
+rely on constraint-conflict analysis and are non-exhaustive, \ie, do
+not aim at finding \emph{all} MUCs. Similarly, in the temporal planner
+IxTeT, an analysis of resource conflicts finds minimal critical sets
+(effects over-consuming a resource)
+\cite{laborie:ghallab:ijcai-95}. On the exhaustive side, problems and
+algorithms involving some form of solvability borderline within a
+lattice of problem variants have been considered since a long time
+(\eg\ \cite{dekleer:ai-86:atms,reiter:ai-87}). In particular, the
+diagnosis framework by Grastien et
+al.\ \shortcite{grastien:etal:dx-11,grastien:etal:kr-12} can cast
+maximum solvable goal subsets as preferred diagnoses. That work uses
+SAT instead of a base planner, but an encoding into planning has been
+devised and ideas for search enhancements may be transferrable.
+%
+% between the two algorithms (in both directions).
 
 Some prior work \cite{yu:etal:jair-17,lauffer:topcu:xaip-19} aims at
 suggesting goals to drop in oversubscribed situations, through
