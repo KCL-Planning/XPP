@@ -199,13 +199,13 @@ Let $\task =
 (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$
 be an OSP task, and \plans\ its set of plans.
 
-Say that $\phi$ and $\psi$ are \defined{\plans-equivalent} if
-$\modelsof{\plans}{\phi} = \modelsof{\plans}{\psi}$, and denote by
-$\equiv{\plans}{\phi}$ the \plans-equivalence class of $\phi$.
+Denote by $\equiv{\plans}{\phi} := \{\psi \mid \modelsof{\plans}{\phi}
+= \modelsof{\plans}{\psi}\}$ the \plans-equivalence class of $\phi$.
 %
-The \defined{global explanation (GE)} for \task\ is the partial order
-$\pdo{\plans}$ over the classes $\equiv{\plans}{\phi}$ where
+The \defined{global explanation (GE)} for \task\ is the strict partial
+order $\pdo{\plans}$ over the classes $\equiv{\plans}{\phi}$ where
 $\equiv{\plans}{\phi} \pdo{\plans} \equiv{\plans}{\psi}$ iff
+$\equiv{\plans}{\phi} \neq \equiv{\plans}{\psi}$ and
 $\entails{\plans}{\phi}{\psi}$.
 %
 %% A \defined{concrete GE (cGE)} replaces each equivalence class
@@ -242,7 +242,7 @@ Let $\task =
 (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$
 be an OSP task, and \plans\ its set of plans.
 
-The \defined{goal-exclusion GE} for \task\ is the partial order
+The \defined{goal-exclusion GE} for \task\ is the strict partial order
 $\pdo{\plans}$ over conjunctive plan properties where $\phi
 \pdo{\plans} \psi$ iff $\entails{\plans}{\phi}{\psi}$ is a
 non-dominated goal exclusion.
