@@ -3,7 +3,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% TODO
 
-% Define pre-handouts
+% Define timing
 
 
 
@@ -925,7 +925,7 @@ Because
 
 \textbf{Non-dominated goal exclusions:} 
 
-\pause
+\pause \prehandout{\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip} \noprehandout{
 
 \begin{itemize}
 \item $\entails{\plans}{P_0}{\neg (P_1 \wedge P_2)}$
@@ -937,6 +937,8 @@ Because
 
 \notesym~In other words: ``\goalsoft\ is not solvable 
 as a whole, but each of its subsets is''.
+
+}
 
 \medskip
 
@@ -1111,12 +1113,14 @@ Then: \textred{Non-rhs-dominated $\entails{\plans}{\bigwedge_{g \in A}
 
 % TALK: Why is this easier than before?
 %
-\textbf{This is easier \& smaller because:} \pause Less soft goals!
+\textbf{This is easier \& smaller because:} \pause \prehandout{\bigskip\bigskip\bigskip\bigskip} \noprehandout{Less soft goals!
 
 \begin{itemize}
 \item Search tree size worst-case exponential in $|\goalsoft|$
 \item \#MUGS worst-case exponential in $|\goalsoft|$
 \end{itemize}
+
+}
 
 \medskip
 
