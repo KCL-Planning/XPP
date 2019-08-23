@@ -78,7 +78,7 @@ The question now is how to compute all MUGS. This can be done through
 a search over goal sets, that we refer to as \defined{systematic
   weakening (SysW)}:
 \begin{enumerate}[(1)]
-\item the start node of the search is \goal; 
+\item the start node of the search is \goalsoft; 
 \item each search step selects an open node $\goal$, calls a planner
   to test whether $\goal$ is solvable in \task, caches the result,
   and expands $\goal$ if it is unsolvable;
