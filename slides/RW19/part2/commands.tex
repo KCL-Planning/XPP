@@ -21,16 +21,14 @@
 \definecolor{OutlineColor}{rgb}{0.2,0.8,0.2} %green
 \definecolor{CommentColor}{rgb}{0.90,0.16,0} %red
 \definecolor{dkgreen}{rgb}{0,0.5,0}
-\definecolor{verylightgray}{rgb}{0.88,0.88,0.88}
+\definecolor{mLightBrown}{rgb}{0.71,0.40,0.11}
+\definecolor{mLightGreen}{rgb}{0.56,0.93,0.56}
 \newcommand<>{\textblue}[1]{{\color#2{blue}#1}}
 \newcommand<>{\textred}[1]{{\color#2{red}#1}}
 \newcommand<>{\textgreen}[1]{{\color#2{green}#1}}
 \newcommand<>{\textdkgreen}[1]{{\color#2{dkgreen}#1}}
 \newcommand<>{\textorange}[1]{{\color#2{orange}#1}}
 \newcommand<>{\textyellow}[1]{{\color#2{yellow}#1}}
-
-\definecolor{darkgreen}{HTML}{009900}
-\definecolor{mBlue}{HTML}{005CE6}
 
 \newcommand{\ie}{i.\,e.}
 \newcommand{\eg}{e.\,g.}
@@ -42,8 +40,6 @@
 #1
 \end{block}} 
 
-
-
 \newcommand{\lectureslides}[1]{\ifthenelse{\value{VERSION}=0}{#1}{}}
 \newcommand{\nolectureslides}[1]{\ifthenelse{\not\value{VERSION}=0}{#1}{}}
 \newcommand{\posthandout}[1]{\ifthenelse{\value{VERSION}=1}{#1}{}}
@@ -52,16 +48,48 @@
 \newcommand{\noprehandout}[1]{\ifthenelse{\not\value{VERSION}=2}{#1}{}}
 
 
+\newcommand{\images}{../IMAGES}
+\graphicspath{{../IMAGES/}}
+\newcommand{\rovergoal}[1]{
+\includegraphics[scale=0.06]{rovergoal#1.png}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% defs, propositions, etc
+
+\newenvironment{mydef}[1]{
+
+\begin{block}{#1}
+}{
+\end{block}
+}
+
+\newenvironment{myprop}[1]{
+
+\begin{block}{Proposition (#1)}
+}{
+\end{block}
+}
+
+\newenvironment{myproof}{
+
+\begin{block}{Proof}
+}{
+\end{block}
+}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%
 %%%
-%%% questionnaire: highlight ``correct'' (green, 2), ``discuss''
+%%% quiz: highlight ``correct'' (green, 2), ``discuss''
 %%% (orange, 1), ``false'' (red, 0) in post-handouts only!
 
-\newcommand{\questionnaire}[9]{
+\newcommand{\quiz}[9]{
 
 \prehandout{
-\begin{block}{Question!}
+\begin{block}{Quiz}
 \textbf{#1}
 \vspace{-0.15cm}
 \begin{columns}
@@ -82,7 +110,7 @@
 }
 
 \lectureslides{
-\begin{block}{Question!}
+\begin{block}{Quiz}
 \textbf{#1}
 \vspace{-0.15cm}
 \begin{columns}
@@ -103,7 +131,7 @@
 }
 
 \posthandout{
-\begin{block}{Question!}
+\begin{block}{Quiz}
 \textbf{#1}
 \vspace{-0.15cm}
 \begin{columns}
@@ -130,13 +158,13 @@
 
 %%%%%%%%%%%%%%%%%%%%%
 %%%
-%%% questionnairetwo: highlight ``correct'' (green, 2), ``discuss''
+%%% quiztwo: highlight ``correct'' (green, 2), ``discuss''
 %%% (orange, 1), ``false'' (red, 0) in post-handouts only!
 
-\newcommand{\questionnairetwo}[5]{
+\newcommand{\quiztwo}[5]{
 
 \prehandout{
-\begin{block}{Question!}
+\begin{block}{Quiz}
 \textbf{#1}
 \vspace{-0.15cm}
 \begin{columns}
@@ -155,7 +183,7 @@
 }
 
 \lectureslides{
-\begin{block}{Question!}
+\begin{block}{Quiz}
 \textbf{#1}
 \vspace{-0.15cm}
 \begin{columns}
@@ -174,7 +202,7 @@
 }
 
 \posthandout{
-\begin{block}{Question!}
+\begin{block}{Quiz}
 \textbf{#1}
 \vspace{-0.15cm}
 \begin{columns}

@@ -9,9 +9,11 @@
 %%   goal fact dependencies from previous section, use for brief
 %%   illustration of bottom-up/top-down}
 
-We now introduce our algorithms for computing goal-exclusion
-explanations. We start with the algorithms for GEs, from which those
-for LEs follow easily.
+%We now introduce our algorithms for computing goal-exclusion
+%explanations. 
+%
+We start with the algorithms for GEs, from which those for LEs follow
+easily.
 
 
 
@@ -19,10 +21,11 @@ for LEs follow easily.
 \subsection{Global Explanations}
 \label{algorithms:ge}
 
-The goal-exclusion GE can be read off the \defined{minimal unsolvable
-  goal subsets (MUGS)}, where $\goal \subseteq \goalsoft$ is a MUGS
-if $\goal$ cannot be achieved but every $\goal' \subsetneq \goal$
-can:
+The special case of goal exclusions -- though not the analysis of
+plan-property dependencies in general -- boils down to the computation
+of \defined{minimal unsolvable goal subsets (MUGS)}. A soft-goal set
+$\goal \subseteq \goalsoft$ is a MUGS if $\goal$ cannot be achieved
+but every $\goal' \subsetneq \goal$ can:
 
 \begin{proposition}[GE from MUGS]
 \label{pro:ge-from-mugs}
@@ -31,7 +34,8 @@ Let $\task =
 be an OSP task, and \plans\ its set of plans.
 
 Then $\entails{\plans}{\bigwedge_{g \in A} g}{\neg \bigwedge_{g \in B}
-  g}$ is non-dominated if and only if $A \cup B$ is a MUGS.
+  g}$, and that entailment is non-dominated, if and only if $A \cup B$
+is a MUGS.
 \end{proposition}
 
 \begin{proof}
@@ -65,15 +69,14 @@ MUGS.
 %% (One can even think about interleaving bottom-up with top-down in
 %% an intelligent way, but that's for future work)
 
-Observe that, from a representational point of view, this means that
-we can represent our explanations even more compactly, by showing MUGS
-$\goal$ instead of the corresponding exclusion entailments with $A
-\cup B = \goal$. In our example, the only MUGS is $\{at(P_0,L_4),
-at(P_1,L_3), at(P_2,L_5)\}$.
+We can hence represent goal-exclusion explanations more compactly,
+showing one MUGS $\goal$ for each set of goal-exclusion entailments
+with $A \cup B = \goal$. In our example, the only MUGS is
+$\{at(P_0,L_4),\allowbreak at(P_1,L_3),\allowbreak at(P_2,L_5)\}$.
 
-From a computational point of view, our problem now boils down to
-computing all MUGS. This can be done through a search over goal sets,
-that we refer to as \defined{systematic weakening (SysW)}:
+The question now is how to compute all MUGS. This can be done through
+a search over goal sets, that we refer to as \defined{systematic
+  weakening (SysW)}:
 \begin{enumerate}[(1)]
 \item the start node of the search is \goal; 
 \item each search step selects an open node $\goal$, calls a planner
