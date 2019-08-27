@@ -518,7 +518,7 @@ its set of \textred{plans \plan}.
 \begin{itemize}
 \item \defined{$\plan$ satisfies $\phi$, $\plan \models \phi$}: if $\phi$ true given truth value
 assignment to $g \in \goalsoft$ defined
-by \textred{$g \in \init\apply{\plan}$ ?  $g \mapsto \true$ :
+by \textred{$g \in \init\apply{\plan}$ ? $g \mapsto \true$ :
 $g \mapsto \false$}
 \item $\defined{\modelsof{\plans}{\phi}} := \{\plan \mid \plan
 \in \plans, \plan \models \phi\}$
@@ -1161,14 +1161,444 @@ in ``Why not property $\bigwedge_{g \in A} g$?'':
 \section[Compilations]{Compilations}
 \subsection*{}
 
-\begin{frame}{}
+\begin{frame}{We Want More General Plan Properties!}
+
+\centering
+
+\begin{tikzpicture}
+\node[] (task) at (0,-0.7) {
+\resizebox{!}{5cm}{%
+\begin{tikzpicture}
+\node[] (t) at (1.5,2) {\includegraphics[scale=0.07]{rover2.png}};
+\node[] (t) at (-5,-2.5) {\includegraphics[scale=0.07]{rover1.png}};
+
+\node[] (m) at (0,0) {\includegraphics[scale=0.2]{mars.png}};
+
+\node[draw, circle, inner sep=3pt] (l1) at (-3,-3) {$L_1$};
+\node[draw, circle, inner sep=3pt] (l2) at (-2.1,1.3) {$L_2$};
+\node[draw, circle, inner sep=3pt] (l3) at (-0.5,-1) {$L_3$};
+\node[draw, circle, inner sep=3pt] (l4) at (3,2) {$L_4$};
+\node[draw, circle, inner sep=3pt] (l5) at (1.8,0) {$L_5$};
+\node[draw, circle, inner sep=3pt] (l6) at (3.2,-2.5) {$L_6$};
+
+\draw[thick] (l1) to (l2);
+\draw[thick] (l1) to (l3);
+\draw[thick] (l2) to (l3);
+\draw[thick] (l3) to (l5);
+\draw[thick] (l4) to (l5);
+\draw[thick] (l4) to (l6);
+\draw[thick] (l5) to (l6);
+\visible<2->{
+\draw[thick, red, ->, line width=0.1cm] (l1) to (l2);
+\draw[thick, mLightGreen, ->, line width=0.1cm] (l1) to (l3);
+\draw[thick, mLightGreen, ->, line width=0.1cm] (l3) to (l2);
+}
+
+\node[] (g) at (-1.9,-4) {\Large \textbf{goal}:};
+\node[] (i1) at (-0.5,-4) {\includegraphics[scale=0.1]{rovergoal1.png}};
+\node[] (i2) at (0.8,-4) {\includegraphics[scale=0.1]{rovergoal2.png}};
+\node[] (i3) at (2.5,-4) {\includegraphics[scale=0.1]{rovergoal3.png}};
+\end{tikzpicture}
+}
+};
+
+\node[draw, align=left, fill=white] (plan) at (-1,3) {
+\scriptsize
+$drive(R_1,L_1,L2)$\\[-0.2cm]
+\scriptsize
+$takeImage(I_1,R_1)$\\[-0.2cm]
+\scriptsize
+$drive(R_2,L_4,L_5)$\\[-0.2cm]
+\scriptsize
+$takeImage(I_3,R_2)$\\[-0.2cm]
+\scriptsize
+$drive(R_2,L_5,L_6)$\\[-0.2cm]
+\scriptsize
+$takeImage(I_2,R_2)$
+};
+
+\node[] (human_why) at (-4,1.5) {\includegraphics[scale=0.2]{human-why.png}};
+\node[] (ai_exp) at (4,1.5) {\includegraphics[scale=0.2]{robot-exp.png}};
+
+\visible<3->{
+\node[] (p) at (4,3.5) {
+\resizebox{!}{1.5cm}{%
+\begin{tikzpicture}
+\node[draw, inner sep=1pt] (p1) at (0.2,0) {
+\dontuseconnection{1}{1}{2}
+};
+\node[] (depp1p2) at (2.7,0) {\Huge $\Rightarrow$};
+\node[draw, inner sep=1pt] (p2) at (5,0) {
+\specificrover{1}{1}
+};
+\node[] (no) at (5,0.9) {\includegraphics[scale=0.1]{no.png}}; 
+%\draw[thick, ->] (p1) to (p2);
+\end{tikzpicture}
+}
+};
+}
+
+\end{tikzpicture}
+
+\end{frame}
+
+
+\begin{frame}{Compilation!}
+
+\notesym~Compile more general plan properties into (additional 
+variables/actions and) goal facts! For example:
+
+\begin{itemize}
+\item Precondition and goal formulas, conditional effects 
+{\footnotesize [\cite{gazen:knoblock:ecp-97,nebel:jair-00}]}
+\item LTL formulas over plan trajectory {\footnotesize [\cite{edelkamp:icaps-06,baier:etal:ai-09}]}
+\item Initial state uncertainty {\footnotesize [\cite{palacios:geffner:jair-09}]}
+\end{itemize}
+
+\medskip \pause
+
+% TALK: Also implemented LTL already, performance Ok optimizations in
+% the making.
+%
+\notesym~Here: effective-to-compile special case of LTL
+
+\begin{mydef}{Action-Set Properties}
+%
+OSP task $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$, \plans\
+its set of plans, \textred{$\acts_1, \dots, \acts_n
+\subseteq \acts$}.
+\begin{itemize}
+\item \defined{Action-set property}: propositional formula $\phi$ over 
+atoms $\acts_1, \dots, \acts_n$
+\item \defined{$\plan \models \phi$}: if $\phi$ true given truth value
+assignment \textred{$\acts_i \cap \{a_1, \dots, a_k\} \neq \emptyset$
+?  $\acts_i \mapsto \true$ : $\acts_i \mapsto \false$} where $\plan
+= \langle a_1, \dots, a_k\rangle$
+\end{itemize}
+%
+%% An \defined{action-set property} for \task\ and $\acts_1, \dots,
+%% \acts_n$ is a function $\prop_\phi : \plans \to \{\true, \false\}$
+%% where $\phi$ is a propositional formula over the atoms $\acts_1,
+%% \dots, \acts_n$, and $\prop_\phi(\plan) = \true$ iff $\phi$ evaluates
+%% to \true\ under the truth value assignment where $\acts_i$ is
+%% \true\ iff $\plan$ contains at least one action from $\acts_i$.
+%
+\end{mydef}
+
+\medskip
+
+\end{frame}
+
+
+\begin{frame}{Rovers Action-Set Properties}
+
+\centering
+
+% TALK: Energy limit compilation: actins take fuel-level
+% parameters. Order can also esily be compiled (e.g. goal fact set
+% when left image is taken while right image has not yet been taken).
+%
+\begin{tikzpicture}
+\node[draw,inner sep=2pt] (p1) at (-0.5,-3.5) {\samerover{1}{2}};
+\node[draw,inner sep=2pt] (p3) at (3,-3.5) {\energylimit{1}};
+\node[] (p2) at (6.5,-3.5) {\orderprop{1}{2}};
+\node[] (p5no) at (6.5,-3.5) {
+\includegraphics[scale=0.2]{no.png} 
+};
+\node[draw,inner sep=2pt] (p4) at (-0.5,0) {\specificrover{1}{2}};
+\node[draw,inner sep=2pt] (p5) at (3,0) {\useconnection{1}{x}{y}};
+\node[draw,inner sep=2pt] (p6) at (6.5,0) {\dontuseconnection{1}{x}{y}};
+\end{tikzpicture}
+
+\end{frame}
+
+
+\begin{frame}{Rovers Action-Set Properties: ``Same Rover''}
+
+\centering
+
+\begin{tikzpicture}
+\node[draw] (p1) at (-1,-0.7) {
+\resizebox{!}{2cm}{%
+\samerover{1}{2}
+}
+};
+
+\visible<2->{
+\node[] (s1) at (1.0,1.5) {\Large Action sets:};
+\node[] (s2) at (1.0,-3.0) {\Large Test formula:};
+}
+
+\visible<3->{
+\node[] (r1) at (3.5,1.5) {\includegraphics[scale=0.05]{rover1.png}};
+\node[align=left] (actionsr0) at (6.5,1.5) {
+$A_1 = \{takeImage(I_1,R_1),$\\
+$takeImage(I_2,R_1)\}$
+};
+
+\node[] (r2) at (3.5,-0.5) {\includegraphics[scale=0.05]{rover2.png}};
+\node[align=left] (actionsr1) at (6.5,-0.5) {
+$A_2 = \{takeImage(I_1,R_2),$\\
+$takeImage(I_2,R_2)\}$
+};
+}
+
+\visible<4->{
+\node[] (s2) at (5,-3.0) {\huge $A_1 \otimes A_2$};
+}
+\end{tikzpicture}
+
+\end{frame}
+
+
+\begin{frame}{Action-Set Property Compilation}
+
+\textbf{Given:} \task, \plans, and $\acts_1, \dots, \acts_n$
+
+\bigskip
+
+\textbf{Construct:} $\task'$
+
+\begin{itemize}
+\item Booleans \textred{$\mathit{isUsed}_i$}, initially
+  \false, set to \true\ by any action from $\acts_i$;
+\item formula-evaluation state variables and actions
+  evaluating each $\prop_\phi$ based on these, setting Boolean flags
+  \textred{$\mathit{isTrue}_\phi$};
+\item separate 1.\ \textred{planning phase}
+  vs.\ 2.\ \textred{formula-evaluation phase}, switch action from 1.\ to
+  2.\ enabled when \goalhard\ is satisfied.
+\end{itemize}
+
+\pause
+
+$\Rightarrow$ planning-phase prefixes in $\task'$ one-to-one $\plans$;
+given such prefix $\plan$, evaluation phase in $\task'$ can achieve
+$\mathit{isTrue}_\phi$ iff $\plan \models \phi$.
+
+\end{frame}
+
+
+\begin{frame}{Rovers ``Same Rover'' Compilation: Illustration}
+
+\begin{center}
+\begin{tikzpicture}
+\only<1-3>{
+\node[align=left] (actionsr0) at (-1,1.5) {
+$A_1 = \{takeImage(I_1,R_1),$\\
+$takeImage(I_2,R_1)\}$
+};
+}
+\only<4-5>{
+\node[align=left, mLightGreen] (actionsr0) at (-1,1.5) {
+$A_1 = \{takeImage(I_1,R_1),$\\
+$takeImage(I_2,R_1)\}$
+};
+}
+\only<6->{
+\node[align=left] (actionsr0) at (-1,1.5) {
+$A_1 = \{takeImage(I_1,R_1),$\\
+$takeImage(I_2,R_1)\}$
+};
+}
+
+\only<1-6>{
+\node[align=left] (actionsr1) at (-1,-0.5) {
+$A_2 = \{takeImage(I_1,R_2),$\\
+$takeImage(I_2,R_2)\}$
+};
+}
+\only<7-8>{
+\node[align=left, mLightGreen] (actionsr1) at (-1,-0.5) {
+$A_2 = \{takeImage(I_1,R_2),$\\
+$takeImage(I_2,R_2)\}$
+};
+}
+\only<9->{
+\node[align=left] (actionsr1) at (-1,-0.5) {
+$A_2 = \{takeImage(I_1,R_2),$\\
+$takeImage(I_2,R_2)\}$
+};
+}
+
+\node[] (formula) at (-1,-3.1) {\huge $A_1 \otimes A_2$};
+
+
+\visible<2->{
+\node[draw, minimum height=3.5cm, minimum width=3cm, fill=white] (p3) at (5.4,0.4) {};
+\node[draw, minimum height=3.5cm, minimum width=3cm, fill=white] (p2) at (5.2,0.2) {};
+\node[draw, align=left, fill=white] (p1) at (5,0) {
+$drive(R_1,L_1,L2)$\\
+\only<-3|handout:1>{$takeImage(I_1,R_1)$}\only<4-5|handout:0>{\textcolor{mLightGreen}{$takeImage(I_1,R_1)$}}\only<6-|handout:0>{$takeImage(I_1,R_1)$}\\
+$drive(R_2,L_4,L_6)$\\
+\only<-6|handout:1>{$takeImage(I_2,R_2)$}\only<7-8|handout:0>{\textcolor{mLightGreen}{$takeImage(I_2,R_2)$}}\only<9-|handout:0>{$takeImage(I_2,R_2)$}\\
+$drive(R_2,L_6,L_5)$\\
+$\cdots$
+};
+}
+\draw (1.5,3) to (1.5,-4);
+\visible<3->{
+\node[] (table) at (4,-3){
+\begin{tabular}{l|c}
+& used\\\hline
+$A_1$ & \visible<5->{$\checkmark$}\\\hline
+$A_2$ & \visible<8->{$\checkmark$}\\
+\end{tabular}
+};
+}
+\visible<10->{
+\node[] (no) at (5.5,-3) {\includegraphics[scale=0.1]{no.png}};
+}
+\end{tikzpicture}
+\end{center}
 
 \end{frame}
 
 
 \begin{frame}{}
 
-results for asp
+\centering
+
+\resizebox{!}{6cm}{%
+\begin{tikzpicture}
+\node[] (gdt) at (-2,5.5) {\textbf{MUGS}};
+\node[] (gd) at (-2,4){
+\resizebox{!}{2cm}{%
+\begin{tikzpicture}
+\node[draw, fill=mLightBrown!40] (all) at (0,5) {\rovergoal{1} \rovergoal{2} \rovergoal{3}};
+\node[draw, fill=mLightBrown!40] (01) at (-3,3) {\rovergoal{1} \rovergoal{2}};
+\node[draw, fill=mLightGreen!40] (02) at (0,3) {\rovergoal{1} \rovergoal{3}};
+\node[draw, fill=mLightBrown!40] (12) at (3,3) {\rovergoal{2} \rovergoal{3}};
+\node[draw, fill=mLightGreen!40] (0) at (-2,1) {\rovergoal{1}};
+\node[draw, fill=mLightGreen!40] (1) at (0,1) {\rovergoal{2}};
+\node[draw, fill=mLightGreen!40] (2) at (2,1) {\rovergoal{3}};
+
+\draw[thick, ->] (all) to (01);
+\draw[thick, ->] (all) to (02);
+\draw[thick, ->] (all) to (12);
+\draw[thick, ->] (01) to (0);
+\draw[thick, ->] (01) to (1);
+\draw[thick, ->] (12) to (2);
+\end{tikzpicture}
+}
+};
+\node[fill=mLightBrown!30] (mugs) at (5,4){
+\resizebox{!}{2cm}{%
+\begin{tikzpicture}
+%% \node[draw, inner sep=1pt] (p) at (-3,0) {
+%% \specificrover{1}{2}
+%% };
+%% \node[draw, inner sep=1pt] (p1) at (-0.3,0) {
+%% \samerover{1}{2}
+%% };
+%
+\node[draw, inner sep=1pt] (p1) at (-0.3,0) {
+\specificrover{1}{2}
+};
+
+\node[draw, inner sep=1pt] (p1) at (3,0) {
+\dontuseconnection{1}{1}{2}
+};
+\end{tikzpicture}
+}
+};
+\draw[thick] (-4,2) to (9,2);
+\visible<2->{
+\node[draw, inner sep=1pt] (p4) at (0.2,0) {
+\dontuseconnection{1}{1}{2}
+%\specificrover{1}{2}
+};
+\node[] (depp4p1) at (3.0,0) {\Huge $\Rightarrow$};
+\node[draw, inner sep=1pt] (p1) at (5.4,0) {
+%\samerover{1}{2}
+\specificrover{1}{2}
+};
+\node[] (not) at (5.4,0) {\includegraphics[scale=0.3]{no.png}};
+
+%\draw[thick, ->] (p4) to (p1);
+}
+\end{tikzpicture}
+}
+
+\end{frame}
+
+
+\begin{frame}{Transportation Example (NoMystery)}
+
+{\centering
+
+\begin{tabular}{cc}
+\begin{minipage}{0.35\textwidth}
+\begin{tikzpicture}[scale=0.55]
+	\scriptsize
+  \node[draw, circle, inner sep=1pt, label=above:{\textcolor{blue}{$P_0, P_1,P_2$}}] (l0) at (0,0) {$L_0$};
+  \node[draw, circle, inner sep=1pt, label=right:{$T_1$}] (l1) at (4,-1) {$L_1$};
+  \node[draw, circle, inner sep=1pt] (l2) at (6,0) {$L_2$};
+  \node[draw, circle, inner sep=1pt, label=below:{\textcolor{red}{$P_1$}}] (l3) at (6,-3) {$L_3$};
+  \node[draw, circle, inner sep=1pt, label=above:{\textcolor{red}{$P_0$}}] (l4) at (2,-2) {$L_4$};
+  \node[draw, circle, inner sep=1pt, label=below:{$T_0$ \textcolor{red}{$P_2$}}] (l5) at (0,-3) {$L_5$};
+
+  \draw[thick] (l0) to node[above] {5} (l2);
+  \draw[thick] (l0) to node[above, pos=0.75] {2} (l1);
+  \draw[thick] (l0) to node[below, pos=0.4] {3} (l4);
+  \draw[thick] (l0) to node[left] {4} (l5);
+  \draw[thick] (l2) to node[right] {1} (l3);
+  \draw[thick] (l4) to node[below, pos=0.6] {2} (l1);
+  \draw[thick] (l4) to node[above] {5} (l3);
+  \draw[thick] (l5) to node[below] {5} (l3);
+  \draw[thick] (l4) to node[above] {4} (l5);
+\end{tikzpicture}
+\end{minipage} &
+\hspace{-0.4cm} \begin{minipage}{0.56\textwidth}
+\scriptsize
+
+\begin{itemize}
+\item Variables \vars: $T_1, f_1, T_2, f_2, P_0, P_1, P_2$
+\item Actions \acts: $drive(T_i,L_x,L_y)$, $load(T_i,P_j,L_x)$, $unload(T_i,P_j,L_x)$
+
+      Driving consumes fuel as indicated
+\item Initial state \init: as shown; \textred{$\init(f_1)=16, \init(f_2)=7$}
+\item Goal \goalsoft: $at(P_0,L_4), at(P_1,L_3), at(P_2,L_5)$
+\end{itemize}
+
+\end{minipage}
+\end{tabular}
+
+}
+
+\bigskip \pause
+
+\textbf{Example action-set property analysis:} 
+
+\begin{itemize}
+\item 1.\ uses $T_0$ $(L_2,L_3)$; 2.\ same truck 
+$P_1$ $P_2$; 3.\ uses $T_0$ $(L_4,L_3)$; 4.\ same truck $P_2$ $P_0$;
+5.\ doesn't use $T_0$ $(L_0,L_5)$; 6.\ uses $T_1$ $(L_5,L_4)$.
+\item MUGS: \pause 7, each of size 3, including $\{5, 2, 4\}$.
+\end{itemize}
+
+\textred{\notesym~User question ``Why do you not avoid the road
+$L_0-L_5$ (which has a lot of traffic at the moment)?''} \pause
+\textblue{``Because if you don't use that road, then you cannot deliver all
+packages with a single truck.''}
+
+\medskip
+
+\end{frame}
+
+
+\begin{frame}{Experiments: Global Explanations}
+
+\notesym~Blocksworld, NoMystery, Rovers, TPP (top left to bottom right):
+
+\centering
+
+\medskip
+
+\includegraphics[height=0.72\textheight]{plot-actionsetprops-global-coverage}
+
+\smallskip
 
 \end{frame}
 
