@@ -16,10 +16,10 @@ noc:
 	pdflatex "\def\nocflagdefined{}\input{$(PAPER).tex}" $(PAPER).tex
 
 supp: 
-	pdflatex "\def\suppflagdefined{}\input{$(PAPER).tex}" $(PAPER).tex	
+	pdflatex "\def\suppflagdefined{}\def\nocflagdefined{}\input{$(PAPER).tex}" $(PAPER).tex	
 	bibtex --min-crossrefs=99 $(PAPER)
-	pdflatex "\def\suppflagdefined{}\input{$(PAPER).tex}" $(PAPER).tex	
-	pdflatex "\def\suppflagdefined{}\input{$(PAPER).tex}" $(PAPER).tex
+	pdflatex "\def\suppflagdefined{}\def\nocflagdefined{}\input{$(PAPER).tex}" $(PAPER).tex	
+	pdflatex "\def\suppflagdefined{}\def\nocflagdefined{}\input{$(PAPER).tex}" $(PAPER).tex
 
 clean:
 	rm -f *~ *.aux *.log *.blg *.bbl tmp.tex *.pdf *.fls
