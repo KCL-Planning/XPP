@@ -4,14 +4,61 @@
 We include full data for action-set properties as discussed in
 Section~\ref{experiments:asp}.
 
-\begin{figure}[htb]
+\begin{figure*}[htb]
 \vspace{-0.0cm}
 \small
 \centering
 
-\input{charts_c150.tex}
-\input{charts_c125.tex}
-\input{charts_c100.tex}
+\begin{tikzpicture}
+\node[] (c100) at (0,0) {
+\begin{tikzpicture}
+\input{data/supp_material_plots/global_exp/c100/blocksworld.tex}
+\input{data/supp_material_plots/global_exp/c100/nomystery.tex}
+\input{data/supp_material_plots/global_exp/c100/rovers.tex}
+\input{data/supp_material_plots/global_exp/c100/tpp.tex}
+\end{tikzpicture}
+};
+
+
+\node[] (c125) at (8,0) {
+\begin{tikzpicture}
+\input{data/action_set_properties/barchart/c125/blocksworld.tex}
+\input{data/action_set_properties/barchart/c125/nomystery.tex}
+\input{data/action_set_properties/barchart/c125/rovers.tex}
+\input{data/action_set_properties/barchart/c125/tpp.tex}
+\end{tikzpicture}
+};
+
+
+\node[] (c150) at (0,-6.5) {
+\begin{tikzpicture}
+\input{data/action_set_properties/barchart/c150/blocksworld.tex}
+\input{data/action_set_properties/barchart/c150/nomystery.tex}
+\input{data/action_set_properties/barchart/c150/rovers.tex}
+\input{data/action_set_properties/barchart/c150/tpp.tex}
+\end{tikzpicture}
+};
+
+
+\node[] (c200) at (8,-6.5) {
+TODO add c200
+};
+
+
+\node[draw] (test) at (3.8,-9.5) {
+\ref{plot:props_bu_hff_94}   SysS
+\ref{plot:props_td_hff_94}   SysW
+\ref{plot:props_bu_trap_94} SysS trap 
+\ref{plot:props_td_trap_94} SysW trap 
+\ref{plot:baseline_lmcut} \hlmcut
+\ref{plot:baseline_sysW_node} trap
+};
+\end{tikzpicture}
+
+
+%\input{charts_c150.tex}
+%\input{charts_c125.tex}
+%\input{charts_c100.tex}
 %\rebecca{\normalsize top c=1.25, bottom c = 1.0}
 \vspace{-0.0cm}
 \caption{\label{fig:appendix:asp-global} Coverage for global
@@ -22,7 +69,7 @@ Section~\ref{experiments:asp}.
     1.25, 1.5, 2.0 from top left to bottm right); include labels for
     $x$ and domain name in the plots}}
 \vspace{-0.0cm}
-\end{figure}
+\end{figure*}
 
 
 \begin{figure}[htb]
