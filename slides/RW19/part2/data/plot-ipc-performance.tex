@@ -1,0 +1,86 @@
+
+\begin{tikzpicture}
+
+    \begin{axis}[
+    width = 4.5cm,
+    height= 4.5cm,
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.1,
+    legend columns=3,
+    legend style={at={(0.05,-0.3)},anchor=west},
+	axis y line*=left,
+    xmax = 5,
+    xtick={1,2,3,4,5},
+    xmin = 1,
+	ymin= 0,
+	ymax= 210,
+	ytick={0,50,100,150,200},
+	%ymode = log,
+	ylabel ={search time},
+	y label style={at={(0.18,0.5)}},
+]
+\addplot[thick, black, mark=*,
+mark options={scale=0.5},
+]
+	plot coordinates {
+		(1, 203.41)
+		(2, 145.69)
+		(3, 82.08)
+		(4, 35.98)
+		(5, 9.05)
+	};
+%\addlegendentry{search time}
+\end{axis}
+
+\begin{axis}[
+    width = 4.5cm,
+    height= 4.5cm,
+	axis y line*=right,
+	ylabel= coverage,
+	y label style={at={(1.7,0.5)}},
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.1,
+    legend columns=3,
+    legend style={at={(0.05,-0.3)},anchor=west},
+    xmax = 5,
+    xtick={1,2,3,4,5},
+    xmin = 1,
+	ymin=0.15,
+	ymax=0.27,
+	ytick={0.15,0.2,0.25},
+]
+\addplot[thick, black, mark=*, mark options={scale=0.5}, dashed]
+	plot coordinates {
+		(1, 0.18)
+		(2, 0.2)
+		(3, 0.22)
+		(4, 0.23)
+		(5, 0.26)
+	};
+%\addlegendentry{coverage}
+
+%lmcut 
+%\addplot[thick, black, mark=None, dotted]
+%	plot coordinates {
+%		(1, 0.49)
+%		(2, 0.49)
+%		(3, 0.49)
+%		(4, 0.49)
+%		(5, 0.49)
+
+%	};
+
+%osp 0.75 
+%\addplot[thick, black, mark=None, dashdotdotted]
+%	plot coordinates {
+%		(1, 0.32)
+%		(2, 0.32)
+%		(3, 0.32)
+%		(4, 0.32)
+%		(5, 0.32)
+%	};
+
+\end{axis}
+
+
+\end{tikzpicture}

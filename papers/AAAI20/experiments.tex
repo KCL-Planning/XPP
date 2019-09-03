@@ -11,6 +11,15 @@
 \section{Experiments}
 \label{experiments}
 
+
+\joerg{actually, we should also evaluate the benefit of our new algorithmic 
+contributions here, which is not nogood learningbut merely nogood
+transfer. that is, we should run additional configurations where
+transfer is switched off, so that we can compare those to ones with
+transer switched on. no place for this in the paper of course. but we
+should have this data at hand for author feedback, and perhaps we can
+include some of it in the final version if we buy additional pages.}
+
 %% \joerg{1.5--2 page: similar to ijcai version; expliucotly distinguish 
 %% global vs local, add results for local in both ipc and action-set prop
 %% experiments}
@@ -253,10 +262,14 @@ coverage rises from 5 to 13.
 %% 0.75. also, we should compare these numbers to those for global
 %% explanation ie the table}
 %
-The average number of MUGS for $|A|=5$ is $<6$ in all domains except
-\parcprinter\ ($6.29$), \openstacks\ ($9.35$), \woodworking\ ($13.43$), 
-and \visitall\ ($20.16$).
-\rebecca{update with new SysS without learning numbers}
+%% The average number of MUGS for $|A|=5$ is $<6$ in all domains except
+%% \parcprinter\ ($6.29$), \openstacks\ ($9.35$), \woodworking\ ($13.43$), 
+%% and \visitall\ ($20.16$). 
+%
+Local explanations are typically small even for domains where global
+explanations can be large as shown in Figure~\ref{table:coverage_ipc}:
+the average number of MUGS for $|A|=5$ is $<7$ in all but 3 domains,
+and is $< 14$ except in \visitall\ ($20.16$).
 %
 %% The average number of MUGS for $|A|=5$ is $<5$ in all domains,
 %% including ones like Floortile, Gripper, Miconic, Woodworking, where
@@ -389,8 +402,10 @@ similarly to Figure~\ref{table:coverage_ipc} MUGS analysis becomes
 much harder, and the coverage gap to the reference points increases
 except in Rovers.\ifdefined\suppflagdefined\else\footnote{We intend to
 buy additional pages to include the data for $x > 1$. For AAAI'20
-review, the data is in supplementary material at
-{\scriptsize \url{https://www.dropbox.com/sh/boq29booqajj7ab/AACbKpiR6jdbeEzCldrvLfk4a?dl=0}}}\fi\
+review, this data is in the supplementary material.}\fi\
+%
+%at
+%{\scriptsize \url{https://www.dropbox.com/sh/boq29booqajj7ab/AACbKpiR6jdbeEzCldrvLfk4a?dl=0}}}\fi\
 %
 \ifdefined\suppflagdefined
 %
@@ -409,7 +424,7 @@ The data is included in Appendix~\ref{apendix:data}.
 \caption{\label{fig:asp-local} Local action-set property explanation 
 at $x=1.0$. SysS with trap learning. Average runtime (left) and
 average \#MUGS (right) as a function of $|A|$. Blocksworld solid,
-NoMystery dashed, Rovers dotted, TPP dashdotted.
+NoMystery dashed, Rovers dashdotted, TPP dotted.
 %\joerg{remove coverage}\joerg{replace by b/w readable version?}
 }
 \vspace{-0.6cm}

@@ -3,7 +3,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% TODO
 
-% Define pre-handouts
+% Define timing
 
 
 
@@ -30,6 +30,7 @@
 \usepackage{ifthen}
 \usepackage{rotating}
 \usepackage{varwidth}
+\usetikzlibrary{arrows,automata,fit,calc,positioning,shapes,shapes.multipart} %
 
 
 
@@ -64,9 +65,6 @@
 %%% commands
 
 \input{commands}
-
-\newcommand{\images}{../IMAGES}
-\graphicspath{{../IMAGES/}}
 
 
 
@@ -212,19 +210,19 @@
 
 \visible<3|handout:0>{
 \node[] (i4) at (0.28,0.57) {\includegraphics[scale=0.25]{part2-intro4.png}};
-\node[align=center] (why) at (-2.0,3.4) {Why a plan with \textcolor{red}{property A},\\ not one with \textcolor{dkgreen}{property B?}};
+\node[align=center] (why) at (-2.0,3.4) {Why does this plan\\ not have \textcolor{dkgreen}{property A?}};
 \node[] (plan) at (4.0,3.2) {\large Plan};
 }
 
 \visible<4|handout:1>{
 \node[] (i5) at (-0.285,0.29) {\includegraphics[scale=0.333]{part2-intro5b.png}};
-\node[align=center] (why) at (-2.0,3.4) {Why a plan with \textcolor{red}{property A},\\ not one with \textcolor{dkgreen}{property B?}};
-\node[align=center] (dependency) at (3.5,3.4) {Because all plans\\ with \textcolor{dkgreen}{property B}\\ have \textcolor{red}{property C!}};
+\node[align=center] (why) at (-2.0,3.4) {Why does this plan\\ not have \textcolor{dkgreen}{property A?}};
+\node[align=center] (dependency) at (3.5,3.4) {Because all plans\\ with \textcolor{dkgreen}{property A}\\ have \textcolor{red}{property B!}};
 }
 
 \visible<5|handout:0>{
 \node[] (i6) at (0,0.57) {\includegraphics[scale=0.333]{part2-intro6b.png}};
-\node[align=center] (dependency) at (3.5,3.4) {Because all plans\\ with \textcolor{dkgreen}{property B}\\ have \textcolor{red}{property C!}};
+\node[align=center] (dependency) at (3.5,3.4) {Because all plans\\ with \textcolor{dkgreen}{property A}\\ have \textcolor{red}{property B!}};
 }
 \end{tikzpicture}
 
@@ -246,49 +244,7 @@
 \end{frame}
 
 
-\begin{frame}{Oversubscription Planning}
-
-\begin{block}{Oversubscription Planning \hfill {\footnotesize [\cite{smith:icaps-04,domshlak:mirkis:jair-15}]}}
-An \defined{OSP task} is a tuple \textred{$\task =
-(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$}:
-\begin{itemize}
-\item \vars\ Variables, \acts\ Actions, \cost\ action-cost function, 
-\init\ initial state;
-\item \goalhard\ \defined{hard} goal;
-\item \goalsoft\ \defined{soft} goal;
-\item $\costbound \in \reals^+_0$ \defined{cost bound}.
-\end{itemize}
-As before: outcome state of applicable action sequence $\plan$ denoted
-$s\apply{\plan}$. \plan\ is a \defined{plan} if
-cost \textred{$\leq \costbound$ and
-$\goalhard \subseteq \init\apply{\plan}$}.
-%
-%% An \defined{oversubscription planning (OSP) task} is a tuple $\task =
-%% (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$
-%% like an FDR task but with two goals -- the \defined{hard} goal
-%% \goalhard\ and the \defined{soft} goal \goalsoft, assumed to be
-%% defined on disjoint sets of variables -- as well as an additional
-%% \defined{cost bound} $\costbound \in \reals^+_0$. A \defined{plan} is
-%% an action sequence \plan\ whose summed-up cost is $\leq \costbound$
-%% and where $\goalhard \subseteq \init\apply{\plan}$.
-%
-\end{block}
-
-\bigskip \pause
-
-\textbf{Plan Quality:} Usually additive soft-goal rewards. \pause Here:
-
-\begin{itemize}
-\item User preferences hard to specify/elicitate. Iterative planning instead.
-\item Plan-property dependencies to support that process.
-\end{itemize}
-
-\medskip
-
-\end{frame}
-
-
-\begin{frame}{(Toy) Example: Mars Rover}
+\begin{frame}{(Toy) Example: IPC Rovers}
 
 \centering
 
@@ -348,53 +304,112 @@ $\goalhard \subseteq \init\apply{\plan}$}.
 \end{frame}
 
 
-\begin{frame}{Mars Rover OSP}
 
-\centering
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Oversubscription Planning
+%
+%%% Timing: XX min
 
-\begin{tikzpicture}
-\node[] (el) at (0,0) {\Large energy limit};
-\node[] (el) at (3,0) {\includegraphics[scale=0.2]{battery-low.png}};
-\end{tikzpicture}
+\section[OSP]{Oversubscription Planning}
+\subsection*{}
 
-\bigskip \medskip
+\begin{frame}{Oversubscription Planning}
 
-\visible<2>{
-\begin{tabular}{c|c|c}
-\includegraphics[scale=0.15]{rovergoal1.png} &
-\includegraphics[scale=0.15]{rovergoal2.png} &
-\includegraphics[scale=0.15]{rovergoal3.png} \\\hline
+\begin{mydef}{Oversubscription Planning \hfill {\footnotesize [\cite{smith:icaps-04,domshlak:mirkis:jair-15}]}}
+An \defined{OSP task} is a tuple \textred{$\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$}:
+\begin{itemize}
+\item \vars\ Variables, \acts\ Actions, \cost\ action-cost function, 
+\init\ initial state;
+\item \goalhard\ \defined{hard} goal;
+\item \goalsoft\ \defined{soft} goal;
+\item $\costbound \in \reals^+_0$ \defined{cost bound}.
+\end{itemize}
+As before: outcome state of applicable action sequence $\plan$ denoted
+$s\apply{\plan}$. \plan\ is a \defined{plan} if
+cost \textred{$\leq \costbound$ and
+$\goalhard \subseteq \init\apply{\plan}$}.
+%
+%% An \defined{oversubscription planning (OSP) task} is a tuple $\task =
+%% (\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$
+%% like an FDR task but with two goals -- the \defined{hard} goal
+%% \goalhard\ and the \defined{soft} goal \goalsoft, assumed to be
+%% defined on disjoint sets of variables -- as well as an additional
+%% \defined{cost bound} $\costbound \in \reals^+_0$. A \defined{plan} is
+%% an action sequence \plan\ whose summed-up cost is $\leq \costbound$
+%% and where $\goalhard \subseteq \init\apply{\plan}$.
+%
+\end{mydef}
 
-\includegraphics[scale=0.1]{yes.png} &
-\includegraphics[scale=0.1]{no.png} &
-\includegraphics[scale=0.1]{yes.png} \\
+\bigskip \pause
 
-\end{tabular}
-}
+\textbf{Plan quality:} Usually additive soft-goal rewards. \pause Here:
+
+\begin{itemize}
+\item User preferences hard to specify/elicitate. Iterative planning instead.
+\item Goal-exclusion dependencies to support that process.
+\end{itemize}
 
 \medskip
 
 \end{frame}
 
 
-\begin{frame}{Our Problem in Mars Rover}
+% NOTE: Talk flow better when pointing this out only on next slide:
+% energy limited, plan achieves goals 1 and 3 but not goal 2.
+%
+%% \begin{frame}{Mars Rover OSP}
+
+%% \centering
+
+%% \begin{tikzpicture}
+%% \node[] (el) at (0,0) {\Large energy limit};
+%% \node[] (el) at (3,0) {\includegraphics[scale=0.2]{battery-low.png}};
+%% \end{tikzpicture}
+
+%% \bigskip \medskip
+
+%% \visible<2>{
+%% \begin{tabular}{c|c|c}
+%% \includegraphics[scale=0.15]{rovergoal1.png} &
+%% \includegraphics[scale=0.15]{rovergoal2.png} &
+%% \includegraphics[scale=0.15]{rovergoal3.png} \\\hline
+
+%% \includegraphics[scale=0.1]{yes.png} &
+%% \includegraphics[scale=0.1]{no.png} &
+%% \includegraphics[scale=0.1]{yes.png} \\
+
+%% \end{tabular}
+%% }
+
+%% \medskip
+
+%% \end{frame}
+
+
+\begin{frame}{OSP and Our Explanation Problem in Rovers}
 
 \centering
 
 \begin{tikzpicture}
 \node[] (task) at (-6,1) {
 \begin{tikzpicture}
-\node[] (p) at (0,2) {\textbf{Planning Task}};
-\node[] (r1) at (0,-0.3) {\includegraphics[scale=0.06]{rover1.png}};
-\node[] (r2) at (1.5,-0.3) {\includegraphics[scale=0.06]{rover2.png}};
-\node[] (i1) at (-0.5,1) {\includegraphics[scale=0.07]{rovergoal1.png}};
-\node[] (i2) at (0.5,1) {\includegraphics[scale=0.07]{rovergoal2.png}};
-\node[] (i3) at (1.7,1) {\includegraphics[scale=0.07]{rovergoal3.png}};
+\node[] (p) at (0,2) {\textbf{planning task}};
+\node[] (p) at (0,1.4) {soft goals};
+\node[] (i1) at (-0.5,0.8) {\includegraphics[scale=0.07]{rovergoal1.png}};
+\node[] (i2) at (0.5,0.8) {\includegraphics[scale=0.07]{rovergoal2.png}};
+\node[] (i3) at (1.7,0.8) {\includegraphics[scale=0.07]{rovergoal3.png}};
+\node[] (r1) at (0,-0.6) {\includegraphics[scale=0.06]{rover1.png}};
+\node[] (r2) at (1.5,-0.6) {\includegraphics[scale=0.06]{rover2.png}};
 \end{tikzpicture}
 };
 
+\node[] (batterylow) at (-6,-1) {\includegraphics[scale=0.1]{battery-low.png}};
+
 \visible<2->{
-\node[] (p) at (0,2.5) {\textbf{Plan}};
+\node[] (p) at (0,2.5) {\textbf{plan}};
 \node[draw, align=left, fill=white] (p1) at (0,0.9) {
 $drive(R_1,L_1,L2)$\\
 $takeImage(I_1, R_1)$\\
@@ -418,8 +433,11 @@ $takeImage(I_3, R_2)$
 };
 }
 
+% TALK: Not putting this on slide for lack of space, but ``Why?'' of
+% course here means ``Why does the plan not take image $I_2$?''
+%
 \visible<4>{
-\node[] (hw) at (-4.0,-2.5) {\includegraphics[scale=0.2]{human-why.png}};
+\node[] (hw) at (-3.7,-2.5) {\includegraphics[scale=0.2]{human-why.png}};
 }
 \end{tikzpicture}
 	
@@ -437,7 +455,492 @@ $takeImage(I_3, R_2)$
 \section[Framework]{Explanation Framework}
 \subsection*{}
 
-\begin{frame}{}
+\begin{frame}{Plan Properties}
+
+\notesym~Plan properties over soft goals in OSP:
+
+\begin{mydef}{Plan Properties}
+OSP task $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$, \textred{\plans\
+its set of plans}.
+\begin{itemize}
+\item  \defined{Plan property}: propositional formula $\phi$ over 
+atoms $g \in \goalsoft$
+\item \defined{Conjunctive} plan property: $\phi$ has form
+\textred{$\bigwedge_{g \in A} g\allowbreak$} or \textred{$\neg \bigwedge_{g \in B} g$}
+\end{itemize}
+%
+%% A \defined{plan property} is a function $\prop_\phi : \plans \mapsto
+%% \{\true, \false\}$ where $\phi$ is a propositional formula over the
+%% atoms \goalsoft, and $\prop_\phi(\plan) = \true$ iff $\phi$ evaluates
+%% to \true\ under the truth value assignment where $g \in \goalsoft$ is
+%% \true\ iff $g \in \init\apply{\plan}$.
+%% %
+%% $\prop_\phi$ is \defined{conjunctive} if $\phi$ has the form
+%% $\bigwedge_{g \in A} g\allowbreak$ or $\neg \bigwedge_{g \in B} g$.
+%
+\end{mydef}
+
+\bigskip \pause
+
+% TALK: Explain here already that we view plan properties as functions
+% from plans to Booleans: which soft goals does the plan achieve?
+%
+\textbf{Simple special case:} Can use arbitrary functions $\plans \to \{\true, \false\}$
+
+\begin{itemize}
+\item \eg\ temporal plan trajectory constraints
+\item \eg\ deadlines, resource bounds
+\end{itemize}
+
+\medskip \pause
+
+\textbf{Compilation:} Into (additional variables/actions and) goal facts!
+
+\begin{itemize}
+\item \eg\ LTL formulas
+\item Here: action-set properties, easy special case of LTL
+\end{itemize}
+
+\medskip
+
+\end{frame}
+
+
+\begin{frame}{\plans-Entailment}
+
+\textred{\notesym~\plans\ in the role of a knowledge base:}
+
+\begin{mydef}{\plans-Entailment}
+OSP task $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$, \plans\
+its set of \textred{plans \plan}.
+\begin{itemize}
+\item \defined{$\plan$ satisfies $\phi$, $\plan \models \phi$}: if $\phi$ true given truth value
+assignment to $g \in \goalsoft$ defined
+by \textred{$g \in \init\apply{\plan}$ ? $g \mapsto \true$ :
+$g \mapsto \false$}
+\item $\defined{\modelsof{\plans}{\phi}} := \{\plan \mid \plan
+\in \plans, \plan \models \phi\}$
+\item \defined{$\phi$ \plans-entails $\psi$, written
+$\entails{\plans}{\phi}{\psi}$}: if \textred{$\modelsof{\plans}{\phi} \subseteq
+\modelsof{\plans}{\psi}$}
+\end{itemize}
+%
+%% We say that $\plan \in \plans$ \defined{satisfies} a plan property
+%% $\phi$, written $\plan \models \phi$, if $\prop_\phi(\plan) =
+%% \true$. We denote by $\modelsof{\plans}{\phi} := \{\plan \mid \plan
+%% \in \plans, \plan \models \phi\}$ the subset of plans that satisfy
+%% $\phi$.
+%% %
+%% %% We say that \phi\ is \defined{satisfiable} in \plans\ if
+%% %% $\modelsof{\plans}{\phi} \neq \emptyset$.
+%% %
+%% We say that $\phi$ \defined{\plans-entails} $\psi$, written
+%% $\entails{\plans}{\phi}{\psi}$, if $\modelsof{\plans}{\phi} \subseteq
+%% \modelsof{\plans}{\psi}$.
+%
+\end{mydef}
+
+\medskip \pause
+
+\notesym~Special case focus here:
+
+\begin{mydef}{Goal Exclusions}
+%
+\begin{itemize}
+\item \defined{Goal exclusion}: entailment of form
+\textred{$\entails{\plans}{\bigwedge_{g \in A} g}{\neg \bigwedge_{g \in B} g}$}
+\item \defined{Non-dominated}: $\not\exists$ $(A',B') \neq
+(A,B)$: \textred{$A' \subseteq A$}, \textred{$B' \subseteq B$},
+  $\entails{\plans}{\bigwedge_{g \in \textred{A'}}
+  g}{\neg \bigwedge_{g \in \textred{B'}} g}$
+\end{itemize}
+%
+%% A \defined{goal exclusion} is an entailment of the form
+%% $\entails{\plans}{\bigwedge_{g \in A} g}{\neg \bigwedge_{g \in B}
+%%   g}$. 
+%% %
+%% The entailment is \defined{non-dominated} if there is no pair
+%% $(A',B')$ where $A' \subseteq A$, $B' \subseteq B$, $(A',B') \neq
+%% (A,B)$, and $\entails{\plans}{\bigwedge_{a \in A'} a}{\neg
+%%   \bigwedge_{g \in B'} g}$.
+%% %
+%% The entailment is \defined{non-rhs-dominated} if there is no $B'$
+%% where $B' \subsetneq B$ and $\entails{\plans}{\bigwedge_{a \in A}
+%%   a}{\neg \bigwedge_{g \in B'} g}$.
+%
+\end{mydef}
+
+% TALK: A non-dominated goal exclusion has subset-minimal $A$ and
+% $B$. This dominates entailments with larger $A$ and/or $B$ as it has
+% a weaker left-hand side $A$ (smaller conjunction) entailing a
+% stronger right-hand side $\neg B$ (smaller disjunction, after moving
+% the negation inside). If $A$ is fixed, then only the right-hand side
+% $B$ needs be minimal. We will use non-dominated entailments to give
+% more compact explanations.
+
+\medskip
+
+\end{frame}
+
+
+\begin{frame}{\plans-Entailment: Rovers Example}
+
+\visible<2->{
+
+\textbf{\plans-entailment:}
+
+\begin{tikzpicture}
+\node[] (depi2) at (-6.0,2) {
+\includegraphics[scale=0.1]{rovergoal2.png} 
+};
+\node[] (depi23) at (-5.0,2) {$\Rightarrow$};
+\node[] (depi3) at (-4.0,2) {
+\includegraphics[scale=0.1]{rovergoal3.png}
+};
+\node[] (depn3) at (-4.0,2) {
+\includegraphics[scale=0.1]{no.png} 
+};
+%
+%% \draw[thick, ->] (depi2) to (depi3);
+\end{tikzpicture}
+
+}
+
+\visible<3->{
+
+\textbf{Dominated \plans-entailment:}
+
+\begin{tikzpicture}
+\node[] (depi1) at (-6.0,2) {
+\includegraphics[scale=0.1]{rovergoal1.png} 
+};
+\node[] (depi2) at (-4.8,2) {
+\includegraphics[scale=0.1]{rovergoal2.png} 
+};
+\node[] (depi23) at (-3.8,2) {$\Rightarrow$};
+\node[] (depi3) at (-2.8,2) {
+\includegraphics[scale=0.1]{rovergoal3.png}
+};
+\node[] (depn3) at (-2.8,2) {
+\includegraphics[scale=0.1]{no.png} 
+};
+
+%% \draw[thick, ->] (depi2) to (depi3);
+\end{tikzpicture}
+
+}
+
+\vspace{-2.5cm} \hfill \includegraphics[height=0.7\textheight]{rovers-example-low}
+
+\end{frame}
+
+
+\begin{frame}{Global Explanations}
+
+% TALK: Briefly discuss straightforward def. QUESTION: Issues with
+% this? Many plan properties (here: all propositional formulas over
+% soft goals) and many equivalence classes (here: in the worst case,
+% one class for every set of truth-value assignments to the soft
+% goals).
+%
+\notesym~All entailment relations over plan properties in the task:
+
+\begin{mydef}{Global Explanation (GE)}
+%
+OSP task $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$, \plans\
+its set of plans.
+\begin{itemize}
+\item \defined{$\equiv{\plans}{\phi}$}: equivalence class, \ie\ set of $\psi$ with 
+$\modelsof{\plans}{\phi} = \modelsof{\plans}{\psi}$
+\item \defined{Global explanation (GE) for \task}: strict partial order
+over equivalence classes, $\equiv{\plans}{\phi}
+< \equiv{\plans}{\psi}$ iff \textred{$\equiv{\plans}{\phi}
+\neq \equiv{\plans}{\psi}$ and $\entails{\plans}{\phi}{\psi}$}
+\end{itemize}
+%
+%% Denote by $\equiv{\plans}{\phi} := \{\psi \mid \modelsof{\plans}{\phi}
+%% = \modelsof{\plans}{\psi}\}$ the \plans-equivalence class of $\phi$.
+%% %
+%% The \defined{global explanation (GE)} for \task\ is the strict partial
+%% order $\pdo{\plans}$ over the classes $\equiv{\plans}{\phi}$ where
+%% $\equiv{\plans}{\phi} \pdo{\plans} \equiv{\plans}{\psi}$ iff
+%% $\equiv{\plans}{\phi} \neq \equiv{\plans}{\psi}$ and
+%% $\entails{\plans}{\phi}{\psi}$.
+%
+\end{mydef}
+
+\medskip \pause
+
+% TALK: No chains of entailments here, in particular phi and psi
+% cannot entail each other so no equivalence classes needed.
+%
+\notesym~More practical variant for goal exclusions:
+
+\begin{mydef}{Goal-Exclusion GE}
+%
+OSP task $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$, \plans\
+its set of plans.
+\begin{itemize}
+\item \defined{goal-exclusion GE for \task}: strict partial 
+order over conjunctive plan properties induced by
+the \textred{non-dominated goal exclusions
+$\entails{\plans}{\bigwedge_{g \in A} g}{\neg \bigwedge_{g \in B} g}$}
+\end{itemize}
+%
+%% The \defined{goal-exclusion GE} for \task\ is the partial order
+%% $\pdo{\plans}$ over conjunctive plan properties where $\phi
+%% \pdo{\plans} \psi$ iff $\entails{\plans}{\phi}{\psi}$ is a
+%% non-dominated goal exclusion.
+%
+\end{mydef}
+
+\medskip
+
+\end{frame}
+
+
+\begin{frame}{Goal-Exclusion GE: Rovers Example}
+
+% TALK: Brief forward reference to MUGS.
+%
+\visible<2->{
+
+\textbf{All non-dominated goal exclusions:}
+
+\begin{tikzpicture}
+\node[] (depi2) at (-6.0,2) {
+\includegraphics[scale=0.1]{rovergoal2.png} 
+};
+\node[] (depi23) at (-5.0,2) {$\Rightarrow$};
+\node[] (depi3) at (-4.0,2) {
+\includegraphics[scale=0.1]{rovergoal3.png}
+};
+\node[] (depn3) at (-4.0,2) {
+\includegraphics[scale=0.1]{no.png} 
+};
+%
+%% \draw[thick, ->] (depi2) to (depi3);
+\end{tikzpicture}
+
+\vspace{-0.3cm} \begin{tikzpicture}
+\node[] (depi2) at (-6.0,2) {
+\includegraphics[scale=0.1]{rovergoal3.png} 
+};
+\node[] (depi23) at (-5.0,2) {$\Rightarrow$};
+\node[] (depi3) at (-4.0,2) {
+\includegraphics[scale=0.1]{rovergoal2.png}
+};
+\node[] (depn3) at (-4.0,2) {
+\includegraphics[scale=0.1]{no.png} 
+};
+%
+%% \draw[thick, ->] (depi2) to (depi3);
+\end{tikzpicture}
+
+}
+
+\vspace{-1.7cm} \hfill \includegraphics[height=0.7\textheight]{rovers-example-low}
+
+\end{frame}
+
+
+\begin{frame}{Local Explanations}
+
+\notesym~In response to user question ``Why not property $\phi$?'':
+
+\begin{mydef}{Local Explanation (LE)}
+%
+OSP task $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$, \plans\
+its set of plans.
+\begin{itemize}
+\item \defined{Local explanation (LE) for $\phi$}: 
+$\{\psi \mid \entails{\plans}{\phi}{\psi}\}$
+\item \defined{Goal-exclusion LE for $\phi = \bigwedge_{g \in A} g$}: $\{\psi \mid \psi = \neg \bigwedge_{g \in B} g,
+\entails{\plans}{\phi}{\psi} \text{ is non-rhs-dominated}\}$\pause
+\item \defined{Non-rhs-dominated}: $\not\exists$ $B'$: \textred{$B' \subsetneq B$},
+  $\entails{\plans}{\bigwedge_{g \in A}
+  g}{\neg \bigwedge_{g \in \textred{B'}} g}$
+\end{itemize}
+%
+%% For a plan property $\phi$, the \defined{local explanation (LE)} for
+%% $\phi$ is the set $\{\psi \mid \entails{\plans}{\phi}{\psi}\}$ of plan
+%% properties \plans-entailed by $\phi$.
+%% %
+%% For $\phi = \bigwedge_{g \in A} g$, the \defined{goal-exclusion LE}
+%% for $\phi$ is $\{\psi \mid \psi = \neg \bigwedge_{g \in B} g,
+%% \entails{\plans}{\phi}{\psi} \text{ is non-rhs-dominated}\}$.
+%
+%% The entailment is \defined{non-rhs-dominated} if there is no $B'$
+%% where $B' \subsetneq B$ and $\entails{\plans}{\bigwedge_{g \in A}
+%%   g}{\neg \bigwedge_{g \in B'} g}$.
+%
+\end{mydef}
+
+\bigskip \pause
+
+\textbf{Remarks:} 
+
+\begin{itemize}
+\item Smaller and easier to compute than GE (see next section).
+\item Relative to current plan \plan\ in iterative planning: only those 
+$\psi$ where $\plan \not\models \psi$ (\ie\ new properties entailed by
+$\phi$).
+\end{itemize}
+
+\medskip
+
+\end{frame}
+
+
+\begin{frame}{Goal-Exclusion LE: Rovers Example}
+
+\only<1|handout:0>{
+
+\centering
+
+\begin{tikzpicture}
+\node[] (task) at (-6,1) {
+\begin{tikzpicture}
+\node[] (p) at (0,2) {\textbf{planning task}};
+\node[] (p) at (0,1.4) {soft goals};
+\node[] (i1) at (-0.5,0.8) {\includegraphics[scale=0.07]{rovergoal1.png}};
+\node[] (i2) at (0.5,0.8) {\includegraphics[scale=0.07]{rovergoal2.png}};
+\node[] (i3) at (1.7,0.8) {\includegraphics[scale=0.07]{rovergoal3.png}};
+\node[] (r1) at (0,-0.6) {\includegraphics[scale=0.06]{rover1.png}};
+\node[] (r2) at (1.5,-0.6) {\includegraphics[scale=0.06]{rover2.png}};
+\end{tikzpicture}
+};
+
+\node[] (batterylow) at (-6,-1) {\includegraphics[scale=0.1]{battery-low.png}};
+
+\node[] (p) at (0,2.5) {\textbf{plan}};
+\node[draw, align=left, fill=white] (p1) at (0,0.9) {
+$drive(R_1,L_1,L2)$\\
+$takeImage(I_1, R_1)$\\
+$drive(R_2,L_4,L_5)$\\
+$takeImage(I_3, R_2)$
+};
+
+\node[fill=white] (p1) at (-0.0,-1.65) {
+\begin{tabular}{c|c|c}
+\includegraphics[scale=0.07]{rovergoal1.png} &
+\includegraphics[scale=0.07]{rovergoal2.png} &
+\includegraphics[scale=0.07]{rovergoal3.png} \\\hline
+
+\includegraphics[scale=0.05]{yes.png} &
+\includegraphics[scale=0.05]{no.png} &
+\includegraphics[scale=0.05]{yes.png} \\
+
+\end{tabular}
+};
+
+\node[] (hw) at (-3.7,-2.5) {\includegraphics[scale=0.2]{human-why.png}};
+\end{tikzpicture}
+
+}%
+%
+\only<2-|handout:1>{
+
+\textbf{Why does this plan not achieve \hspace{1.4cm}?}
+
+\vspace{-0.9cm} \hspace{5.3cm} \begin{tikzpicture}
+\node[] (depi2) at (-6.0,2) {
+\includegraphics[scale=0.1]{rovergoal2.png} 
+};
+\end{tikzpicture}
+
+\vspace{-0.2cm}
+
+Because  
+
+\vspace{-0.8cm} \hspace{1.05cm} \begin{tikzpicture}
+\node[] (depi2) at (-6.0,2) {
+\includegraphics[scale=0.1]{rovergoal2.png} 
+};
+\node[] (depi23) at (-5.0,2) {$\Rightarrow$};
+\node[] (depi3) at (-4.0,2) {
+\includegraphics[scale=0.1]{rovergoal3.png}
+};
+\node[] (depn3) at (-4.0,2) {
+\includegraphics[scale=0.1]{no.png} 
+};
+\end{tikzpicture}
+
+\vspace{-0.55cm} \hfill \includegraphics[height=0.7\textheight]{rovers-example-low}
+
+}
+
+\end{frame}
+
+
+\begin{frame}{Another Example: Transportation (IPC ``NoMystery'')}
+
+{\centering
+
+\begin{tabular}{cc}
+\begin{minipage}{0.35\textwidth}
+\begin{tikzpicture}[scale=0.55]
+	\scriptsize
+  \node[draw, circle, inner sep=1pt, label=above:{\textcolor{blue}{$P_0, P_1,P_2$}}] (l0) at (0,0) {$L_0$};
+  \node[draw, circle, inner sep=1pt, label=right:{$T_1$}] (l1) at (4,-1) {$L_1$};
+  \node[draw, circle, inner sep=1pt] (l2) at (6,0) {$L_2$};
+  \node[draw, circle, inner sep=1pt, label=below:{\textcolor{red}{$P_1$}}] (l3) at (6,-3) {$L_3$};
+  \node[draw, circle, inner sep=1pt, label=above:{\textcolor{red}{$P_0$}}] (l4) at (2,-2) {$L_4$};
+  \node[draw, circle, inner sep=1pt, label=below:{$T_0$ \textcolor{red}{$P_2$}}] (l5) at (0,-3) {$L_5$};
+
+  \draw[thick] (l0) to node[above] {5} (l2);
+  \draw[thick] (l0) to node[above, pos=0.75] {2} (l1);
+  \draw[thick] (l0) to node[below, pos=0.4] {3} (l4);
+  \draw[thick] (l0) to node[left] {4} (l5);
+  \draw[thick] (l2) to node[right] {1} (l3);
+  \draw[thick] (l4) to node[below, pos=0.6] {2} (l1);
+  \draw[thick] (l4) to node[above] {5} (l3);
+  \draw[thick] (l5) to node[below] {5} (l3);
+  \draw[thick] (l4) to node[above] {4} (l5);
+\end{tikzpicture}
+\end{minipage} &
+\hspace{-0.4cm} \begin{minipage}{0.56\textwidth}
+\scriptsize
+
+\begin{itemize}
+\item Variables \vars: $T_1, f_1, T_2, f_2, P_0, P_1, P_2$
+\item Actions \acts: $drive(T_i,L_x,L_y)$, $load(T_i,P_j,L_x)$, $unload(T_i,P_j,L_x)$
+
+      Driving consumes fuel as indicated
+\item Initial state \init: as shown; \textred{$\init(f_1)=13, \init(f_2)=0$}
+\item Goal \goalsoft: $at(P_0,L_4), at(P_1,L_3), at(P_2,L_5)$
+\end{itemize}
+
+\end{minipage}
+\end{tabular}
+
+}
+
+\bigskip \pause
+
+\textbf{Non-dominated goal exclusions:} 
+
+\pause \prehandout{\bigskip\bigskip\bigskip\bigskip\bigskip\bigskip} \noprehandout{
+
+\begin{itemize}
+\item $\entails{\plans}{P_0}{\neg (P_1 \wedge P_2)}$
+\item $\entails{\plans}{P_1}{\neg (P_0 \wedge P_2)}$
+\item $\entails{\plans}{P_2}{\neg (P_0 \wedge P_1)}$
+\end{itemize}
+
+\pause
+
+\notesym~In other words: ``\goalsoft\ is not solvable 
+as a whole, but each of its subsets is''.
+
+}
+
+\medskip
 
 \end{frame}
 
@@ -453,7 +956,196 @@ $takeImage(I_3, R_2)$
 \section[Computing]{Computing Explanations}
 \subsection*{}
 
-\begin{frame}{}
+\begin{frame}{Non-Dominated Goal Exclusions from MUGS}
+
+\begin{mydef}{Minimal Unsolvable Goal Subset (MUGS)}
+%
+OSP task $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$, \plans\
+its set of plans.
+\begin{itemize}
+\item \defined{Minimal unsolvable goal subset (MUGS)}: unsolvable 
+$\goal \subseteq \goalsoft$, every $\goal' \subsetneq \goal$ solvable
+\end{itemize}
+%
+\end{mydef}
+
+\medskip \pause
+
+% TALK: Previous defs somewhat of an overkill given it all boils down
+% to MUGS. But: this is so only in the special case of goal
+% exclusions. In general, plan-property dependencies always equivalent
+% to unsat of conjunction as always for entailment; but not
+% necessarily a more compact formulation in the form of conflict sets
+% as here.
+%
+\begin{myprop}{Non-dominated Goal Exclusions from MUGS}
+%
+\textred{Non-dominated $\entails{\plans}{\bigwedge_{g \in A} g}{\neg \bigwedge_{g \in B} g}$
+  $\Leftrightarrow$ $A \cup B$ MUGS}
+%
+\end{myprop}
+
+\vspace{-0.1cm}
+
+\begin{proof}
+%
+A \plans-entailment $\entails{\plans}{\bigwedge_{g \in A} g}{\neg
+  \bigwedge_{g \in B} g}$ clearly holds iff $A \cup B$ is
+unsolvable. Non-dominated entailments result from set-inclusion
+minimal $A$ and $B$, corresponding to the set-inclusion minimality of
+MUGS.
+%
+\end{proof}
+
+\notesym~Compute and represent goal-exclusion GE via MUGs.
+
+\medskip
+
+\end{frame}
+
+
+\begin{frame}{Systematic Weakening}
+
+\vspace{-0.2cm}
+
+\begin{enumerate}
+\item Start with \goalsoft 
+\item Select open node $\goal$, call planner
+  to test solvability, cache result, expand $\goal$ if unsolvable
+\item children of $\goal$: $\goal' \subset \goal$ where $|\goal'| = |\goal|-1$
+\end{enumerate}
+
+\smallskip
+
+{\centering
+
+\begin{tikzpicture}
+\visible<1>{
+\node[draw] (all) at (0,5) {\rovergoal{1} \rovergoal{2} \rovergoal{3}};
+}
+\visible<2->{
+\node[draw, fill=mLightBrown!40] (all) at (0,5) {\rovergoal{1} \rovergoal{2} \rovergoal{3}};
+}
+
+\visible<3>{
+\node[draw] (01) at (-3,3) {\rovergoal{1} \rovergoal{2}};
+\node[draw] (02) at (0,3) {\rovergoal{1} \rovergoal{3}};
+\node[draw] (12) at (3,3) {\rovergoal{2} \rovergoal{3}};
+}
+\visible<4-6>{
+\node[draw, fill=mLightBrown!40] (01) at (-3,3) {\rovergoal{1} \rovergoal{2}};
+\node[draw, fill=mLightGreen!40] (02) at (0,3) {\rovergoal{1} \rovergoal{3}};
+\node[draw, fill=mLightBrown!40] (12) at (3,3) {\rovergoal{2} \rovergoal{3}};
+}
+\visible<7->{
+\node[draw, fill=mLightBrown!40, line width=2pt] (01) at (-3,3) {\rovergoal{1} \rovergoal{2}};
+\node[draw, fill=mLightGreen!40] (02) at (0,3) {\rovergoal{1} \rovergoal{3}};
+\node[draw, fill=mLightBrown!40, line width=2pt] (12) at (3,3) {\rovergoal{2} \rovergoal{3}};
+}
+
+\visible<5>{
+\node[draw] (0) at (-2,1) {\rovergoal{1}};
+\node[draw] (1) at (0,1) {\rovergoal{2}};
+\node[draw] (2) at (2,1) {\rovergoal{3}};
+}	
+\visible<6->{
+\node[draw, fill=mLightGreen!40] (0) at (-2,1) {\rovergoal{1}};
+\node[draw, fill=mLightGreen!40] (1) at (0,1) {\rovergoal{2}};
+\node[draw, fill=mLightGreen!40] (2) at (2,1) {\rovergoal{3}};
+}
+
+\visible<3->{
+\draw[thick, ->] (all) to (01);
+\draw[thick, ->] (all) to (02);
+\draw[thick, ->] (all) to (12);
+}
+\visible<5->{
+\draw[thick, ->] (01) to (0);
+\draw[thick, ->] (01) to (1);
+\draw[thick, ->] (12) to (2);
+}
+\end{tikzpicture}
+
+}
+
+\medskip\smallskip
+
+\end{frame}
+
+
+\begin{frame}{Experiments: Global Explanations}
+
+\centering
+
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{0.8}
+
+\tiny
+
+\input{data/table-ipc.tex} 
+
+\end{frame}
+
+
+\begin{frame}{Local Explanations from MUGS}
+
+\notesym~In response to user question ``Why not property $\bigwedge_{g \in A} g$?'':
+
+\begin{myprop}{Non-rhs-dominated Goal Exclusions from MUGS}
+%
+OSP task $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$, \plans\
+its set of plans.
+
+Modified task $\task' :=
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\textred{\goalhard
+\cup A},\allowbreak\textred{\goalsoft \setminus
+A},\allowbreak\costbound)$.
+
+Then: \textred{Non-rhs-dominated $\entails{\plans}{\bigwedge_{g \in A}
+  g}{\neg \bigwedge_{g \in B} g}$ $\Leftrightarrow$ $B$ MUGS in
+  $\task'$}.
+%
+\end{myprop}
+
+\bigskip \smallskip \pause
+
+% TALK: Why is this easier than before?
+%
+\textbf{This is easier \& smaller because:} \pause \prehandout{\bigskip\bigskip\bigskip\bigskip} \noprehandout{Less soft goals!
+
+\begin{itemize}
+\item Search tree size worst-case exponential in $|\goalsoft|$
+\item \#MUGS worst-case exponential in $|\goalsoft|$
+\end{itemize}
+
+}
+
+\medskip
+
+\end{frame}
+
+
+\begin{frame}{Experiments: Local Explanations}
+
+\notesym~Performance and \#MUGS \textred{as function of question size $|A|$}
+in ``Why not property $\bigwedge_{g \in A} g$?'':
+
+\medskip
+
+\small
+
+\centering
+
+\begin{tabular}{cc}
+\begin{minipage}{0.45\textwidth}
+\includegraphics[height=4.2cm]{plot-ipc-performance.png}
+\end{minipage} &
+\hspace{0.5cm} \begin{minipage}{0.45\textwidth}
+\includegraphics[height=4.2cm]{plot-ipc-mugs.png}
+\end{minipage}
+\end{tabular}
 
 \end{frame}
 
@@ -469,23 +1161,444 @@ $takeImage(I_3, R_2)$
 \section[Compilations]{Compilations}
 \subsection*{}
 
-\begin{frame}{}
+\begin{frame}{We Want More General Plan Properties!}
+
+\centering
+
+\begin{tikzpicture}
+\node[] (task) at (0,-0.7) {
+\resizebox{!}{5cm}{%
+\begin{tikzpicture}
+\node[] (t) at (1.5,2) {\includegraphics[scale=0.07]{rover2.png}};
+\node[] (t) at (-5,-2.5) {\includegraphics[scale=0.07]{rover1.png}};
+
+\node[] (m) at (0,0) {\includegraphics[scale=0.2]{mars.png}};
+
+\node[draw, circle, inner sep=3pt] (l1) at (-3,-3) {$L_1$};
+\node[draw, circle, inner sep=3pt] (l2) at (-2.1,1.3) {$L_2$};
+\node[draw, circle, inner sep=3pt] (l3) at (-0.5,-1) {$L_3$};
+\node[draw, circle, inner sep=3pt] (l4) at (3,2) {$L_4$};
+\node[draw, circle, inner sep=3pt] (l5) at (1.8,0) {$L_5$};
+\node[draw, circle, inner sep=3pt] (l6) at (3.2,-2.5) {$L_6$};
+
+\draw[thick] (l1) to (l2);
+\draw[thick] (l1) to (l3);
+\draw[thick] (l2) to (l3);
+\draw[thick] (l3) to (l5);
+\draw[thick] (l4) to (l5);
+\draw[thick] (l4) to (l6);
+\draw[thick] (l5) to (l6);
+\visible<2->{
+\draw[thick, red, ->, line width=0.1cm] (l1) to (l2);
+\draw[thick, mLightGreen, ->, line width=0.1cm] (l1) to (l3);
+\draw[thick, mLightGreen, ->, line width=0.1cm] (l3) to (l2);
+}
+
+\node[] (g) at (-1.9,-4) {\Large \textbf{goal}:};
+\node[] (i1) at (-0.5,-4) {\includegraphics[scale=0.1]{rovergoal1.png}};
+\node[] (i2) at (0.8,-4) {\includegraphics[scale=0.1]{rovergoal2.png}};
+\node[] (i3) at (2.5,-4) {\includegraphics[scale=0.1]{rovergoal3.png}};
+\end{tikzpicture}
+}
+};
+
+\node[draw, align=left, fill=white] (plan) at (-1,3) {
+\scriptsize
+$drive(R_1,L_1,L2)$\\[-0.2cm]
+\scriptsize
+$takeImage(I_1,R_1)$\\[-0.2cm]
+\scriptsize
+$drive(R_2,L_4,L_5)$\\[-0.2cm]
+\scriptsize
+$takeImage(I_3,R_2)$\\[-0.2cm]
+\scriptsize
+$drive(R_2,L_5,L_6)$\\[-0.2cm]
+\scriptsize
+$takeImage(I_2,R_2)$
+};
+
+\node[] (human_why) at (-4,1.5) {\includegraphics[scale=0.2]{human-why.png}};
+\node[] (ai_exp) at (4,1.5) {\includegraphics[scale=0.2]{robot-exp.png}};
+
+\visible<3->{
+\node[] (p) at (4,3.5) {
+\resizebox{!}{1.5cm}{%
+\begin{tikzpicture}
+\node[draw, inner sep=1pt] (p1) at (0.2,0) {
+\dontuseconnection{1}{1}{2}
+};
+\node[] (depp1p2) at (2.7,0) {\Huge $\Rightarrow$};
+\node[draw, inner sep=1pt] (p2) at (5,0) {
+\specificrover{1}{1}
+};
+\node[] (no) at (5,0.9) {\includegraphics[scale=0.1]{no.png}}; 
+%\draw[thick, ->] (p1) to (p2);
+\end{tikzpicture}
+}
+};
+}
+
+\end{tikzpicture}
 
 \end{frame}
 
 
+\begin{frame}{Compilation!}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Current Results
+\notesym~Compile more general plan properties into (additional 
+variables/actions and) goal facts! For example:
+
+\begin{itemize}
+\item Precondition and goal formulas, conditional effects 
+{\footnotesize [\cite{gazen:knoblock:ecp-97,nebel:jair-00}]}
+\item LTL formulas over plan trajectory {\footnotesize [\cite{edelkamp:icaps-06,baier:etal:ai-09}]}
+\item Initial state uncertainty {\footnotesize [\cite{palacios:geffner:jair-09}]}
+\end{itemize}
+
+\medskip \pause
+
+% TALK: Also implemented LTL already, performance Ok optimizations in
+% the making.
 %
-%%% Timing: XX min
+\notesym~Here: effective-to-compile special case of LTL
 
-\section[Results]{Current Results}
-\subsection*{}
+\begin{mydef}{Action-Set Properties}
+%
+OSP task $\task =
+(\vars,\allowbreak\acts,\allowbreak\cost,\allowbreak\init,\allowbreak\goalhard,\allowbreak\goalsoft,\allowbreak\costbound)$, \plans\
+its set of plans, \textred{$\acts_1, \dots, \acts_n
+\subseteq \acts$}.
+\begin{itemize}
+\item \defined{Action-set property}: propositional formula $\phi$ over 
+atoms $\acts_1, \dots, \acts_n$
+\item \defined{$\plan \models \phi$}: if $\phi$ true given truth value
+assignment \textred{$\acts_i \cap \{a_1, \dots, a_k\} \neq \emptyset$
+?  $\acts_i \mapsto \true$ : $\acts_i \mapsto \false$} where $\plan
+= \langle a_1, \dots, a_k\rangle$
+\end{itemize}
+%
+%% An \defined{action-set property} for \task\ and $\acts_1, \dots,
+%% \acts_n$ is a function $\prop_\phi : \plans \to \{\true, \false\}$
+%% where $\phi$ is a propositional formula over the atoms $\acts_1,
+%% \dots, \acts_n$, and $\prop_\phi(\plan) = \true$ iff $\phi$ evaluates
+%% to \true\ under the truth value assignment where $\acts_i$ is
+%% \true\ iff $\plan$ contains at least one action from $\acts_i$.
+%
+\end{mydef}
+
+\medskip
+
+\end{frame}
+
+
+\begin{frame}{Rovers Action-Set Properties}
+
+\centering
+
+% TALK: Energy limit compilation: actins take fuel-level
+% parameters. Order can also esily be compiled (e.g. goal fact set
+% when left image is taken while right image has not yet been taken).
+%
+\begin{tikzpicture}
+\node[draw,inner sep=2pt] (p1) at (-0.5,-3.5) {\samerover{1}{2}};
+\node[draw,inner sep=2pt] (p3) at (3,-3.5) {\energylimit{1}};
+\node[] (p2) at (6.5,-3.5) {\orderprop{1}{2}};
+\node[] (p5no) at (6.5,-3.5) {
+\includegraphics[scale=0.2]{no.png} 
+};
+\node[draw,inner sep=2pt] (p4) at (-0.5,0) {\specificrover{1}{2}};
+\node[draw,inner sep=2pt] (p5) at (3,0) {\useconnection{1}{x}{y}};
+\node[draw,inner sep=2pt] (p6) at (6.5,0) {\dontuseconnection{1}{x}{y}};
+\end{tikzpicture}
+
+\end{frame}
+
+
+\begin{frame}{Rovers Action-Set Properties: ``Same Rover''}
+
+\centering
+
+\begin{tikzpicture}
+\node[draw] (p1) at (-1,-0.7) {
+\resizebox{!}{2cm}{%
+\samerover{1}{2}
+}
+};
+
+\visible<2->{
+\node[] (s1) at (1.0,1.5) {\Large Action sets:};
+\node[] (s2) at (1.0,-3.0) {\Large Test formula:};
+}
+
+\visible<3->{
+\node[] (r1) at (3.5,1.5) {\includegraphics[scale=0.05]{rover1.png}};
+\node[align=left] (actionsr0) at (6.5,1.5) {
+$A_1 = \{takeImage(I_1,R_1),$\\
+$takeImage(I_2,R_1)\}$
+};
+
+\node[] (r2) at (3.5,-0.5) {\includegraphics[scale=0.05]{rover2.png}};
+\node[align=left] (actionsr1) at (6.5,-0.5) {
+$A_2 = \{takeImage(I_1,R_2),$\\
+$takeImage(I_2,R_2)\}$
+};
+}
+
+\visible<4->{
+\node[] (s2) at (5,-3.0) {\huge $A_1 \otimes A_2$};
+}
+\end{tikzpicture}
+
+\end{frame}
+
+
+\begin{frame}{Action-Set Property Compilation}
+
+\textbf{Given:} \task, \plans, and $\acts_1, \dots, \acts_n$
+
+\bigskip
+
+\textbf{Construct:} $\task'$
+
+\begin{itemize}
+\item Booleans \textred{$\mathit{isUsed}_i$}, initially
+  \false, set to \true\ by any action from $\acts_i$;
+\item formula-evaluation state variables and actions
+  evaluating each $\prop_\phi$ based on these, setting Boolean flags
+  \textred{$\mathit{isTrue}_\phi$};
+\item separate 1.\ \textred{planning phase}
+  vs.\ 2.\ \textred{formula-evaluation phase}, switch action from 1.\ to
+  2.\ enabled when \goalhard\ is satisfied.
+\end{itemize}
+
+\pause
+
+$\Rightarrow$ planning-phase prefixes in $\task'$ one-to-one $\plans$;
+given such prefix $\plan$, evaluation phase in $\task'$ can achieve
+$\mathit{isTrue}_\phi$ iff $\plan \models \phi$.
+
+\end{frame}
+
+
+\begin{frame}{Rovers ``Same Rover'' Compilation: Illustration}
+
+\begin{center}
+\begin{tikzpicture}
+\only<1-3>{
+\node[align=left] (actionsr0) at (-1,1.5) {
+$A_1 = \{takeImage(I_1,R_1),$\\
+$takeImage(I_2,R_1)\}$
+};
+}
+\only<4-5>{
+\node[align=left, mLightGreen] (actionsr0) at (-1,1.5) {
+$A_1 = \{takeImage(I_1,R_1),$\\
+$takeImage(I_2,R_1)\}$
+};
+}
+\only<6->{
+\node[align=left] (actionsr0) at (-1,1.5) {
+$A_1 = \{takeImage(I_1,R_1),$\\
+$takeImage(I_2,R_1)\}$
+};
+}
+
+\only<1-6>{
+\node[align=left] (actionsr1) at (-1,-0.5) {
+$A_2 = \{takeImage(I_1,R_2),$\\
+$takeImage(I_2,R_2)\}$
+};
+}
+\only<7-8>{
+\node[align=left, mLightGreen] (actionsr1) at (-1,-0.5) {
+$A_2 = \{takeImage(I_1,R_2),$\\
+$takeImage(I_2,R_2)\}$
+};
+}
+\only<9->{
+\node[align=left] (actionsr1) at (-1,-0.5) {
+$A_2 = \{takeImage(I_1,R_2),$\\
+$takeImage(I_2,R_2)\}$
+};
+}
+
+\node[] (formula) at (-1,-3.1) {\huge $A_1 \otimes A_2$};
+
+
+\visible<2->{
+\node[draw, minimum height=3.5cm, minimum width=3cm, fill=white] (p3) at (5.4,0.4) {};
+\node[draw, minimum height=3.5cm, minimum width=3cm, fill=white] (p2) at (5.2,0.2) {};
+\node[draw, align=left, fill=white] (p1) at (5,0) {
+$drive(R_1,L_1,L2)$\\
+\only<-3|handout:1>{$takeImage(I_1,R_1)$}\only<4-5|handout:0>{\textcolor{mLightGreen}{$takeImage(I_1,R_1)$}}\only<6-|handout:0>{$takeImage(I_1,R_1)$}\\
+$drive(R_2,L_4,L_6)$\\
+\only<-6|handout:1>{$takeImage(I_2,R_2)$}\only<7-8|handout:0>{\textcolor{mLightGreen}{$takeImage(I_2,R_2)$}}\only<9-|handout:0>{$takeImage(I_2,R_2)$}\\
+$drive(R_2,L_6,L_5)$\\
+$\cdots$
+};
+}
+\draw (1.5,3) to (1.5,-4);
+\visible<3->{
+\node[] (table) at (4,-3){
+\begin{tabular}{l|c}
+& used\\\hline
+$A_1$ & \visible<5->{$\checkmark$}\\\hline
+$A_2$ & \visible<8->{$\checkmark$}\\
+\end{tabular}
+};
+}
+\visible<10->{
+\node[] (no) at (5.5,-3) {\includegraphics[scale=0.1]{no.png}};
+}
+\end{tikzpicture}
+\end{center}
+
+\end{frame}
+
 
 \begin{frame}{}
+
+\centering
+
+\resizebox{!}{6cm}{%
+\begin{tikzpicture}
+\node[] (gdt) at (-2,5.5) {\textbf{MUGS}};
+\node[] (gd) at (-2,4){
+\resizebox{!}{2cm}{%
+\begin{tikzpicture}
+\node[draw, fill=mLightBrown!40] (all) at (0,5) {\rovergoal{1} \rovergoal{2} \rovergoal{3}};
+\node[draw, fill=mLightBrown!40] (01) at (-3,3) {\rovergoal{1} \rovergoal{2}};
+\node[draw, fill=mLightGreen!40] (02) at (0,3) {\rovergoal{1} \rovergoal{3}};
+\node[draw, fill=mLightBrown!40] (12) at (3,3) {\rovergoal{2} \rovergoal{3}};
+\node[draw, fill=mLightGreen!40] (0) at (-2,1) {\rovergoal{1}};
+\node[draw, fill=mLightGreen!40] (1) at (0,1) {\rovergoal{2}};
+\node[draw, fill=mLightGreen!40] (2) at (2,1) {\rovergoal{3}};
+
+\draw[thick, ->] (all) to (01);
+\draw[thick, ->] (all) to (02);
+\draw[thick, ->] (all) to (12);
+\draw[thick, ->] (01) to (0);
+\draw[thick, ->] (01) to (1);
+\draw[thick, ->] (12) to (2);
+\end{tikzpicture}
+}
+};
+\node[fill=mLightBrown!30] (mugs) at (5,4){
+\resizebox{!}{2cm}{%
+\begin{tikzpicture}
+%% \node[draw, inner sep=1pt] (p) at (-3,0) {
+%% \specificrover{1}{2}
+%% };
+%% \node[draw, inner sep=1pt] (p1) at (-0.3,0) {
+%% \samerover{1}{2}
+%% };
+%
+\node[draw, inner sep=1pt] (p1) at (-0.3,0) {
+\specificrover{1}{2}
+};
+
+\node[draw, inner sep=1pt] (p1) at (3,0) {
+\dontuseconnection{1}{1}{2}
+};
+\end{tikzpicture}
+}
+};
+\draw[thick] (-4,2) to (9,2);
+\visible<2->{
+\node[draw, inner sep=1pt] (p4) at (0.2,0) {
+\dontuseconnection{1}{1}{2}
+%\specificrover{1}{2}
+};
+\node[] (depp4p1) at (3.0,0) {\Huge $\Rightarrow$};
+\node[draw, inner sep=1pt] (p1) at (5.4,0) {
+%\samerover{1}{2}
+\specificrover{1}{2}
+};
+\node[] (not) at (5.4,0) {\includegraphics[scale=0.3]{no.png}};
+
+%\draw[thick, ->] (p4) to (p1);
+}
+\end{tikzpicture}
+}
+
+\end{frame}
+
+
+\begin{frame}{Transportation Example (NoMystery)}
+
+{\centering
+
+\begin{tabular}{cc}
+\begin{minipage}{0.35\textwidth}
+\begin{tikzpicture}[scale=0.55]
+	\scriptsize
+  \node[draw, circle, inner sep=1pt, label=above:{\textcolor{blue}{$P_0, P_1,P_2$}}] (l0) at (0,0) {$L_0$};
+  \node[draw, circle, inner sep=1pt, label=right:{$T_1$}] (l1) at (4,-1) {$L_1$};
+  \node[draw, circle, inner sep=1pt] (l2) at (6,0) {$L_2$};
+  \node[draw, circle, inner sep=1pt, label=below:{\textcolor{red}{$P_1$}}] (l3) at (6,-3) {$L_3$};
+  \node[draw, circle, inner sep=1pt, label=above:{\textcolor{red}{$P_0$}}] (l4) at (2,-2) {$L_4$};
+  \node[draw, circle, inner sep=1pt, label=below:{$T_0$ \textcolor{red}{$P_2$}}] (l5) at (0,-3) {$L_5$};
+
+  \draw[thick] (l0) to node[above] {5} (l2);
+  \draw[thick] (l0) to node[above, pos=0.75] {2} (l1);
+  \draw[thick] (l0) to node[below, pos=0.4] {3} (l4);
+  \draw[thick] (l0) to node[left] {4} (l5);
+  \draw[thick] (l2) to node[right] {1} (l3);
+  \draw[thick] (l4) to node[below, pos=0.6] {2} (l1);
+  \draw[thick] (l4) to node[above] {5} (l3);
+  \draw[thick] (l5) to node[below] {5} (l3);
+  \draw[thick] (l4) to node[above] {4} (l5);
+\end{tikzpicture}
+\end{minipage} &
+\hspace{-0.4cm} \begin{minipage}{0.56\textwidth}
+\scriptsize
+
+\begin{itemize}
+\item Variables \vars: $T_1, f_1, T_2, f_2, P_0, P_1, P_2$
+\item Actions \acts: $drive(T_i,L_x,L_y)$, $load(T_i,P_j,L_x)$, $unload(T_i,P_j,L_x)$
+
+      Driving consumes fuel as indicated
+\item Initial state \init: as shown; \textred{$\init(f_1)=16, \init(f_2)=7$}
+\item Goal \goalsoft: $at(P_0,L_4), at(P_1,L_3), at(P_2,L_5)$
+\end{itemize}
+
+\end{minipage}
+\end{tabular}
+
+}
+
+\bigskip \pause
+
+\textbf{Example action-set property analysis:} 
+
+\begin{itemize}
+\item 1.\ uses $T_0$ $(L_2,L_3)$; 2.\ same truck 
+$P_1$ $P_2$; 3.\ uses $T_0$ $(L_4,L_3)$; 4.\ same truck $P_2$ $P_0$;
+5.\ doesn't use $T_0$ $(L_0,L_5)$; 6.\ uses $T_1$ $(L_5,L_4)$.
+\item MUGS: \pause 7, each of size 3, including $\{5, 2, 4\}$.
+\end{itemize}
+
+\textred{\notesym~User question ``Why do you not avoid the road
+$L_0-L_5$ (which has a lot of traffic at the moment)?''} \pause
+\textblue{``Because if you don't use that road, then you cannot deliver all
+packages with a single truck.''}
+
+\medskip
+
+\end{frame}
+
+
+\begin{frame}{Experiments: Global Explanations}
+
+\notesym~Blocksworld, NoMystery, Rovers, TPP (top left to bottom right):
+
+\centering
+
+\medskip
+
+\includegraphics[height=0.72\textheight]{plot-actionsetprops-global-coverage}
+
+\smallskip
 
 \end{frame}
 
@@ -498,7 +1611,7 @@ $takeImage(I_3, R_2)$
 %
 %%% Timing: XX min
 
-\section[NoGood Learning]{NoGood Learning in State Space}
+\section[NoGoods]{NoGood Learning in State Space}
 \subsection*{}
 
 \begin{frame}{}

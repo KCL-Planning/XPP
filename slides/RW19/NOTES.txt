@@ -54,18 +54,19 @@ Follow AAAI submission. In framework section, point to the more
 general definitions where relevant. Add some material on nogood
 learning if time. Hence:
 
-=== Introduction (AAAI sec 1, 2: motivate approach, introduce OSP)
+=== Introduction (AAAI sec 1: motivate approach)
+
+=== OSP (definition, example)
 
 === Explanation Framework (AAAI sec 3)
 
 === Computing Explanations (AAAI sec 4, keep brief, explain as finding
-borderline in lattice of goal formulas)
+borderline in lattice of goal formulas; briefly give empirical results)
 
 === Compilations (AAAI sec 5, start with LTL and known compilations,
 mention prelim results, then proceed to special case action-set
-properties with very effective compilation)
-
-=== Results (AAAI sec 6: summarize experiments)
+properties with very effective compilation; briefly give empirical
+results)
 
 === NoGood Learning in State Space (use previous slides and Marcel's
 material, scale level of detail depending on expected timing)
