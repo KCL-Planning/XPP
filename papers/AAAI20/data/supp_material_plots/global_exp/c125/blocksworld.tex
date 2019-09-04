@@ -1,0 +1,121 @@
+    \begin{axis}[
+    width = 5cm,
+    height=4cm,
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.07,
+    legend columns=1,
+    ybar,
+    bar width=1pt,
+    ymin = 0,
+    ymax = 10,
+	compat=1.6,
+	title={},
+	title style={yshift=-1.5ex},
+	%ylabel=goals 06,
+	title=Blocksworld,
+	at={(0,0)},
+	xtick= {1,5,10},
+]
+\addplot+[ybar, bar shift =-4.0pt, red,
+]
+plot coordinates {
+(07, 2) %c_125
+(08, 0) %c_125
+(03, 10) %c_125
+(10, 0) %c_125
+(06, 3) %c_125
+(09, 0) %c_125
+(02, 10) %c_125
+(05, 5) %c_125
+(04, 7) %c_125
+(01, 10) %c_125
+};
+\label{plot:props_hff_bu_53}
+\addplot+[ybar, bar shift =-2.0pt, blue,
+]
+plot coordinates {
+(07, 3) %c_125
+(08, 1) %c_125
+(03, 10) %c_125
+(10, 0) %c_125
+(06, 6) %c_125
+(09, 4) %c_125
+(02, 10) %c_125
+(05, 10) %c_125
+(04, 10) %c_125
+(01, 10) %c_125
+};
+\label{plot:props_hff_td_53}
+\addplot+[ybar, bar shift =0.0pt, green,
+]
+plot coordinates {
+(07, 0) %c_125
+(08, 0) %c_125
+(03, 6) %c_125
+(10, 0) %c_125
+(06, 1) %c_125
+(09, 0) %c_125
+(02, 8) %c_125
+(05, 4) %c_125
+(04, 4) %c_125
+(01, 9) %c_125
+};
+\label{plot:props_trap_bu_53}
+\addplot+[ybar, bar shift =2.0pt, orange,
+]
+plot coordinates {
+(07, 0) %c_125
+(08, 0) %c_125
+(03, 6) %c_125
+(10, 0) %c_125
+(06, 2) %c_125
+(09, 0) %c_125
+(02, 9) %c_125
+(05, 4) %c_125
+(04, 4) %c_125
+(01, 9) %c_125
+};
+\label{plot:props_trap_td_53}
+
+%lmcut
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.15cm, black,
+]
+plot coordinates {
+(02, 10)
+(01, 10)
+(04, 10)
+(03, 10)
+(07, 10)
+(08, 10)
+(06, 10)
+(10, 10)
+(05, 10)
+(09, 10)
+};
+
+%trap first meta node top down
+\addplot+[only marks, mark = -, mark options = {thick, black}, mark size = 0.15cm, black,
+]
+plot coordinates {
+(01, 9)
+(02, 9)
+(03, 6)
+(04, 4)
+(05, 4)
+(06, 2)
+(07, 0)
+(08, 0)
+(09, 0)
+(10, 2)
+};
+    \end{axis}
+    \hfill
+    
+%\node[draw, align=center] (test) at (2,-2) {
+%\ref{plot:props_hff_bu_53} props-hff-bu\\
+%\ref{plot:props_hff_td_53} props-hff-td\\
+%\ref{plot:props_trap_bu_53} props-trap-bu\\
+%\ref{plot:props_trap_td_53} props-trap-td\\
+%};
+
+

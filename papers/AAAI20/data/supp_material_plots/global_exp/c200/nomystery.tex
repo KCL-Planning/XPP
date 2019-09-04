@@ -1,0 +1,116 @@
+\begin{axis}[
+    width = 5cm,
+    height=4cm,
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.1,
+    legend columns=1,
+    ybar,
+    bar width=1pt,
+    ymin = 0,
+    ymax = 10,
+	compat=1.6,
+	title=NoMystery,
+	title style={yshift=-1.5ex},
+	xtick= {1,5,10},
+	at={(4cm,0cm)},
+]
+\addplot+[ybar, bar shift =-4.0pt, red,
+]
+plot coordinates {
+(01, 10) %c_200
+(02, 9) %c_200
+(06, 1) %c_200
+(07, 0) %c_200
+(03, 6) %c_200
+(08, 0) %c_200
+(10, 0) %c_200
+(09, 0) %c_200
+(04, 4) %c_200
+(05, 3) %c_200
+};
+\label{plot:props_bu_hff_24}
+\addplot+[ybar, bar shift =-2.0pt, blue,
+]
+plot coordinates {
+(01, 10) %c_200
+(02, 10) %c_200
+(06, 5) %c_200
+(07, 4) %c_200
+(10, 1) %c_200
+(08, 3) %c_200
+(03, 8) %c_200
+(09, 1) %c_200
+(04, 8) %c_200
+(05, 7) %c_200
+};
+\label{plot:props_td_hff_24}
+\addplot+[ybar, bar shift =0.0pt, green,
+]
+plot coordinates {
+(01, 10) %c_200
+(02, 10) %c_200
+(06, 4) %c_200
+(07, 3) %c_200
+(03, 8) %c_200
+(08, 3) %c_200
+(10, 2) %c_200
+(09, 2) %c_200
+(04, 6) %c_200
+(05, 4) %c_200
+};
+\label{plot:props_bu_trap_24}
+\addplot+[ybar, bar shift =2.0pt, orange,
+]
+plot coordinates {
+(01, 10) %c_200
+(02, 10) %c_200
+(06, 7) %c_200
+(07, 6) %c_200
+(03, 8) %c_200
+(08, 4) %c_200
+(10, 3) %c_200
+(09, 3) %c_200
+(04, 7) %c_200
+(05, 7) %c_200
+};
+\label{plot:props_td_trap_24}
+
+%lmcut
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.15cm, black,
+]
+plot coordinates {
+(02, 10)
+(01, 10)
+(04, 10)
+(03, 10)
+(07, 10)
+(08, 10)
+(06, 10)
+(10, 10)
+(05, 10)
+(09, 10)
+};
+
+%trap first meta node top down
+\addplot+[only marks, mark = -, mark options = {thick, black}, mark size = 0.15cm, black,
+]
+plot coordinates {
+(01, 10)
+(02, 10)
+(03, 8)
+(04, 7)
+(05, 7)
+(06, 7)
+(07, 7)
+(08, 6)
+(09, 5)
+(10, 3)
+};
+    \end{axis}
+%\node[draw, align=center] (test) at (8,-18) {
+%\ref{plot:props_bu_hff_24} props-bu-hff\\
+%\ref{plot:props_td_hff_24} props-td-hff\\
+%\ref{plot:props_bu_trap_24} props-bu-trap\\
+%\ref{plot:props_td_trap_24} props-td-trap\\
+%};
+

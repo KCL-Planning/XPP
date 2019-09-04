@@ -1,3 +1,4 @@
+\onecolumn
 \section{Additional Data}
 \label{apendix:data}
 
@@ -10,6 +11,7 @@ Section~\ref{experiments:asp}.
 \centering
 
 \begin{tikzpicture}
+\node[] (c100_label) at (0,3.5) {$x=1.0$};
 \node[] (c100) at (0,0) {
 \begin{tikzpicture}
 \input{data/supp_material_plots/global_exp/c100/blocksworld.tex}
@@ -20,32 +22,40 @@ Section~\ref{experiments:asp}.
 };
 
 
-\node[] (c125) at (8,0) {
+\node[] (c125_label) at (9,3.5) {$x=1.25$};
+\node[] (c125) at (9,0) {
 \begin{tikzpicture}
-\input{data/action_set_properties/barchart/c125/blocksworld.tex}
-\input{data/action_set_properties/barchart/c125/nomystery.tex}
-\input{data/action_set_properties/barchart/c125/rovers.tex}
-\input{data/action_set_properties/barchart/c125/tpp.tex}
+\input{data/supp_material_plots/global_exp/c125/blocksworld.tex}
+\input{data/supp_material_plots/global_exp/c125/nomystery.tex}
+\input{data/supp_material_plots/global_exp/c125/rovers.tex}
+\input{data/supp_material_plots/global_exp/c125/tpp.tex}
 \end{tikzpicture}
 };
 
 
-\node[] (c150) at (0,-6.5) {
+\node[] (c150_label) at (0,-4.5) {$x=1.5$};
+\node[] (c150) at (0,-8) {
 \begin{tikzpicture}
-\input{data/action_set_properties/barchart/c150/blocksworld.tex}
-\input{data/action_set_properties/barchart/c150/nomystery.tex}
-\input{data/action_set_properties/barchart/c150/rovers.tex}
-\input{data/action_set_properties/barchart/c150/tpp.tex}
+\input{data/supp_material_plots/global_exp/c150/blocksworld.tex}
+\input{data/supp_material_plots/global_exp/c150/nomystery.tex}
+\input{data/supp_material_plots/global_exp/c150/rovers.tex}
+\input{data/supp_material_plots/global_exp/c150/tpp.tex}
 \end{tikzpicture}
 };
 
 
-\node[] (c200) at (8,-6.5) {
-TODO add c200
+\node[] (c200_label) at (9,-4.5) {$x=2.0$};
+\node[] (c200) at (9,-8) {
+\begin{tikzpicture}
+\input{data/supp_material_plots/global_exp/c200/blocksworld.tex}
+\input{data/supp_material_plots/global_exp/c200/nomystery.tex}
+\input{data/supp_material_plots/global_exp/c200/rovers.tex}
+\input{data/supp_material_plots/global_exp/c200/tpp.tex}
+\end{tikzpicture}
 };
 
 
-\node[draw] (test) at (3.8,-9.5) {
+\node[draw] (test) at (3.8,-12) {
 \ref{plot:props_bu_hff_94}   SysS
 \ref{plot:props_td_hff_94}   SysW
 \ref{plot:props_bu_trap_94} SysS trap 
@@ -60,42 +70,47 @@ TODO add c200
 %\input{charts_c125.tex}
 %\input{charts_c100.tex}
 %\rebecca{\normalsize top c=1.25, bottom c = 1.0}
-\vspace{-0.0cm}
-\caption{\label{fig:appendix:asp-global} Coverage for global
-  action-set property explanation. Number of properties on x-axis,
-  scaling from $1$ to $10$. SysS with trap learning.\joerg{include
-    x=2.0; include reference point data everywhere; include reference
-    points in plot legend; format figure (presumably, square for 1.0,
-    1.25, 1.5, 2.0 from top left to bottm right); include labels for
-    $x$ and domain name in the plots}}
-\vspace{-0.0cm}
+\caption{\label{fig:appendix:asp-global} 
+	Coverage for global action-set property explanation. Number of properties on x-axis,
+ 	scaling from $1$ to $10$, scaling $x$ from $1.0$ to $2.0$. 
+ }
 \end{figure*}
 
 
-\begin{figure}[htb]
-\vspace{-0.0cm}
+\begin{figure*}[htb]
 \small
 \centering
+\begin{tikzpicture}
+\node[rotate=00] (c150_label) at (0,2) {$x = 1.0$, SysS};
+\node[] (c100) at (0,0) {
+	%\input{data/supp_material_plots/local_exp/charts_local_exp_props_questions_c100.tex}
+	\input{data/supp_material_plots/local_exp/charts_local_exp_props_questions_c100_bu.tex}
+};
+\node[rotate=00] (c150_label) at (7, 2) {$x = 1.25$, SysW};
+\node[] (c125) at (7,0) {
+	\input{data/supp_material_plots/local_exp/charts_local_exp_props_questions_c125.tex}
+};
+\node[rotate=00] (c150_label) at (0,-2) {$x = 1.5$, SysW};
+\node[] (c150) at (0,-4) {
+	\input{data/supp_material_plots/local_exp/charts_local_exp_props_questions_c150.tex}
+};
+\node[rotate=00] (c200_label) at (7,-2) {$x = 2.0$, SysW};
+\node[] (c200) at (7,-4) {
+	\input{data/supp_material_plots/local_exp/charts_local_exp_props_questions_c200.tex}
+};
+\end{tikzpicture}
 
-c = 1.5\\
-\input{charts_local_exp_props_questions_c150.tex}
-c = 1.25\\
-\input{charts_local_exp_props_questions_c125.tex}
-c = 1.0 td\\
-\input{charts_local_exp_props_questions_c100.tex}
-c = 1.0 bu\\
-\input{charts_local_exp_props_questions_c100_bu.tex}
-%\rebecca{top c=1.25, bottom c = 1.0}
-\vspace{-0.0cm}
 \caption{\label{fig:appendix:asp-local} Local action-set property
-  explanation at $x=1.0$. SysS with trap learning. Average runtime
+  explanation scaling from $x=1.0$ to $x=2.0$. SysW and SysS with trap learning. Average runtime
   (left) and average \#MUGS (right) as a function of
   $|A|$. Blocksworld blue, NoMystery red, Rovers orange, TPP
-  green.\joerg{include x=2.0 for SysW; remove SysW for x=1.0; remove
+  green.
+  (In Blocksworld there is no commonly solved instance for all sizes with $x=2.0$.)
+  \joerg{include x=2.0 for SysW; remove SysW for x=1.0; remove
     coverage; replace by b/w readable version?; format figure
     (presumably, square for 1.0, 1.25, 1.5, 2.0 from top left to bottm
     right); include labels for $x$ and algorithm (SysW vs SysS) in the
     plots}}
 \vspace{-0.0cm}
-\end{figure}
+\end{figure*}
 

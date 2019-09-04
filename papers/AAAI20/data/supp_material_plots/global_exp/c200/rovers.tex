@@ -1,0 +1,118 @@
+    \begin{axis}[
+    width = 5cm,
+    height=4cm,
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.1,
+    legend columns=1,
+    ybar,
+    bar width=1pt,
+    ymin = 0,
+    ymax = 10,
+	compat=1.6,
+	title=Rovers,
+	title style={yshift=-1.5ex},
+	xtick= {1,5,10},
+	at={(0cm,-3.3cm)},
+]
+\addplot+[ybar, bar shift =-4.0pt, red,
+]
+plot coordinates {
+(02, 10) %c_200
+(03, 9) %c_200
+(05, 6) %c_200
+(01, 10) %c_200
+(09, 0) %c_200
+(10, 1) %c_200
+(08, 2) %c_200
+(04, 8) %c_200
+(06, 2) %c_200
+(07, 2) %c_200
+};
+\label{plot:props_bu_hff_48}
+\addplot+[ybar, bar shift =-2.0pt, blue,
+]
+plot coordinates {
+(02, 10) %c_200
+(03, 9) %c_200
+(05, 7) %c_200
+(01, 10) %c_200
+(09, 2) %c_200
+(10, 5) %c_200
+(08, 4) %c_200
+(04, 9) %c_200
+(06, 6) %c_200
+(07, 3) %c_200
+};
+\label{plot:props_td_hff_48}
+\addplot+[ybar, bar shift =0.0pt, green,
+]
+plot coordinates {
+(02, 10) %c_200
+(03, 10) %c_200
+(05, 10) %c_200
+(01, 10) %c_200
+(09, 10) %c_200
+(10, 10) %c_200
+(08, 10) %c_200
+(04, 10) %c_200
+(06, 10) %c_200
+(07, 10) %c_200
+};
+\label{plot:props_bu_trap_48}
+\addplot+[ybar, bar shift =2.0pt, orange,
+]
+plot coordinates {
+(02, 10) %c_200
+(03, 10) %c_200
+(05, 10) %c_200
+(01, 10) %c_200
+(09, 10) %c_200
+(10, 10) %c_200
+(08, 10) %c_200
+(04, 10) %c_200
+(06, 10) %c_200
+(07, 10) %c_200
+};
+\label{plot:props_td_trap_48}
+
+%lmcut
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.15cm, black,
+]
+plot coordinates {
+(01, 1)
+(02, 1)
+(03, 0)
+(04, 1)
+(05, 1)
+(06, 0)
+(07, 0)
+(08, 0)
+(09, 0)
+(10, 0)
+};
+
+%trap first meta node top down
+\addplot+[only marks, mark = -, mark options = {thick, black}, mark size = 0.15cm, black,
+]
+plot coordinates {
+(01, 10)
+(02, 10)
+(03, 10)
+(04, 10)
+(05, 10)
+(06, 10)
+(07, 10)
+(08, 10)
+(09, 10)
+(10, 10)
+};
+    \end{axis}
+    \hfill
+    
+%\node[draw, align=center] (test) at (8,-18) {
+%\ref{plot:props_bu_hff_48} props-bu-hff\\
+%\ref{plot:props_td_hff_48} props-td-hff\\
+%\ref{plot:props_bu_trap_48} props-bu-trap\\
+%\ref{plot:props_td_trap_48} props-td-trap\\
+%};
+

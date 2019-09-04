@@ -1,0 +1,117 @@
+\begin{axis}[
+    width = 5cm,
+    height=4cm,
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.1,
+    legend columns=1,
+    ybar,
+    bar width=1pt,
+    ymin = 0,
+    ymax = 10,
+	compat=1.6,
+	title=Blocksworld,
+	at={(0cm,0cm)},
+	xtick= {1,5,10},
+]
+\addplot+[ybar, bar shift =-4.0pt, red,
+]
+plot coordinates {
+(04, 10) %c_200
+(07, 10) %c_200
+(09, 6) %c_200
+(03, 10) %c_200
+(06, 10) %c_200
+(05, 10) %c_200
+(08, 9) %c_200
+(10, 3) %c_200
+(02, 10) %c_200
+(01, 10) %c_200
+};
+\label{plot:props_bu_hff_20}
+\addplot+[ybar, bar shift =-2.0pt, blue,
+]
+plot coordinates {
+(04, 10) %c_200
+(07, 9) %c_200
+(09, 9) %c_200
+(03, 10) %c_200
+(06, 9) %c_200
+(05, 9) %c_200
+(08, 9) %c_200
+(10, 9) %c_200
+(02, 10) %c_200
+(01, 10) %c_200
+};
+\label{plot:props_td_hff_20}
+\addplot+[ybar, bar shift =0.0pt, green,
+]
+plot coordinates {
+(04, 10) %c_200
+(07, 5) %c_200
+(09, 0) %c_200
+(03, 10) %c_200
+(06, 7) %c_200
+(05, 10) %c_200
+(08, 2) %c_200
+(10, 0) %c_200
+(02, 10) %c_200
+(01, 10) %c_200
+};
+\label{plot:props_bu_trap_20}
+\addplot+[ybar, bar shift =2.0pt, orange,
+]
+plot coordinates {
+(04, 10) %c_200
+(07, 8) %c_200
+(09, 1) %c_200
+(03, 10) %c_200
+(06, 8) %c_200
+(05, 10) %c_200
+(08, 5) %c_200
+(10, 0) %c_200
+(02, 10) %c_200
+(01, 10) %c_200
+};
+\label{plot:props_td_trap_20}
+
+%lmcut
+\addplot+[only marks, mark = -, mark options = {thick, red, dashed}, mark size = 0.15cm, black,
+]
+plot coordinates {
+(02, 10)
+(01, 10)
+(04, 10)
+(03, 10)
+(07, 10)
+(08, 10)
+(06, 10)
+(10, 10)
+(05, 10)
+(09, 10)
+};
+
+%trap first meta node top down
+\addplot+[only marks, mark = -, mark options = {thick, black}, mark size = 0.15cm, black,
+]
+plot coordinates {
+(01, 10)
+(02, 10)
+(03, 10)
+(04, 10)
+(05, 10)
+(06, 8)
+(07, 8)
+(08, 5)
+(09, 2)
+(10, 1)
+};
+    \end{axis}
+    \hfill
+    
+%\node[draw, align=center] (test) at (8,-18) {
+%\ref{plot:props_bu_hff_20} props-bu-hff\\
+%\ref{plot:props_td_hff_20} props-td-hff\\
+%\ref{plot:props_bu_trap_20} props-bu-trap\\
+%\ref{plot:props_td_trap_20} props-td-trap\\
+%};
+
