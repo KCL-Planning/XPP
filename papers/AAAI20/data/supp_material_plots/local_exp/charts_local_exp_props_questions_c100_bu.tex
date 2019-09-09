@@ -11,9 +11,9 @@
     xmax = 5,
     xtick={1,2,3,4,5},
     xmin = 1,
-	%ylabel= search time,
+	ylabel= search time,
 	y label style={at={(0.2,0.5)}},
-	%axis y line*=left,
+	axis y line*=left,
 ]
 
 %blocksworld search time
@@ -64,70 +64,70 @@ mark options={scale=0.5, solid},
         };
 \end{axis}
 
-%\begin{axis}[
-%    width = 4cm,
-%    height= 4cm,
-%    enlarge x limits = 0.1,
-%    enlarge y limits = 0.1,
-%    legend columns=3,
-%    legend style={at={(0.05,-0.3)},anchor=west},
-%    xmax = 5,
-%    xtick={1,2,3,4,5},
-%    xmin = 1,
-%	axis y line*=right,
-%	ylabel= coverage,
-%	y label style={at={(1.8,0.5)}},
-%	ymax = 1,
-%	ymin = 0,
-%]
-%
-%%coverage blocksworld
-%\addplot[thick, blue, dashed, mark=*,
-%mark options={scale=0.5, solid},
-%]
-%        plot coordinates {
-%			(1, 1.0)
-%			(2, 1.0)
-%			(3, 1.0)
-%			(4, 1.0)
-%			(5, 1.0)
-%        };
-%
-%%coverage nomystery
-%\addplot[thick, red, dashed, mark=*,
-%mark options={scale=0.5, solid},
-%]
-%        plot coordinates {
-%			(1, 0.85)
-%			(2, 0.85)
-%			(3, 0.85)
-%			(4, 0.87)
-%			(5, 0.93)
-%        };
-%
-%%tpp coverage
-%\addplot[thick, green, dashed, mark=*, mark options={scale=0.5, solid},
-%]
-%        plot coordinates {
-%			(1, 1.0)
-%			(2, 1.0)
-%			(3, 1.0)
-%			(4, 1.0)
-%			(5, 1.0)
-%        };
-%
-%%rovers coverage
-%\addplot[thick, orange, dashed, mark=*, mark options={scale=0.5, solid},
-%]
-%        plot coordinates {
-%			(1, 1.0)
-%			(2, 1.0)
-%			(3, 1.0)
-%			(4, 1.0)
-%			(5, 1.0)
-%        };
-%
-%    \end{axis}
+\begin{axis}[
+    width = 4cm,
+    height= 4cm,
+    enlarge x limits = 0.1,
+    enlarge y limits = 0.1,
+    legend columns=3,
+    legend style={at={(0.05,-0.3)},anchor=west},
+    xmax = 5,
+    xtick={1,2,3,4,5},
+    xmin = 1,
+	axis y line*=right,
+	ylabel= coverage,
+	y label style={at={(1.8,0.5)}},
+	ymax = 1,
+	ymin = 0,
+]
+
+%coverage blocksworld
+\addplot[thick, blue, dashed, mark=*,
+mark options={scale=0.5, solid},
+]
+        plot coordinates {
+			(1, 1.0)
+			(2, 1.0)
+			(3, 1.0)
+			(4, 1.0)
+			(5, 1.0)
+        };
+
+%coverage nomystery
+\addplot[thick, red, dashed, mark=*,
+mark options={scale=0.5, solid},
+]
+        plot coordinates {
+			(1, 0.85)
+			(2, 0.85)
+			(3, 0.85)
+			(4, 0.87)
+			(5, 0.93)
+        };
+
+%tpp coverage
+\addplot[thick, green, dashed, mark=*, mark options={scale=0.5, solid},
+]
+        plot coordinates {
+			(1, 1.0)
+			(2, 1.0)
+			(3, 1.0)
+			(4, 1.0)
+			(5, 1.0)
+        };
+
+%rovers coverage
+\addplot[thick, orange, dashed, mark=*, mark options={scale=0.5, solid},
+]
+        plot coordinates {
+			(1, 1.0)
+			(2, 1.0)
+			(3, 1.0)
+			(4, 1.0)
+			(5, 1.0)
+        };
+
+    \end{axis}
 
 
 \end{tikzpicture}
@@ -146,7 +146,9 @@ mark options={scale=0.5, solid},
     xtick={1,2,3,4,5},
     xmin = 1,
 	ymin=1,
-	ymax=8,
+	ymax=10,
+	ylabel= \#MUGS,
+	y label style={at={(0.3,0.5)}},
 ]
 
 %MUGS blocksworld

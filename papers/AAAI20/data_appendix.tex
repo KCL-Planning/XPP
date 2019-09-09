@@ -81,31 +81,46 @@ Section~\ref{experiments:asp}.
 \small
 \centering
 \begin{tikzpicture}
-\node[rotate=00] (c150_label) at (0,2) {$x = 1.0$, SysS};
+%SysW
+\node[rotate=00] (c150_label) at (0.5,2) {SysW};
+\node[rotate=90] (c150_label) at (-4.5,0) {$x = 1.0$};
 \node[] (c100) at (0,0) {
-	%\input{data/supp_material_plots/local_exp/charts_local_exp_props_questions_c100.tex}
-	\input{data/supp_material_plots/local_exp/charts_local_exp_props_questions_c100_bu.tex}
+	\input{data/supp_material_plots/local_exp/charts_local_exp_props_questions_c100.tex}
 };
-\node[rotate=00] (c150_label) at (7, 2) {$x = 1.25$, SysW};
-\node[] (c125) at (7,0) {
+\node[rotate=90] (c150_label) at (-4.5, -3) {$x = 1.25$};
+\node[] (c125) at (0,-3) {
 	\input{data/supp_material_plots/local_exp/charts_local_exp_props_questions_c125.tex}
 };
-\node[rotate=00] (c150_label) at (0,-2) {$x = 1.5$, SysW};
-\node[] (c150) at (0,-4) {
+\node[rotate=90] (c150_label) at (-4.5,-6) {$x = 1.5$};
+\node[] (c150) at (-0.1,-6) {
 	\input{data/supp_material_plots/local_exp/charts_local_exp_props_questions_c150.tex}
 };
-\node[rotate=00] (c200_label) at (7,-2) {$x = 2.0$, SysW};
-\node[] (c200) at (7,-4) {
+\node[rotate=90] (c200_label) at (-4.5,-9) {$x = 2.0$};
+\node[] (c200) at (0,-9) {
 	\input{data/supp_material_plots/local_exp/charts_local_exp_props_questions_c200.tex}
+};
+%SysS
+\node[rotate=00] (c150_label) at (9.0,2) {SysS};
+\node[] (c100) at (8.5,0) {
+	\input{data/supp_material_plots/local_exp/charts_local_exp_props_questions_c100_bu.tex}
+};
+\node[] (c125) at (8.5,-3) {
+	\input{data/supp_material_plots/local_exp/charts_local_exp_props_questions_c125_bu.tex}
+};
+\node[] (c150) at (8.5,-6) {
+	\input{data/supp_material_plots/local_exp/charts_local_exp_props_questions_c150_bu.tex}
+};
+\node[] (c200) at (8.5,-9) {
+	\input{data/supp_material_plots/local_exp/charts_local_exp_props_questions_c200_bu.tex}
 };
 \end{tikzpicture}
 
 \caption{\label{fig:appendix:asp-local} Local action-set property
   explanation scaling from $x=1.0$ to $x=2.0$. SysW and SysS with trap learning. Average runtime
-  (left) and average \#MUGS (right) as a function of
+  solid and coverage dashed (left) and average \#MUGS (right) as a function of
   $|A|$. Blocksworld blue, NoMystery red, Rovers orange, TPP
   green.
-  (In Blocksworld there is no commonly solved instance for all sizes with $x=2.0$.)
+  (SysW: In Blocksworld there is no commonly solved instance for all sizes with $x=2.0$.)
   \joerg{include x=2.0 for SysW; remove SysW for x=1.0; remove
     coverage; replace by b/w readable version?; format figure
     (presumably, square for 1.0, 1.25, 1.5, 2.0 from top left to bottm
